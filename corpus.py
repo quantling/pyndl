@@ -34,7 +34,7 @@ def read_clean_gzfile(gz_file_path):
 
     Yields
     ------
-    line : non empty, cleaned line out of the xml subtilte file
+    line : non empty, cleaned line out of the xml subtitle file
 
     Raises
     ------

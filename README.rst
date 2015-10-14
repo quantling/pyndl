@@ -10,9 +10,11 @@ huge amounts of text file corpora.
     This package is under heavy development and anything might change at any
     point in time.
 
+
 Ndl
 ===
 This package mimics some of the functionality of the ndl2 R package.
+
 
 Important terminology
 =====================
@@ -53,7 +55,6 @@ symbol file :
     symbol and the second column contains the frequency of the symbol. There is
     one symbol per line. The ordering does not matter.
 
-
 event file :
     An event file contains a list of all events that should be learned. The
     learning will start at the first event and continue to the last event in
@@ -70,4 +71,5 @@ corpus file :
     text. A ``---end.of.document---`` or ``---END.OF.DOCUMENT---`` string marks
     where an old document finished and a new document starts.
 
-
+settings file :
+    A settings file contains all the settings for a resulting weight matrix.
