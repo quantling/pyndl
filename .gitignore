@@ -1,2 +1,5 @@
 others_code/
 latex/
+*.pyc
+__pycache__/
+tests/__pycache__/
