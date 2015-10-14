@@ -1,5 +1,10 @@
 
+import sys
+
 import numpy as np
+from matplotlib import pyplot as plt
+
+from counting import cues_outcomes
 
 """
 Kalman filter
@@ -11,7 +16,7 @@ developed on the basis of a matrix algebra solution.
 
 """
 
-def update_covariance(covmat, cues_present_vec, *, noise_parameter=1):
+def update_covariance_matrix(covmat, cues_present_vec, *, noise_parameter=1):
     """
     Update the covariance matrix ``covmat`` in place (!!).
 
@@ -24,19 +29,20 @@ def update_covariance(covmat, cues_present_vec, *, noise_parameter=1):
     noise_parameter : modulates the learning rate
 
     """
-    if cues_present_vec.shape[0] == 1:
+    if not cues_present_vec.shape[1] == 1:
         raise ValueError("cues_present_vec need to be a column vector.")
-    if isinstance(cues_present_vec, np.matrix)
-        raise ValueError("cues_present_vec need to be a np.matrix.")
+    #if not isinstance(cues_present_vec, np.matrix):
+    #    raise ValueError("cues_present_vec need to be a np.matrix.")
 
     numerator = covmat * cues_present_vec * cues_present_vec.T * covmat
     denominator = float(noise_parameter + cues_present_vec.T * covmat *
                         cues_present_vec)
     # inplace manipulation (bad behaviour, but memory efficient)
     covmat -= numerator / denominator
+    return covmat
 
 
-def update_mu(mumat, covmat, cues_present_vec, outcomes_present_vec, *,
+def update_mu_matrix(mumat, covmat, cues_present_vec, outcomes_present_vec, *,
               noise_parameter=1):
     """
     Update the mean matrix ``mumat`` in place (!!).
@@ -54,28 +60,99 @@ def update_mu(mumat, covmat, cues_present_vec, outcomes_present_vec, *,
 
     """
 
-    if cues_present_vec.shape[0] == 1:
+    if not cues_present_vec.shape[1] == 1:
         raise ValueError("cues_present_vec need to be a column vector.")
-    if isinstance(cues_present_vec, np.matrix)
-        raise ValueError("cues_present_vec need to be a np.matrix.")
-    if outcomes_present_vec.shape[0] == 1:
+    #if not isinstance(cues_present_vec, np.matrix):
+    #    raise ValueError("cues_present_vec need to be a np.matrix.")
+    if not outcomes_present_vec.shape[1] == 1:
         raise ValueError("outcomes_present_vec need to be a column vector.")
-    if isinstance(outcomes_present_vec, np.matrix)
-        raise ValueError("outcomes_present_vec need to be a np.matrix.")
+    #if not isinstance(outcomes_present_vec, np.matrix):
+    #    raise ValueError("outcomes_present_vec need to be a np.matrix.")
 
-    nominator = covmat * cues_present_vec * (outcomes_present_vec -
-                                             cues_present_vec.T * mumat)
     denominator = float(noise_parameter + cues_present_vec.T * covmat *
                         cues_present_vec)
     # inplace manipulation (bad behaviour, but memory efficient)
     # not memory efficient in this case
-    mumat += nominator / denominator
+
+    mumat += (covmat * (cues_present_vec * (outcomes_present_vec.T - cues_present_vec.T * mumat))) / denominator
+    return mumat
 
 
-# TODO building a cue->index map
-# TODO building a outcome->index map
 
-# TODO generating sparse column vectors out of event
+def main():
+    """
+    A main function that runs a learning of the kalman filtering.
 
-# TODO expose covmat and mumat to R
+    .. note::
+
+        This is here in order to get it running and might be changed heavily.
+
+    """
+    events_file = "tests/events_tiny.tab"
+    cues, outcomes = cues_outcomes(events_file)
+
+    # building a cue->index map
+    tmp = list(cues.keys())
+    tmp.sort()
+    cues = dict(zip(tmp, range(len(tmp))))
+    del tmp
+    # building a outcome->index map
+    tmp = list(outcomes.keys())
+    tmp.sort()
+    outcomes = dict(zip(tmp, range(len(tmp))))
+    del tmp
+
+    # mumat has cues as rows and outcomes as columns
+    mumat = np.matrix(np.zeros((len(cues), len(outcomes)), dtype=np.double))
+    print("mumat: " + str(mumat.shape))
+
+    # covmat has cues as rows and columns
+    covmat = np.matrix(np.diag(np.ones(len(cues), dtype=np.double)))
+
+    cue_vector = np.matrix(np.zeros((len(cues), 1)), dtype=np.double)
+    outcome_vector = np.matrix(np.zeros((len(outcomes), 1)), dtype=np.double)
+
+
+    # generating sparse column vectors out of event
+    with open(events_file, "rt") as dfile:
+        # skip header
+        dfile.readline()
+
+        for line in dfile:
+            cues_line, outcomes_line, freq = line.split("\t")
+            cues_line = cues_line.split("_")
+            outcomes_line = outcomes_line.strip().split("_")
+            freq = int(freq)
+
+            for cue in cues_line:
+                cue_vector[cues[cue], 0] = 1.0
+            for outcome in outcomes_line:
+                outcome_vector[outcomes[outcome], 0] = 1.0
+
+            # update mumat and covmat inplace
+            # first update mumat as it depends on covmat
+            for ii in range(freq):
+                mumat = update_mu_matrix(mumat, covmat, cue_vector, outcome_vector)
+                covmat = update_covariance_matrix(covmat, cue_vector)
+
+            # set values back to zero!!!
+            for cue in cues_line:
+                cue_vector[cues[cue]] = 0.0
+            for outcome in outcomes_line:
+                outcome_vector[outcomes[outcome]] = 0.0
+            print(".", end="")
+            sys.stdout.flush()
+
+    # TODO expose covmat and mumat to R
+    np.savetxt("mumat.txt", mumat)
+    np.savetxt("covmat.txt", covmat)
+
+    #plt.imshow(mumat)
+    #plt.show()
+    #plt.imshow(covmat)
+    #plt.show()
+
+
+if __name__=="__main__":
+    main()
 
