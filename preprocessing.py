@@ -3,34 +3,124 @@
 
 import re
 
-# corpus = open("/home/christian/test", "r")
-# corpus = open("/home/tino/collab-petar/pl.subtitles.utf8", "r")
-corpus = open("/home/tino/collab-petar/ro.subtitles.utf8", "r")
-# eventfile = open("/home/christian/testevents", "w")
-# eventfile = open("/home/tino/debug-ndl2/polish/pl.subtitles.events.utf8", "w", encoding = "utf-8")
-eventfile = open("/home/tino/debug-ndl2/polish/ro.subtitles.events.utf8", "w", encoding = "utf-8")
 
-document = []
-# regular = re.compile("^[abcdefghijklmnopqrstuvwxyzóąćęłńśźż]*$")     # polish
-regular = re.compile(u"^[aâăbcdefghiîjklmnopqrsştţuvwxyz]*$")        # romanian
+def process_occurrences(occurrences, outfile):
+    """
+    occurrences : sequence of str
+    outfile : file handle
 
-# write header
-eventfile.write("cues\toutcomes\tfrequency\n")
+    """
+    for occurence in occurrences:
+        if occurence:
+            phrase_string = "#" + re.sub("_", "#", occurence) + "#"
+            trigrams = (phrase_string[i:i+3] for i in
+                        range(len(phrase_string)-2))
+            outfile.write("_".join(trigrams) + "\t" + occurence + "\t1\n")
 
-for line in corpus:
-    current = line.lower().strip()
-    if regular.search(current) is None:
-        # make events out of each document
-        if "end.of.document" in current:
-            # make events and write to file
-            for i in range(len(document)-2):
-                phrase = document[i:i+3]
-                phraseString = "#" + "#".join(phrase) + "#"
-                trigrams = [phraseString[i:i+3] for i in range(len(phraseString)-2)]
-                eventfile.write("_".join(trigrams) + "\t" + "_".join(phrase) + "\t1\n")
-            document = []
-    else:
-        document.append(current)
+
+def create_eventfile(corpus_file,
+                     event_file,
+                     symbols="abcdefghijklmnopqrstuvwxyz",
+                     *,
+                     context="document",
+                     event="consecutive_words",
+                     event_option=3,
+                     lower_case=True,
+                     verbose=False):
+    """
+    Create an text based event file from a corpus file.
+
+    Parameters
+    ==========
+    corpus_file : str
+        path where the corpus file is
+    event_file : str
+        path where the output file will be created
+    symbols : str
+        string of all valid symbols
+    context : {"document", "paragraph"}
+    event : {"line", "consecutive_words", "sentence"}
+
+
+    Breaks / Separators
+    ===================
+
+    What marks parts, where we do not want to continue learning?
+
+    * ---end.of.document--- string?
+    * line breaks?
+    * empty lines?
+
+    What do we consider one event?
+
+    * three consecutive words?
+    * one line of the corpus?
+    * everything between two empty lines?
+    * everything within one document?
+
+    Should the events be connected to the events before and after?
+
+    No.
+
+    Context
+    =======
+    A context is a whole document or a paragraph within which we will take
+    (three) consecutive words as occurrences or events. The last words of a
+    context will not form an occurrence with the first words of the next
+    context.
+
+    Occurrence
+    ==========
+    An occurrence or event is will result in one event in the end. This can be
+    (three) consecutive words, a sentence, or a line in the corpus file.
+
+    """
+    if "_" in symbols or "#" in symbols:
+        raise ValueError("_ and # are special symbols and cannot be in symbols string")
+
+    in_symbols = re.compile("^[%s]*$" % symbols)
+    not_in_symbols = re.compile("[^%s]" % symbols)
+    document_pattern = re.compile("---end.of.document---")
+
+    with open(corpus_file, "rt") as corpus:
+        with open(event_file, "wt") as outfile:
+            outfile.write("cues\toutcomes\tfrequency\n")
+
+            occurrences = []
+            contexts = []
+
+            if context == "document" and event == "consecutive_words":
+                words = []
+
+                for ii, line in enumerate(corpus):
+                    if verbose and ii % 100000 == 0:
+                        print(".", end="")
+                        sys.stdout.flush()
+                    if lower_case:
+                        line = line.lower().strip()
+                    else:
+                        line = line.strip()
+
+                    if document_pattern.match(line.lower()) is not None:
+
+                        if len(words) < event_option:
+                            occurrences.append("_".join(words))
+                        else:
+                            # take all event_option number of consecutive words and make an occurence out of it.
+                            for jj in range(len(words) - (event_option - 1)):
+                                occurrences.append("_".join(words[jj:(jj+event_option)]))
+                        process_occurrences(occurrences, outfile)
+                        occurrences = []
+                        words = []
+
+                    # replace all weird characters with space
+                    line = not_in_symbols.sub(" ", line)
+
+                    words.extend([word.strip() for word in line.split(" ") if word.strip()])
+            else:
+                raise NotImplementedError("This combination of context=%s and event=%s is not implemented yet." % (str(context), str(event)))
+
+
 
 import sys
 def attach_one(filename):
@@ -43,7 +133,19 @@ def attach_one(filename):
                     print(".", end="")
                     sys.stdout.flush()
 
-attach_one("ro.subtitles.events.utf8")
+if __name__ == "__main__":
+    #attach_one("ro.subtitles.events.utf8")
+
+    #corpus_file = "/home/tino/collab-petar/pl.subtitles.utf8"
+    #event_file = "/home/tino/collab-petar/pl.subtitles.events.utf8"
+    corpus_file = "./tests/corpus.txt"
+    event_file = "./tests/events_corpus.tab"
+    symbols = "abcdefghijklmnopqrstuvwxyzóąćęłńśźż"  # polish
+    #symbols = "aâăbcdefghiîjklmnopqrsştţuvwxyz")  # romanian
+
+    create_eventfile(corpus_file, event_file, symbols,
+                     context="document", event="consecutive_words",
+                     event_option=3, lower_case=True, verbose=True)
 
 
 ################
@@ -160,7 +262,9 @@ def process_tabular_corpus(corpus_file, cue_id_map, outcome_id_map, path_name,
 
     """
     event_file = os.path.join(path_name, "events_0_1.dat")
-    with open(event_file, "wb") as out_file:
+
+    raise NotImplementedError()
+    #with open(event_file, "wb") as out_file:
 
 
 
