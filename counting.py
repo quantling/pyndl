@@ -58,9 +58,10 @@ def cues_outcomes(event_file_name,
 
     """
     with multiprocessing.Pool(number_of_processes) as pool:
+        step = num_of_processes
         results = pool.starmap(_job_cues_outcomes, ((event_file_name,
                                                     start,
-                                                    number_of_processes,
+                                                    step,
                                                     verbose)
                                       for start in range(number_of_processes)))
         cues = Counter()
@@ -126,9 +127,12 @@ def words_symbols(corpus_file_name,
 
     """
     with multiprocessing.Pool(number_of_processes) as pool:
-        results = pool.starmap(_job_words_symbols, ((corpus_file_name, start,
-                                                     number_of_processes,
-                                                     lower_case, verbose)
+        step = number_of_processes
+        results = pool.starmap(_job_words_symbols, ((corpus_file_name,
+                                                     start,
+                                                     step,
+                                                     lower_case,
+                                                     verbose)
                                                     for start in
                                                     range(number_of_processes)))
         words = Counter()
