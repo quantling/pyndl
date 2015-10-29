@@ -1,16 +1,19 @@
 
 import sys
 import random
-
-WORD_FREQ_FILE = "sr.subtitles.utf8.words.freq"
-SAMPLESIZE = 60000
-SAMPLE_FILE = "sr.subtitles.utf8.words.freq.used"
-WORD_ONLY_FILE =  "sr.subtitles.utf8.words.used"
+from collections import Counter
 
 
-def bandsampling(population, sample_size=50000, cutoff=5, verbose=False):
-    # filter all words with freq < 5
-    population = [(word, freq) for word, freq in population if freq >= cutoff]
+def bandsample(population, sample_size=50000, *, cutoff=5, verbose=False):
+    """
+    Creates a sample of size sample_size out of the population using
+    bandsampling.
+
+    """
+    # make a copy of the population
+    # filter all words with freq < cutoff
+    population = [(word, freq) for word, freq in population.items() if freq >=
+                  cutoff]
     # shuffle words with same frequency
     random.shuffle(population)
     population.sort(key=lambda x: x[1])  # lowest -> highest freq
@@ -48,32 +51,7 @@ def bandsampling(population, sample_size=50000, cutoff=5, verbose=False):
             if index % 10000 == 0:
                 print(".", end="")
                 sys.stdout.flush()
+    sample = Counter({key: value for key, value in sample})
     return sample
-
-
-def main():
-    population = list()
-    with open(WORD_FREQ_FILE, "rt") as infile:
-        for line in infile:
-            if not line.strip():
-                continue
-            word, freq = line.split(" ")
-            population.append((word, int(freq)))
-    sample = bandsampling(population, SAMPLESIZE)
-    sample.sort(key=lambda x: x[1], reverse=True)
-    with open(SAMPLE_FILE, "wt") as outfile:
-        with open(WORD_ONLY_FILE, "wt") as outfile2:
-            for word, freq in sample:
-                outfile.write("%s %i\n" % (word, freq))
-                outfile2.write("%s\n" % word)
-
-
-if __name__ == "__main__":
-    #test_population = [("A", 10), ("B", 100), ("C", 10), ("D", 3), ("E", 12),
-    #                   ("F", 6)]
-    #sample = bandsampling(test_population, 4, verbose=True)
-    #print(sample)
-
-    main()
 
 
