@@ -58,7 +58,7 @@ def cues_outcomes(event_file_name,
 
     """
     with multiprocessing.Pool(number_of_processes) as pool:
-        step = num_of_processes
+        step = number_of_processes
         results = pool.starmap(_job_cues_outcomes, ((event_file_name,
                                                     start,
                                                     step,
