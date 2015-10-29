@@ -1,7 +1,11 @@
 # !/usr/bin/env/python3
 # coding: utf-8
 
+import multiprocessing
+import os
 import re
+import sys
+import time
 
 
 def process_occurrences(occurrences, outfile):
@@ -121,6 +125,53 @@ def create_eventfile(corpus_file,
                 raise NotImplementedError("This combination of context=%s and event=%s is not implemented yet." % (str(context), str(event)))
 
 
+def filter_eventfile(input_event_file, output_event_file, allowed_cues="all",
+                     allowed_outcomes="all"):
+    """
+    Filter an event file by allowed cues and outcomes.
+
+    Parameters
+    ==========
+    input_event_file : str
+        path where the input event file is
+    output_event_file : str
+        path where the output file will be created
+    allowed_cues : "all" or sequence of str
+        list all allowed cues
+    allowed_outcomes : "all" or sequence of str
+        list all allowed outcomes
+
+    Notes
+    =====
+    It will keep all cues that are within the event and that (for a human
+    reader) might clearly belong to a removed outcome. This is on purpose and
+    is the expected behaviour as these cues are in the context of this outcome.
+
+    """
+    with open(input_event_file, "rt") as infile:
+        with open(output_event_file, "wt") as outfile:
+            # copy header
+            outfile.write(infile.readline())
+
+            for line in infile:
+                try:
+                    cues, outcomes, frequency = line.strip().split("\t")
+                except ValueError:
+                    raise ValueError("tabular corpus file need to have three tab separated columns")
+                cues = cues.split("_")
+                outcomes = outcomes.split("_")
+                frequency = int(frequency)
+                if not allowed_cues == "all":
+                    cues = [cue for cue in cues if cue in allowed_cues]
+                if not allowed_outcomes == "all":
+                    outcomes = [outcome for outcome in outcomes if outcome in allowed_outcomes]
+                # no cues or no outcomes left?
+                if not cues or not outcomes:
+                    continue
+                outfile.write("%s\t%s\t%i\n" % ("_".join(cues), "_".join(outcomes), frequency))
+
+
+
 ################
 ## Preprocessing
 ################
@@ -202,17 +253,21 @@ def write_events(filename, events, *, start=0, stop=4294967296):
             # frequency
             out_file.write(to_bytes(frequency))
 
-        if n_events != n_events_estimate:
+        if n_events != n_events_estimate and not n_events == 0:
             # the generator was exhausted earlier
             out_file.seek(8)
             out_file.write(to_bytes(n_events))
             raise StopIteration("event generator was exhausted before stop")
 
+    if n_events == 0:
+        os.remove(filename)
 
 
 
-def event_generator(corpus_file, cue_id_map, outcome_id_map, *, sort_within_event=False):
-    with open(corpus_file, "rt") as in_file:
+
+
+def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event=False):
+    with open(event_file, "rt") as in_file:
         # skip header
         in_file.readline()
         for nn, line in enumerate(in_file):
@@ -220,6 +275,9 @@ def event_generator(corpus_file, cue_id_map, outcome_id_map, *, sort_within_even
                 cues, outcomes, frequency = line.strip().split("\t")
             except ValueError:
                 raise ValueError("tabular corpus file need to have three tab separated columns")
+            cues = cues.split("_")
+            outcomes = outcomes.split("_")
+            frequency = int(frequency)
             # uses list and not generators; as generators can only be traversed once
             event = ([cue_id_map[cue] for cue in cues],
                      [outcome_id_map[outcome] for outcome in outcomes],
@@ -232,6 +290,13 @@ def event_generator(corpus_file, cue_id_map, outcome_id_map, *, sort_within_even
                 outcome_ids.sort()
                 event = (cue_ids, outcome_ids, frequency)
             yield event
+
+
+def _job_binary_event_files(*, filename, event_file, cue_id_map,
+                            outcome_id_map, sort_within_event, start, stop):
+    # create generator which is not pickable
+    events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=sort_within_event)
+    write_events(filename, events, start=start, stop=stop)
 
 
 def create_binary_event_files(path_name, event_file, cue_id_map,
@@ -284,48 +349,53 @@ def create_binary_event_files(path_name, event_file, cue_id_map,
             else:
                 raise error
 
+        def callback(result):
+            if verbose:
+                print("finished job")
+                sys.stdout.flush()
+
         ii = 0
         while True:
             kwargs = {"filename": os.path.join(path_name, "events_0_%i.dat" % ii),
-                      "events": event_generator(event_file,
-                                                cue_id_map,
-                                                outcome_id_map,
-                                                sort_within_event=sort_within_event),
+                      "event_file": event_file,
+                      "cue_id_map": cue_id_map,
+                      "outcome_id_map": outcome_id_map,
+                      "sort_within_event": sort_within_event,
                       "start": ii*events_per_file,
                       "stop": (ii+1)*events_per_file}
             try:
-                pool.apply_async(write_events, kwds=kwargs,
-                                 error_callback=error_callback)
+                #result = pool.apply(_job_binary_event_files, kwds=kwargs)
+                result = pool.apply_async(_job_binary_event_files,
+                                          kwds=kwargs,
+                                          callback=callback,
+                                          error_callback=error_callback)
                 if verbose:
                     print("submitted job %i" % ii)
             except ValueError as error:
                 # someone has closed the pool with the correct error callback
                 if error.args[0] == 'Pool not running':
-                    print("reached end of events")
+                    if verbose:
+                        print("reached end of events")
                     break  # out of while True
                 else:
                     raise error
             ii += 1
             # only start jobs in chunks of 4*number_of_processes
             if ii % (number_of_processes*4) == 0:
-                pool.wait()
+                while True:
+                    if result.ready():
+                        break
+                    time.sleep(1)
         # wait until all jobs are done
-        pool.wait()
+        pool.close()
+        pool.join()
         print("finished all jobs.\n")
-
-
-def main():
-    corpus_file = ""
-    cue_freq_map, outcome_freq_map = extract_cues_outcomes(corpus_file)
-
-    outcomes = read_outcomes(outcome_file)
-    outcomes.sort()
-    outcome_id_map = {outcome: nn for nn, outcome in enumerate(outcomes)}
 
 
 if __name__ == "__main__":
 
     from counting import cues_outcomes
+    from bandsampling import bandsample
 
     corpus_file = "./tests/corpus.txt"
     event_file = "./tests/events_corpus.tab"
@@ -339,16 +409,21 @@ if __name__ == "__main__":
 
     cue_freq_map, outcome_freq_map = cues_outcomes(event_file,
                                                    number_of_processes=2)
-    cues = cue_freq_map.keys()
+    cues = list(cue_freq_map.keys())
     cues.sort()
     cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
 
-    outcomes = outcome_freq_map.keys()
+    outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1)
+    outcomes = list(outcome_freq_map_filtered.keys())
     outcomes.sort()
     outcome_id_map = {outcome: nn for nn, outcome in enumerate(outcomes)}
 
-    path_name = event_file + ".events"
-    create_binary_event_files(path_name, event_file, cue_id_map,
+    event_file_filtered = event_file + ".filtered"
+    filter_eventfile(event_file, event_file_filtered, allowed_outcomes=outcomes)
+
+
+    path_name = event_file_filtered + ".events"
+    create_binary_event_files(path_name, event_file_filtered, cue_id_map,
                               outcome_id_map, sort_within_event=False,
                               number_of_processes=2, events_per_file=100, overwrite=True,
                               verbose=True)
