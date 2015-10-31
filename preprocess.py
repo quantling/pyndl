@@ -10,10 +10,11 @@ import sys
 import time
 
 
-def bandsample(population, sample_size=50000, *, cutoff=5, seed=None, verbose=False):
+def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
+               verbose=False):
     """
     Creates a sample of size sample_size out of the population using
-    bandsampling.
+    band sampling.
 
     """
     # make a copy of the population
@@ -21,8 +22,8 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None, verbose=Fa
     population = [(word, freq) for word, freq in population.items() if freq >=
                   cutoff]
     # shuffle words with same frequency
-    if seed not None:
-        rando.seed(seed)
+    if seed is not None:
+        random.seed(seed)
     random.shuffle(population)
     population.sort(key=lambda x: x[1])  # lowest -> highest freq
 
@@ -247,14 +248,14 @@ def write_events(filename, events, *, start=0, stop=4294967296):
     ndl2/src/common/serialization.cpp.
 
     Parameters
-    ----------
+    ==========
     filename : string
     events : iterator of (cue_ids, outcome_ids, frequency) triples called event
     start : first event to write (zero based index)
     stop : last event to write (zero based index; excluded)
 
     Binary Format
-    -------------
+    =============
 
     ::
 
@@ -269,7 +270,7 @@ def write_events(filename, events, *, start=0, stop=4294967296):
         ...
 
     Raises
-    ------
+    ======
     StopIteration : events generator is exhausted before stop is reached
 
     """
@@ -361,7 +362,7 @@ def create_binary_event_files(path_name, event_file, cue_id_map,
     Creates the binary event files for a tabular cue outcome frequency corpus.
 
     Parameters
-    ----------
+    ==========
     path_name : str
         folder name where to store the binary event files
     event_file : str
