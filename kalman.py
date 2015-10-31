@@ -1,10 +1,5 @@
-
-import sys
-
-import numpy as np
-from matplotlib import pyplot as plt
-
-from .counting import cues_outcomes
+# !/usr/bin/env/python3
+# coding: utf-8
 
 """
 Kalman filter
@@ -15,6 +10,13 @@ the expectation (mean), and for the uncertainty (variance). Again, algorithm is
 developed on the basis of a matrix algebra solution.
 
 """
+
+import sys
+
+import numpy as np
+from matplotlib import pyplot as plt
+
+from .count import cues_outcomes
 
 
 def update_covariance_matrix(covmat, cues_present_vec, *, noise_parameter=1):
