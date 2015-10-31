@@ -8,14 +8,13 @@ This module provides functions in order to count
 
 """
 
-import sys
-import os
 from collections import Counter
-import itertools
 import functools
+import itertools
 import multiprocessing
-
+import os
 import pickle
+import sys
 
 
 def _job_cues_outcomes(event_file_name, start, step, verbose=True):
