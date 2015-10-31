@@ -448,7 +448,7 @@ def create_binary_event_files(path_name, event_file, cue_id_map,
 
 if __name__ == "__main__":
 
-    from .counting import cues_outcomes
+    from .count import cues_outcomes
 
     corpus_file = "./tests/corpus.txt"
     event_file = "./tests/events_corpus.tab"
