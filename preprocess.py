@@ -1,11 +1,66 @@
 # !/usr/bin/env/python3
 # coding: utf-8
 
+from collections import Counter
 import multiprocessing
 import os
+import random
 import re
 import sys
 import time
+
+
+def bandsample(population, sample_size=50000, *, cutoff=5, seed=None, verbose=False):
+    """
+    Creates a sample of size sample_size out of the population using
+    bandsampling.
+
+    """
+    # make a copy of the population
+    # filter all words with freq < cutoff
+    population = [(word, freq) for word, freq in population.items() if freq >=
+                  cutoff]
+    # shuffle words with same frequency
+    if seed not None:
+        rando.seed(seed)
+    random.shuffle(population)
+    population.sort(key=lambda x: x[1])  # lowest -> highest freq
+
+    step = sum(freq for word, freq in population) / sample_size
+    if verbose:
+        print("step %.2f" % step)
+
+    accumulator = 0
+    index = 0
+    sample = list()
+    while 0 <= index < len(population):
+        word, freq = population[index]
+        accumulator += freq
+        if verbose:
+            print("%s\t%i\t%.2f" % (word, freq, accumulator))
+        if accumulator >= step:
+            sample.append((word, freq))
+            accumulator -= step
+            if verbose:
+                print("add\t%s\t%.2f" % (word, accumulator))
+            del population[index]
+            while accumulator >= step and index >= 1:
+                index -= 1
+                sample.append(population[index])
+                accumulator -= step
+                if verbose:
+                    word, freq = population[index]
+                    print("  add\t%s\t%.2f" % (word, accumulator))
+                del population[index]
+        else:
+            # only add to index if no element was removed
+            # if element was removed, index points at next element already
+            index += 1
+            if index % 10000 == 0:
+                print(".", end="")
+                sys.stdout.flush()
+    sample = Counter({key: value for key, value in sample})
+    return sample
 
 
 def process_occurrences(occurrences, outfile):
@@ -22,15 +77,15 @@ def process_occurrences(occurrences, outfile):
             outfile.write("_".join(trigrams) + "\t" + occurence + "\t1\n")
 
 
-def create_eventfile(corpus_file,
-                     event_file,
-                     symbols="abcdefghijklmnopqrstuvwxyz",
-                     *,
-                     context="document",
-                     event="consecutive_words",
-                     event_option=3,
-                     lower_case=True,
-                     verbose=False):
+def create_event_file(corpus_file,
+                      event_file,
+                      symbols="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                      *,
+                      context="document",
+                      event="consecutive_words",
+                      event_option=3,
+                      lower_case=False,
+                      verbose=False):
     """
     Create an text based event file from a corpus file.
 
@@ -125,8 +180,8 @@ def create_eventfile(corpus_file,
                 raise NotImplementedError("This combination of context=%s and event=%s is not implemented yet." % (str(context), str(event)))
 
 
-def filter_eventfile(input_event_file, output_event_file, allowed_cues="all",
-                     allowed_outcomes="all"):
+def filter_event_file(input_event_file, output_event_file, allowed_cues="all",
+                      allowed_outcomes="all"):
     """
     Filter an event file by allowed cues and outcomes.
 
@@ -157,7 +212,7 @@ def filter_eventfile(input_event_file, output_event_file, allowed_cues="all",
                 try:
                     cues, outcomes, frequency = line.strip().split("\t")
                 except ValueError:
-                    raise ValueError("tabular corpus file need to have three tab separated columns")
+                    raise ValueError("tabular event file need to have three tab separated columns")
                 cues = cues.split("_")
                 outcomes = outcomes.split("_")
                 frequency = int(frequency)
@@ -261,8 +316,6 @@ def write_events(filename, events, *, start=0, stop=4294967296):
 
     if n_events == 0:
         os.remove(filename)
-
-
 
 
 
@@ -394,8 +447,7 @@ def create_binary_event_files(path_name, event_file, cue_id_map,
 
 if __name__ == "__main__":
 
-    from counting import cues_outcomes
-    from bandsampling import bandsample
+    from .counting import cues_outcomes
 
     corpus_file = "./tests/corpus.txt"
     event_file = "./tests/events_corpus.tab"

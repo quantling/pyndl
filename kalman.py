@@ -4,7 +4,7 @@ import sys
 import numpy as np
 from matplotlib import pyplot as plt
 
-from counting import cues_outcomes
+from .counting import cues_outcomes
 
 """
 Kalman filter

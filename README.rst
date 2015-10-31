@@ -73,3 +73,4 @@ corpus file :
 
 settings file :
     A settings file contains all the settings for a resulting weight matrix.
+
