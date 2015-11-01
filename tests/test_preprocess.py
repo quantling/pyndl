@@ -6,9 +6,16 @@ import os
 import pytest
 
 from ..preprocess import (create_event_file, filter_event_file,
-                          create_binary_event_files, bandsample)
+                          create_binary_event_files, bandsample,
+                          event_generator, write_events,
+                          _job_binary_event_file)
 
 from ..count import cues_outcomes
+
+def test_bandsample():
+    cue_freq_map, outcome_freq_map = cues_outcomes("./tests/event_file.tab",
+                                                   number_of_processes=2)
+    outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=1234, verbose=True)
 
 
 def test_create_event_file_bad_symbols():
@@ -21,11 +28,13 @@ def test_create_event_file_bad_symbols():
                          "abcd_", context="document",
                          event="consecutive_words", event_option=3)
 
+
 def test_create_event_file_bad_event_context():
     with pytest.raises(NotImplementedError):
         create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
                          context="UNREASONABLE", event="consecutive_words",
                          event_option=3)
+
 
 def test_create_event_file_upper_case():
     event_file = "./tests/events_corpus_upper_case.tab"
@@ -63,6 +72,46 @@ def test_filter_event_file():
     os.remove(output_event_file)
 
 
+def test_write_events():
+    event_file = "./tests/event_file.tab"
+    cue_freq_map, outcome_freq_map = cues_outcomes(event_file)
+    outcomes = list(outcome_freq_map.keys())
+    outcomes.sort()
+    cues = list(cue_freq_map.keys())
+    cues.sort()
+    cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
+    outcome_id_map = {outcome: nn for nn, outcome in enumerate(outcomes)}
+    events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
+    file_name = "./tests/events.bin"
+    with pytest.raises(StopIteration):
+        write_events(events, file_name)
+    os.remove(file_name)
+
+    # start stop
+    events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
+    write_events(events, file_name, start=10, stop=20)
+    os.remove(file_name)
+
+    # no events
+    events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
+    write_events(events, file_name, start=100000, stop=100010)
+
+    _job_binary_event_file(file_name=file_name, event_file=event_file,
+                           cue_id_map=cue_id_map,
+                           outcome_id_map=outcome_id_map,
+                           sort_within_event=False,
+                           start=0, stop=10)
+    os.remove(file_name)
+
+    # bad event file
+    with pytest.raises(ValueError):
+        events = event_generator("./tests/event_file_BAD.tab", cue_id_map,
+                                outcome_id_map)
+        # traverse generator
+        for event in events:
+            pass
+
+
 def test_preprocessing():
     corpus_file = "./tests/corpus.txt"
     event_file = "./tests/events_corpus.tab"
@@ -93,10 +142,23 @@ def test_preprocessing():
 
     # create binary event files
     path_name = event_file_filtered + ".events"
+    for file_ in os.listdir(path_name):
+        os.remove(os.path.join(path_name, file_))
+    os.rmdir(path_name)
     create_binary_event_files(path_name, event_file_filtered, cue_id_map,
                               outcome_id_map, sort_within_event=False,
-                              number_of_processes=2, events_per_file=1000, overwrite=True,
+                              number_of_processes=2, events_per_file=1000,
                               verbose=True)
+    with pytest.raises(IOError):
+        create_binary_event_files(path_name, event_file_filtered, cue_id_map,
+                                outcome_id_map, sort_within_event=False,
+                                number_of_processes=2, events_per_file=1000,
+                                verbose=True)
+    create_binary_event_files(path_name, event_file_filtered, cue_id_map,
+                            outcome_id_map, sort_within_event=False,
+                            number_of_processes=2, events_per_file=1000,
+                            overwrite=True, verbose=True)
+
 
     # clean everything
     os.remove(event_file)
