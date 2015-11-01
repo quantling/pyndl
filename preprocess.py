@@ -57,7 +57,7 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
             # only add to index if no element was removed
             # if element was removed, index points at next element already
             index += 1
-            if index % 10000 == 0:
+            if verbose and index % 1000 == 0:
                 print(".", end="")
                 sys.stdout.flush()
     sample = Counter({key: value for key, value in sample})
@@ -240,7 +240,7 @@ def to_bytes(int_):
     return int_.to_bytes(4, 'little')
 
 
-def write_events(filename, events, *, start=0, stop=4294967296):
+def write_events(events, filename, *, start=0, stop=4294967295):
     """
     Write out a list of events to a disk file in binary format.
 
@@ -249,8 +249,8 @@ def write_events(filename, events, *, start=0, stop=4294967296):
 
     Parameters
     ==========
-    filename : string
     events : iterator of (cue_ids, outcome_ids, frequency) triples called event
+    filename : string
     start : first event to write (zero based index)
     stop : last event to write (zero based index; excluded)
 
@@ -346,11 +346,11 @@ def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event
             yield event
 
 
-def _job_binary_event_files(*, filename, event_file, cue_id_map,
+def _job_binary_event_file(*, file_name, event_file, cue_id_map,
                             outcome_id_map, sort_within_event, start, stop):
     # create generator which is not pickable
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=sort_within_event)
-    write_events(filename, events, start=start, stop=stop)
+    write_events(events, file_name, start=start, stop=stop)
 
 
 def create_binary_event_files(path_name, event_file, cue_id_map,
@@ -410,7 +410,7 @@ def create_binary_event_files(path_name, event_file, cue_id_map,
 
         ii = 0
         while True:
-            kwargs = {"filename": os.path.join(path_name, "events_0_%i.dat" % ii),
+            kwargs = {"file_name": os.path.join(path_name, "events_0_%i.dat" % ii),
                       "event_file": event_file,
                       "cue_id_map": cue_id_map,
                       "outcome_id_map": outcome_id_map,
@@ -418,8 +418,7 @@ def create_binary_event_files(path_name, event_file, cue_id_map,
                       "start": ii*events_per_file,
                       "stop": (ii+1)*events_per_file}
             try:
-                #result = pool.apply(_job_binary_event_files, kwds=kwargs)
-                result = pool.apply_async(_job_binary_event_files,
+                result = pool.apply_async(_job_binary_event_file,
                                           kwds=kwargs,
                                           callback=callback,
                                           error_callback=error_callback)
@@ -446,39 +445,6 @@ def create_binary_event_files(path_name, event_file, cue_id_map,
         print("finished all jobs.\n")
 
 
-if __name__ == "__main__":
-
-    from .count import cues_outcomes
-
-    corpus_file = "./tests/corpus.txt"
-    event_file = "./tests/events_corpus.tab"
-    symbols = "abcdefghijklmnopqrstuvwxyzóąćęłńśźż"  # polish
-
-    #symbols = "aâăbcdefghiîjklmnopqrsştţuvwxyz")  # romanian
-
-    create_eventfile(corpus_file, event_file, symbols,
-                     context="document", event="consecutive_words",
-                     event_option=3, lower_case=True, verbose=True)
-
-    cue_freq_map, outcome_freq_map = cues_outcomes(event_file,
-                                                   number_of_processes=2)
-    cues = list(cue_freq_map.keys())
-    cues.sort()
-    cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
-
-    outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1)
-    outcomes = list(outcome_freq_map_filtered.keys())
-    outcomes.sort()
-    outcome_id_map = {outcome: nn for nn, outcome in enumerate(outcomes)}
-
-    event_file_filtered = event_file + ".filtered"
-    filter_eventfile(event_file, event_file_filtered, allowed_outcomes=outcomes)
-
-
-    path_name = event_file_filtered + ".events"
-    create_binary_event_files(path_name, event_file_filtered, cue_id_map,
-                              outcome_id_map, sort_within_event=False,
-                              number_of_processes=2, events_per_file=100, overwrite=True,
-                              verbose=True)
-
+# for example code see function test_preprocess in file
+# ./tests/test_preprocess.py.
 
