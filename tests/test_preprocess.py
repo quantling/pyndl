@@ -44,6 +44,19 @@ def test_create_event_file_upper_case():
     os.remove(event_file)
 
 
+def test_create_event_file_word_to_word():
+    event_file = "./tests/event_file_word_to_word.tab"
+    create_event_file("./tests/corpus_tiny.txt", event_file,
+                        context="document", event="consecutive_words",
+                        event_option=3, cue_structure="word_to_word")
+    with open(event_file, "rt") as new_file:
+        lines_new = new_file.readlines()
+    with open("./tests/event_file_word_to_word_reference.tab", "rt") as reference:
+        lines_reference = reference.readlines()
+    assert lines_new == lines_reference
+    os.remove(event_file)
+
+
 def test_filter_event_file_bad_event_file():
     input_event_file = "./tests/event_file_BAD.tab"
     output_event_file = "./tests/event_file_BAD_output.tab"
