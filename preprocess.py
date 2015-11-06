@@ -64,18 +64,26 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
     return sample
 
 
-def process_occurrences(occurrences, outfile):
+def process_occurrences(occurrences, outfile, *, cue_structure="trigrams"):
     """
     occurrences : sequence of str
     outfile : file handle
 
     """
-    for occurence in occurrences:
-        if occurence:
-            phrase_string = "#" + re.sub("_", "#", occurence) + "#"
-            trigrams = (phrase_string[i:i+3] for i in
-                        range(len(phrase_string)-2))
-            outfile.write("_".join(trigrams) + "\t" + occurence + "\t1\n")
+    if cue_structure == "trigrams":
+        for occurrence in occurrences:
+            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
+            trigrams = (phrase_string[i:(i + 3)] for i in
+                        range(len(phrase_string) - 3 + 1))
+            outfile.write("_".join(trigrams) + "\t" + occurrence + "\t1\n")
+    elif cue_structure == "word_to_word":
+        for occurrence in occurrences:
+            words = occurrence.split("_")
+            if len(words) == 1:
+                continue
+            outcome = words[-1]  # last word
+            cues = words[:-1]  # all words before the last one
+            outfile.write("_".join(cues) + "\t" + outcome + "\t1\n")
 
 
 def create_event_file(corpus_file,
@@ -85,6 +93,7 @@ def create_event_file(corpus_file,
                       context="document",
                       event="consecutive_words",
                       event_option=3,
+                      cue_structure="trigrams",
                       lower_case=False,
                       verbose=False):
     """
@@ -140,13 +149,46 @@ def create_event_file(corpus_file,
 
     in_symbols = re.compile("^[%s]*$" % symbols)
     not_in_symbols = re.compile("[^%s]" % symbols)
-    document_pattern = re.compile("---end.of.document---")
+    document_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
+
+    def gen_occurrences(words):
+        # take all event_option number of consecutive words and make an
+        # occurrence out of it.
+        # for words = (A, B, C, D); event_option = 3
+        # make: A, A_B, A_B_C, B_C_D, C_D, D
+        occurrences = list()
+        cur_words = list()
+        ii = 0
+        while True:
+            if ii < len(words):
+                cur_words.append(words[ii])
+            if ii >= len(words) or ii >= event_option:
+                cur_words = cur_words[1:]
+            occurrences.append("_".join(cur_words))
+            ii += 1
+            if not cur_words:
+                break
+        return occurrences
+
+    def process_line(line):
+        if lower_case:
+            line = line.lower()
+        # replace all weird characters with space
+        line = not_in_symbols.sub(" ", line)
+        return line
+
+    def gen_words(line):
+        return [word.strip() for word in line.split(" ") if word.strip()]
+
+    def process_words(words):
+        occurrences = gen_occurrences(words)
+        process_occurrences(occurrences, outfile,
+                            cue_structure=cue_structure)
 
     with open(corpus_file, "rt") as corpus:
         with open(event_file, "wt") as outfile:
             outfile.write("cues\toutcomes\tfrequency\n")
 
-            occurrences = []
             contexts = []
 
             if context == "document" and event == "consecutive_words":
@@ -156,27 +198,40 @@ def create_event_file(corpus_file,
                     if verbose and ii % 100000 == 0:
                         print(".", end="")
                         sys.stdout.flush()
-                    if lower_case:
-                        line = line.lower().strip()
-                    else:
-                        line = line.strip()
+                    line = line.strip()
 
-                    if document_pattern.match(line.lower()) is not None:
+                    if document_pattern.search(line) is not None:
+                        print("%i: %s" % (ii, line))
 
-                        if len(words) < event_option:
-                            occurrences.append("_".join(words))
-                        else:
-                            # take all event_option number of consecutive words and make an occurence out of it.
-                            for jj in range(len(words) - (event_option - 1)):
-                                occurrences.append("_".join(words[jj:(jj+event_option)]))
-                        process_occurrences(occurrences, outfile)
-                        occurrences = []
+                        line1, *lines = document_pattern.split(line)
+                        line1 = document_pattern.sub("", line1)
+
+                        if line1.strip():
+                            line1 = process_line(line1.strip())
+                            words.extend(gen_words(line1))
+                        process_words(words)
                         words = []
+                        while len(lines) > 1:
+                            # all except the last entry of lines is a whole document
+                            line1, *lines = lines
+                            line1 = document_pattern.sub("", line1)
+                            if line1.strip():
+                                line1 = process_line(line1.strip())
+                                words.extend(gen_words(line1))
+                                process_words(words)
+                                words = []
+                        # last lines should be added to next document
+                        line1 = lines[0]
+                        line1 = document_pattern.sub("", line1)
+                        if line1.strip():
+                            line1 = process_line(line1.strip())
+                            words.extend(gen_words(line1))
+                    else:
+                        line = process_line(line)
+                        words.extend(gen_words(line))
 
-                    # replace all weird characters with space
-                    line = not_in_symbols.sub(" ", line)
-
-                    words.extend([word.strip() for word in line.split(" ") if word.strip()])
+                # write the rest!
+                process_words(words)
             else:
                 raise NotImplementedError("This combination of context=%s and event=%s is not implemented yet." % (str(context), str(event)))
 
@@ -211,7 +266,7 @@ def filter_event_file(input_event_file, output_event_file, allowed_cues="all",
 
             for line in infile:
                 try:
-                    cues, outcomes, frequency = line.strip().split("\t")
+                    cues, outcomes, frequency = line.split("\t")
                 except ValueError:
                     raise ValueError("tabular event file need to have three tab separated columns")
                 cues = cues.split("_")
@@ -326,9 +381,9 @@ def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event
         in_file.readline()
         for nn, line in enumerate(in_file):
             try:
-                cues, outcomes, frequency = line.strip().split("\t")
+                cues, outcomes, frequency = line.split("\t")
             except ValueError:
-                raise ValueError("tabular corpus file need to have three tab separated columns")
+                raise ValueError("tabular event file need to have three tab separated columns")
             cues = cues.split("_")
             outcomes = outcomes.split("_")
             frequency = int(frequency)
