@@ -2,17 +2,21 @@
 Readme
 ======
 
-This python package is a collection of useful script in order to run tasks on
+This python3 package is a collection of useful script in order to run tasks on
 huge amounts of text file corpora.
 
-.. note::
+.. warning::
 
     This package is under heavy development and anything might change at any
     point in time.
 
+.. note::
 
-Ndl
-===
+    This package is not intended to be used under python2.
+
+
+pyndl
+=====
 This package mimics some of the functionality of the ndl2 R package.
 
 
