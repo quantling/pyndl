@@ -66,8 +66,13 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
 
 def process_occurrences(occurrences, outfile, *, cue_structure="trigrams"):
     """
+    Process the occurrences and write them to outfile.
+
+    Parameters
+    ==========
     occurrences : sequence of str
     outfile : file handle
+    cue_structure : {'trigrams', 'word_to_word'}
 
     """
     if cue_structure == "trigrams":
@@ -109,11 +114,15 @@ def create_event_file(corpus_file,
         string of all valid symbols
     context : {"document", "paragraph"}
     event : {"line", "consecutive_words", "sentence"}
-
+    event_option : int
+        number of consecutive words that should be used as one occurence
+    cue_structure: {"trigrams", "word_to_word"}
+    lower_case : bool
+        should the cues and outcomes be lower cased
+    verbose : bool
 
     Breaks / Separators
     ===================
-
     What marks parts, where we do not want to continue learning?
 
     * ---end.of.document--- string?
