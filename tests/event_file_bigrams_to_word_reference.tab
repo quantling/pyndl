@@ -1,0 +1,48 @@
+cues	outcomes	frequency
+#N_Ni_ig_gd_dy_y#	Nigdy	1
+#N_Ni_ig_gd_dy_y#_#w_w#	Nigdy_w	1
+#w_w#	w	1
+##		1
+#h_hi_is_st_to_or_ri_ii_i#	historii	1
+#h_hi_is_st_to_or_ri_ii_i#_#a_ad_dn_na_a#	historii_adna	1
+#h_hi_is_st_to_or_ri_ii_i#_#a_ad_dn_na_a#_#k_ku_ul_lt_tu_ur_ra_a#	historii_adna_kultura	1
+#a_ad_dn_na_a#_#k_ku_ul_lt_tu_ur_ra_a#_#n_ni_ie_e#	adna_kultura_nie	1
+#k_ku_ul_lt_tu_ur_ra_a#_#n_ni_ie_e#_#b_by_y#	kultura_nie_by	1
+#n_ni_ie_e#_#b_by_y#_#a_a#	nie_by_a	1
+#b_by_y#_#a_a#_#t_ta_ak_k#	by_a_tak	1
+#a_a#_#t_ta_ak_k#_#s_sk_ku_up_pi_io_on_na_a#	a_tak_skupiona	1
+#t_ta_ak_k#_#s_sk_ku_up_pi_io_on_na_a#_#n_na_a#	tak_skupiona_na	1
+#s_sk_ku_up_pi_io_on_na_a#_#n_na_a#_#s_sw_wo_oi_im_m#	skupiona_na_swoim	1
+#n_na_a#_#s_sw_wo_oi_im_m#_#w_wy_yg_gl_l#	na_swoim_wygl	1
+#s_sw_wo_oi_im_m#_#w_wy_yg_gl_l#_#d_dz_zi_ie_e#	swoim_wygl_dzie	1
+#w_wy_yg_gl_l#_#d_dz_zi_ie_e#_#t_ta_ak_k#	wygl_dzie_tak	1
+#d_dz_zi_ie_e#_#t_ta_ak_k#_#j_ja_ak_k#	dzie_tak_jak	1
+#t_ta_ak_k#_#j_ja_ak_k#	tak_jak	1
+#j_ja_ak_k#	jak	1
+##		1
+#U_Up_p#	Up	1
+#U_Up_p#_#b_by_y#	Up_by	1
+#b_by_y#	by	1
+##		1
+#P_Pr_ro_op_ph_he_et_t#	Prophet	1
+#P_Pr_ro_op_ph_he_et_t#_#N_Ni_ie_e#	Prophet_Nie	1
+#P_Pr_ro_op_ph_he_et_t#_#N_Ni_ie_e#_#j_ja_ak_k#	Prophet_Nie_jak	1
+#N_Ni_ie_e#_#j_ja_ak_k#	Nie_jak	1
+#j_ja_ak_k#	jak	1
+##		1
+#U_Up_p#	Up	1
+#U_Up_p#_#b_by_y#	Up_by	1
+#U_Up_p#_#b_by_y#_#c_co_o#	Up_by_co	1
+#b_by_y#_#c_co_o#	by_co	1
+#c_co_o#	co	1
+##		1
+#u_uw_wi_ie_er_rz_zy_ys_sz_z#	uwierzysz	1
+#u_uw_wi_ie_er_rz_zy_ys_sz_z#_#c_co_o#	uwierzysz_co	1
+#c_co_o#	co	1
+##		1
+#c_co_o#	co	1
+#c_co_o#_#w_wy_yg_gl_l#	co_wygl	1
+#c_co_o#_#w_wy_yg_gl_l#_#d_dz_zi_ie_e#	co_wygl_dzie	1
+#w_wy_yg_gl_l#_#d_dz_zi_ie_e#	wygl_dzie	1
+#d_dz_zi_ie_e#	dzie	1
+##		1
