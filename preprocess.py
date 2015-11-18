@@ -64,7 +64,7 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
     return sample
 
 
-def process_occurrences(occurrences, outfile, *, cue_structure="trigrams"):
+def process_occurrences(occurrences, outfile, *, cue_structure="trigrams_to_word"):
     """
     Process the occurrences and write them to outfile.
 
@@ -72,10 +72,16 @@ def process_occurrences(occurrences, outfile, *, cue_structure="trigrams"):
     ==========
     occurrences : sequence of str
     outfile : file handle
-    cue_structure : {'trigrams', 'word_to_word'}
+    cue_structure : {'bigrams_to_word', 'trigrams_to_word', 'word_to_word'}
 
     """
-    if cue_structure == "trigrams":
+    if cue_structure == "bigrams_to_word":
+        for occurrence in occurrences:
+            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
+            bigrams = (phrase_string[i:(i + 2)] for i in
+                        range(len(phrase_string) - 2 + 1))
+            outfile.write("_".join(bigrams) + "\t" + occurrence + "\t1\n")
+    elif cue_structure == "trigrams_to_word":
         for occurrence in occurrences:
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             trigrams = (phrase_string[i:(i + 3)] for i in
@@ -89,16 +95,18 @@ def process_occurrences(occurrences, outfile, *, cue_structure="trigrams"):
             outcome = words[-1]  # last word
             cues = words[:-1]  # all words before the last one
             outfile.write("_".join(cues) + "\t" + outcome + "\t1\n")
+    else:
+        raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
 
 def create_event_file(corpus_file,
                       event_file,
                       symbols="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
                       *,
-                      context="document",
-                      event="consecutive_words",
+                      context_structure="document",
+                      event_structure="consecutive_words",
                       event_option=3,
-                      cue_structure="trigrams",
+                      cue_structure="trigrams_to_word",
                       lower_case=False,
                       verbose=False):
     """
@@ -112,11 +120,11 @@ def create_event_file(corpus_file,
         path where the output file will be created
     symbols : str
         string of all valid symbols
-    context : {"document", "paragraph"}
-    event : {"line", "consecutive_words", "sentence"}
+    context_structure : {"document", "paragraph"}
+    event_structure : {"line", "consecutive_words", "sentence"}
     event_option : int
         number of consecutive words that should be used as one occurence
-    cue_structure: {"trigrams", "word_to_word"}
+    cue_structure: {"trigrams_to_word", "word_to_word", "bigrams_to_word"}
     lower_case : bool
         should the cues and outcomes be lower cased
     verbose : bool
@@ -156,28 +164,37 @@ def create_event_file(corpus_file,
     if "_" in symbols or "#" in symbols:
         raise ValueError("_ and # are special symbols and cannot be in symbols string")
 
+    if event_structure not in ('consecutive_words', 'line'):
+        raise NotImplementedError('This event structure (%s) is not implemented yet.' % event_structure)
+
+    if context_structure not in ('document',):
+        raise NotImplementedError('This context structure (%s) is not implemented yet.' % context_structure)
+
     in_symbols = re.compile("^[%s]*$" % symbols)
     not_in_symbols = re.compile("[^%s]" % symbols)
-    document_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
+    context_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
 
     def gen_occurrences(words):
         # take all event_option number of consecutive words and make an
         # occurrence out of it.
         # for words = (A, B, C, D); event_option = 3
         # make: A, A_B, A_B_C, B_C_D, C_D, D
-        occurrences = list()
-        cur_words = list()
-        ii = 0
-        while True:
-            if ii < len(words):
-                cur_words.append(words[ii])
-            if ii >= len(words) or ii >= event_option:
-                cur_words = cur_words[1:]
-            occurrences.append("_".join(cur_words))
-            ii += 1
-            if not cur_words:
-                break
-        return occurrences
+        if event_structure == 'consecutive_words':
+            occurrences = list()
+            cur_words = list()
+            ii = 0
+            while True:
+                if ii < len(words):
+                    cur_words.append(words[ii])
+                if ii >= len(words) or ii >= event_option:
+                    cur_words = cur_words[1:]
+                occurrences.append("_".join(cur_words))
+                ii += 1
+                if not cur_words:
+                    break
+            return occurrences
+        elif event_structure == 'line':
+            return ['_'.join(words),]
 
     def process_line(line):
         if lower_case:
@@ -194,55 +211,60 @@ def create_event_file(corpus_file,
         process_occurrences(occurrences, outfile,
                             cue_structure=cue_structure)
 
+    def process_context(line):
+        '''called when a context boundary is found.'''
+        if context_structure == 'document':
+            # remove document marker
+            line = context_pattern.sub("", line)
+        return line
+
     with open(corpus_file, "rt") as corpus:
         with open(event_file, "wt") as outfile:
             outfile.write("cues\toutcomes\tfrequency\n")
 
-            contexts = []
+            words = []
+            for ii, line in enumerate(corpus):
+                if verbose and ii % 100000 == 0:
+                    print(".", end="")
+                    sys.stdout.flush()
+                line = line.strip()
 
-            if context == "document" and event == "consecutive_words":
-                words = []
+                if event_structure == 'line':
+                    line = process_line(line)
+                    words = gen_words(line)
+                    process_words(words)
+                else:
+                    if context_pattern.search(line) is not None:
+                        # process the first context
+                        context1, *contexts = context_pattern.split(line)
+                        context1 = process_context(context1)
 
-                for ii, line in enumerate(corpus):
-                    if verbose and ii % 100000 == 0:
-                        print(".", end="")
-                        sys.stdout.flush()
-                    line = line.strip()
-
-                    if document_pattern.search(line) is not None:
-                        print("%i: %s" % (ii, line))
-
-                        line1, *lines = document_pattern.split(line)
-                        line1 = document_pattern.sub("", line1)
-
-                        if line1.strip():
-                            line1 = process_line(line1.strip())
-                            words.extend(gen_words(line1))
+                        if context1.strip():
+                            context1 = process_line(context1.strip())
+                            words.extend(gen_words(context1))
                         process_words(words)
-                        words = []
-                        while len(lines) > 1:
-                            # all except the last entry of lines is a whole document
-                            line1, *lines = lines
-                            line1 = document_pattern.sub("", line1)
-                            if line1.strip():
-                                line1 = process_line(line1.strip())
-                                words.extend(gen_words(line1))
+                        # process in between contexts
+                        while len(contexts) > 1:
+                            words = []
+                            context1, *contexts = contexts
+                            context1 = process_context(context1)
+                            if context1.strip():
+                                context1 = process_line(context1.strip())
+                                words.extend(gen_words(context1))
                                 process_words(words)
-                                words = []
-                        # last lines should be added to next document
-                        line1 = lines[0]
-                        line1 = document_pattern.sub("", line1)
-                        if line1.strip():
-                            line1 = process_line(line1.strip())
-                            words.extend(gen_words(line1))
+                        # add last part to next context
+                        context1 = contexts[0]
+                        context1 = process_context(context1)
+                        if context1.strip():
+                            context1 = process_line(context1.strip())
+                            words.extend(gen_words(context1))
                     else:
                         line = process_line(line)
                         words.extend(gen_words(line))
 
-                # write the rest!
+            # write the last context (the rest)!
+            if not event_structure == 'line':
                 process_words(words)
-            else:
-                raise NotImplementedError("This combination of context=%s and event=%s is not implemented yet." % (str(context), str(event)))
 
 
 class JobFilter():

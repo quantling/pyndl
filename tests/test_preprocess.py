@@ -21,34 +21,64 @@ def test_bandsample():
 def test_create_event_file_bad_symbols():
     with pytest.raises(ValueError):
         create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
-                         "abcd#", context="document",
-                         event="consecutive_words", event_option=3)
+                          "abcd#", context_structure="document",
+                          event_structure="consecutive_words", event_option=3)
     with pytest.raises(ValueError):
         create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
-                         "abcd_", context="document",
-                         event="consecutive_words", event_option=3)
+                          "abcd_", context_structure="document",
+                          event_structure="consecutive_words", event_option=3)
 
 
 def test_create_event_file_bad_event_context():
     with pytest.raises(NotImplementedError):
         create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
-                         context="UNREASONABLE", event="consecutive_words",
-                         event_option=3)
+                          context_structure="UNREASONABLE",
+                          event_structure="consecutive_words", event_option=3)
 
 
 def test_create_event_file_upper_case():
     event_file = "./tests/events_corpus_upper_case.tab"
     create_event_file("./tests/corpus.txt", event_file,
-                        context="document", event="consecutive_words",
-                        event_option=3)
+                      context_structure="document",
+                      event_structure="consecutive_words", event_option=3)
     os.remove(event_file)
+
+
+def test_create_event_file_trigrams_to_word():
+    event_file = "./tests/event_file_trigrams_to_word.tab"
+    create_event_file("./tests/corpus_tiny.txt", event_file,
+                      context_structure="document",
+                      event_structure="consecutive_words", event_option=3,
+                      cue_structure="trigrams_to_word")
+    with open(event_file, "rt") as new_file:
+        lines_new = new_file.readlines()
+    with open("./tests/event_file_trigrams_to_word_reference.tab", "rt") as reference:
+        lines_reference = reference.readlines()
+    assert lines_new == lines_reference
+    os.remove(event_file)
+
+
+def test_create_event_file_bigrams_to_word():
+    event_file = "./tests/event_file_bigrams_to_word.tab"
+    create_event_file("./tests/corpus_tiny.txt", event_file,
+                      context_structure="document",
+                      event_structure="consecutive_words", event_option=3,
+                      cue_structure="bigrams_to_word")
+    with open(event_file, "rt") as new_file:
+        lines_new = new_file.readlines()
+    with open("./tests/event_file_bigrams_to_word_reference.tab", "rt") as reference:
+        lines_reference = reference.readlines()
+    assert lines_new == lines_reference
+    os.remove(event_file)
+
 
 
 def test_create_event_file_word_to_word():
     event_file = "./tests/event_file_word_to_word.tab"
     create_event_file("./tests/corpus_tiny.txt", event_file,
-                        context="document", event="consecutive_words",
-                        event_option=3, cue_structure="word_to_word")
+                      context_structure="document",
+                      event_structure="consecutive_words", event_option=3,
+                      cue_structure="word_to_word")
     with open(event_file, "rt") as new_file:
         lines_new = new_file.readlines()
     with open("./tests/event_file_word_to_word_reference.tab", "rt") as reference:
@@ -158,8 +188,9 @@ def test_preprocessing():
 
     # create event file
     create_event_file(corpus_file, event_file, symbols,
-                     context="document", event="consecutive_words",
-                     event_option=3, lower_case=True, verbose=True)
+                      context_structure="document",
+                      event_structure="consecutive_words", event_option=3,
+                      lower_case=True, verbose=True)
 
     # read in cues and outcomes
     cue_freq_map, outcome_freq_map = cues_outcomes(event_file,
