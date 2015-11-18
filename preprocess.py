@@ -80,12 +80,16 @@ def process_occurrences(occurrences, outfile, *, cue_structure="trigrams_to_word
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             bigrams = (phrase_string[i:(i + 2)] for i in
                         range(len(phrase_string) - 2 + 1))
+            if not bigrams or not occurrence:
+                continue
             outfile.write("_".join(bigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "trigrams_to_word":
         for occurrence in occurrences:
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             trigrams = (phrase_string[i:(i + 3)] for i in
                         range(len(phrase_string) - 3 + 1))
+            if not trigrams or not occurrence:
+                continue
             outfile.write("_".join(trigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "word_to_word":
         for occurrence in occurrences:
@@ -94,6 +98,8 @@ def process_occurrences(occurrences, outfile, *, cue_structure="trigrams_to_word
                 continue
             outcome = words[-1]  # last word
             cues = words[:-1]  # all words before the last one
+            if not cues or not outcome:
+                continue
             outfile.write("_".join(cues) + "\t" + outcome + "\t1\n")
     else:
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)

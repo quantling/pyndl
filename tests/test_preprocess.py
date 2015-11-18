@@ -10,30 +10,40 @@ from ..preprocess import (create_event_file, filter_event_file,
                           event_generator, write_events,
                           _job_binary_event_file, JobFilter)
 
-from ..count import cues_outcomes
+from ..count import cues_outcomes, load_counter
 
 def test_bandsample():
     cue_freq_map, outcome_freq_map = cues_outcomes("./tests/event_file.tab",
                                                    number_of_processes=2)
-    outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=1234, verbose=True)
+    outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=1234, verbose=False)
+    assert len(outcome_freq_map_filtered) == 50
+
+    #
+    outcome_freq_map_filtered_reference = load_counter('./tests/bandsampled_outcomes_reference.tab')
+    assert outcome_freq_map_filtered == outcome_freq_map_filtered_reference
+
+    bandsample(outcome_freq_map, 50, cutoff=1, verbose=True)
 
 
 def test_create_event_file_bad_symbols():
     with pytest.raises(ValueError):
         create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
-                          "abcd#", context_structure="document",
-                          event_structure="consecutive_words", event_option=3)
+                          "abcd#")
     with pytest.raises(ValueError):
         create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
-                          "abcd_", context_structure="document",
-                          event_structure="consecutive_words", event_option=3)
+                          "abcd_")
 
 
 def test_create_event_file_bad_event_context():
     with pytest.raises(NotImplementedError):
         create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
-                          context_structure="UNREASONABLE",
-                          event_structure="consecutive_words", event_option=3)
+                          context_structure="UNREASONABLE")
+
+
+def test_create_event_file_bad_event_event():
+    with pytest.raises(NotImplementedError):
+        create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
+                          event_structure="UNREASONABLE")
 
 
 def test_create_event_file_upper_case():
@@ -56,6 +66,21 @@ def test_create_event_file_trigrams_to_word():
         lines_reference = reference.readlines()
     assert lines_new == lines_reference
     os.remove(event_file)
+
+
+def test_create_event_file_trigrams_to_word_line_based():
+    event_file = "./tests/event_file_trigrams_to_word_line_based.tab"
+    create_event_file("./tests/corpus_tiny.txt", event_file,
+                      context_structure="document",
+                      event_structure="line", event_option=3,
+                      cue_structure="trigrams_to_word")
+    with open(event_file, "rt") as new_file:
+        lines_new = new_file.readlines()
+    with open("./tests/event_file_trigrams_to_word_line_based_reference.tab", "rt") as reference:
+        lines_reference = reference.readlines()
+    assert lines_new == lines_reference
+    os.remove(event_file)
+
 
 
 def test_create_event_file_bigrams_to_word():

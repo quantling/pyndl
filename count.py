@@ -170,7 +170,7 @@ def load_counter(filename):
             key, count = line.strip().split('\t')
             if key in counter.keys():
                 raise ValueError("%s contains two instances (words, symbols, ...) of the same spelling." % filename)
-            counter[key] = count
+            counter[key] = int(count)
     return counter
 
 
