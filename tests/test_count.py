@@ -20,3 +20,11 @@ def test_words_symbols():
     assert words == words3
     assert symbols == symbols3
 
+
+def test_save_load():
+    file_name = "./tests/cues.tab"
+    cues, outcomes = count.cues_outcomes("./tests/event_file.tab")
+    count.save_counter(cues, file_name)
+    cues_loaded = count.load_counter(file_name)
+    assert cues == cues_loaded
+
