@@ -176,6 +176,9 @@ def create_event_file(corpus_file,
     if context_structure not in ('document',):
         raise NotImplementedError('This context structure (%s) is not implemented yet.' % context_structure)
 
+    if os.path.isfile(event_file):
+        raise OSError('%s file exits. Remove file and start again.' % event_file)
+
     in_symbols = re.compile("^[%s]*$" % symbols)
     not_in_symbols = re.compile("[^%s]" % symbols)
     context_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
