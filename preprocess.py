@@ -245,8 +245,43 @@ def create_event_file(corpus_file,
                 raise NotImplementedError("This combination of context=%s and event=%s is not implemented yet." % (str(context), str(event)))
 
 
+class JobFilter():
+    """
+    Stores the persistent information over several jobs and exposes a job
+    method that only takes the varying parts as one argument.
+
+    .. note::
+
+        Using a closure is not possible as it is not pickable / serializable.
+
+    """
+
+    def __init__(self, allowed_cues, allowed_outcomes):
+        self.allowed_cues = allowed_cues
+        self.allowed_outcomes = allowed_outcomes
+
+
+    def job(self, line):
+        try:
+            cues, outcomes, frequency = line.split("\t")
+        except ValueError:
+            raise ValueError("tabular event file need to have three tab separated columns")
+        cues = cues.split("_")
+        outcomes = outcomes.split("_")
+        frequency = int(frequency)
+        if not self.allowed_cues == "all":
+            cues = [cue for cue in cues if cue in self.allowed_cues]
+        if not self.allowed_outcomes == "all":
+            outcomes = [outcome for outcome in outcomes if outcome in self.allowed_outcomes]
+        # no cues or no outcomes left?
+        if not cues or not outcomes:
+            return None
+        processed_line = ("%s\t%s\t%i\n" % ("_".join(cues), "_".join(outcomes), frequency))
+        return processed_line
+
+
 def filter_event_file(input_event_file, output_event_file, allowed_cues="all",
-                      allowed_outcomes="all"):
+                      allowed_outcomes="all", *, number_of_processes=1, verbose=False):
     """
     Filter an event file by allowed cues and outcomes.
 
@@ -260,6 +295,8 @@ def filter_event_file(input_event_file, output_event_file, allowed_cues="all",
         list all allowed cues
     allowed_outcomes : "all" or sequence of str
         list all allowed outcomes
+    number_of_processes : int
+        number of threads to use
 
     Notes
     =====
@@ -268,28 +305,20 @@ def filter_event_file(input_event_file, output_event_file, allowed_cues="all",
     is the expected behaviour as these cues are in the context of this outcome.
 
     """
-    with open(input_event_file, "rt") as infile:
-        with open(output_event_file, "wt") as outfile:
-            # copy header
-            outfile.write(infile.readline())
+    job = JobFilter(allowed_cues, allowed_outcomes)
 
-            for line in infile:
-                try:
-                    cues, outcomes, frequency = line.split("\t")
-                except ValueError:
-                    raise ValueError("tabular event file need to have three tab separated columns")
-                cues = cues.split("_")
-                outcomes = outcomes.split("_")
-                frequency = int(frequency)
-                if not allowed_cues == "all":
-                    cues = [cue for cue in cues if cue in allowed_cues]
-                if not allowed_outcomes == "all":
-                    outcomes = [outcome for outcome in outcomes if outcome in allowed_outcomes]
-                # no cues or no outcomes left?
-                if not cues or not outcomes:
-                    continue
-                outfile.write("%s\t%s\t%i\n" % ("_".join(cues), "_".join(outcomes), frequency))
-
+    with multiprocessing.Pool(number_of_processes) as pool:
+        with open(input_event_file, "rt") as infile:
+            with open(output_event_file, "wt") as outfile:
+                # copy header
+                outfile.write(infile.readline())
+                for ii, processed_line, in enumerate(pool.imap(job.job, infile,
+                                                               chunksize=1000)):
+                    if processed_line is not None:
+                        outfile.write(processed_line)
+                    if verbose and ii % 100000 == 0:
+                        print('.', end='')
+                        sys.stdout.flush()
 
 
 ################

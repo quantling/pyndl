@@ -8,7 +8,7 @@ import pytest
 from ..preprocess import (create_event_file, filter_event_file,
                           create_binary_event_files, bandsample,
                           event_generator, write_events,
-                          _job_binary_event_file)
+                          _job_binary_event_file, JobFilter)
 
 from ..count import cues_outcomes
 
@@ -65,6 +65,30 @@ def test_filter_event_file_bad_event_file():
     os.remove(output_event_file)
 
 
+def test_job_filter():
+    allowed_cues = ["#of", "of#"]
+    allowed_outcomes = ["of",]
+    job = JobFilter(allowed_cues, allowed_outcomes)
+    line = '#of_alb_NEI_b_of#_XX\tterm_not_of\t3\n'
+    new_line = job.job(line)
+    assert(new_line == '#of_of#\tof\t3\n')
+    # no cues
+    line = 'alb_NEI_b_XX\tterm_not_of\t3\n'
+    new_line = job.job(line)
+    assert(new_line is None)
+    # no outcomes
+    line = '#of_alb_NEI_b_of#_XX\tterm_not\t3\n'
+    new_line = job.job(line)
+    assert(new_line is None)
+    # neither cues nor outcomes
+    line = '#alb_NEI_b_XX\tterm_not\t3\n'
+    new_line = job.job(line)
+    assert(new_line is None)
+    with pytest.raises(ValueError):
+        bad_line = 'This is a bad line.'
+        job.job(bad_line)
+
+
 def test_filter_event_file():
     input_event_file = "./tests/event_file.tab"
     output_event_file = "./tests/event_file_filtered.tab"
@@ -73,8 +97,10 @@ def test_filter_event_file():
     outcomes = ["of",]
     outcomes.sort()
     filter_event_file(input_event_file, output_event_file,
-                     allowed_cues=cues,
-                     allowed_outcomes=outcomes)
+                      allowed_cues=cues,
+                      allowed_outcomes=outcomes,
+                      number_of_processes=2,
+                      verbose=True)
     cue_freq_map, outcome_freq_map = cues_outcomes(output_event_file)
     cues_new = list(cue_freq_map)
     cues_new.sort()
