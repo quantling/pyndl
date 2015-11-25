@@ -181,6 +181,7 @@ if __name__ == '__main__':
         print('Or:    python3 %s event=event_file.tab [num_of_processes]' % sys.argv[0])
         sys.exit('Wrong command line option.')
     modus, filename = sys.argv[1].strip().split("=")
+    path, filename = os.path.split(filename)
     if not os.path.exists(filename):
         sys.exit('ERROR: file %s was not found!' % sys.argv[1])
     try:
@@ -189,14 +190,14 @@ if __name__ == '__main__':
         step = 1
 
     if modus == 'event':
-        cues, outcomes = cues_outcomes(filename,
+        cues, outcomes = cues_outcomes(os.path.join(path, filename),
                                        number_of_processes=step,
                                        verbose=True)
         save_counter(cues, filename + ".cues", header="cues\tfreq\n")
         save_counter(outcomes, filename + ".outcomes", header="outcomes\tfreq\n")
 
     elif modus == 'corpus':
-        words, symbols = words_symbols(filename,
+        words, symbols = words_symbols(os.path.join(path, filename),
                                        number_of_processes=step,
                                        verbose=True)
         save_counter(words, filename + ".words", header="words\tfreq\n")
