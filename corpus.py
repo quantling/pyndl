@@ -27,7 +27,7 @@ import sys
 import gzip
 import multiprocessing
 
-from docopt import docopt
+from .docopt import docopt
 
 
 # define rules for substitution

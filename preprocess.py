@@ -64,7 +64,8 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
     return sample
 
 
-def process_occurrences(occurrences, outfile, *, cue_structure="trigrams_to_word"):
+def process_occurrences(occurrences, outfile, *,
+        cue_structure="trigrams_to_word", cue_structure_options=None):
     """
     Process the occurrences and write them to outfile.
 
@@ -73,6 +74,7 @@ def process_occurrences(occurrences, outfile, *, cue_structure="trigrams_to_word
     occurrences : sequence of str
     outfile : file handle
     cue_structure : {'bigrams_to_word', 'trigrams_to_word', 'word_to_word'}
+    cue_structure_options : sequence of options or *None*
 
     """
     if cue_structure == "bigrams_to_word":
@@ -92,12 +94,24 @@ def process_occurrences(occurrences, outfile, *, cue_structure="trigrams_to_word
                 continue
             outfile.write("_".join(trigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "word_to_word":
+        if cue_structure_options is not None:
+            before, after = cue_structure_options
+        else:
+            after = 0
         for occurrence in occurrences:
             words = occurrence.split("_")
             if len(words) == 1:
                 continue
-            outcome = words[-1]  # last word
-            cues = words[:-1]  # all words before the last one
+            if after == 0 or len(words) <= before + 1:
+                outcome = words[-1]  # last word
+                cues = words[:-1]  # all words before the last one
+            # len(words) > before + 1
+            else:
+                outcome = words[before]
+                cues = words[:before]
+                cues.append(words[(before + 1):])
+                if len(cues) > before + after:
+                    raise ValueError("before plus after + 1 should never be longer than the number of words used in the occurrence.")
             if not cues or not outcome:
                 continue
             outfile.write("_".join(cues) + "\t" + outcome + "\t1\n")
@@ -113,6 +127,7 @@ def create_event_file(corpus_file,
                       event_structure="consecutive_words",
                       event_option=3,
                       cue_structure="trigrams_to_word",
+                      cue_structure_options=None,
                       lower_case=False,
                       verbose=False):
     """
@@ -131,6 +146,9 @@ def create_event_file(corpus_file,
     event_option : int
         number of consecutive words that should be used as one occurence
     cue_structure: {"trigrams_to_word", "word_to_word", "bigrams_to_word"}
+    cue_structure_options: sequence of options or None
+        For the word_to_word model you can give a tuple (before, after)
+        this overwrites the event_option.
     lower_case : bool
         should the cues and outcomes be lower cased
     verbose : bool
@@ -183,6 +201,12 @@ def create_event_file(corpus_file,
     not_in_symbols = re.compile("[^%s]" % symbols)
     context_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
 
+    if (event_structure == 'consecutive_words'
+            and cue_structure == 'word_to_word'):
+        if cue_structure_options is not None:
+            before, after = cue_structure_options
+            event_option = before + after + 1
+
     def gen_occurrences(words):
         # take all event_option number of consecutive words and make an
         # occurrence out of it.
@@ -218,7 +242,8 @@ def create_event_file(corpus_file,
     def process_words(words):
         occurrences = gen_occurrences(words)
         process_occurrences(occurrences, outfile,
-                            cue_structure=cue_structure)
+                            cue_structure=cue_structure,
+                            cue_structure_options=cue_structure_options)
 
     def process_context(line):
         '''called when a context boundary is found.'''
