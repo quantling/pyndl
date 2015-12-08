@@ -27,7 +27,10 @@ import sys
 import gzip
 import multiprocessing
 
-from docopt import docopt
+if __name__ == '__main__':
+    from docopt import docopt
+else:
+    from .docopt import docopt
 
 
 # define rules for substitution
@@ -99,7 +102,9 @@ def main(directory, outfile, *, n_threads=1, verbose=False):
     if os.path.isfile(outfile):
         raise OSError("%s exists. Please <outfile> needs to be new file name."
                       % outfile)
-    # create file generator
+
+    if verbose:
+        print("Walk through '%s' and read in all file names..." % directory)
     gz_files = [os.path.join(root, name)
              for root, dirs, files in os.walk(directory)
              for name in files
