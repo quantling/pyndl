@@ -6,13 +6,13 @@ corpus.py generates a corpus file (outfile) out of a bunch of gunzipped xml
 subtitle files in a directory and all its subdirectories.
 
 Usage:
-    corpus.py [-n=<n_threads>] [-v] <directory> <outfile>
+    corpus.py [-n=N_THREADS] [-v] <directory> <outfile>
     corpus.py -h | --help
     corpus.py --version
 
 Options:
     -h, --help      Show this screen.
-    -n=<n_threads>  Number of threads to use [default: 1].
+    -n=N_THREADS    Number of threads to use [default: 1].
     -v              Verbose output.
 
 """
