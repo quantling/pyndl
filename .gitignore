@@ -3,4 +3,5 @@ latex/
 *.pyc
 __pycache__/
 tests/__pycache__/
-.coverage.*
+.coverage*
+htmlcov/
