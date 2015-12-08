@@ -12,71 +12,79 @@ from ..preprocess import (create_event_file, filter_event_file,
 
 from ..count import cues_outcomes, load_counter
 
+
 def test_bandsample():
-    cue_freq_map, outcome_freq_map = cues_outcomes("./tests/event_file.tab",
+    cue_freq_map, outcome_freq_map = cues_outcomes("./tests/resources/event_file.tab",
                                                    number_of_processes=2)
     outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=1234, verbose=False)
     assert len(outcome_freq_map_filtered) == 50
 
-    #
-    outcome_freq_map_filtered_reference = load_counter('./tests/bandsampled_outcomes_reference.tab')
+    outcome_freq_map_filtered_reference = load_counter('./tests/reference/bandsampled_outcomes.tab')
     assert outcome_freq_map_filtered == outcome_freq_map_filtered_reference
 
     bandsample(outcome_freq_map, 50, cutoff=1, verbose=True)
 
 
 def test_create_event_file_bad_symbols():
+    event_file = "./tests/temp/events_corpus.tab"
     with pytest.raises(ValueError):
-        create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
+        create_event_file("./tests/resources/corpus.txt", event_file,
                           "abcd#")
+    assert not os.path.isfile(event_file)
     with pytest.raises(ValueError):
-        create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
+        create_event_file("./tests/resources/corpus.txt", event_file,
                           "abcd_")
+    assert not os.path.isfile(event_file)
 
 
 def test_create_event_file_bad_event_context():
+    event_file = "./tests/temp/events_corpus.tab"
     with pytest.raises(NotImplementedError):
-        create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
+        create_event_file("./tests/resources/corpus.txt", event_file,
                           context_structure="UNREASONABLE")
+    assert not os.path.isfile(event_file)
 
 
 def test_create_event_file_bad_event_event():
+    event_file = "./tests/temp/events_corpus.tab"
     with pytest.raises(NotImplementedError):
-        create_event_file("./tests/corpus.txt", "./tests/events_corpus.tab",
+        create_event_file("./tests/resources/corpus.txt", event_file,
                           event_structure="UNREASONABLE")
-
+    assert not os.path.isfile(event_file)
 
 def test_create_event_file_upper_case():
-    event_file = "./tests/events_corpus_upper_case.tab"
-    create_event_file("./tests/corpus.txt", event_file,
+    event_file = "./tests/temp/events_corpus_upper_case.tab"
+    create_event_file("./tests/resources/corpus.txt", event_file,
                       context_structure="document",
-                      event_structure="consecutive_words", event_option=3)
+                      event_structure="consecutive_words",
+                      event_options=(3, ))
     os.remove(event_file)
 
 
 def test_create_event_file_trigrams_to_word():
-    event_file = "./tests/event_file_trigrams_to_word.tab"
-    create_event_file("./tests/corpus_tiny.txt", event_file,
+    event_file = "./tests/temp/event_file_trigrams_to_word.tab"
+    create_event_file("./tests/resources/corpus_tiny.txt", event_file,
                       context_structure="document",
-                      event_structure="consecutive_words", event_option=3,
+                      event_structure="consecutive_words",
+                      event_options=(3, ),
                       cue_structure="trigrams_to_word")
     with open(event_file, "rt") as new_file:
         lines_new = new_file.readlines()
-    with open("./tests/event_file_trigrams_to_word_reference.tab", "rt") as reference:
+    with open("./tests/reference/event_file_trigrams_to_word.tab", "rt") as reference:
         lines_reference = reference.readlines()
     assert lines_new == lines_reference
     os.remove(event_file)
 
 
 def test_create_event_file_trigrams_to_word_line_based():
-    event_file = "./tests/event_file_trigrams_to_word_line_based.tab"
-    create_event_file("./tests/corpus_tiny.txt", event_file,
+    event_file = "./tests/temp/event_file_trigrams_to_word_line_based.tab"
+    create_event_file("./tests/resources/corpus_tiny.txt", event_file,
                       context_structure="document",
-                      event_structure="line", event_option=3,
+                      event_structure="line", event_options=(3, ),
                       cue_structure="trigrams_to_word")
     with open(event_file, "rt") as new_file:
         lines_new = new_file.readlines()
-    with open("./tests/event_file_trigrams_to_word_line_based_reference.tab", "rt") as reference:
+    with open("./tests/reference/event_file_trigrams_to_word_line_based.tab", "rt") as reference:
         lines_reference = reference.readlines()
     assert lines_new == lines_reference
     os.remove(event_file)
@@ -84,14 +92,15 @@ def test_create_event_file_trigrams_to_word_line_based():
 
 
 def test_create_event_file_bigrams_to_word():
-    event_file = "./tests/event_file_bigrams_to_word.tab"
-    create_event_file("./tests/corpus_tiny.txt", event_file,
+    event_file = "./tests/temp/event_file_bigrams_to_word.tab"
+    create_event_file("./tests/resources/corpus_tiny.txt", event_file,
                       context_structure="document",
-                      event_structure="consecutive_words", event_option=3,
+                      event_structure="consecutive_words",
+                      event_options=(3, ),
                       cue_structure="bigrams_to_word")
     with open(event_file, "rt") as new_file:
         lines_new = new_file.readlines()
-    with open("./tests/event_file_bigrams_to_word_reference.tab", "rt") as reference:
+    with open("./tests/reference/event_file_bigrams_to_word.tab", "rt") as reference:
         lines_reference = reference.readlines()
     assert lines_new == lines_reference
     os.remove(event_file)
@@ -99,22 +108,22 @@ def test_create_event_file_bigrams_to_word():
 
 
 def test_create_event_file_word_to_word():
-    event_file = "./tests/event_file_word_to_word.tab"
-    create_event_file("./tests/corpus_tiny.txt", event_file,
+    event_file = "./tests/temp/event_file_word_to_word.tab"
+    create_event_file("./tests/resources/corpus_tiny.txt", event_file,
                       context_structure="document",
-                      event_structure="consecutive_words", event_option=3,
+                      event_structure="word_to_word", event_options=(2, 1),
                       cue_structure="word_to_word")
     with open(event_file, "rt") as new_file:
         lines_new = new_file.readlines()
-    with open("./tests/event_file_word_to_word_reference.tab", "rt") as reference:
+    with open("./tests/reference/event_file_word_to_word.tab", "rt") as reference:
         lines_reference = reference.readlines()
     assert lines_new == lines_reference
     os.remove(event_file)
 
 
 def test_filter_event_file_bad_event_file():
-    input_event_file = "./tests/event_file_BAD.tab"
-    output_event_file = "./tests/event_file_BAD_output.tab"
+    input_event_file = "./tests/resources/event_file_BAD.tab"
+    output_event_file = "./tests/temp/event_file_BAD_output.tab"
     with pytest.raises(ValueError):
         filter_event_file(input_event_file, output_event_file)
     os.remove(output_event_file)
@@ -145,8 +154,8 @@ def test_job_filter():
 
 
 def test_filter_event_file():
-    input_event_file = "./tests/event_file.tab"
-    output_event_file = "./tests/event_file_filtered.tab"
+    input_event_file = "./tests/resources/event_file.tab"
+    output_event_file = "./tests/temp/event_file_filtered.tab"
     cues = ["#of", "of#"]
     cues.sort()
     outcomes = ["of",]
@@ -167,7 +176,7 @@ def test_filter_event_file():
 
 
 def test_write_events():
-    event_file = "./tests/event_file.tab"
+    event_file = "./tests/resources/event_file.tab"
     cue_freq_map, outcome_freq_map = cues_outcomes(event_file)
     outcomes = list(outcome_freq_map.keys())
     outcomes.sort()
@@ -176,7 +185,7 @@ def test_write_events():
     cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
     outcome_id_map = {outcome: nn for nn, outcome in enumerate(outcomes)}
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
-    file_name = "./tests/events.bin"
+    file_name = "./tests/temp/events.bin"
     with pytest.raises(StopIteration):
         write_events(events, file_name)
     os.remove(file_name)
@@ -199,7 +208,7 @@ def test_write_events():
 
     # bad event file
     with pytest.raises(ValueError):
-        events = event_generator("./tests/event_file_BAD.tab", cue_id_map,
+        events = event_generator("./tests/resources/event_file_BAD.tab", cue_id_map,
                                 outcome_id_map)
         # traverse generator
         for event in events:
@@ -207,14 +216,15 @@ def test_write_events():
 
 
 def test_preprocessing():
-    corpus_file = "./tests/corpus.txt"
-    event_file = "./tests/events_corpus.tab"
+    corpus_file = "./tests/resources/corpus.txt"
+    event_file = "./tests/temp/events_corpus.tab"
     symbols = "abcdefghijklmnopqrstuvwxyzóąćęłńśźż"  # polish
 
     # create event file
     create_event_file(corpus_file, event_file, symbols,
                       context_structure="document",
-                      event_structure="consecutive_words", event_option=3,
+                      event_structure="consecutive_words",
+                      event_options=(3, ),
                       lower_case=True, verbose=True)
 
     # read in cues and outcomes
@@ -237,19 +247,17 @@ def test_preprocessing():
 
     # create binary event files
     path_name = event_file_filtered + ".events"
-    for file_ in os.listdir(path_name):
-        os.remove(os.path.join(path_name, file_))
-    os.rmdir(path_name)
-    create_binary_event_files(path_name, event_file_filtered, cue_id_map,
+    create_binary_event_files(event_file_filtered, path_name, cue_id_map,
                               outcome_id_map, sort_within_event=False,
                               number_of_processes=2, events_per_file=1000,
                               verbose=True)
     with pytest.raises(IOError):
-        create_binary_event_files(path_name, event_file_filtered, cue_id_map,
+        create_binary_event_files(event_file_filtered, path_name, cue_id_map,
                                 outcome_id_map, sort_within_event=False,
                                 number_of_processes=2, events_per_file=1000,
                                 verbose=True)
-    create_binary_event_files(path_name, event_file_filtered, cue_id_map,
+    # overwrite=True
+    create_binary_event_files(event_file_filtered, path_name, cue_id_map,
                             outcome_id_map, sort_within_event=False,
                             number_of_processes=2, events_per_file=1000,
                             overwrite=True, verbose=True)
@@ -258,4 +266,6 @@ def test_preprocessing():
     # clean everything
     os.remove(event_file)
     os.remove(event_file_filtered)
-
+    for file_ in os.listdir(path_name):
+        os.remove(os.path.join(path_name, file_))
+    os.rmdir(path_name)

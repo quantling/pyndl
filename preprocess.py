@@ -65,20 +65,22 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
 
 
 def process_occurrences(occurrences, outfile, *,
-        cue_structure="trigrams_to_word", cue_structure_options=None):
+        cue_structure="trigrams_to_word"):
     """
     Process the occurrences and write them to outfile.
 
     Parameters
     ==========
-    occurrences : sequence of str
+    occurrences : sequence of (cues, outcomes) tuples
+        cues and outcomes are both strings where underscores and # are
+        special symbols.
     outfile : file handle
     cue_structure : {'bigrams_to_word', 'trigrams_to_word', 'word_to_word'}
-    cue_structure_options : sequence of options or *None*
 
     """
     if cue_structure == "bigrams_to_word":
-        for occurrence in occurrences:
+        for cues, outcomes in occurrences:
+            occurrence = cues + outcomes
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             bigrams = (phrase_string[i:(i + 2)] for i in
                         range(len(phrase_string) - 2 + 1))
@@ -86,7 +88,8 @@ def process_occurrences(occurrences, outfile, *,
                 continue
             outfile.write("_".join(bigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "trigrams_to_word":
-        for occurrence in occurrences:
+        for cues, outcomes in occurrences:
+            occurrence = cues + outcomes
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             trigrams = (phrase_string[i:(i + 3)] for i in
                         range(len(phrase_string) - 3 + 1))
@@ -94,27 +97,10 @@ def process_occurrences(occurrences, outfile, *,
                 continue
             outfile.write("_".join(trigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "word_to_word":
-        if cue_structure_options is not None:
-            before, after = cue_structure_options
-        else:
-            after = 0
-        for occurrence in occurrences:
-            words = occurrence.split("_")
-            if len(words) == 1:
+        for cues, outcomes in occurrences:
+            if not cues or not outcomes:
                 continue
-            if after == 0 or len(words) <= before + 1:
-                outcome = words[-1]  # last word
-                cues = words[:-1]  # all words before the last one
-            # len(words) > before + 1
-            else:
-                outcome = words[before]
-                cues = words[:before]
-                cues.append(words[(before + 1):])
-                if len(cues) > before + after:
-                    raise ValueError("before plus after + 1 should never be longer than the number of words used in the occurrence.")
-            if not cues or not outcome:
-                continue
-            outfile.write("_".join(cues) + "\t" + outcome + "\t1\n")
+            outfile.write(cues + "\t" + outcomes + "\t1\n")
     else:
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
@@ -125,9 +111,8 @@ def create_event_file(corpus_file,
                       *,
                       context_structure="document",
                       event_structure="consecutive_words",
-                      event_option=3,
+                      event_options=(3,),  # number_of_words,
                       cue_structure="trigrams_to_word",
-                      cue_structure_options=None,
                       lower_case=False,
                       verbose=False):
     """
@@ -142,13 +127,12 @@ def create_event_file(corpus_file,
     symbols : str
         string of all valid symbols
     context_structure : {"document", "paragraph"}
-    event_structure : {"line", "consecutive_words", "sentence"}
-    event_option : int
-        number of consecutive words that should be used as one occurence
+    event_structure : {"line", "consecutive_words", "word_to_word", "sentence"}
+    event_options : None or (number_of_words,) or (before, after) or None
+        in "consecutive words" the number of words of the sliding window as
+        an integer; in "word_to_word" the number of words before and after the
+        word of interst each as an integer.
     cue_structure: {"trigrams_to_word", "word_to_word", "bigrams_to_word"}
-    cue_structure_options: sequence of options or None
-        For the word_to_word model you can give a tuple (before, after)
-        this overwrites the event_option.
     lower_case : bool
         should the cues and outcomes be lower cased
     verbose : bool
@@ -188,7 +172,7 @@ def create_event_file(corpus_file,
     if "_" in symbols or "#" in symbols:
         raise ValueError("_ and # are special symbols and cannot be in symbols string")
 
-    if event_structure not in ('consecutive_words', 'line'):
+    if event_structure not in ('consecutive_words', 'line', 'word_to_word'):
         raise NotImplementedError('This event structure (%s) is not implemented yet.' % event_structure)
 
     if context_structure not in ('document',):
@@ -201,17 +185,16 @@ def create_event_file(corpus_file,
     not_in_symbols = re.compile("[^%s]" % symbols)
     context_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
 
-    if (event_structure == 'consecutive_words'
-            and cue_structure == 'word_to_word'):
-        if cue_structure_options is not None:
-            before, after = cue_structure_options
-            event_option = before + after + 1
+    if event_structure == 'consecutive_words':
+        number_of_words, = event_options
+    elif event_structure == 'word_to_word':
+        before, after = event_options
 
     def gen_occurrences(words):
-        # take all event_option number of consecutive words and make an
+        # take all number_of_words number of consecutive words and make an
         # occurrence out of it.
-        # for words = (A, B, C, D); event_option = 3
-        # make: A, A_B, A_B_C, B_C_D, C_D, D
+        # for words = (A, B, C, D); number_of_words = 3
+        # make: (A, ), (A_B, ), (A_B_C, ), (B_C_D, ), (C_D, ), (D, )
         if event_structure == 'consecutive_words':
             occurrences = list()
             cur_words = list()
@@ -219,15 +202,31 @@ def create_event_file(corpus_file,
             while True:
                 if ii < len(words):
                     cur_words.append(words[ii])
-                if ii >= len(words) or ii >= event_option:
+                if ii >= len(words) or ii >= number_of_words:
+                    # remove the first word
                     cur_words = cur_words[1:]
-                occurrences.append("_".join(cur_words))
+                # append (cues, outcomes) with empty outcomes
+                occurrences.append(("_".join(cur_words), ''))
                 ii += 1
                 if not cur_words:
                     break
             return occurrences
+        # for words = (A, B, C, D); before = 2, after = 1
+        # make: (B, A), (A_C, B), (A_B_D, C), (B_C, D)
+        elif event_structure == 'word_to_word':
+            occurrences = list()
+            for ii, word in enumerate(words):
+                # words before the word to a maximum of before
+                cues = words[max(0, ii - before):ii]
+                # words after the word to a maximum of before
+                cues.extend(
+                        words[(ii + 1):min(len(words), ii + 1 + after)])
+                # append (cues, outcomes)
+                occurrences.append(("_".join(cues), word))
+            return occurrences
         elif event_structure == 'line':
-            return ['_'.join(words),]
+            # (cues, outcomes) with empty outcomes
+            return [('_'.join(words), ''),]
 
     def process_line(line):
         if lower_case:
@@ -242,8 +241,7 @@ def create_event_file(corpus_file,
     def process_words(words):
         occurrences = gen_occurrences(words)
         process_occurrences(occurrences, outfile,
-                            cue_structure=cue_structure,
-                            cue_structure_options=cue_structure_options)
+                            cue_structure=cue_structure)
 
     def process_context(line):
         '''called when a context boundary is found.'''
@@ -502,7 +500,7 @@ def _job_binary_event_file(*, file_name, event_file, cue_id_map,
     write_events(events, file_name, start=start, stop=stop)
 
 
-def create_binary_event_files(path_name, event_file, cue_id_map,
+def create_binary_event_files(event_file, path_name, cue_id_map,
                               outcome_id_map,
                               *, sort_within_event=False, number_of_processes=2,
                               events_per_file=1000000, overwrite=False,
@@ -512,11 +510,11 @@ def create_binary_event_files(path_name, event_file, cue_id_map,
 
     Parameters
     ==========
-    path_name : str
-        folder name where to store the binary event files
     event_file : str
         path to tab separated text file that contains all events in a cue
         outcome frequency table.
+    path_name : str
+        folder name where to store the binary event files
     cue_id_map : dict (str -> int)
         cue to id map
     outcome_id_map : dict (str -> int)
