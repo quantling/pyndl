@@ -22,9 +22,8 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
     population = [(word, freq) for word, freq in population.items() if freq >=
                   cutoff]
     # shuffle words with same frequency
-    if seed is not None:
-        random.seed(seed)
-    random.shuffle(population)
+    rand = random.Random(seed)  # TODO not working properly :(
+    rand.shuffle(population)
     population.sort(key=lambda x: x[1])  # lowest -> highest freq
 
     step = sum(freq for word, freq in population) / sample_size
