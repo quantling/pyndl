@@ -26,6 +26,7 @@ import time
 import sys
 import gzip
 import multiprocessing
+import xml.etree.ElementTree
 
 if __name__ == '__main__':
     from docopt import docopt
@@ -58,13 +59,42 @@ def read_clean_gzfile(gz_file_path):
     FileNotFoundError : if file is not there.
 
     """
+    
+    # The time_threshold defines the amount of time to pass i order to start a new paragraph
+    current_time = 0
+    time_threshold = 10
+    
     with gzip.open(gz_file_path, "rt", encoding="utf-8-sig") as file_:
-        for line in file_:
-            result = line.strip().lstrip().rstrip()
+        tree = xml.etree.ElementTree.parse(file_)
+        root = tree.getroot()
+	  
+        for s_tag in root.findall('s'):
+            # inside s tags we can find time tags (self-explanatory) and w tags (which contain words)
+            
+            # read all words in w tags and concatenate 
+            result = ""
+            for w_tag in s_tag.findall('w'):
+                result += w_tag.text + " "
+            
             for pattern in PATTERNS:
                 result = pattern.sub('', result)
             if not result:
                 continue
+                
+            # Check time and prepend a newspace (new paragraph) if needed
+            for time_tag in s_tag.findall('time'):
+	        # tag_type is either 'S' or 'E'
+                tag_type = time_tag.get('id')[-1:]
+                
+                # parse time value to seconds
+                t_string = time_tag.get('value').replace(',',':').split(':')
+                t = float(t_string[0])*(60*60) + float(t_string[1])*60 + float(t_string[2]) + float(t_string[3])/100
+                
+                if (tag_type == 'S' and t-current_time > time_threshold):
+                    result = "\n" + result
+                elif (tag_type == 'E'):
+                    current_time = t
+                
             yield result + "\n"
 
 
@@ -74,7 +104,7 @@ def _job(filename):
     not_found = None
     try:
         lines = list(read_clean_gzfile(filename))
-        lines.append("---END.OF.DOCUMENT---\n")
+        lines.append("\n---END.OF.DOCUMENT---\n\n")
     except FileNotFoundError:
         not_found = filename + "\n"
     return (lines, not_found)
