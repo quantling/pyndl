@@ -33,18 +33,6 @@ if __name__ == '__main__':
 else:
     from .docopt import docopt
 
-
-# define rules for substitution
-PATTERNS = (
-        # remove xml tags
-        re.compile('<.*?>', re.UNICODE+re.IGNORECASE),
-        # remove everything within paranthesis
-        re.compile('\(.*?\)', re.UNICODE),
-        # remove everything within square brackets
-        re.compile('\[.*?\]', re.UNICODE),
-        )
-
-
 def read_clean_gzfile(gz_file_path):
     """
     Generator that opens and reads a gunzipped xml subtitle file, while all
@@ -60,7 +48,8 @@ def read_clean_gzfile(gz_file_path):
 
     """
     
-    # The time_threshold defines the amount of time to pass i order to start a new paragraph
+    # The time_threshold defines the amount of time to pass in order
+    # to start a new paragraph (this might have to be a parameter of the function!)
     current_time = 0
     time_threshold = 10
     
@@ -76,8 +65,6 @@ def read_clean_gzfile(gz_file_path):
             for w_tag in s_tag.findall('w'):
                 result += w_tag.text + " "
             
-            for pattern in PATTERNS:
-                result = pattern.sub('', result)
             if not result:
                 continue
                 
