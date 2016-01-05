@@ -125,7 +125,7 @@ def create_event_file(corpus_file,
         path where the output file will be created
     symbols : str
         string of all valid symbols
-    context_structure : {"document", "paragraph"}
+    context_structure : {"document", "paragraph", "line"}
     event_structure : {"line", "consecutive_words", "word_to_word", "sentence"}
     event_options : None or (number_of_words,) or (before, after) or None
         in "consecutive words" the number of words of the sliding window as
@@ -174,7 +174,7 @@ def create_event_file(corpus_file,
     if event_structure not in ('consecutive_words', 'line', 'word_to_word'):
         raise NotImplementedError('This event structure (%s) is not implemented yet.' % event_structure)
 
-    if context_structure not in ('document',):
+    if context_structure not in ('document', 'line'):
         raise NotImplementedError('This context structure (%s) is not implemented yet.' % context_structure)
 
     if os.path.isfile(event_file):
@@ -258,9 +258,10 @@ def create_event_file(corpus_file,
                 if verbose and ii % 100000 == 0:
                     print(".", end="")
                     sys.stdout.flush()
+                    outfile.flush()
                 line = line.strip()
 
-                if event_structure == 'line':
+                if context_structure == 'line':
                     line = process_line(line)
                     words = gen_words(line)
                     process_words(words)
@@ -294,8 +295,9 @@ def create_event_file(corpus_file,
                         words.extend(gen_words(line))
 
             # write the last context (the rest)!
-            if not event_structure == 'line':
+            if not context_structure == 'line':
                 process_words(words)
+
 
 
 class JobFilter():
