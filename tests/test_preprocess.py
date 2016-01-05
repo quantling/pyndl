@@ -130,9 +130,9 @@ def test_filter_event_file_bad_event_file():
 
 
 def test_job_filter():
-    allowed_cues = ["#of", "of#"]
-    allowed_outcomes = ["of",]
-    job = JobFilter(allowed_cues, allowed_outcomes)
+    keep_cues = ["#of", "of#"]
+    keep_outcomes = ["of",]
+    job = JobFilter(keep_cues, keep_outcomes, None, None, None, None)
     line = '#of_alb_NEI_b_of#_XX\tterm_not_of\t3\n'
     new_line = job.job(line)
     assert(new_line == '#of_of#\tof\t3\n')
@@ -161,8 +161,8 @@ def test_filter_event_file():
     outcomes = ["of",]
     outcomes.sort()
     filter_event_file(input_event_file, output_event_file,
-                      allowed_cues=cues,
-                      allowed_outcomes=outcomes,
+                      keep_cues=cues,
+                      keep_outcomes=outcomes,
                       number_of_processes=2,
                       verbose=True)
     cue_freq_map, outcome_freq_map = cues_outcomes(output_event_file)
@@ -242,7 +242,7 @@ def test_preprocessing():
 
     # filter outcomes by reduced number of outcomes
     event_file_filtered = event_file + ".filtered"
-    filter_event_file(event_file, event_file_filtered, allowed_outcomes=outcomes)
+    filter_event_file(event_file, event_file_filtered, keep_outcomes=outcomes)
 
 
     # create binary event files
