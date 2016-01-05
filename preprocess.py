@@ -1,7 +1,7 @@
 # !/usr/bin/env/python3
 # coding: utf-8
 
-from collections import Counter
+import collections
 import multiprocessing
 import os
 import random
@@ -59,7 +59,7 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
             if verbose and index % 1000 == 0:
                 print(".", end="")
                 sys.stdout.flush()
-    sample = Counter({key: value for key, value in sample})
+    sample = collections.Counter({key: value for key, value in sample})
     return sample
 
 
@@ -309,9 +309,88 @@ class JobFilter():
 
     """
 
-    def __init__(self, allowed_cues, allowed_outcomes):
-        self.allowed_cues = allowed_cues
-        self.allowed_outcomes = allowed_outcomes
+    @staticmethod
+    def return_empty_string():
+        return ''
+
+
+    def __init__(self, keep_cues, keep_outcomes, remove_cues, remove_outcomes,
+                 cue_map, outcome_map):
+        if ((cue_map is not None and remove_cues is not None)
+                or (cue_map is not None and keep_cues != 'all')
+                or (remove_cues is not None and keep_cues != 'all')):
+            raise ValueError('You can either specify keep_cues, remove_cues, or cue_map.')
+        if ((outcome_map is not None and remove_outcomes is not None)
+                or (outcome_map is not None and keep_outcomes != 'all')
+                or (remove_outcomes is not None and keep_outcomes != 'all')):
+            raise ValueError('You can either specify keep_outcomes, remove_outcomes, or outcome_map.')
+
+        if cue_map is not None:
+            self.cue_map = collections.defaultdict(self.return_empty_string, cue_map)
+            self.process_cues = self.process_cues_map
+        elif remove_cues is not None:
+            self.remove_cues = set(remove_cues)
+            self.process_cues = self.process_cues_remove
+        elif keep_cues == 'all':
+            self.keep_cues = 'all'
+            self.process_cues = self.process_cues_all
+        else:
+            self.keep_cues = keep_cues
+            self.process_cues = self.process_cues_keep
+        if outcome_map is not None:
+            self.outcome_map = collections.defaultdict(self.return_empty_string, outcome_map)
+            self.process_outcomes = self.process_outcomes_map
+        elif remove_outcomes is not None:
+            self.remove_outcomes = set(remove_outcomes)
+            self.process_outcomes = self.process_outcomes_remove
+        elif keep_outcomes == 'all':
+            self.keep_outcomes = 'all'
+            self.process_outcomes = self.process_outcomes_all
+        else:
+            self.keep_outcomes = set(keep_outcomes)
+            self.process_outcomes = self.process_outcomes_keep
+
+
+    def process_cues(self, cues):
+        raise NotImplementedError("Needs to be implemented or assigned by a specific method.")
+
+
+    def process_cues_map(self, cues):
+        cues = [self.cue_map[cue] for cue in cues]
+        return [cue for cue in cues if cue]
+
+
+    def process_cues_remove(self, cues):
+        return [cue for cue in cues if cue not in self.remove_cues]
+
+
+    def process_cues_keep(self, cues):
+        return [cue for cue in cues if cue in self.keep_cues]
+
+
+    def process_cues_all(self, cues):
+        return cues
+
+
+    def process_outcomes(self, outcomes):
+        raise NotImplementedError("Needs to be implemented or assigned by a specific method.")
+
+
+    def process_outcomes_map(self, outcomes):
+        outcomes = [self.outcome_map[outcome] for outcome in outcomes]
+        return [outcome for outcome in outcomes if outcome]
+
+
+    def process_outcomes_remove(self, outcomes):
+        return [outcome for outcome in outcomes if outcome not in self.remove_outcomes]
+
+
+    def process_outcomes_keep(self, outcomes):
+        return [outcome for outcome in outcomes if outcome in self.keep_outcomes]
+
+
+    def process_outcomes_all(self, outcomes):
+        return outcomes
 
 
     def job(self, line):
@@ -322,10 +401,8 @@ class JobFilter():
         cues = cues.split("_")
         outcomes = outcomes.split("_")
         frequency = int(frequency)
-        if not self.allowed_cues == "all":
-            cues = [cue for cue in cues if cue in self.allowed_cues]
-        if not self.allowed_outcomes == "all":
-            outcomes = [outcome for outcome in outcomes if outcome in self.allowed_outcomes]
+        cues = self.process_cues(cues)
+        outcomes = self.process_outcomes(outcomes)
         # no cues or no outcomes left?
         if not cues or not outcomes:
             return None
@@ -333,21 +410,36 @@ class JobFilter():
         return processed_line
 
 
-def filter_event_file(input_event_file, output_event_file, allowed_cues="all",
-                      allowed_outcomes="all", *, number_of_processes=1, verbose=False):
+def filter_event_file(input_event_file, output_event_file, *,
+                      keep_cues="all", keep_outcomes="all",
+                      remove_cues=None, remove_outcomes=None,
+                      cue_map=None, outcome_map=None,
+                      number_of_processes=1, verbose=False):
     """
-    Filter an event file by allowed cues and outcomes.
+    Filter an event file by a list or a map of cues and outcomes.
 
     Parameters
     ==========
+    You can either use keep_*, remove_*, or map_*.
+
     input_event_file : str
         path where the input event file is
     output_event_file : str
         path where the output file will be created
-    allowed_cues : "all" or sequence of str
-        list all allowed cues
-    allowed_outcomes : "all" or sequence of str
-        list all allowed outcomes
+    keep_cues : "all" or sequence of str
+        list of all cues that should be kept
+    keep_outcomes : "all" or sequence of str
+        list of all outcomes that should be kept
+    remove_cues : None or sequence of str
+        list of all cues that should be removed
+    remove_outcomes : None or sequence of str
+        list of all outcomes that should be removed
+    cue_map : dict
+        maps every cue as key to the value. Removes all cues that do not have a
+        key.
+    outcome_map : dict
+        maps every cue as key to the value. Removes all cues that do not have a
+        key.
     number_of_processes : int
         number of threads to use
 
@@ -358,7 +450,8 @@ def filter_event_file(input_event_file, output_event_file, allowed_cues="all",
     is the expected behaviour as these cues are in the context of this outcome.
 
     """
-    job = JobFilter(allowed_cues, allowed_outcomes)
+    job = JobFilter(keep_cues, keep_outcomes, remove_cues, remove_outcomes,
+                    cue_map, outcome_map)
 
     with multiprocessing.Pool(number_of_processes) as pool:
         with open(input_event_file, "rt") as infile:
