@@ -168,8 +168,8 @@ def create_event_file(corpus_file,
     (three) consecutive words, a sentence, or a line in the corpus file.
 
     """
-    if "_" in symbols or "#" in symbols:
-        raise ValueError("_ and # are special symbols and cannot be in symbols string")
+    if '_' in symbols or '#' in symbols or '\t' in symbols:
+        raise ValueError('"_", "#", and "\\t" are special symbols and cannot be in symbols string')
 
     if event_structure not in ('consecutive_words', 'line', 'word_to_word'):
         raise NotImplementedError('This event structure (%s) is not implemented yet.' % event_structure)
