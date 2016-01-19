@@ -684,7 +684,10 @@ def create_binary_event_files(event_file, path_name, cue_id_map,
                 while True:
                     if result.ready():
                         break
-                    time.sleep(1)
+                    time.sleep(1.0)  # check every second
+                    if verbose:
+                        print('c')
+                        sys.stdout.flush()
         # wait until all jobs are done
         pool.close()
         pool.join()
