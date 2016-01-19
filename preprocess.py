@@ -405,8 +405,10 @@ class JobFilter():
         frequency = int(frequency)
         cues = self.process_cues(cues)
         outcomes = self.process_outcomes(outcomes)
-        # no cues or no outcomes left?
-        if not cues or not outcomes:
+        # no cues left?
+        # NOTE: We want to keep events with no outcomes as this is the
+        # background for the cues in that events.
+        if not cues:
             return None
         processed_line = ("%s\t%s\t%i\n" % ("_".join(cues), "_".join(outcomes), frequency))
         return processed_line
@@ -450,6 +452,9 @@ def filter_event_file(input_event_file, output_event_file, *,
     It will keep all cues that are within the event and that (for a human
     reader) might clearly belong to a removed outcome. This is on purpose and
     is the expected behaviour as these cues are in the context of this outcome.
+
+    If an event has no cues it gets removed, but if an event has no outcomes it
+    is still present in order to capture the background rate of that cues.
 
     """
     job = JobFilter(keep_cues, keep_outcomes, remove_cues, remove_outcomes,
