@@ -99,7 +99,7 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=True,
     symbols = Counter()
     with open(corpus_file_name, 'r') as dfile:
         for nn, line in enumerate(itertools.islice(dfile, start, None, step)):
-            for word in line.split(' '):
+            for word in line.split():  # splits the string on all whitespace
                 word = word.strip()
                 word = word.strip('!?,.:;/"\'()^@*~')
                 if lower_case:

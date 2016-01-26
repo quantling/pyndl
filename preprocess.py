@@ -168,8 +168,8 @@ def create_event_file(corpus_file,
     (three) consecutive words, a sentence, or a line in the corpus file.
 
     """
-    if "_" in symbols or "#" in symbols:
-        raise ValueError("_ and # are special symbols and cannot be in symbols string")
+    if '_' in symbols or '#' in symbols or '\t' in symbols:
+        raise ValueError('"_", "#", and "\\t" are special symbols and cannot be in symbols string')
 
     if event_structure not in ('consecutive_words', 'line', 'word_to_word'):
         raise NotImplementedError('This event structure (%s) is not implemented yet.' % event_structure)
@@ -405,8 +405,10 @@ class JobFilter():
         frequency = int(frequency)
         cues = self.process_cues(cues)
         outcomes = self.process_outcomes(outcomes)
-        # no cues or no outcomes left?
-        if not cues or not outcomes:
+        # no cues left?
+        # NOTE: We want to keep events with no outcomes as this is the
+        # background for the cues in that events.
+        if not cues:
             return None
         processed_line = ("%s\t%s\t%i\n" % ("_".join(cues), "_".join(outcomes), frequency))
         return processed_line
@@ -450,6 +452,9 @@ def filter_event_file(input_event_file, output_event_file, *,
     It will keep all cues that are within the event and that (for a human
     reader) might clearly belong to a removed outcome. This is on purpose and
     is the expected behaviour as these cues are in the context of this outcome.
+
+    If an event has no cues it gets removed, but if an event has no outcomes it
+    is still present in order to capture the background rate of that cues.
 
     """
     job = JobFilter(keep_cues, keep_outcomes, remove_cues, remove_outcomes,
@@ -679,7 +684,10 @@ def create_binary_event_files(event_file, path_name, cue_id_map,
                 while True:
                     if result.ready():
                         break
-                    time.sleep(1)
+                    time.sleep(1.0)  # check every second
+                    if verbose:
+                        print('c')
+                        sys.stdout.flush()
         # wait until all jobs are done
         pool.close()
         pool.join()
