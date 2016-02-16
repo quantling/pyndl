@@ -79,7 +79,7 @@ def process_occurrences(occurrences, outfile, *,
     """
     if cue_structure == "bigrams_to_word":
         for cues, outcomes in occurrences:
-            occurrence = cues + outcomes
+            occurrence = cues + '_' + outcomes
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             bigrams = (phrase_string[i:(i + 2)] for i in
                         range(len(phrase_string) - 2 + 1))
@@ -88,7 +88,7 @@ def process_occurrences(occurrences, outfile, *,
             outfile.write("_".join(bigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "trigrams_to_word":
         for cues, outcomes in occurrences:
-            occurrence = cues + outcomes
+            occurrence = cues + '_' + outcomes
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             trigrams = (phrase_string[i:(i + 3)] for i in
                         range(len(phrase_string) - 3 + 1))
@@ -97,7 +97,7 @@ def process_occurrences(occurrences, outfile, *,
             outfile.write("_".join(trigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "word_to_word":
         for cues, outcomes in occurrences:
-            if not cues or not outcomes:
+            if not cues:
                 continue
             outfile.write(cues + "\t" + outcomes + "\t1\n")
     else:
@@ -440,10 +440,12 @@ def filter_event_file(input_event_file, output_event_file, *,
         list of all outcomes that should be removed
     cue_map : dict
         maps every cue as key to the value. Removes all cues that do not have a
-        key.
+	key. This can be used to map several different cues to the same cue or
+        to rename cues.
     outcome_map : dict
-        maps every cue as key to the value. Removes all cues that do not have a
-        key.
+        maps every outcome as key to the value. Removes all outcome that do not have a
+	key. This can be used to map several different outcomes to the same
+        outcome or to rename outcomes.
     number_of_processes : int
         number of threads to use
 
