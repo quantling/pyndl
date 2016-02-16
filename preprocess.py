@@ -79,7 +79,10 @@ def process_occurrences(occurrences, outfile, *,
     """
     if cue_structure == "bigrams_to_word":
         for cues, outcomes in occurrences:
-            occurrence = cues + '_' + outcomes
+            if cues and outcomes:
+                occurrence = cues + '_' + outcomes
+            else:  # take either
+                occurrence = cues + outcomes
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             bigrams = (phrase_string[i:(i + 2)] for i in
                         range(len(phrase_string) - 2 + 1))
@@ -88,7 +91,10 @@ def process_occurrences(occurrences, outfile, *,
             outfile.write("_".join(bigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "trigrams_to_word":
         for cues, outcomes in occurrences:
-            occurrence = cues + '_' + outcomes
+            if cues and outcomes:
+                occurrence = cues + '_' + outcomes
+            else:  # take either
+                occurrence = cues + outcomes
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             trigrams = (phrase_string[i:(i + 3)] for i in
                         range(len(phrase_string) - 3 + 1))
