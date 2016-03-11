@@ -424,7 +424,8 @@ def filter_event_file(input_event_file, output_event_file, *,
                       keep_cues="all", keep_outcomes="all",
                       remove_cues=None, remove_outcomes=None,
                       cue_map=None, outcome_map=None,
-                      number_of_processes=1, verbose=False):
+                      number_of_processes=1, chunksize=100000,
+                      verbose=False):
     """
     Filter an event file by a list or a map of cues and outcomes.
 
@@ -454,6 +455,8 @@ def filter_event_file(input_event_file, output_event_file, *,
         outcome or to rename outcomes.
     number_of_processes : int
         number of threads to use
+    chunksize : int
+        number of chunks per submitted job, should be around 100000
 
     Notes
     =====
@@ -474,7 +477,7 @@ def filter_event_file(input_event_file, output_event_file, *,
                 # copy header
                 outfile.write(infile.readline())
                 for ii, processed_line, in enumerate(pool.imap(job.job, infile,
-                                                               chunksize=1000)):
+                                                               chunksize=chunksize)):
                     if processed_line is not None:
                         outfile.write(processed_line)
                     if verbose and ii % 100000 == 0:
