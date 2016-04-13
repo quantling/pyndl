@@ -447,11 +447,11 @@ def filter_event_file(input_event_file, output_event_file, *,
         list of all outcomes that should be removed
     cue_map : dict
         maps every cue as key to the value. Removes all cues that do not have a
-	key. This can be used to map several different cues to the same cue or
+        key. This can be used to map several different cues to the same cue or
         to rename cues.
     outcome_map : dict
         maps every outcome as key to the value. Removes all outcome that do not have a
-	key. This can be used to map several different outcomes to the same
+        key. This can be used to map several different outcomes to the same
         outcome or to rename outcomes.
     number_of_processes : int
         number of threads to use
@@ -490,14 +490,15 @@ def filter_event_file(input_event_file, output_event_file, *,
 ################
 
 MAGIC_NUMBER = 14159265
-CURRENT_VERSION = 215
+CURRENT_VERSION_WITH_FREQ = 215
+CURRENT_VERSION = 2048 + 215
 
 
 def to_bytes(int_):
     return int_.to_bytes(4, 'little')
 
 
-def write_events(events, filename, *, start=0, stop=4294967295):
+def write_events(events, filename, *, start=0, stop=4294967295, store_freq=False):
     """
     Write out a list of events to a disk file in binary format.
 
@@ -510,11 +511,26 @@ def write_events(events, filename, *, start=0, stop=4294967295):
     filename : string
     start : first event to write (zero based index)
     stop : last event to write (zero based index; excluded)
+    store_freq : bool
+        should the frequency information per event be stored, if False all
+        frequencies need to be 1.
 
     Binary Format
     =============
+    Without frequency information::
 
-    ::
+        8 byte header
+        nr of events
+        nr of cues in first event
+        ids for every cue
+        nr of outcomes in first event
+        ids for every outcome
+        frequency
+        nr of cues in second event
+        ...
+
+
+    With frequency information (old format)::
 
         8 byte header
         nr of events
@@ -535,7 +551,10 @@ def write_events(events, filename, *, start=0, stop=4294967295):
     with open(filename, "wb") as out_file:
         # 8 bytes header
         out_file.write(to_bytes(MAGIC_NUMBER))
-        out_file.write(to_bytes(CURRENT_VERSION))
+        if store_freq:
+            out_file.write(to_bytes(CURRENT_VERSION_WITH_FREQ))
+        else:
+            out_file.write(to_bytes(CURRENT_VERSION))
 
         # events
         # estimated number of events (will be rewritten if the actual number
@@ -564,7 +583,11 @@ def write_events(events, filename, *, start=0, stop=4294967295):
                 out_file.write(to_bytes(outcome_id))
 
             # frequency
-            out_file.write(to_bytes(frequency))
+            if store_freq:
+                out_file.write(to_bytes(frequency))
+            else:
+                if frequency != 1:
+                    raise ValueError('All frequencies need to 1 or use store_freq=True.')
 
         if n_events != n_events_estimate and not n_events == 0:
             # the generator was exhausted earlier
@@ -604,16 +627,16 @@ def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event
 
 
 def _job_binary_event_file(*, file_name, event_file, cue_id_map,
-                            outcome_id_map, sort_within_event, start, stop):
+                            outcome_id_map, sort_within_event, start, stop, store_freq):
     # create generator which is not pickable
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=sort_within_event)
-    write_events(events, file_name, start=start, stop=stop)
+    write_events(events, file_name, start=start, stop=stop, store_freq=store_freq)
 
 
 def create_binary_event_files(event_file, path_name, cue_id_map,
                               outcome_id_map,
                               *, sort_within_event=False, number_of_processes=2,
-                              events_per_file=1000000, overwrite=False,
+                              events_per_file=1000000, overwrite=False, store_freq=False,
                               verbose=False):
     """
     Creates the binary event files for a tabular cue outcome frequency corpus.
@@ -635,6 +658,8 @@ def create_binary_event_files(event_file, path_name, cue_id_map,
         number of threads to use
     events_per_file : int
     overwrite : overwrite files if they exist
+    store_freq : bool
+        should the frequency be stored, otherwise it needs to be 1 for all events
     verbose : bool
 
     """
@@ -673,7 +698,8 @@ def create_binary_event_files(event_file, path_name, cue_id_map,
                       "outcome_id_map": outcome_id_map,
                       "sort_within_event": sort_within_event,
                       "start": ii*events_per_file,
-                      "stop": (ii+1)*events_per_file}
+                      "stop": (ii+1)*events_per_file,
+                      "store_freq": store_freq,}
             try:
                 result = pool.apply_async(_job_binary_event_file,
                                           kwds=kwargs,
