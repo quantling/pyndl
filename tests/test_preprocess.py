@@ -66,6 +66,7 @@ def test_create_event_file_upper_case():
 
 def test_create_event_file_trigrams_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word.tab")
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab")
     create_event_file(TINY_RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
@@ -73,7 +74,7 @@ def test_create_event_file_trigrams_to_word():
                       cue_structure="trigrams_to_word")
     with open(event_file, "rt") as new_file:
         lines_new = new_file.readlines()
-    with open("./tests/reference/event_file_trigrams_to_word.tab", "rt") as reference:
+    with open(reference_file, "rt") as reference:
         lines_reference = reference.readlines()
     assert lines_new == lines_reference
     os.remove(event_file)
@@ -81,13 +82,14 @@ def test_create_event_file_trigrams_to_word():
 
 def test_create_event_file_trigrams_to_word_line_based():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word_line_based.tab")
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word_line_based.tab")
     create_event_file(TINY_RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="line", event_options=(3, ),
                       cue_structure="trigrams_to_word")
     with open(event_file, "rt") as new_file:
         lines_new = new_file.readlines()
-    with open("./tests/reference/event_file_trigrams_to_word_line_based.tab", "rt") as reference:
+    with open(reference_file, "rt") as reference:
         lines_reference = reference.readlines()
     assert lines_new == lines_reference
     os.remove(event_file)
@@ -95,6 +97,7 @@ def test_create_event_file_trigrams_to_word_line_based():
 
 def test_create_event_file_bigrams_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word.tab")
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_bigrams_to_word.tab")
     create_event_file(TINY_RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
@@ -102,7 +105,7 @@ def test_create_event_file_bigrams_to_word():
                       cue_structure="bigrams_to_word")
     with open(event_file, "rt") as new_file:
         lines_new = new_file.readlines()
-    with open("./tests/reference/event_file_bigrams_to_word.tab", "rt") as reference:
+    with open(reference_file, "rt") as reference:
         lines_reference = reference.readlines()
     assert lines_new == lines_reference
     os.remove(event_file)
@@ -110,13 +113,14 @@ def test_create_event_file_bigrams_to_word():
 
 def test_create_event_file_word_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_word_to_word.tab")
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_word_to_word.tab")
     create_event_file(TINY_RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="word_to_word", event_options=(2, 1),
                       cue_structure="word_to_word")
     with open(event_file, "rt") as new_file:
         lines_new = new_file.readlines()
-    with open("./tests/reference/event_file_word_to_word.tab", "rt") as reference:
+    with open(reference_file, "rt") as reference:
         lines_reference = reference.readlines()
     assert lines_new == lines_reference
     os.remove(event_file)
