@@ -2,7 +2,42 @@ from collections import defaultdict
 
 import numpy as np
 
-def dict_ndl(event_file, alphas, betas, all_outcomes):
+
+def events(event_file, *, no_frequency=False):
+    """
+    Yields events for all events in event_file.
+
+    Parameters
+    ==========
+    event_file : file_handle
+    no_frequency : bool
+        no frequency should be in the event_file
+
+    Yields
+    ======
+    cues, outcomes : list, list
+        a tuple of two lists containing cues and outcomes
+
+    """
+    # skip header
+    event_file.readline()
+    if no_frequency:
+        for line in event_file:
+            cues, outcomes = line.split('\t')
+            cues = cues.split('_')
+            outcomes = outcomes.split('_')
+            yield (cues, outcomes)
+    else:
+        for line in event_file:
+            cues, outcomes, frequency = line.split('\t')
+            cues = cues.split('_')
+            outcomes = outcomes.split('_')
+            frequency = int(frequency)
+            for _ in range(frequency):
+                yield (cues, outcomes)
+
+
+def dict_ndl(events, alphas, betas, all_outcomes):
     """
     Calculate the weiths for all_outcomes over all events in event_file.
 
@@ -10,7 +45,7 @@ def dict_ndl(event_file, alphas, betas, all_outcomes):
 
     Parameters
     ==========
-    event_file : file_handle
+    events : generator yielding cues, outcomes pairs
     alphas : dict
         a (default)dict having cues as keys and a value below 1 as value
     betas : dict
@@ -31,30 +66,22 @@ def dict_ndl(event_file, alphas, betas, all_outcomes):
     # weights[outcome][cue]
     weights = defaultdict(lambda: defaultdict(float))
 
-    # skip header
-    event_file.readline()
-    for ii, line in enumerate(event_file):
-        cues, outcomes, frequency = line.split('\t')
-        cues = cues.split('_')
-        outcomes = outcomes.split('_')
-        frequency = int(frequency)
-        if frequency != 1:
-            raise ValueError('frequency needs to be one in the whole event_file for this implementation')
-
+    for cues, outcomes in events:
         for outcome in all_outcomes:
             beta = betas[outcome]
             association_strength = sum(weights[outcome][cue] for cue in cues)
-
+            if outcome in outcomes:
+                update = lambda_ - association_strength
+            else:
+                update = 0 - association_strength
             for cue in cues:
-                alpha = alphas[cue]
-                if outcome in outcomes:
-                    what_to_add = lambda_ - association_strength
-                else:
-                    what_to_add = 0 - association_strength
-                what_to_add *= alpha * beta
-                weights[outcome][cue] += what_to_add
+                weights[outcome][cue] += alphas[cue] * beta * update
 
     return weights
+
+# NOTE: In the original code some stuff was differently handled for multiple
+# cues and multiple outcomes. 
+
 
 def binary_ndl(events, outcomes, number_of_cues, alphas, betas):
     """
@@ -92,11 +119,14 @@ def binary_ndl(events, outcomes, number_of_cues, alphas, betas):
 # NOTE: In the original code some stuff was differently handled for multiple
 # cues and multiple outcomes. 
 
+
+
 if __name__ == '__main__':
     with open('tests/resources/event_file.tab', 'rt') as event_file:
+        events_ = events(event_file)
         all_outcomes = ('była', 'tak', 'skupiona', 'brzucha', 'botoksem',
                         'kolagenem')
-        weights = dict_ndl(event_file, defaultdict(lambda: 0.01), defaultdict(lambda: 0.01), all_outcomes)
+        weights = dict_ndl(events_, defaultdict(lambda: 0.01), defaultdict(lambda: 0.01), all_outcomes)
         for outcome, cues in weights.items():
             print('Outcome: %s' % str(outcome))
             for cue, value in cues.items():
