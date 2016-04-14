@@ -12,49 +12,52 @@ from ..preprocess import (create_event_file, filter_event_file,
 
 from ..count import cues_outcomes, load_counter
 
+TEST_ROOT = os.path.dirname(__file__)
+EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
+RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
+TINY_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus_tiny.txt")
+
 
 def test_bandsample():
-    cue_freq_map, outcome_freq_map = cues_outcomes("./tests/resources/event_file.tab",
+    cue_freq_map, outcome_freq_map = cues_outcomes(os.path.join(TEST_ROOT, "resources/event_file.tab"),
                                                    number_of_processes=2)
     outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=1234, verbose=False)
     assert len(outcome_freq_map_filtered) == 50
 
-    outcome_freq_map_filtered_reference = load_counter('./tests/reference/bandsampled_outcomes.tab')
+    outcome_freq_map_filtered_reference = load_counter(os.path.join(TEST_ROOT, 'reference/bandsampled_outcomes.tab'))
     assert outcome_freq_map_filtered == outcome_freq_map_filtered_reference
 
     bandsample(outcome_freq_map, 50, cutoff=1, verbose=True)
 
 
 def test_create_event_file_bad_symbols():
-    event_file = "./tests/temp/events_corpus.tab"
     with pytest.raises(ValueError):
-        create_event_file("./tests/resources/corpus.txt", event_file,
+        create_event_file(RESOURCE_FILE, EVENT_FILE,
                           "abcd#")
-    assert not os.path.isfile(event_file)
+    assert not os.path.isfile(EVENT_FILE)
     with pytest.raises(ValueError):
-        create_event_file("./tests/resources/corpus.txt", event_file,
+        create_event_file(RESOURCE_FILE, EVENT_FILE,
                           "abcd_")
-    assert not os.path.isfile(event_file)
+    assert not os.path.isfile(EVENT_FILE)
 
 
 def test_create_event_file_bad_event_context():
-    event_file = "./tests/temp/events_corpus.tab"
     with pytest.raises(NotImplementedError):
-        create_event_file("./tests/resources/corpus.txt", event_file,
+        create_event_file(RESOURCE_FILE, EVENT_FILE,
                           context_structure="UNREASONABLE")
-    assert not os.path.isfile(event_file)
+    assert not os.path.isfile(EVENT_FILE)
 
 
 def test_create_event_file_bad_event_event():
-    event_file = "./tests/temp/events_corpus.tab"
     with pytest.raises(NotImplementedError):
-        create_event_file("./tests/resources/corpus.txt", event_file,
+        create_event_file(RESOURCE_FILE, EVENT_FILE,
                           event_structure="UNREASONABLE")
-    assert not os.path.isfile(event_file)
+    assert not os.path.isfile(EVENT_FILE)
+
 
 def test_create_event_file_upper_case():
-    event_file = "./tests/temp/events_corpus_upper_case.tab"
-    create_event_file("./tests/resources/corpus.txt", event_file,
+    event_file = os.path.join(TEST_ROOT, "temp/events_corpus_upper_case.tab")
+    create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ))
@@ -62,8 +65,8 @@ def test_create_event_file_upper_case():
 
 
 def test_create_event_file_trigrams_to_word():
-    event_file = "./tests/temp/event_file_trigrams_to_word.tab"
-    create_event_file("./tests/resources/corpus_tiny.txt", event_file,
+    event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word.tab")
+    create_event_file(TINY_RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -77,8 +80,8 @@ def test_create_event_file_trigrams_to_word():
 
 
 def test_create_event_file_trigrams_to_word_line_based():
-    event_file = "./tests/temp/event_file_trigrams_to_word_line_based.tab"
-    create_event_file("./tests/resources/corpus_tiny.txt", event_file,
+    event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word_line_based.tab")
+    create_event_file(TINY_RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="line", event_options=(3, ),
                       cue_structure="trigrams_to_word")
@@ -90,10 +93,9 @@ def test_create_event_file_trigrams_to_word_line_based():
     os.remove(event_file)
 
 
-
 def test_create_event_file_bigrams_to_word():
-    event_file = "./tests/temp/event_file_bigrams_to_word.tab"
-    create_event_file("./tests/resources/corpus_tiny.txt", event_file,
+    event_file = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word.tab")
+    create_event_file(TINY_RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -106,10 +108,9 @@ def test_create_event_file_bigrams_to_word():
     os.remove(event_file)
 
 
-
 def test_create_event_file_word_to_word():
-    event_file = "./tests/temp/event_file_word_to_word.tab"
-    create_event_file("./tests/resources/corpus_tiny.txt", event_file,
+    event_file = os.path.join(TEST_ROOT, "temp/event_file_word_to_word.tab")
+    create_event_file(TINY_RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="word_to_word", event_options=(2, 1),
                       cue_structure="word_to_word")
@@ -122,8 +123,8 @@ def test_create_event_file_word_to_word():
 
 
 def test_filter_event_file_bad_event_file():
-    input_event_file = "./tests/resources/event_file_BAD.tab"
-    output_event_file = "./tests/temp/event_file_BAD_output.tab"
+    input_event_file = os.path.join(TEST_ROOT, "resources/event_file_BAD.tab")
+    output_event_file = os.path.join(TEST_ROOT, "temp/event_file_BAD_output.tab")
     with pytest.raises(ValueError):
         filter_event_file(input_event_file, output_event_file)
     os.remove(output_event_file)
@@ -131,7 +132,7 @@ def test_filter_event_file_bad_event_file():
 
 def test_job_filter():
     keep_cues = ["#of", "of#"]
-    keep_outcomes = ["of",]
+    keep_outcomes = ["of", ]
     job = JobFilter(keep_cues, keep_outcomes, None, None, None, None)
     line = '#of_alb_NEI_b_of#_XX\tterm_not_of\t3\n'
     new_line = job.job(line)
@@ -154,11 +155,11 @@ def test_job_filter():
 
 
 def test_filter_event_file():
-    input_event_file = "./tests/resources/event_file.tab"
-    output_event_file = "./tests/temp/event_file_filtered.tab"
+    input_event_file = os.path.join(TEST_ROOT, "resources/event_file.tab")
+    output_event_file = os.path.join(TEST_ROOT, "temp/event_file_filtered.tab")
     cues = ["#of", "of#"]
     cues.sort()
-    outcomes = ["of",]
+    outcomes = ["of", ]
     outcomes.sort()
     filter_event_file(input_event_file, output_event_file,
                       keep_cues=cues,
@@ -176,7 +177,7 @@ def test_filter_event_file():
 
 
 def test_write_events():
-    event_file = "./tests/resources/event_file.tab"
+    event_file = os.path.join(TEST_ROOT, "resources/event_file.tab")
     cue_freq_map, outcome_freq_map = cues_outcomes(event_file)
     outcomes = list(outcome_freq_map.keys())
     outcomes.sort()
@@ -185,7 +186,7 @@ def test_write_events():
     cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
     outcome_id_map = {outcome: nn for nn, outcome in enumerate(outcomes)}
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
-    file_name = "./tests/temp/events.bin"
+    file_name = os.path.join(TEST_ROOT, "temp/events.bin")
     with pytest.raises(StopIteration):
         write_events(events, file_name)
     os.remove(file_name)
@@ -217,7 +218,7 @@ def test_write_events():
 
 def test_preprocessing():
     corpus_file = "./tests/resources/corpus.txt"
-    event_file = "./tests/temp/events_corpus.tab"
+    event_file = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
     symbols = "abcdefghijklmnopqrstuvwxyzóąćęłńśźż"  # polish
 
     # create event file
