@@ -202,13 +202,9 @@ def main(directory, outfile, *, n_threads=1, verbose=False):
         # prevent overwriting files
         file_name = outfile + ".not_found"
         nn = 1
-        while True:
-            if os.path.isfile(file_name):
+        while not os.path.isfile(file_name):
                 nn += 1
                 file_name = outfile + ".not_found-" + str(nn)
-                continue
-            else:
-                break
 
         with open(file_name, "wt") as not_found_file:
             not_found_file.writelines(not_founds)
@@ -220,4 +216,3 @@ if __name__ == "__main__":
          ARGUMENTS['<outfile>'],
          n_threads=int(ARGUMENTS['-n']),
          verbose=ARGUMENTS['-v'])
-
