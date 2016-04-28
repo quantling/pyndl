@@ -208,7 +208,12 @@ def test_write_events():
                            cue_id_map=cue_id_map,
                            outcome_id_map=outcome_id_map,
                            sort_within_event=False,
-                           start=0, stop=10)
+                           start=0, stop=10, store_freq=True)
+    _job_binary_event_file(file_name=file_name, event_file=event_file,
+                           cue_id_map=cue_id_map,
+                           outcome_id_map=outcome_id_map,
+                           sort_within_event=False,
+                           start=0, stop=10, store_freq=False)
     os.remove(file_name)
 
     # bad event file
