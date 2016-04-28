@@ -78,3 +78,10 @@ corpus file :
 settings file :
     A settings file contains all the settings for a resulting weight matrix.
 
+
+Testing
+=======
+Check if the package does what it is supposed to do by running the test with ``py.test``::
+
+    py.test-3 --cov-report html --cov=pyndl
+
