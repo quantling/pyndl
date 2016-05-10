@@ -1,17 +1,18 @@
 from collections import defaultdict
+import time
 
 import numpy as np
 
 
-def events(event_file, *, no_frequency=False):
+def events(event_file, *, frequency=True):
     """
     Yields events for all events in event_file.
 
     Parameters
     ==========
     event_file : file_handle
-    no_frequency : bool
-        no frequency should be in the event_file
+    frequency : bool
+        frequency should be in the event_file
 
     Yields
     ======
@@ -21,15 +22,15 @@ def events(event_file, *, no_frequency=False):
     """
     # skip header
     event_file.readline()
-    if no_frequency:
+    if not frequency:
         for line in event_file:
-            cues, outcomes = line.split('\t')
+            cues, outcomes = line.strip('\n').split('\t')
             cues = cues.split('_')
             outcomes = outcomes.split('_')
             yield (cues, outcomes)
     else:
         for line in event_file:
-            cues, outcomes, frequency = line.split('\t')
+            cues, outcomes, frequency = line.strip('\n').split('\t')
             cues = cues.split('_')
             outcomes = outcomes.split('_')
             frequency = int(frequency)
@@ -81,6 +82,15 @@ def dict_ndl(events, alphas, betas, all_outcomes):
 
 # NOTE: In the original code some stuff was differently handled for multiple
 # cues and multiple outcomes. 
+
+def activations(cues, weights):
+    if isinstance(weights, dict):
+        activations_ = defaultdict(float)
+        for outcome, cue_dict in weights.items():
+            for cue in cues:
+                activations_[outcome] += cue_dict[cue]
+        return activations_
+
 
 
 def binary_ndl(events, outcomes, number_of_cues, alphas, betas):
