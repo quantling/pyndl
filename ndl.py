@@ -1,16 +1,17 @@
 from collections import defaultdict
+import multiprocessing
 import time
 
 import numpy as np
 
-
-def events(event_file, *, frequency=True):
+def events(event_path, *, frequency=True):
     """
     Yields events for all events in event_file.
 
     Parameters
     ==========
-    event_file : file_handle
+    event_path : str
+        path to event file
     frequency : bool
         frequency should be in the event_file
 
@@ -20,33 +21,107 @@ def events(event_file, *, frequency=True):
         a tuple of two lists containing cues and outcomes
 
     """
-    # skip header
-    event_file.readline()
-    if not frequency:
-        for line in event_file:
-            cues, outcomes = line.strip('\n').split('\t')
-            cues = cues.split('_')
-            outcomes = outcomes.split('_')
-            yield (cues, outcomes)
-    else:
-        for line in event_file:
-            cues, outcomes, frequency = line.strip('\n').split('\t')
-            cues = cues.split('_')
-            outcomes = outcomes.split('_')
-            frequency = int(frequency)
-            for _ in range(frequency):
+    with open(event_path, 'rt') as event_file:
+        # skip header
+        event_file.readline()
+        if not frequency:
+            for line in event_file:
+                cues, outcomes = line.strip('\n').split('\t')
+                cues = cues.split('_')
+                outcomes = outcomes.split('_')
                 yield (cues, outcomes)
+        else:
+            for line in event_file:
+                cues, outcomes, frequency = line.strip('\n').split('\t')
+                cues = cues.split('_')
+                outcomes = outcomes.split('_')
+                frequency = int(frequency)
+                for _ in range(frequency):
+                    yield (cues, outcomes)
 
-
-def dict_ndl(events, alphas, betas, all_outcomes):
+def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_processes=2):
     """
-    Calculate the weiths for all_outcomes over all events in event_file.
+    Calculate the weigths for all_outcomes over all events in event_file
+    given by the files path.
+
+    This is a parrallel python implementation using dicts and multiprocessing.
+
+    Parameters
+    ==========
+    event_path : path to the event file
+    alphas : dict
+        a (default)dict having cues as keys and a value below 1 as value
+    betas : dict
+        a (default)dict having outcomes as keys and a value below 1 as value
+    all_outcomes : list
+        a list of all outcomes of interest
+    number_of_processes : int
+        a integer giving the number of processes in which the job should
+        executed
+
+    Returns
+    =======
+    weights : dict of dicts of floats
+        the first dict has outcomes as keys and dicts as values
+        the second dict has cues as keys and weights as values
+        weights[outcome][cue] gives the weight between outcome and cue.
+
+    """
+    with multiprocessing.Pool(number_of_processes) as pool:
+
+        job = JobCalculateWeights(alphas, betas, event_path)
+
+        weights = defaultdict(lambda: defaultdict(float))
+
+        results = pool.imap_unordered(job.dict_ndl_weight_calculator, all_outcomes)
+
+        for key,value in results:
+            weights[key] = value
+
+        return weights
+
+
+class JobCalculateWeights():
+    """
+    Stores the values of alphas and betas an the path to the event file
+
+    Method is used as a worker for the multiprocessed dict_ndl implementation
+    """
+
+    def __init__(self, alphas, betas, event_path):
+        self.alphas = alphas
+        self.betas = betas
+        self.event_path = event_path
+
+    def dict_ndl_weight_calculator(self,outcome):
+
+        lambda_ = 1.0
+
+        weights = defaultdict(float)
+
+        event_list = events(self.event_path)
+
+        for cues, outcomes in event_list:
+            association_strength = sum(weights[cue] for cue in cues)
+            if outcome in outcomes:
+                update = lambda_ - association_strength
+            else:
+                update = 0 - association_strength
+            for cue in cues:
+                weights[cue] += self.alphas[cue] * self.betas[outcome] * update
+
+        return (outcome, weights)
+
+
+def dict_ndl(event_path, alphas, betas, all_outcomes):
+    """
+    Calculate the weigths for all_outcomes over all events in event_file.
 
     This is a pure python implementation using dicts.
 
     Parameters
     ==========
-    events : generator yielding cues, outcomes pairs
+    event_path : path to the event file
     alphas : dict
         a (default)dict having cues as keys and a value below 1 as value
     betas : dict
@@ -66,8 +141,9 @@ def dict_ndl(events, alphas, betas, all_outcomes):
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
     weights = defaultdict(lambda: defaultdict(float))
+    event_list = events(event_path)
 
-    for cues, outcomes in events:
+    for cues, outcomes in event_list:
         for outcome in all_outcomes:
             beta = betas[outcome]
             association_strength = sum(weights[outcome][cue] for cue in cues)
@@ -81,7 +157,8 @@ def dict_ndl(events, alphas, betas, all_outcomes):
     return weights
 
 # NOTE: In the original code some stuff was differently handled for multiple
-# cues and multiple outcomes. 
+# cues and multiple outcomes.
+
 
 def activations(cues, weights):
     if isinstance(weights, dict):
@@ -122,12 +199,12 @@ def binary_ndl(events, outcomes, number_of_cues, alphas, betas):
                     what_to_add = lambda_ - association_strength
                 else:
                     what_to_add = 0 - association_strength
-                what_to_add *= alpha * beta 
+                what_to_add *= alpha * beta
                 outcome[cue_index] += what_to_add
     return outcomes
-            
+
 # NOTE: In the original code some stuff was differently handled for multiple
-# cues and multiple outcomes. 
+# cues and multiple outcomes.
 
 
 
@@ -141,4 +218,3 @@ if __name__ == '__main__':
             print('Outcome: %s' % str(outcome))
             for cue, value in cues.items():
                 print('  %s = %f' % (str(cue), value))
-
