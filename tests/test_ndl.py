@@ -44,6 +44,17 @@ def test_compare_time():
     # that a parrallel implementation of dict_ndl should be faster.
     assert duration_parrallel < duration_not_parrallel
 
+def test_slice_list():
+
+    l1 = [0,1,2,3,4,5,6,7,8,9]
+
+    res = ndl.slice_list(l1,2)
+    assert res == [[0,1],[2,3],[4,5],[6,7],[8,9]]
+
+    res2 = ndl.slice_list(l1,3)
+    assert res2 == [[0,1,2],[3,4,5],[6,7,8],[9]]
+
+
 
 
 def generate_random_alpha_beta(file_path):
