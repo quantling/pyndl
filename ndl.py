@@ -73,14 +73,13 @@ def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_pro
 
         job = JobCalculateWeights(alphas, betas, event_path)
 
-        weights = defaultdict(lambda: defaultdict(float))
+        weights = defaultdict(lambda:defaultdict(float))
 
         partlists_of_outcomes = slice_list(all_outcomes,sequence)
 
-        results = pool.imap_unordered(job.dict_ndl_weight_calculator, partlists_of_outcomes)
-
-        for key,value in results:
-            weights[key] = value
+        for result in pool.imap_unordered(job.dict_ndl_weight_calculator, partlists_of_outcomes):
+            for outcome, cues in result:
+                weights[outcome] = cues
 
         return weights
 
@@ -99,23 +98,11 @@ class JobCalculateWeights():
 
     def dict_ndl_weight_calculator(self,part_outcomes):
 
-        lambda_ = 1.0
+        weights = dict_ndl(self.event_path, self.alphas, self.betas, part_outcomes)
 
-        weights = defaultdict(float)
+        return [(outcome,cues) for outcome, cues in weights.items()]
 
-        event_list = events(self.event_path)
 
-        for cues, outcomes in event_list:
-            for outcome in part_outcomes:
-                association_strength = sum(weights[cue] for cue in cues)
-                if outcome in outcomes:
-                    update = lambda_ - association_strength
-                else:
-                    update = 0 - association_strength
-                for cue in cues:
-                    weights[cue] += self.alphas[cue] * self.betas[outcome] * update
-
-        return (outcome, weights)
 
 
 def dict_ndl(event_path, alphas, betas, all_outcomes):
@@ -228,6 +215,7 @@ def slice_list(li, sequence):
         a list of sublists with the length sequence
 
     """
+    assert len(li) == len(set(li))
     ii = 0
     seq_list = list()
     while ii < len(li):
