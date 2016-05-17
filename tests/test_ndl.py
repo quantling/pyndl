@@ -6,18 +6,27 @@ import os
 import random
 import time
 
+import pytest
+import numpy as np
+
+
+slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
+                          reason="need --runslow option to run")
+
+
 from .. import ndl, count
 
 TEST_ROOT = os.path.dirname(__file__)
 
-file_path = os.path.join(TEST_ROOT, 'resources/minigeco_wordcues_mini.tab')
+file_path = os.path.join(TEST_ROOT, 'resources/event_file_tiny.tab')
 cues, outcomes = count.cues_outcomes(file_path)
 all_outcomes = list(outcomes.keys())
 
 
-def test_compare_output():
+def test_compare_weights_parallel():
     """
-    Checks whether the output of the parrallel and the not parrallel implementation of dict_ndl is equal
+    Checks whether the output of the parallel and the not parallel
+    implementation of dict_ndl is equal.
 
     """
 
@@ -30,21 +39,72 @@ def test_compare_output():
         for cue in cue_dict:
             assert result_parallel[outcome][cue] == result_not_parallel[outcome][cue]
 
-def test_compare_time():
+
+def test_compare_weights_ndl2():
     """
-    Compares the times to execute the implementations of dict_ndl
+    Checks whether the output of the R learner implemented in ndl2 and the
+    python implementation of dict_ndl is equal.
+
+    R code to generate the results::
+
+        library(ndl2)
+        learner <- learnWeightsTabular('resources/event_file_tiny.tab', alpha=0.1, beta=0.1)
+        wm <- learner$getWeights()
+        write.csv(wm, 'reference/weights_event_tiny_R_ndl2.csv')
 
     """
+    result_ndl2 = defaultdict(lambda: defaultdict(float))
+    with open(os.path.join(TEST_ROOT,
+                           'reference/weights_event_tiny_R_ndl2.csv'), 'rt') as reference_file:
+        first_line = reference_file.readline()
+        outcomes = first_line.split(',')[1:]
+        outcomes = [outcome.strip('"') for outcome in outcomes]
+        for line in reference_file:
+            cue, *cue_weights = line.split(',')
+            cue = cue.strip('"')
+            for ii, outcome in enumerate(outcomes):
+                result_ndl2[outcome][cue] = float(cue_weights[ii])
+
+    alphas = betas = defaultdict(lambda: 0.1)
+    result_python = ndl.dict_ndl(file_path, alphas, betas, all_outcomes)
+
+    unequal = list()
+    for outcome, cue_dict in result_python.items():
+        for cue in cue_dict:
+            if not np.isclose(result_ndl2[outcome][cue], result_python[outcome][cue], rtol=1e-03, atol=1e-05):
+                unequal.append((outcome, cue, result_ndl2[outcome][cue], result_python[outcome][cue]))
+
+    print(unequal)
+    print('%.2f ratio unequal' % (len(unequal) / (len(result_python.keys()) * len(list(result_python.values())[0].keys()))))
+    assert len(unequal) == 0
+
+
+
+@slow
+def test_compare_time_parallel():
+    """
+    Compares the times to execute the implementations of dict_ndl.
+
+    """
+
+    # we need a bigger event file for the timing
+    file_path = os.path.join(TEST_ROOT, 'resources/minigeco_wordcues_mini.tab')
+    cues, outcomes = count.cues_outcomes(file_path)
+    all_outcomes = list(outcomes.keys())
 
     alphas, betas = generate_random_alpha_beta(file_path)
 
-    duration_not_parrallel = clock(ndl.dict_ndl, (file_path, alphas, betas, all_outcomes))
+    result_not_parallel, duration_not_parrallel = clock(ndl.dict_ndl, (file_path, alphas, betas, all_outcomes))
 
-    duration_parrallel = clock(ndl.dict_ndl_parrallel, (file_path, alphas, betas, all_outcomes))
+    result_parallel, duration_parrallel = clock(ndl.dict_ndl_parrallel, (file_path, alphas, betas, all_outcomes))
 
     # For small files this test is expected to fail. Otherwise it is expected
     # that a parrallel implementation of dict_ndl should be faster.
     assert duration_parrallel < duration_not_parrallel
+    for outcome, cue_dict in result_parallel.items():
+        for cue in cue_dict:
+            assert result_parallel[outcome][cue] == result_not_parallel[outcome][cue]
+
 
 def test_slice_list():
 
@@ -55,7 +115,6 @@ def test_slice_list():
 
     res2 = ndl.slice_list(l1,3)
     assert res2 == [[0,1,2],[3,4,5],[6,7,8],[9]]
-
 
 
 
@@ -73,6 +132,7 @@ def generate_random_alpha_beta(file_path):
 
     return (alphas,betas)
 
+
 def clock(f, args, **kwargs):
     start = time.time()
     result = f(*args, **kwargs)
@@ -80,4 +140,4 @@ def clock(f, args, **kwargs):
 
     duration = stop - start
 
-    return duration
+    return result, duration
