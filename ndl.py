@@ -113,7 +113,7 @@ class JobCalculateWeights():
         return (outcome, weights)
 
 
-def dict_ndl(event_path, alphas, betas, all_outcomes):
+def dict_ndl(event_list, alphas, betas, all_outcomes):
     """
     Calculate the weigths for all_outcomes over all events in event_file.
 
@@ -121,7 +121,8 @@ def dict_ndl(event_path, alphas, betas, all_outcomes):
 
     Parameters
     ==========
-    event_path : path to the event file
+    events : generator or str
+        generates cues, outcomes pairs or the path to the event file
     alphas : dict
         a (default)dict having cues as keys and a value below 1 as value
     betas : dict
@@ -141,7 +142,9 @@ def dict_ndl(event_path, alphas, betas, all_outcomes):
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
     weights = defaultdict(lambda: defaultdict(float))
-    event_list = events(event_path)
+
+    if isinstance(event_list, str):
+        event_list = events(event_list)
 
     for cues, outcomes in event_list:
         for outcome in all_outcomes:
