@@ -39,7 +39,7 @@ def events(event_path, *, frequency=True):
                 for _ in range(frequency):
                     yield (cues, outcomes)
 
-def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_processes=2):
+def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_processes=2, sequence=10):
     """
     Calculate the weigths for all_outcomes over all events in event_file
     given by the files path.
@@ -58,6 +58,8 @@ def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_pro
     number_of_processes : int
         a integer giving the number of processes in which the job should
         executed
+    sequence : int
+        a integer giving the length of sublists generated from all outcomes
 
     Returns
     =======
@@ -71,12 +73,13 @@ def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_pro
 
         job = JobCalculateWeights(alphas, betas, event_path)
 
-        weights = defaultdict(lambda: defaultdict(float))
+        weights = defaultdict(lambda:defaultdict(float))
 
-        results = pool.imap_unordered(job.dict_ndl_weight_calculator, all_outcomes)
+        partlists_of_outcomes = slice_list(all_outcomes,sequence)
 
-        for key,value in results:
-            weights[key] = value
+        for result in pool.imap_unordered(job.dict_ndl_weight_calculator, partlists_of_outcomes):
+            for outcome, cues in result:
+                weights[outcome] = cues
 
         return weights
 
@@ -93,24 +96,13 @@ class JobCalculateWeights():
         self.betas = betas
         self.event_path = event_path
 
-    def dict_ndl_weight_calculator(self,outcome):
+    def dict_ndl_weight_calculator(self,part_outcomes):
 
-        lambda_ = 1.0
+        weights = dict_ndl(self.event_path, self.alphas, self.betas, part_outcomes)
 
-        weights = defaultdict(float)
+        return [(outcome,cues) for outcome, cues in weights.items()]
 
-        event_list = events(self.event_path)
 
-        for cues, outcomes in event_list:
-            association_strength = sum(weights[cue] for cue in cues)
-            if outcome in outcomes:
-                update = lambda_ - association_strength
-            else:
-                update = 0 - association_strength
-            for cue in cues:
-                weights[cue] += self.alphas[cue] * self.betas[outcome] * update
-
-        return (outcome, weights)
 
 
 def dict_ndl(event_list, alphas, betas, all_outcomes):
@@ -208,6 +200,32 @@ def binary_ndl(events, outcomes, number_of_cues, alphas, betas):
 
 # NOTE: In the original code some stuff was differently handled for multiple
 # cues and multiple outcomes.
+
+def slice_list(li, sequence):
+    """
+    Slices a list in sublists with the length sequence.
+
+    Parameters
+    ==========
+    li : list
+         list which should be sliced in sublists
+    sequence : int
+         integer which determines the length of the sublists
+
+    Returns
+    =======
+    seq_list : list of lists
+        a list of sublists with the length sequence
+
+    """
+    assert len(li) == len(set(li))
+    ii = 0
+    seq_list = list()
+    while ii < len(li):
+        seq_list.append(li[ii:ii+sequence])
+        ii = ii+sequence
+
+    return seq_list
 
 
 
