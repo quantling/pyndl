@@ -39,7 +39,7 @@ def events(event_path, *, frequency=True):
                 for _ in range(frequency):
                     yield (cues, outcomes)
 
-def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_processes=2, sequence=10):
+def dict_ndl_parrallel(event_path, alpha, betas, all_outcomes, *, number_of_processes=2, sequence=10):
     """
     Calculate the weigths for all_outcomes over all events in event_file
     given by the files path.
@@ -71,7 +71,7 @@ def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_pro
     """
     with multiprocessing.Pool(number_of_processes) as pool:
 
-        job = JobCalculateWeights(alphas, betas, event_path)
+        job = JobCalculateWeights(alpha, betas, event_path)
 
         weights = defaultdict(lambda:defaultdict(float))
 
@@ -91,14 +91,14 @@ class JobCalculateWeights():
     Method is used as a worker for the multiprocessed dict_ndl implementation
     """
 
-    def __init__(self, alphas, betas, event_path):
-        self.alphas = alphas
+    def __init__(self, alpha, betas, event_path):
+        self.alpha = alpha
         self.betas = betas
         self.event_path = event_path
 
     def dict_ndl_weight_calculator(self,part_outcomes):
 
-        weights = dict_ndl(self.event_path, self.alphas, self.betas, part_outcomes)
+        weights = dict_ndl_simple(self.event_path, self.alpha, self.betas, part_outcomes)
 
         return [(outcome,cues) for outcome, cues in weights.items()]
 
@@ -153,6 +153,54 @@ def dict_ndl(event_list, alphas, betas, all_outcomes):
 
 # NOTE: In the original code some stuff was differently handled for multiple
 # cues and multiple outcomes.
+
+
+def dict_ndl_simple(event_list, alpha, betas, all_outcomes):
+    """
+    Calculate the weigths for all_outcomes over all events in event_file.
+
+    This is a pure python implementation using dicts.
+
+    Parameters
+    ==========
+    events : generator or str
+        generates cues, outcomes pairs or the path to the event file
+    alpha : float
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    all_outcomes : list
+        a list of all outcomes of interest
+
+    Returns
+    =======
+    weights : dict of dicts of floats
+        the first dict has outcomes as keys and dicts as values
+        the second dict has cues as keys and weights as values
+        weights[outcome][cue] gives the weight between outcome and cue.
+
+    """
+    lambda_ = 1.0
+    # weights can be seen as an infinite outcome by cue matrix
+    # weights[outcome][cue]
+    weights = defaultdict(lambda: defaultdict(float))
+
+    beta1, beta2 = betas
+
+    if isinstance(event_list, str):
+        event_list = events(event_list)
+
+    for cues, outcomes in event_list:
+        for outcome in all_outcomes:
+            association_strength = sum(weights[outcome][cue] for cue in cues)
+            if outcome in outcomes:
+                update = beta1 * (lambda_ - association_strength)
+            else:
+                update = beta2 * (0 - association_strength)
+            for cue in cues:
+                weights[outcome][cue] += alpha * update
+
+    return weights
+
 
 
 def activations(cues, weights):
