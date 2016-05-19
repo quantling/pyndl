@@ -210,7 +210,7 @@ def dict_ndl_simple(event_list, alpha, betas, all_outcomes):
     return weights
 
 
-def numpy_ndl_simple(event_path, alpha, betas, all_outcomes, *, frequency=False):
+def numpy_ndl_simple(event_list, alpha, betas, all_outcomes, *, cue_map, outcome_map):
     """
     Calculate the weigths for all_outcomes over all events in event_file.
 
@@ -225,35 +225,39 @@ def numpy_ndl_simple(event_path, alpha, betas, all_outcomes, *, frequency=False)
         one value for successful prediction (reward) one for punishment
     all_outcomes : list
         a list of all outcomes of interest
+    cue_map : dict
+        has cues as keys and int as values, where the int represents the index in the
+        numpy array.
+    outcome_map : dict
+        has outcomes as keys and int as values, where the int represents the index in the
+        numpy array.
 
     Returns
     =======
-    weights : dict of dicts of floats
-        the first dict has outcomes as keys and dicts as values
-        the second dict has cues as keys and weights as values
-        weights[outcome][cue] gives the weight between outcome and cue.
+    weights : numpy.array of shape len(outcomes), len(cues)
+        weights[outcome_index][cue_index] gives the weight between outcome and cue.
 
     """
-
-    cue_map, outcome_map = generate_mapping(event_path,number_of_processes=2)
-
     lambda_ = 1.0
 
-    weights = np.array([[0. for cue in cue_map.keys()] for outcome in outcome_map.keys()], dtype=float)
+    weights = np.zeros((len(outcome_map), len(cue_map)), dtype=float)
 
     beta1, beta2 = betas
 
-    event_list = events(event_path,frequency=frequency)
+    all_outcome_indices = [outcome_map[outcome] for outcome in all_outcomes]
 
     for cues, outcomes in event_list:
-        for outcome in all_outcomes:
-            association_strength = np.sum(weights[outcome_map[outcome]])
-            if outcome in outcomes:
+        cue_indices = [cue_map[cue] for cue in cues]
+        outcome_indices = [outcome_map[outcome] for outcome in outcomes]
+        for outcome_index in all_outcome_indices:
+            #association_strength = np.sum(weights[outcome_index][cue_indices])  # fancy indexing, this seems slower --Tino
+            association_strength = np.sum(weights[outcome_index][cue_index] for cue_index in cue_indices)
+            if outcome_index in outcome_indices:
                 update = beta1 * (lambda_ - association_strength)
             else:
                 update = beta2 * (0 - association_strength)
-            for cue in cues:
-                weights[outcome_map[outcome]][cue_map[cue]] += alpha * update
+            for cue_index in cue_indices:
+                weights[outcome_index][cue_index] += alpha * update
 
     return weights
 
