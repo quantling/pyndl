@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # run py.test-3 from the above folder
 
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 import os
 import random
 import time
@@ -18,9 +18,39 @@ from .. import ndl, count
 
 TEST_ROOT = os.path.dirname(__file__)
 
-file_path = os.path.join(TEST_ROOT, 'resources/event_file_tiny.tab')
+file_path = os.path.join(TEST_ROOT, 'resources/event_file_tiny.tab')#minigeco_wordcues_mini.tab')
+reference_path = os.path.join(TEST_ROOT, 'reference/weights_event_tiny_R_ndl2.csv')
 cues, outcomes = count.cues_outcomes(file_path)
 all_outcomes = list(outcomes.keys())
+
+cue_map, outcome_map = ndl.generate_mapping(file_path,number_of_processes=2)
+
+alpha = 0.1
+betas = (0.1,0.1)
+
+
+def test_compare_weights_numpy():
+    """
+    Checks whether the output of the numpy and the dict
+    implementation of ndl is equal.
+
+    """
+
+    result_dict_ndl = ndl.dict_ndl_simple(ndl.events(file_path, frequency=True), alpha, betas, all_outcomes)
+    result_numpy_ndl = ndl.numpy_ndl_simple(file_path, alpha, betas, all_outcomes,frequency=True)
+
+    assert len(result_numpy_ndl) == len(result_dict_ndl)
+    #assert len(result_numpy_ndl[0]) == len(result_dict_ndl[0])
+
+    unequal = list()
+    for outcome, cues in result_dict_ndl.items():
+        for cue in cues:
+            if not np.isclose(result_dict_ndl[outcome][cue], result_numpy_ndl[outcome_map[outcome]][cue_map[cue]], rtol=0, atol=0):
+                unequal.append((outcome, cue, result_dict_ndl[outcome][cue], result_numpy_ndl[outcome_map[outcome]][cue_map[cue]]))
+
+    #print(unequal)
+    print('%.2f ratio unequal' % (len(unequal) / (len(result_numpy_ndl) * len(list(result_numpy_ndl[0])))))
+    assert len(unequal) == 0
 
 
 def test_compare_weights_parallel():
@@ -56,8 +86,8 @@ def test_compare_weights_ndl2():
 
     """
     result_ndl2 = defaultdict(lambda: defaultdict(float))
-    with open(os.path.join(TEST_ROOT,
-                           'reference/weights_bnc_tri2l_1k_R_ndl2.csv'), 'rt') as reference_file:
+
+    with open(reference_path, 'rt') as reference_file:
         first_line = reference_file.readline()
         outcomes = first_line.split(',')[1:]
         outcomes = [outcome.strip('"') for outcome in outcomes]
@@ -92,7 +122,6 @@ def test_compare_time_parallel():
     """
 
     # we need a bigger event file for the timing
-    file_path = os.path.join(TEST_ROOT, 'resources/minigeco_wordcues_mini.tab')
     cues, outcomes = count.cues_outcomes(file_path)
     all_outcomes = list(outcomes.keys())
 
@@ -143,4 +172,3 @@ def clock(f, args, **kwargs):
     duration = stop - start
 
     return result, duration
-
