@@ -4,7 +4,7 @@ import time
 
 import numpy as np
 
-def events(event_path, *, frequency=True):
+def events(event_path, *, frequency=False):
     """
     Yields events for all events in event_file.
 
@@ -39,7 +39,8 @@ def events(event_path, *, frequency=True):
                 for _ in range(frequency):
                     yield (cues, outcomes)
 
-def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_processes=2, sequence=10):
+
+def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_processes=2, sequence=10, frequency_in_event_file=False):
     """
     Calculate the weigths for all_outcomes over all events in event_file
     given by the files path.
@@ -60,6 +61,8 @@ def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_pro
         executed
     sequence : int
         a integer giving the length of sublists generated from all outcomes
+    frequency_in_event_file : bool
+        is the frequency column in the event file present?
 
     Returns
     =======
@@ -71,7 +74,10 @@ def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, number_of_pro
     """
     with multiprocessing.Pool(number_of_processes) as pool:
 
-        job = JobCalculateWeights(alphas, betas, event_path)
+        job = JobCalculateWeights(alphas,
+                                  betas,
+                                  event_path,
+                                  frequency_in_event_file=frequency_in_event_file)
 
         weights = defaultdict(lambda:defaultdict(float))
 
@@ -91,17 +97,17 @@ class JobCalculateWeights():
     Method is used as a worker for the multiprocessed dict_ndl implementation
     """
 
-    def __init__(self, alphas, betas, event_path):
+    def __init__(self, alphas, betas, event_path, *,
+                 frequency_in_event_file=False):
         self.alphas = alphas
         self.betas = betas
         self.event_path = event_path
+        self.frequency_in_event_file = frequency_in_event_file
 
     def dict_ndl_weight_calculator(self,part_outcomes):
-
-        weights = dict_ndl(self.event_path, self.alphas, self.betas, part_outcomes)
-
+        events_ = events(self.event_path, frequency=self.frequency_in_event_file)
+        weights = dict_ndl(events_, self.alphas, self.betas, part_outcomes)
         return [(outcome,cues) for outcome, cues in weights.items()]
-
 
 
 
@@ -131,6 +137,7 @@ def dict_ndl(event_list, alphas, betas, all_outcomes):
 
     """
     lambda_ = 1.0
+    beta1, beta2 = betas
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
     weights = defaultdict(lambda: defaultdict(float))
@@ -140,14 +147,13 @@ def dict_ndl(event_list, alphas, betas, all_outcomes):
 
     for cues, outcomes in event_list:
         for outcome in all_outcomes:
-            beta = betas[outcome]
             association_strength = sum(weights[outcome][cue] for cue in cues)
             if outcome in outcomes:
-                update = lambda_ - association_strength
+                update = beta1 * (lambda_ - association_strength)
             else:
-                update = 0 - association_strength
+                update = beta2 * (0 - association_strength)
             for cue in cues:
-                weights[outcome][cue] += alphas[cue] * beta * update
+                weights[outcome][cue] += alphas[cue] * update
 
     return weights
 
@@ -182,19 +188,20 @@ def binary_ndl(events, outcomes, number_of_cues, alphas, betas):
     # create dict {index: column} pair for each outcome
     outcomes = {index: np.zeros(number_of_cues) for index in outcome_indices}
 
+    beta1, beta2 = betas
+
     for present_cues, present_outcomes in events:
         for outcome_index in outcome_indices:
-            beta = betas[present_outcome_index]
             outcome = outcomes[outcome_index]
             association_strength = sum(outcome[cue_index] for cue_index in present_cues)
 
             for cue_index in present_cues:
                 alpha = alphas[cue_index]
                 if outcome_index in present_outcomes:
-                    what_to_add = lambda_ - association_strength
+                    what_to_add = beta1 * (lambda_ - association_strength)
                 else:
-                    what_to_add = 0 - association_strength
-                what_to_add *= alpha * beta
+                    what_to_add = beta2 * (0 - association_strength)
+                what_to_add *= alpha
                 outcome[cue_index] += what_to_add
     return outcomes
 
