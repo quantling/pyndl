@@ -35,9 +35,10 @@ def test_compare_weights_numpy():
     implementation of ndl is equal.
 
     """
-
-    result_dict_ndl = ndl.dict_ndl_simple(ndl.events(file_path, frequency=True), alpha, betas, all_outcomes)
-    result_numpy_ndl = ndl.numpy_ndl_simple(file_path, alpha, betas, all_outcomes,frequency=True)
+    events = ndl.events(file_path, frequency=True)
+    result_dict_ndl = ndl.dict_ndl_simple(events, alpha, betas, all_outcomes)
+    events = ndl.events(file_path, frequency=True)
+    result_numpy_ndl = ndl.numpy_ndl_simple(events, alpha, betas, all_outcomes, cue_map=cue_map, outcome_map=outcome_map)
 
     assert len(result_numpy_ndl) == len(result_dict_ndl)
     #assert len(result_numpy_ndl[0]) == len(result_dict_ndl[0])
