@@ -1,8 +1,9 @@
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 import multiprocessing
 import time
 
 import numpy as np
+from . import count
 
 def events(event_path, *, frequency=False):
     """
@@ -209,6 +210,53 @@ def dict_ndl_simple(event_list, alpha, betas, all_outcomes):
     return weights
 
 
+def numpy_ndl_simple(event_path, alpha, betas, all_outcomes, *, frequency=False):
+    """
+    Calculate the weigths for all_outcomes over all events in event_file.
+
+    This is a python implementation using numpy.
+
+    Parameters
+    ==========
+    event_path : str
+        generates cues, outcomes pairs or the path to the event file
+    alpha : float
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    all_outcomes : list
+        a list of all outcomes of interest
+
+    Returns
+    =======
+    weights : dict of dicts of floats
+        the first dict has outcomes as keys and dicts as values
+        the second dict has cues as keys and weights as values
+        weights[outcome][cue] gives the weight between outcome and cue.
+
+    """
+
+    cue_map, outcome_map = generate_mapping(event_path,number_of_processes=2)
+
+    lambda_ = 1.0
+
+    weights = np.array([[0. for cue in cue_map.keys()] for outcome in outcome_map.keys()], dtype=float)
+
+    beta1, beta2 = betas
+
+    event_list = events(event_path,frequency=frequency)
+
+    for cues, outcomes in event_list:
+        for outcome in all_outcomes:
+            association_strength = np.sum(weights[outcome_map[outcome]])
+            if outcome in outcomes:
+                update = beta1 * (lambda_ - association_strength)
+            else:
+                update = beta2 * (0 - association_strength)
+            for cue in cues:
+                weights[outcome_map[outcome]][cue_map[cue]] += alpha * update
+
+    return weights
+
 
 def activations(cues, weights):
     if isinstance(weights, dict):
@@ -256,6 +304,27 @@ def binary_ndl(events, outcomes, number_of_cues, alphas, betas):
 
 # NOTE: In the original code some stuff was differently handled for multiple
 # cues and multiple outcomes.
+
+def generate_mapping(event_path, number_of_processes=2):
+    """
+    Generates OrderedDicts of all cues and outcomes to use indizes in the numpy
+    implementation.
+
+    Parameters
+    ==========
+    event_path : str
+        path to the event_file for which the mapping should be generated
+    number_of_processes : int
+         integer of how many processes should be used
+
+    """
+    cues, outcomes = count.cues_outcomes(event_path, number_of_processes=number_of_processes)
+    cue_list = list(cues.keys())
+    outcome_list = list(outcomes.keys())
+    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cue_list)))
+    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcome_list)))
+
+    return (cue_map, outcome_map)
 
 def slice_list(li, sequence):
     """
