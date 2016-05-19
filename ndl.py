@@ -74,9 +74,9 @@ def dict_ndl_parrallel(event_path, alpha, betas, all_outcomes, *, number_of_proc
     """
     with multiprocessing.Pool(number_of_processes) as pool:
 
-        job = JobCalculateWeights(alpha,
+        job = JobCalculateWeights(event_path,
+                                  alpha,
                                   betas,
-                                  event_path,
                                   frequency_in_event_file=frequency_in_event_file)
 
         weights = defaultdict(lambda:defaultdict(float))
@@ -98,11 +98,11 @@ class JobCalculateWeights():
 
     """
 
-    def __init__(self, alpha, betas, event_path, *,
+    def __init__(self, event_path, alpha, betas, *,
                  frequency_in_event_file=False):
+        self.event_path = event_path
         self.alpha = alpha
         self.betas = betas
-        self.event_path = event_path
         self.frequency_in_event_file = frequency_in_event_file
 
     def dict_ndl_weight_calculator(self,part_outcomes):
