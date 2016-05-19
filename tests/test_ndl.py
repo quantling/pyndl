@@ -66,7 +66,6 @@ def test_compare_weights_parallel():
     result_not_parallel = ndl.dict_ndl(events, alphas, betas, all_outcomes)
     result_parallel = ndl.dict_ndl_parrallel(file_path, alphas, betas, all_outcomes, frequency_in_event_file=True)
 
-
     for outcome, cue_dict in result_parallel.items():
         for cue in cue_dict:
             assert result_parallel[outcome][cue] == result_not_parallel[outcome][cue]
