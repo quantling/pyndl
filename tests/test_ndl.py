@@ -26,7 +26,7 @@ all_outcomes = list(outcomes.keys())
 cue_map, outcome_map = ndl.generate_mapping(file_path,number_of_processes=2)
 
 alpha = 0.1
-betas = (0.1,0.1)
+betas = (0.1, 0.1)
 
 
 def test_compare_weights_numpy():
@@ -46,7 +46,7 @@ def test_compare_weights_numpy():
     unequal = list()
     for outcome, cues in result_dict_ndl.items():
         for cue in cues:
-            if not np.isclose(result_dict_ndl[outcome][cue], result_numpy_ndl[outcome_map[outcome]][cue_map[cue]], rtol=0, atol=0):
+            if not np.isclose(result_dict_ndl[outcome][cue], result_numpy_ndl[outcome_map[outcome]][cue_map[cue]], rtol=1e-5, atol=1e-8):
                 unequal.append((outcome, cue, result_dict_ndl[outcome][cue], result_numpy_ndl[outcome_map[outcome]][cue_map[cue]]))
 
     #print(unequal)
