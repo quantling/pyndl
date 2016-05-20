@@ -3,6 +3,12 @@ import multiprocessing
 import time
 
 import numpy as np
+
+try:
+    from numba import jit
+except ImportError:
+    jit = lambda x: x
+
 from . import count
 
 def events(event_path, *, frequency=False):
@@ -210,6 +216,20 @@ def dict_ndl_simple(event_list, alpha, betas, all_outcomes):
     return weights
 
 
+@jit
+def _update_numpy_array_inplace(weights, cue_indices, outcome_indices, all_outcome_indices, alpha, beta1, beta2, lambda_):
+    for outcome_index in all_outcome_indices:
+        association_strength = np.sum(weights[outcome_index][cue_indices])
+        if outcome_index in outcome_indices:
+            update = beta1 * (lambda_ - association_strength)
+        else:
+            update = beta2 * (0 - association_strength)
+        for cue_index in cue_indices:
+            weights[outcome_index][cue_index] += alpha * update
+
+
+
+
 def numpy_ndl_simple(event_list, alpha, betas, all_outcomes, *, cue_map, outcome_map):
     """
     Calculate the weigths for all_outcomes over all events in event_file.
@@ -249,16 +269,7 @@ def numpy_ndl_simple(event_list, alpha, betas, all_outcomes, *, cue_map, outcome
     for cues, outcomes in event_list:
         cue_indices = [cue_map[cue] for cue in cues]
         outcome_indices = [outcome_map[outcome] for outcome in outcomes]
-        for outcome_index in all_outcome_indices:
-            #association_strength = np.sum(weights[outcome_index][cue_indices])  # fancy indexing, this seems slower --Tino
-            association_strength = np.sum(weights[outcome_index][cue_index] for cue_index in cue_indices)
-            if outcome_index in outcome_indices:
-                update = beta1 * (lambda_ - association_strength)
-            else:
-                update = beta2 * (0 - association_strength)
-            for cue_index in cue_indices:
-                weights[outcome_index][cue_index] += alpha * update
-
+        _update_numpy_array_inplace(weights, cue_indices, outcome_indices, all_outcome_indices, alpha, beta1, beta2, lambda_)
     return weights
 
 
