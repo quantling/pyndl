@@ -47,7 +47,9 @@ def events(event_path, *, frequency=False):
                     yield (cues, outcomes)
 
 
-def dict_ndl_parrallel(event_path, alpha, betas, all_outcomes, *, number_of_processes=2, sequence=10, frequency_in_event_file=False):
+def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *,
+                       number_of_processes=2, sequence=10,
+                       frequency_in_event_file=False):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -57,8 +59,8 @@ def dict_ndl_parrallel(event_path, alpha, betas, all_outcomes, *, number_of_proc
     Parameters
     ==========
     event_path : path to the event file
-    alpha : float
-        saliency of all cues
+    alpha : dict
+        saliency dict of all cues
     betas : dict
         a (default)dict having outcomes as keys and a value below 1 as value
     all_outcomes : list
@@ -82,7 +84,7 @@ def dict_ndl_parrallel(event_path, alpha, betas, all_outcomes, *, number_of_proc
     with multiprocessing.Pool(number_of_processes) as pool:
 
         job = JobCalculateWeights(event_path,
-                                  alpha,
+                                  alphas,
                                   betas,
                                   frequency_in_event_file=frequency_in_event_file)
 
@@ -90,12 +92,68 @@ def dict_ndl_parrallel(event_path, alpha, betas, all_outcomes, *, number_of_proc
 
         partlists_of_outcomes = slice_list(all_outcomes,sequence)
 
-        for result in pool.imap_unordered(job.dict_ndl_weight_calculator, partlists_of_outcomes):
+        for result in pool.imap_unordered(job.dict_ndl_weight_calculator,
+                                          partlists_of_outcomes):
             for outcome, cues in result:
                 weights[outcome] = cues
 
         return weights
 
+def numpy_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, cue_map,
+                        outcome_map, number_of_processes=2, sequence=10,
+                        frequency_in_event_file=False):
+    """
+    Calculate the weights for all_outcomes over all events in event_file
+    given by the files path.
+
+    This is a parallel python implementation using dicts and multiprocessing.
+
+    Parameters
+    ==========
+    event_path : path to the event file
+    alphas : numpy.array
+        saliency array of all cues
+    betas : (float, float)
+    all_outcomes : list
+        a list of all outcomes of interest
+    cue_map: dict
+        a mapping between cues and index for the numpy array
+    outcome_map: dict
+        a mapping between outcomes and index for the numpy array
+    number_of_processes : int
+        a integer giving the number of processes in which the job should
+        executed
+    sequence : int
+        a integer giving the length of sublists generated from all outcomes
+    frequency_in_event_file : bool
+        is the frequency column in the event file present?
+
+    Returns
+    =======
+    weights : numpy.array of shape len(outcomes), len(cues)
+        weights[outcome_index][cue_index] gives the weight between outcome and cue.
+
+    """
+
+
+    with multiprocessing.Pool(number_of_processes) as pool:
+
+        job = JobCalculateWeights(event_path,
+                                  alphas,
+                                  betas,
+                                  frequency_in_event_file=frequency_in_event_file,
+                                  cue_map=cue_map,
+                                  outcome_map=outcome_map)
+
+        weights = np.zeros((len(outcome_map), len(cue_map)), dtype=float)
+
+        partlists_of_outcomes = slice_list(all_outcomes,sequence)
+
+        for result in pool.imap_unordered(job.numpy_ndl_weight_calculator, partlists_of_outcomes):
+            weights = np.add(weights, result)
+
+
+        return weights
 
 class JobCalculateWeights():
     """
@@ -105,18 +163,25 @@ class JobCalculateWeights():
 
     """
 
-    def __init__(self, event_path, alpha, betas, *,
-                 frequency_in_event_file=False):
+    def __init__(self, event_path, alphas, betas, *,
+                 frequency_in_event_file=False, cue_map=None, outcome_map=None):
         self.event_path = event_path
-        self.alpha = alpha
+        self.alphas = alphas
         self.betas = betas
         self.frequency_in_event_file = frequency_in_event_file
+        self.cue_map = cue_map
+        self.outcome_map = outcome_map
 
     def dict_ndl_weight_calculator(self,part_outcomes):
         events_ = events(self.event_path, frequency=self.frequency_in_event_file)
-        weights = dict_ndl(events_, self.alpha, self.betas, part_outcomes)
+        weights = dict_ndl(events_, self.alphas, self.betas, part_outcomes)
         return [(outcome,cues) for outcome, cues in weights.items()]
 
+    def numpy_ndl_weight_calculator(self,part_outcomes):
+        events_ = events(self.event_path, frequency=self.frequency_in_event_file)
+        weigths = numpy_ndl(events_, self.alphas, self.betas, part_outcomes,
+                            cue_map=self.cue_map, outcome_map=self.outcome_map)
+        return weigths
 
 
 def dict_ndl(event_list, alphas, betas, all_outcomes):
@@ -217,7 +282,9 @@ def dict_ndl_simple(event_list, alpha, betas, all_outcomes):
 
 
 @jit
-def _update_numpy_array_inplace(weights, cue_indices, outcome_indices, all_outcome_indices, alpha, beta1, beta2, lambda_):
+def _update_numpy_array_inplace(weights, cue_indices, outcome_indices,
+                                all_outcome_indices, alpha, beta1, beta2,
+                                lambda_):
     for outcome_index in all_outcome_indices:
         association_strength = np.sum(weights[outcome_index][cue_indices])
         if outcome_index in outcome_indices:
@@ -227,6 +294,59 @@ def _update_numpy_array_inplace(weights, cue_indices, outcome_indices, all_outco
         for cue_index in cue_indices:
             weights[outcome_index][cue_index] += alpha * update
 
+
+def numpy_ndl(event_list, alphas, betas, all_outcomes, *, cue_map, outcome_map):
+    """
+    Calculate the weigths for all_outcomes over all events in event_file.
+
+    This is a python implementation using numpy.
+
+    Parameters
+    ==========
+    event_path : str
+        generates cues, outcomes pairs or the path to the event file
+    alphas : numpy array
+        saliency array of all cues
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    all_outcomes : list
+        a list of all outcomes of interest
+    cue_map : dict
+        has cues as keys and int as values, where the int represents the index in the
+        numpy array.
+    outcome_map : dict
+        has outcomes as keys and int as values, where the int represents the index in the
+        numpy array.
+
+    Returns
+    =======
+    weights : numpy.array of shape len(outcomes), len(cues)
+        weights[outcome_index][cue_index] gives the weight between outcome and cue.
+
+    """
+    lambda_ = 1.0
+
+    all_outcome_indices = [outcome_map[outcome] for outcome in all_outcomes]
+
+    weights = np.zeros((len(outcome_map), len(cue_map)), dtype=float)
+
+    beta1, beta2 = betas
+
+    if isinstance(event_list, str):
+        event_list = events(event_list)
+
+    for cues, outcomes in event_list:
+        cue_indices = [cue_map[cue] for cue in cues]
+        outcome_indices = [outcome_map[outcome] for outcome in outcomes]
+        for outcome_index in all_outcome_indices:
+            association_strength = np.sum(weights[outcome_index][cue_indices])
+            if outcome_index in outcome_indices:
+                update = beta1 * (lambda_ - association_strength)
+            else:
+                update = beta2 * (0 - association_strength)
+            for cue_index in cue_indices:
+                weights[outcome_index][cue_index] += alphas[cue_index] * update
+    return weights
 
 
 
@@ -241,6 +361,7 @@ def numpy_ndl_simple(event_list, alpha, betas, all_outcomes, *, cue_map, outcome
     event_path : str
         generates cues, outcomes pairs or the path to the event file
     alpha : float
+        saliency of all cues
     betas : (float, float)
         one value for successful prediction (reward) one for punishment
     all_outcomes : list
@@ -266,10 +387,15 @@ def numpy_ndl_simple(event_list, alpha, betas, all_outcomes, *, cue_map, outcome
 
     all_outcome_indices = [outcome_map[outcome] for outcome in all_outcomes]
 
+    if isinstance(event_list, str):
+        event_list = events(event_list)
+
     for cues, outcomes in event_list:
         cue_indices = [cue_map[cue] for cue in cues]
         outcome_indices = [outcome_map[outcome] for outcome in outcomes]
-        _update_numpy_array_inplace(weights, cue_indices, outcome_indices, all_outcome_indices, alpha, beta1, beta2, lambda_)
+        _update_numpy_array_inplace(weights, cue_indices, outcome_indices,
+                                    all_outcome_indices, alpha, beta1, beta2,
+                                    lambda_)
     return weights
 
 
