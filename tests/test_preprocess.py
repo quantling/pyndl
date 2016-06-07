@@ -8,9 +8,11 @@ import pytest
 from ..preprocess import (create_event_file, filter_event_file,
                           create_binary_event_files, bandsample,
                           event_generator, write_events,
-                          _job_binary_event_file, JobFilter, to_bytes, to_integer)
+                          _job_binary_event_file, JobFilter, to_bytes, to_integer, read_binary_file)
 
-from ..count import cues_outcomes, load_counter
+from ..count import (cues_outcomes, load_counter)
+
+from .. import ndl
 
 TEST_ROOT = os.path.dirname(__file__)
 EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
@@ -227,6 +229,35 @@ def test_write_events():
 def test_byte_conversion():
     a = 184729172
     assert a == to_integer(to_bytes(a))
+
+def test_read_binary_file():
+    file_path = "resources/event_file_tiny.tab"
+    binary_path = "binary_resources/"
+
+    abs_file_path = os.path.join(TEST_ROOT, file_path)
+    abs_binary_path = os.path.join(TEST_ROOT, binary_path)
+    abs_binary_file_path = os.path.join(abs_binary_path, "events_0_0.dat")
+
+    cue_id_map, outcome_id_map = ndl.generate_mapping(abs_file_path)
+
+    create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map, outcome_id_map, overwrite=True)
+
+    bin_events = read_binary_file(abs_binary_file_path)
+    events = ndl.events(abs_file_path, frequency=True)
+
+    for event, bin_event in zip(events,bin_events):
+        cues, outcomes = event
+        bin_cues, bin_outcomes = bin_event
+        if len(cues) != len(bin_cues):
+            raise ValueError('Cues have diffrent length')
+        if len(outcomes) != len(bin_outcomes):
+            raise ValueError('Cues have diffrent length')
+
+        for cue, bin_cue in zip(cues, bin_cues):
+            assert cue_id_map[cue] == bin_cue
+
+        for outcome, bin_outcome in zip(outcomes, bin_outcomes):
+            assert outcome_id_map[outcome] == bin_outcome
 
 
 def test_preprocessing():
