@@ -4,12 +4,12 @@ import time
 
 import numpy as np
 
+from . import count
+
 try:
     from numba import jit
 except ImportError:
     jit = lambda x: x
-
-from . import count
 
 def events(event_path, *, frequency=False):
     """
@@ -293,7 +293,6 @@ def _update_numpy_array_inplace(weights, cue_indices, outcome_indices,
             update = beta2 * (0 - association_strength)
         for cue_index in cue_indices:
             weights[outcome_index][cue_index] += alpha * update
-
 
 def numpy_ndl(event_list, alphas, betas, all_outcomes, *, cue_map, outcome_map):
     """
