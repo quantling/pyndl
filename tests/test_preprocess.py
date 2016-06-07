@@ -8,7 +8,7 @@ import pytest
 from ..preprocess import (create_event_file, filter_event_file,
                           create_binary_event_files, bandsample,
                           event_generator, write_events,
-                          _job_binary_event_file, JobFilter)
+                          _job_binary_event_file, JobFilter, to_bytes, to_integer)
 
 from ..count import cues_outcomes, load_counter
 
@@ -223,6 +223,10 @@ def test_write_events():
         # traverse generator
         for event in events:
             pass
+
+def test_byte_conversion():
+    a = 184729172
+    assert a == to_integer(to_bytes(a))
 
 
 def test_preprocessing():

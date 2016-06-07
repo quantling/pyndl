@@ -493,9 +493,48 @@ MAGIC_NUMBER = 14159265
 CURRENT_VERSION_WITH_FREQ = 215
 CURRENT_VERSION = 2048 + 215
 
+def read_binary_file(binary_file_path):
+    with open(binary_file_path, "rb") as binary_file:
+        magic_number = to_integer(binary_file.read(4))
+        if not magic_number == MAGIC_NUMBER:
+            raise ValueError('Header does not match the magic number')
+        version = to_integer(binary_file.read(4))
+        if version == CURRENT_VERSION_WITH_FREQ:
+            frequency = True
+        elif version == CURRENT_VERSION:
+            frequency = False
+        else:
+            raise ValueError('Version is incorrectly specified')
+
+        nr_of_events = to_integer(binary_file.read(4))
+        if not frequency:
+            for event in range(nr_of_events):
+                # Cues
+                number_of_cues = to_integer(binary_file.read(4))
+                cue_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_cues)]
+                # outcomes
+                number_of_outcomes = to_integer(binary_file.read(4))
+                outcome_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_outcomes)]
+                yield (cue_ids,outcome_ids)
+        else:
+            for event in range(nr_of_events):
+                #cues
+                number_of_cues = to_integer(binary_file.read(4))
+                cue_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_cues)]
+                #outcomes
+                number_of_outcomes = to_integer(binary_file.read(4))
+                outcome_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_outcomes)]
+                # frequency
+
+                frequency_counter = to_integer(binary_file.read(4))
+                for appearance in frequency_counter:
+                    yield (cue_ids,outcome_ids)
 
 def to_bytes(int_):
     return int_.to_bytes(4, 'little')
+
+def to_integer(byte_):
+    return int.from_bytes(byte_, "little")
 
 
 def write_events(events, filename, *, start=0, stop=4294967295, store_freq=False):
@@ -525,7 +564,6 @@ def write_events(events, filename, *, start=0, stop=4294967295, store_freq=False
         ids for every cue
         nr of outcomes in first event
         ids for every outcome
-        frequency
         nr of cues in second event
         ...
 
@@ -587,7 +625,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, store_freq=False
                 out_file.write(to_bytes(frequency))
             else:
                 if frequency != 1:
-                    raise ValueError('All frequencies need to 1 or use store_freq=True.')
+                    raise ValueError('All frequencies need to be 1 or use store_freq=True.')
 
         if n_events != n_events_estimate and not n_events == 0:
             # the generator was exhausted earlier
@@ -733,4 +771,3 @@ def create_binary_event_files(event_file, path_name, cue_id_map,
 
 # for example code see function test_preprocess in file
 # ./tests/test_preprocess.py.
-
