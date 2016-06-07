@@ -9,7 +9,7 @@ try:
 except ImportError:
     jit = lambda x: x
 
-from . import count
+import count
 
 def events(event_path, *, frequency=False):
     """
