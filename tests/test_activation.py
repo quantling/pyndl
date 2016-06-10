@@ -7,15 +7,17 @@ import gc
 def test_activation_matrix():
     weights = np.array([[0, 1], [1, 0], [0, 0]])
     cues = ['c1', 'c2', 'c3']
-    events_cues = [['c1', 'c2'], ['c1', 'c3'], ['c2'], ['c1', 'c1']]
+    events_cues = [['c1', 'c2', 'c3po'], ['c1', 'c3'], ['c2'], ['c1', 'c1']]
     reference_activations = np.array([[1, 1], [0, 1], [1, 0], [0, 2]])
+    reference_new_cues = {'c3po'}
 
-    activations = activation_matrix(events_cues, weights, cues, numThreads=1)
-    activations_mp = activation_matrix(events_cues, weights, cues, numThreads=3)
+    activations, new_cues = activation_matrix(events_cues, weights, cues, numThreads=1)
+    activations_mp, new_cues_mp = activation_matrix(events_cues, weights, cues, numThreads=3)
 
     assert np.allclose(reference_activations, activations)
     assert np.allclose(reference_activations, activations_mp)
-    assert np.allclose(activations, activations_mp)
+    assert reference_new_cues == new_cues
+    assert reference_new_cues == new_cues_mp
 
 
 def dont_test_activation_matrix_large():
@@ -47,10 +49,10 @@ def dont_test_activation_matrix_large():
 
     print("Start test...")
     gc.collect()
-    asp = time_test(activation_matrix,
+    asp, ncsp = time_test(activation_matrix,
                     of="single threaded")(huge_events_cues, huge_weights, huge_cues, numThreads=1)
     gc.collect()
-    amp = time_test(activation_matrix,
+    amp, ncmp = time_test(activation_matrix,
                     of="multi threaded (8 threads)")(huge_events_cues, huge_weights, huge_cues, numThreads=8)
     del huge_weights
     del huge_events_cues
