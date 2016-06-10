@@ -40,7 +40,7 @@ def _mp_activation_matrix(events_cues, weights, numThreads):
     return activations
 
 
-def activation_matrix(events, weights, cues, numThreads=1):
+def activation_matrix(events, weights, cues, numThreads=1, unique_cues=True):
     """Estimate activations for given event cues
 
     Memory overhead for multiprocessing is one copy of weights
@@ -51,6 +51,7 @@ def activation_matrix(events, weights, cues, numThreads=1):
         weights: Weight matrix as 2d numpy.array with shape (cues, weights)
         cues: List of cue strings labeling weights axis 0 or dict with cue_string: row_index
         numThreads: number of cores for multiprocessing. Has memory overhead if > 1 (see above).
+        unique_cues: ignore duplicate cues in events. True behaves like R ndl2.
     Returns:
         activation: matrix
         new_cues: cues not present in weight matrix and ignored
@@ -67,6 +68,8 @@ def activation_matrix(events, weights, cues, numThreads=1):
         if isinstance(event, str):
             event = event.split("_")
         event_indexed = [cues.get(cue) for cue in event]
+        if unique_cues:
+            event_indexed = list(set(event_indexed))
         new_cues_event = {event[i] for i, c in enumerate(event_indexed) if c is None}
         if len(new_cues_event) > 0:
             new_cues |= new_cues_event
