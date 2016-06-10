@@ -31,6 +31,8 @@ def _mp_activation_matrix(events_cues, weights, cues, numThreads):
     activations_dim = (len(events_cues), weights.shape[1])
     shared_activations = mp.RawArray(ctypes.c_double, int(np.prod(activations_dim)))
     weights_dim = weights.shape
+    if not weights.flags.contiguous:
+        weights = weights.copy()
     shared_weights = mp.sharedctypes.copy(np.ctypeslib.as_ctypes(np.float64(weights)))
 
     initargs = (shared_weights, weights_dim, shared_activations, activations_dim)
