@@ -1,10 +1,12 @@
 from collections import defaultdict, OrderedDict
 import multiprocessing
 import time
+import os
 
 import numpy as np
 
 from . import count
+from . import preprocess
 
 try:
     from numba import jit
@@ -106,7 +108,7 @@ def numpy_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, cue_map,
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
 
-    This is a parallel python implementation using dicts and multiprocessing.
+    This is a parallel python implementation using numpy and multiprocessing.
 
     Parameters
     ==========
@@ -155,6 +157,59 @@ def numpy_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, cue_map,
 
         return weights
 
+def binary_numpy_ndl_parrallel(binary_event_path, cue_map, outcome_map,
+                                alphas, betas, all_outcome_indices, *,
+                                number_of_processes=2, sequence=10):
+    """
+    Calculate the weights for all_outcomes over all events in event_file
+    given by the files path.
+
+    This is a parallel python implementation using numpy, multiprocessing and
+    the binary format defined in preprocess.py.
+
+    Parameters
+    ==========
+    binary_event_path : path to the binary event file(s)
+    cue_map: dict
+        a mapping between cues and index for the numpy array
+    outcome_map: dict
+        a mapping between outcomes and index for the numpy array
+    alphas : numpy.array
+        saliency array of all cues
+    betas : (float, float)
+    all_outcome_indices : list
+        a list of all outcome indeces of interest
+    number_of_processes : int
+        a integer giving the number of processes in which the job should
+        executed
+    sequence : int
+        a integer giving the length of sublists generated from all outcomes
+
+    Returns
+    =======
+    weights : numpy.array of shape len(outcomes), len(cues)
+        weights[outcome_index][cue_index] gives the weight between outcome and cue.
+
+    """
+
+    weights = np.zeros((len(outcome_map),len(cue_map)), dtype=float)
+
+    with multiprocessing.Pool(number_of_processes) as pool:
+
+        job = JobCalculateWeights(binary_event_path,
+                                  alphas,
+                                  betas,
+                                  cue_map=cue_map,
+                                  outcome_map=outcome_map)
+
+        partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
+
+        for result in pool.imap_unordered(job.binary_numpy_ndl_weight_calculator, partlists_of_outcome_indices):
+            weights = np.add(weights, result)
+
+
+        return weights
+
 class JobCalculateWeights():
     """
     Stores the values of alphas and betas an the path to the event file
@@ -182,6 +237,22 @@ class JobCalculateWeights():
         weigths = numpy_ndl(events_, self.alphas, self.betas, part_outcomes,
                             cue_map=self.cue_map, outcome_map=self.outcome_map)
         return weigths
+
+    def binary_numpy_ndl_weight_calculator(self,part_outcome_indices):
+        binary_files = [os.path.join(self.event_path, binary_file)
+                        for binary_file in os.listdir(self.event_path)
+                        if os.path.isfile(os.path.join(self.event_path, binary_file))]
+        binary_files.reverse()
+        weights_binary = np.zeros((len(self.outcome_map),len(self.cue_map)), dtype=float)
+
+        for binary_file in binary_files:
+            binary_event = preprocess.read_binary_file(binary_file)
+            weights_per_step = binary_numpy_ndl(binary_event, weights_binary,
+                                                    self.alphas, self.betas,
+                                                    part_outcome_indices)
+            weights_binary = weights_per_step
+
+        return weights_binary
 
 
 def dict_ndl(event_list, alphas, betas, all_outcomes):
@@ -337,6 +408,45 @@ def numpy_ndl(event_list, alphas, betas, all_outcomes, *, cue_map, outcome_map):
     for cues, outcomes in event_list:
         cue_indices = [cue_map[cue] for cue in cues]
         outcome_indices = [outcome_map[outcome] for outcome in outcomes]
+        for outcome_index in all_outcome_indices:
+            association_strength = np.sum(weights[outcome_index][cue_indices])
+            if outcome_index in outcome_indices:
+                update = beta1 * (lambda_ - association_strength)
+            else:
+                update = beta2 * (0 - association_strength)
+            for cue_index in cue_indices:
+                weights[outcome_index][cue_index] += alphas[cue_index] * update
+    return weights
+
+def binary_numpy_ndl(binary_event_list, weights, alphas, betas, all_outcome_indices):
+    """
+    Calculate the weigths for all_outcomes over all events in a binary_event_file.
+
+    This is a python implementation using numpy.
+
+    Parameters
+    ==========
+    binary_event_list : TODO
+        generates cues, outcomes pairs or the path to the event file
+    alphas : numpy array
+        saliency array of all cues
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    all_outcomes : list
+        a list of all outcomes of interest
+
+    Returns
+    =======
+    weights : numpy.array of shape len(outcomes), len(cues)
+        weights[outcome_index][cue_index] gives the weight between outcome and cue.
+
+    """
+
+    lambda_ = 1.0
+
+    beta1, beta2 = betas
+
+    for cue_indices, outcome_indices in binary_event_list:
         for outcome_index in all_outcome_indices:
             association_strength = np.sum(weights[outcome_index][cue_indices])
             if outcome_index in outcome_indices:
