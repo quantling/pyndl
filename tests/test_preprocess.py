@@ -11,7 +11,7 @@ from ..preprocess import (create_event_file, filter_event_file,
                           _job_binary_event_file, JobFilter, to_bytes, to_integer, read_binary_file)
 
 from ..count import (cues_outcomes, load_counter)
-
+from .test_ndl import clock
 from .. import ndl
 
 TEST_ROOT = os.path.dirname(__file__)
