@@ -8,7 +8,7 @@ def test_activation_matrix():
     weights = np.array([[0, 1], [1, 0], [0, 0]])
     cues = ['c1', 'c2', 'c3']
     events_cues = [['c1', 'c2', 'c3po'], ['c1', 'c3'], ['c2'], ['c1', 'c1']]
-    reference_activations = np.array([[1, 1], [0, 1], [1, 0], [0, 2]])
+    reference_activations = np.array([[1, 1], [0, 1], [1, 0], [0, 1]])
     reference_new_cues = {'c3po'}
 
     activations, new_cues = activation_matrix(events_cues, weights, cues, numThreads=1)
@@ -59,4 +59,3 @@ def dont_test_activation_matrix_large():
     gc.collect()
     print("Compare results...")
     assert np.allclose(asp, amp), "single and multi threaded had different results"
-
