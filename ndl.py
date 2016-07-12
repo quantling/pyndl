@@ -13,6 +13,9 @@ try:
 except ImportError:
     jit = lambda x: x
 
+# Path where the binary resources are temporaly stored
+BINARY_PATH = os.path.join(os.path.dirname(__file__), "tests/binary_resources/")
+
 def events(event_path, *, frequency=False):
     """
     Yields events for all events in event_file.
@@ -47,7 +50,6 @@ def events(event_path, *, frequency=False):
                 frequency = int(frequency)
                 for _ in range(frequency):
                     yield (cues, outcomes)
-
 
 def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *,
                        number_of_processes=2, sequence=10,
@@ -157,8 +159,7 @@ def numpy_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, cue_map,
 
         return weights
 
-def binary_numpy_ndl_parrallel(binary_event_path, cue_map, outcome_map,
-                                alphas, betas, all_outcome_indices, *,
+def binary_numpy_ndl_parrallel(event_path, alphas, betas, *,
                                 number_of_processes=2, sequence=10):
     """
     Calculate the weights for all_outcomes over all events in event_file
@@ -169,16 +170,12 @@ def binary_numpy_ndl_parrallel(binary_event_path, cue_map, outcome_map,
 
     Parameters
     ==========
-    binary_event_path : path to the binary event file(s)
-    cue_map: dict
-        a mapping between cues and index for the numpy array
-    outcome_map: dict
-        a mapping between outcomes and index for the numpy array
-    alphas : numpy.array
+    event_path : str
+        path to the event file
+    alphas : numpy array
         saliency array of all cues
     betas : (float, float)
-    all_outcome_indices : list
-        a list of all outcome indeces of interest
+        one value for successful prediction (reward) one for punishment
     number_of_processes : int
         a integer giving the number of processes in which the job should
         executed
@@ -192,11 +189,20 @@ def binary_numpy_ndl_parrallel(binary_event_path, cue_map, outcome_map,
 
     """
 
+    cue_map, outcome_map, all_outcome_indices = generate_mapping(
+                                                    event_path,
+                                                    number_of_processes=number_of_processes,
+                                                    binary=True)
+
+    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
+                                         outcome_map, overwrite=True,
+                                         number_of_processes=number_of_processes)
+
     weights = np.zeros((len(outcome_map),len(cue_map)), dtype=float)
 
     with multiprocessing.Pool(number_of_processes) as pool:
 
-        job = JobCalculateWeights(binary_event_path,
+        job = JobCalculateWeights(BINARY_PATH,
                                   alphas,
                                   betas,
                                   cue_map=cue_map,
@@ -243,11 +249,12 @@ class JobCalculateWeights():
                         for binary_file in os.listdir(self.event_path)
                         if os.path.isfile(os.path.join(self.event_path, binary_file))]
         binary_files.reverse()
+
         weights_binary = np.zeros((len(self.outcome_map),len(self.cue_map)), dtype=float)
 
         for binary_file in binary_files:
-            binary_event = preprocess.read_binary_file(binary_file)
-            weights_per_step = binary_numpy_ndl(binary_event, weights_binary,
+            binary_events = preprocess.read_binary_file(binary_file)
+            weights_per_step = binary_numpy_ndl(binary_events, weights_binary,
                                                     self.alphas, self.betas,
                                                     part_outcome_indices)
             weights_binary = weights_per_step
@@ -426,8 +433,10 @@ def binary_numpy_ndl(binary_event_list, weights, alphas, betas, all_outcome_indi
 
     Parameters
     ==========
-    binary_event_list : TODO
-        generates cues, outcomes pairs or the path to the event file
+    binary_event_list : generator
+        generates cues, outcomes pairs
+    weights: numpy array
+        weight matrix on which the algortihm learns
     alphas : numpy array
         saliency array of all cues
     betas : (float, float)
@@ -507,7 +516,6 @@ def numpy_ndl_simple(event_list, alpha, betas, all_outcomes, *, cue_map, outcome
                                     lambda_)
     return weights
 
-
 def activations(cues, weights):
     if isinstance(weights, dict):
         activations_ = defaultdict(float)
@@ -515,8 +523,6 @@ def activations(cues, weights):
             for cue in cues:
                 activations_[outcome] += cue_dict[cue]
         return activations_
-
-
 
 def binary_ndl(events, outcomes, number_of_cues, alphas, betas):
     """
@@ -555,7 +561,7 @@ def binary_ndl(events, outcomes, number_of_cues, alphas, betas):
 # NOTE: In the original code some stuff was differently handled for multiple
 # cues and multiple outcomes.
 
-def generate_mapping(event_path, number_of_processes=2):
+def generate_mapping(event_path, number_of_processes=2, binary=False): # TODO find better name
     """
     Generates OrderedDicts of all cues and outcomes to use indizes in the numpy
     implementation.
@@ -567,14 +573,26 @@ def generate_mapping(event_path, number_of_processes=2):
     number_of_processes : int
          integer of how many processes should be used
 
+    Returns
+    =======
+    cue_map: OrderedDict
+        a OrderedDict mapping all cues to indizes
+    outcome_map: OrderedDict
+        a OrderedDict mapping all outcomes to indizes
+    all_outcomes : list
+        a list of all outcomes in the event file
     """
     cues, outcomes = count.cues_outcomes(event_path, number_of_processes=number_of_processes)
-    cue_list = list(cues.keys())
-    outcome_list = list(outcomes.keys())
-    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cue_list)))
-    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcome_list)))
+    all_cues = list(cues.keys())
+    all_outcomes = list(outcomes.keys())
+    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(all_cues)))
+    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(all_outcomes)))
 
-    return (cue_map, outcome_map)
+    if binary:
+        all_outcome_indices = [outcome_map[outcome] for outcome in all_outcomes]
+        return (cue_map, outcome_map, all_outcome_indices)
+    else:
+        return (cue_map, outcome_map, all_outcomes)
 
 def slice_list(li, sequence):
     """
