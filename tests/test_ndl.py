@@ -21,9 +21,8 @@ TEST_ROOT = os.path.dirname(__file__)
 file_path = os.path.join(TEST_ROOT, 'resources/event_file_tiny.tab')#minigeco_wordcues_mini.tab')
 reference_path = os.path.join(TEST_ROOT, 'reference/weights_event_tiny_R_ndl2.csv')
 cues, outcomes = count.cues_outcomes(file_path)
-all_outcomes = list(outcomes.keys())
 
-cue_map, outcome_map = ndl.generate_mapping(file_path,number_of_processes=2)
+cue_map, outcome_map, all_outcomes = ndl.generate_mapping(file_path,number_of_processes=2)
 
 alpha = 0.1
 betas = (0.1, 0.1)
@@ -116,10 +115,10 @@ def test_compare_weights_numpy_binary():
     abs_binary_path = os.path.join(TEST_ROOT, "binary_resources/")
 
     alpha = 0.1
-    cue_map, outcome_map = ndl.generate_mapping(abs_file_path,number_of_processes=2)
+#    cue_map, outcome_map = ndl.generate_mapping(abs_file_path,number_of_processes=2)
     alphas, betas = generate_alpha_beta(abs_file_path, cue_map, outcome_map, fixed_alpha=alpha, fixed_beta=(0.1, 0.1), numpy=True)
-    cues, outcomes = count.cues_outcomes(abs_file_path)
-    all_outcomes = list(outcomes.keys())
+#    cues, outcomes = count.cues_outcomes(abs_file_path)
+#    all_outcomes = list(outcomes.keys())
 
 
     preprocess.create_binary_event_files(abs_file_path, abs_binary_path, cue_map, outcome_map, overwrite=True)
@@ -165,39 +164,30 @@ def test_compare_weights_binary_numpy_ndl_parrallel():
     implementation of binary_numpy_ndl is equal.
 
     """
-
     # preprocess and create binary event_file
     abs_file_path = os.path.join(TEST_ROOT, "resources/event_file_tiny.tab")
     abs_binary_path = os.path.join(TEST_ROOT, "binary_resources/")
 
-    alpha = 0.1
-    cue_map, outcome_map = ndl.generate_mapping(abs_file_path,number_of_processes=2)
-    alphas, betas = generate_alpha_beta(abs_file_path, cue_map, outcome_map, fixed_alpha=alpha, fixed_beta=(0.1, 0.1), numpy=True)
+    cue_map, outcome_map, all_outcome_indices= ndl.generate_mapping(abs_file_path,number_of_processes=2,binary=True)
+    alphas, betas = generate_alpha_beta(abs_file_path, cue_map, outcome_map, fixed_alpha=0.1, fixed_beta=(0.1, 0.1), numpy=True)
     cues, outcomes = count.cues_outcomes(abs_file_path)
-    all_outcomes = list(outcomes.keys())
-
-
-    preprocess.create_binary_event_files(abs_file_path, abs_binary_path, cue_map, outcome_map, overwrite=True)
-
-    weights_binary = np.zeros((len(outcome_map),len(cue_map)), dtype=float)
-    binary_files = [os.path.join(abs_binary_path, binary_file) for binary_file in os.listdir(abs_binary_path) if os.path.isfile(os.path.join(abs_binary_path, binary_file))]
-    binary_files.reverse()
-    all_outcome_indices = [outcome_map[outcome] for outcome in all_outcomes]
-    duration_binary = 0
 
     # parrallel version
     weights_parrallel, duration_parrallel = clock(ndl.binary_numpy_ndl_parrallel,
-                                        (abs_binary_path, cue_map, outcome_map, alphas, betas, all_outcome_indices), number_of_processes=4)
+                                        (abs_file_path, alphas, betas), number_of_processes=4)
 
 
     # Binary version
+    weights_binary = np.zeros((len(outcome_map),len(cue_map)), dtype=float)
+    binary_files = [os.path.join(abs_binary_path, binary_file) for binary_file in os.listdir(abs_binary_path) if os.path.isfile(os.path.join(abs_binary_path, binary_file))]
+    binary_files.reverse()
+    duration_binary = 0
+
     for binary_file in binary_files:
         binary_event = preprocess.read_binary_file(binary_file)
         weights_per_step, duration_per_step = clock(ndl.binary_numpy_ndl, (binary_event, weights_binary, alphas, betas, all_outcome_indices))
         duration_binary += duration_per_step
         weights_binary = weights_per_step
-
-    # assert duration_parrallel < duration_binary
 
     cue_indices = [cue_map[cue] for cue in cues]
     outcome_indices = [outcome_map[outcome] for outcome in outcomes]

@@ -238,7 +238,7 @@ def test_read_binary_file():
     abs_binary_path = os.path.join(TEST_ROOT, binary_path)
     abs_binary_file_path = os.path.join(abs_binary_path, "events_0_0.dat")
 
-    cue_id_map, outcome_id_map = ndl.generate_mapping(abs_file_path)
+    cue_id_map, outcome_id_map, all_outcomes = ndl.generate_mapping(abs_file_path)
 
     create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map, outcome_id_map, overwrite=True)
 
