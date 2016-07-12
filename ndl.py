@@ -251,13 +251,28 @@ class JobCalculateWeights():
         binary_files.reverse()
 
         weights_binary = np.zeros((len(self.outcome_map),len(self.cue_map)), dtype=float)
+        # TODO implementing that alpha and
+        # beta can be used from the function
+        alpha = 0.1
+        beta1 = 0.1
+        beta2 = 0.1
+        lambda_ = 1.0
 
         for binary_file in binary_files:
             binary_events = preprocess.read_binary_file(binary_file)
+            """
+            # Version not optimized for numba
             weights_per_step = binary_numpy_ndl(binary_events, weights_binary,
                                                     self.alphas, self.betas,
                                                     part_outcome_indices)
+
             weights_binary = weights_per_step
+            """
+
+            for cue_indices, outcome_indices in binary_events:
+                _update_numpy_array_inplace(weights_binary, cue_indices,
+                                            outcome_indices, part_outcome_indices,
+                                            alpha,beta1,beta2,lambda_)
 
         return weights_binary
 
