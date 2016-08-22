@@ -2,11 +2,14 @@ from collections import defaultdict, OrderedDict
 import multiprocessing
 import time
 import os
+import pyximport; pyximport.install()
 
 import numpy as np
 
 from . import count
 from . import preprocess
+from . import ndl_c
+
 
 try:
     from numba import jit
@@ -159,7 +162,7 @@ def numpy_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, cue_map,
 
         return weights
 
-def binary_numpy_ndl_parrallel(event_path, alphas, betas, *,
+def binary_numpy_ndl_parrallel(event_path, alpha, betas, lambda_, *,
                                 number_of_processes=2, sequence=10):
     """
     Calculate the weights for all_outcomes over all events in event_file
@@ -172,10 +175,12 @@ def binary_numpy_ndl_parrallel(event_path, alphas, betas, *,
     ==========
     event_path : str
         path to the event file
-    alphas : numpy array
-        saliency array of all cues
+    alpha : float
+        saliency of all cues
     betas : (float, float)
         one value for successful prediction (reward) one for punishment
+    lambda_ : float
+
     number_of_processes : int
         a integer giving the number of processes in which the job should
         executed
@@ -198,22 +203,175 @@ def binary_numpy_ndl_parrallel(event_path, alphas, betas, *,
                                          outcome_map, overwrite=True,
                                          number_of_processes=number_of_processes)
 
-    weights = np.zeros((len(outcome_map),len(cue_map)), dtype=float)
 
     with multiprocessing.Pool(number_of_processes) as pool:
-
-        job = JobCalculateWeights(BINARY_PATH,
-                                  alphas,
-                                  betas,
-                                  cue_map=cue_map,
-                                  outcome_map=outcome_map)
+        shape = (len(outcome_map),len(cue_map))
+        weights = np.zeros(shape, dtype=float)
+        job = JobCalculateWeightsInplace(BINARY_PATH,
+                                         alpha,
+                                         betas,
+                                         lambda_,
+                                         shape)
 
         partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
 
-        for result in pool.imap_unordered(job.binary_numpy_ndl_weight_calculator, partlists_of_outcome_indices):
+        for result in pool.imap_unordered(job.binary_ndl_weight_calculator, partlists_of_outcome_indices):
             weights = np.add(weights, result)
 
 
+        return weights
+
+def binary_inplace_numpy_ndl(event_path, alpha, betas, lambda_, *,
+                                       number_of_processes=2):
+    """
+    Calculate the weights for all_outcomes over all events in event_file
+    given by the files path.
+
+    Parameters
+    ==========
+    event_path : str
+        path to the event file
+    alpha : float
+        saliency of all cues
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    lambda_ : float
+
+    number_of_processes : int
+        a integer giving the number of processes in which the job should
+        executed
+
+    Returns
+    =======
+    weights : numpy.array of shape len(outcomes), len(cues)
+        weights[outcome_index][cue_index] gives the weight between outcome and cue.
+
+    """
+    # preprocessing
+    cue_map, outcome_map, all_outcome_indices = generate_mapping(
+                                                    event_path,
+                                                    number_of_processes=number_of_processes,
+                                                    binary=True)
+
+    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
+                                         outcome_map, overwrite=True,
+                                         number_of_processes=number_of_processes)
+
+
+    shape = (len(outcome_map),len(cue_map))
+    weights = np.zeros(shape, dtype=float)
+
+    binary_files = [os.path.join(BINARY_PATH, binary_file)
+                    for binary_file in os.listdir(BINARY_PATH)
+                    if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
+    binary_files.reverse()
+
+    beta1, beta2 = betas
+
+    for binary_file in binary_files:
+        ndl_c.learn_inplace(binary_file, weights, alpha, beta1, beta2, lambda_,
+                                      np.array(all_outcome_indices))
+    return weights
+
+def binary_inplace_numpy_ndl_parrallel(event_path, alpha, betas, lambda_, *,
+                                       number_of_processes=2, sequence=10):
+    """
+    Calculate the weights for all_outcomes over all events in event_file
+    given by the files path.
+
+    This is a parallel python implementation using numpy, multiprocessing and
+    the binary format defined in preprocess.py.
+
+    Parameters
+    ==========
+    event_path : str
+        path to the event file
+    alpha : float
+        saliency of all cues
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    lambda_ : float
+
+    number_of_processes : int
+        a integer giving the number of processes in which the job should
+        executed
+    sequence : int
+        a integer giving the length of sublists generated from all outcomes
+
+    Returns
+    =======
+    weights : numpy.array of shape len(outcomes), len(cues)
+        weights[outcome_index][cue_index] gives the weight between outcome and cue.
+
+    """
+
+    # preprocessing
+    cue_map, outcome_map, all_outcome_indices = generate_mapping(
+                                                    event_path,
+                                                    number_of_processes=number_of_processes,
+                                                    binary=True)
+
+    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
+                                         outcome_map, overwrite=True,
+                                         number_of_processes=number_of_processes)
+
+    shape = (len(outcome_map),len(cue_map))
+    weights = np.zeros(shape, dtype=float)
+    # multiprocessing
+    with multiprocessing.Pool(number_of_processes) as pool:
+
+        job_inplace = JobCalculateWeightsInplace(BINARY_PATH,
+                                         alpha,
+                                         betas,
+                                         lambda_,
+                                         shape)
+
+        partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
+
+        for result in pool.imap_unordered(job_inplace.binary_inplace_ndl_weight_calculator, partlists_of_outcome_indices):
+            weights = np.add(weights, result)
+
+        return weights
+
+
+class JobCalculateWeightsInplace():
+    """
+        Methods are used as workers for the multiprocessed implementations
+    """
+    def __init__(self, binary_event_path, alpha, betas, lambda_, shape):
+        binary_files = [os.path.join(binary_event_path, binary_file)
+                        for binary_file in os.listdir(binary_event_path)
+                        if os.path.isfile(os.path.join(binary_event_path, binary_file))]
+        self.binary_files = binary_files.reverse()
+        self.event_path = binary_event_path
+        self.alpha = alpha
+        beta1, beta2 = betas
+        self.beta1 = beta1
+        self.beta2 = beta2
+        self.lambda_ = lambda_
+        self.shape = shape
+
+    def binary_inplace_ndl_weight_calculator(self,part_outcome_indices):
+        weights = np.zeros(self.shape, dtype=float)
+        for binary_file in self.binary_files:
+            ndl_c.learn_inplace(binary_file, weights, self.alpha,
+                                          self.beta1, self.beta2, self.lambda_,
+                                          part_outcome_indices)
+
+        return weights
+
+    def binary_ndl_weight_calculator(self,part_outcome_indices):
+        weights = np.zeros(self.shape, dtype=float)
+
+        for binary_file in self.binary_files:
+            binary_events = preprocess.read_binary_file(binary_file)
+            for cue_indices, outcome_indices in binary_events:
+                ndl_c._update_numpy_array_inplace(weights,
+                                                  np.array(cue_indices),
+                                                  np.array(outcome_indices),
+                                                  np.array(part_outcome_indices),
+                                                  self.alpha, self.beta1,
+                                                  self.beta2, self.lambda_)
         return weights
 
 class JobCalculateWeights():
@@ -243,38 +401,6 @@ class JobCalculateWeights():
         weigths = numpy_ndl(events_, self.alphas, self.betas, part_outcomes,
                             cue_map=self.cue_map, outcome_map=self.outcome_map)
         return weigths
-
-    def binary_numpy_ndl_weight_calculator(self,part_outcome_indices):
-        binary_files = [os.path.join(self.event_path, binary_file)
-                        for binary_file in os.listdir(self.event_path)
-                        if os.path.isfile(os.path.join(self.event_path, binary_file))]
-        binary_files.reverse()
-
-        weights_binary = np.zeros((len(self.outcome_map),len(self.cue_map)), dtype=float)
-        # TODO implementing that alpha and
-        # beta can be used from the function
-        alpha = 0.1
-        beta1 = 0.1
-        beta2 = 0.1
-        lambda_ = 1.0
-
-        for binary_file in binary_files:
-            binary_events = preprocess.read_binary_file(binary_file)
-            """
-            # Version not optimized for numba
-            weights_per_step = binary_numpy_ndl(binary_events, weights_binary,
-                                                    self.alphas, self.betas,
-                                                    part_outcome_indices)
-
-            weights_binary = weights_per_step
-            """
-
-            for cue_indices, outcome_indices in binary_events:
-                _update_numpy_array_inplace(weights_binary, cue_indices,
-                                            outcome_indices, part_outcome_indices,
-                                            alpha,beta1,beta2,lambda_)
-
-        return weights_binary
 
 
 def dict_ndl(event_list, alphas, betas, all_outcomes):
@@ -323,11 +449,7 @@ def dict_ndl(event_list, alphas, betas, all_outcomes):
 
     return weights
 
-# NOTE: In the original code some stuff was differently handled for multiple
-# cues and multiple outcomes.
-
-
-def dict_ndl_simple(event_list, alpha, betas, all_outcomes):
+def dict_ndl_simple(event_list, alpha, betas, lambda_, all_outcomes):
     """
     Calculate the weigths for all_outcomes over all events in event_file.
 
@@ -351,7 +473,6 @@ def dict_ndl_simple(event_list, alpha, betas, all_outcomes):
         weights[outcome][cue] gives the weight between outcome and cue.
 
     """
-    lambda_ = 1.0
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
     weights = defaultdict(lambda: defaultdict(float))
@@ -373,7 +494,6 @@ def dict_ndl_simple(event_list, alpha, betas, all_outcomes):
 
     return weights
 
-
 @jit
 def _update_numpy_array_inplace(weights, cue_indices, outcome_indices,
                                 all_outcome_indices, alpha, beta1, beta2,
@@ -386,6 +506,8 @@ def _update_numpy_array_inplace(weights, cue_indices, outcome_indices,
             update = beta2 * (0 - association_strength)
         for cue_index in cue_indices:
             weights[outcome_index][cue_index] += alpha * update
+
+    return weights
 
 def numpy_ndl(event_list, alphas, betas, all_outcomes, *, cue_map, outcome_map):
     """
@@ -440,7 +562,8 @@ def numpy_ndl(event_list, alphas, betas, all_outcomes, *, cue_map, outcome_map):
                 weights[outcome_index][cue_index] += alphas[cue_index] * update
     return weights
 
-def binary_numpy_ndl(binary_event_list, weights, alphas, betas, all_outcome_indices):
+def binary_numpy_ndl(event_path, alpha, betas, lambda_,
+                     all_outcome_indices, *, number_of_processes=2):
     """
     Calculate the weigths for all_outcomes over all events in a binary_event_file.
 
@@ -448,8 +571,8 @@ def binary_numpy_ndl(binary_event_list, weights, alphas, betas, all_outcome_indi
 
     Parameters
     ==========
-    binary_event_list : generator
-        generates cues, outcomes pairs
+    event_path : str
+        path to the event file
     weights: numpy array
         weight matrix on which the algortihm learns
     alphas : numpy array
@@ -466,22 +589,34 @@ def binary_numpy_ndl(binary_event_list, weights, alphas, betas, all_outcome_indi
 
     """
 
-    lambda_ = 1.0
+    cue_map, outcome_map, all_outcome_indices = generate_mapping(
+                                                    event_path,
+                                                    number_of_processes=number_of_processes,
+                                                    binary=True)
+
+    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
+                                         outcome_map, overwrite=True,
+                                         number_of_processes=number_of_processes)
+
+    weights = np.zeros((len(outcome_map),len(cue_map)), dtype=float)
+
+    binary_files = [os.path.join(BINARY_PATH, binary_file)
+                    for binary_file in os.listdir(BINARY_PATH)
+                    if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
+    binary_files.reverse()
 
     beta1, beta2 = betas
 
-    for cue_indices, outcome_indices in binary_event_list:
-        for outcome_index in all_outcome_indices:
-            association_strength = np.sum(weights[outcome_index][cue_indices])
-            if outcome_index in outcome_indices:
-                update = beta1 * (lambda_ - association_strength)
-            else:
-                update = beta2 * (0 - association_strength)
-            for cue_index in cue_indices:
-                weights[outcome_index][cue_index] += alphas[cue_index] * update
+    for binary_file in binary_files:
+        binary_events = preprocess.read_binary_file(binary_file)
+        for cue_indices, outcome_indices in binary_events:
+            ndl_c._update_numpy_array_inplace(weights,
+                                              np.array(cue_indices),
+                                              np.array(outcome_indices),
+                                              np.array(all_outcome_indices),
+                                              alpha, beta1, beta2, lambda_)
+
     return weights
-
-
 
 def numpy_ndl_simple(event_list, alpha, betas, all_outcomes, *, cue_map, outcome_map):
     """
@@ -634,8 +769,6 @@ def slice_list(li, sequence):
         ii = ii+sequence
 
     return seq_list
-
-
 
 if __name__ == '__main__':
     with open('tests/resources/event_file.tab', 'rt') as event_file:
