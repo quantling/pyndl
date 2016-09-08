@@ -176,7 +176,7 @@ def test_compare_weights_numpy_binary():
     all_outcome_indices = [outcome_map[outcome] for outcome in all_outcomes]
     weights_binary, duration_binary = clock(ndl.binary_numpy_ndl,
                                             (FILE_PATH, ALPHA, BETAS,
-                                            LAMBDA_, all_outcome_indices))
+                                            LAMBDA_))
 
     unequal = compare_arrays(FILE_PATH, weights_numpy, weights_binary)
     #print(unequal)
@@ -199,15 +199,14 @@ def test_compare_weights_binary_numpy_ndl_parrallel():
 
     # parrallel version
     weights_parrallel, duration_parrallel = clock(ndl.binary_numpy_ndl_parrallel,
-                                                  (FILE_PATH, ALPHA, BETAS, LAMBDA_),
-                                                  number_of_processes=4)
+                                                  (FILE_PATH, ALPHA,
+                                                  BETAS, LAMBDA_))
 
 
     # Binary version
     weights_binary, duration_binary = clock(ndl.binary_numpy_ndl,
                                             (FILE_PATH, ALPHA,
-                                             BETAS, LAMBDA_,
-                                             all_outcome_indices))
+                                             BETAS, LAMBDA_))
 
 
     unequal = compare_arrays(FILE_PATH, weights_parrallel, weights_binary)
