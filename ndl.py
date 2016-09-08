@@ -339,10 +339,10 @@ class JobCalculateWeightsInplace():
         Methods are used as workers for the multiprocessed implementations
     """
     def __init__(self, binary_event_path, alpha, betas, lambda_, shape):
-        binary_files = [os.path.join(binary_event_path, binary_file)
+        self.binary_files = [os.path.join(binary_event_path, binary_file)
                         for binary_file in os.listdir(binary_event_path)
                         if os.path.isfile(os.path.join(binary_event_path, binary_file))]
-        self.binary_files = binary_files.reverse()
+        self.binary_files.reverse()
         self.event_path = binary_event_path
         self.alpha = alpha
         beta1, beta2 = betas
@@ -353,25 +353,31 @@ class JobCalculateWeightsInplace():
 
     def binary_inplace_ndl_weight_calculator(self,part_outcome_indices):
         weights = np.zeros(self.shape, dtype=float)
+
         for binary_file in self.binary_files:
             ndl_c.learn_inplace(binary_file, weights, self.alpha,
                                           self.beta1, self.beta2, self.lambda_,
-                                          part_outcome_indices)
+                                          np.array(part_outcome_indices))
 
         return weights
 
     def binary_ndl_weight_calculator(self,part_outcome_indices):
         weights = np.zeros(self.shape, dtype=float)
-
         for binary_file in self.binary_files:
             binary_events = preprocess.read_binary_file(binary_file)
             for cue_indices, outcome_indices in binary_events:
-                ndl_c._update_numpy_array_inplace(weights,
-                                                  np.array(cue_indices),
-                                                  np.array(outcome_indices),
-                                                  np.array(part_outcome_indices),
-                                                  self.alpha, self.beta1,
-                                                  self.beta2, self.lambda_)
+                _update_numpy_array_inplace(weights,
+                                            cue_indices, outcome_indices,
+                                            part_outcome_indices, self.alpha,
+                                            self.beta1, self.beta2,
+                                            self.lambda_)
+
+#                ndl_c._update_numpy_array_inplace(weights,
+#                                                  np.array(cue_indices),
+#                                                  np.array(outcome_indices),
+#                                                  np.array(part_outcome_indices),
+#                                                  self.alpha, self.beta1,
+#                                                  self.beta2, self.lambda_)
         return weights
 
 class JobCalculateWeights():
@@ -562,8 +568,8 @@ def numpy_ndl(event_list, alphas, betas, all_outcomes, *, cue_map, outcome_map):
                 weights[outcome_index][cue_index] += alphas[cue_index] * update
     return weights
 
-def binary_numpy_ndl(event_path, alpha, betas, lambda_,
-                     all_outcome_indices, *, number_of_processes=2):
+def binary_numpy_ndl(event_path, alpha, betas, lambda_, *,
+                     number_of_processes=2):
     """
     Calculate the weigths for all_outcomes over all events in a binary_event_file.
 
