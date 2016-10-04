@@ -1,6 +1,6 @@
 import numpy as np
 cimport numpy as np
-
+cimport cython
 
 ################
 ## Preprocessing
@@ -13,18 +13,22 @@ CURRENT_VERSION = 2048 + 215
 
 cdef bytes to_bytes(int_):
     return int_.to_bytes(4, 'little')
-
+#    cdef bytes byte_ = (bytes) int_
+#    return byte_
 
 cdef int to_integer(byte_):
     return int.from_bytes(byte_, "little")
+#    cdef int int_ = (int) byte_
+#    return int_
 
-
-
-def _update_binary_events_inplace(np.ndarray[int, ndim=2] event_list not None,
-                                  np.ndarray[double, ndim=2] weights not None,
-                                  np.ndarray[long] all_outcome_indices not None,
-                                  double alpha, double beta1, double beta2,
-                                  double lambda_):
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
+def _update_binary_events_inplace(np.ndarray[int, ndim=2] event_list,
+                                  np.ndarray[double, ndim=2] weights,
+                                  np.ndarray[long] all_outcome_indices,
+                                  cython.double alpha, cython.double beta1, 
+                                  cython.double beta2, double lambda_):
 
     for cue_indices, outcome_indices in event_list:
         _update_numpy_array_inplace(weights,
@@ -34,13 +38,15 @@ def _update_binary_events_inplace(np.ndarray[int, ndim=2] event_list not None,
                                     alpha, beta1, beta2, lambda_)
 
 
-
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
 def _update_numpy_array_inplace(np.ndarray[double, ndim=2] weights,
                                       np.ndarray[long] cue_indices,
                                       np.ndarray[long] outcome_indices,
                                       np.ndarray[long] all_outcome_indices,
-                                      double alpha, double beta1, double beta2,
-                                      double lambda_):
+                                      cython.double alpha, cython.double beta1,
+                                      cython.double beta2, double lambda_):
     cdef double association_strength = 0.0
     cdef double update = 0.0
     for outcome_index in all_outcome_indices:
@@ -55,10 +61,13 @@ def _update_numpy_array_inplace(np.ndarray[double, ndim=2] weights,
             weights[outcome_index][cue_index] += alpha * update
 
 
-
+@cython.boundscheck(False)
+@cython.wraparound(False)
+@cython.nonecheck(False)
 def learn_inplace(binary_file_path, np.ndarray[double, ndim=2] weights,
-                        double alpha, double beta1, double beta2,
-                        double lambda_, np.ndarray[long] all_outcome_indices):
+                        cython.double alpha, cython.double beta1, 
+                        cython.double beta2, cython.double lambda_, 
+                        np.ndarray[long] all_outcome_indices):
 
     with open(binary_file_path, "rb") as binary_file:
         magic_number = to_integer(binary_file.read(4))
@@ -76,9 +85,9 @@ def learn_inplace(binary_file_path, np.ndarray[double, ndim=2] weights,
         if not frequency:
             for event in range(nr_of_events):
                 # Cues
-                number_of_cues = to_integer(binary_file.read(4))
+                number_of_cues = to_integer(binary_file.read(4)) # cdef int indirekt casten
                 cue_ids = np.array([to_integer(binary_file.read(4))
-                                    for ii in range(number_of_cues)], dtype=int)
+                                    for ii in range(number_of_cues)], dtype=int) # evtl gleich in _update_... indizieren
                 # outcomes
                 number_of_outcomes = to_integer(binary_file.read(4))
                 outcome_ids = np.array([to_integer(binary_file.read(4))
@@ -87,7 +96,7 @@ def learn_inplace(binary_file_path, np.ndarray[double, ndim=2] weights,
                 _update_numpy_array_inplace(weights, cue_ids,
                                             outcome_ids,
                                             all_outcome_indices, alpha, beta1,
-                                            beta2, lambda_)
+                                            beta2, lambda_) # Code direkt reinkopieren
 
         else:
             for event in range(nr_of_events):
