@@ -107,6 +107,27 @@ def test_compare_weights_numpy_inplace_parrallel():
     print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
     assert len(unequal) == 0
 
+def test_compare_weights_numpy_inplace_parrallel_thread():
+
+    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
+
+    result_inplace_ndl = ndl.binary_inplace_numpy_ndl_parrallel_thread(FILE_PATH,
+                                                                ALPHA,
+                                                                BETAS,
+                                                                LAMBDA_)
+    events = ndl.events(FILE_PATH, frequency=True)
+    result_dict_ndl = ndl.dict_ndl_simple(events, ALPHA, BETAS,
+                                                      LAMBDA_, all_outcomes)
+
+    assert len(result_dict_ndl) == len(result_inplace_ndl)
+    #assert len(result_numpy_ndl[0]) == len(result_dict_ndl[0])
+
+    unequal = compare_arrays(FILE_PATH, result_inplace_ndl, result_dict_ndl,
+                             is_np_arr2=False)
+    #print(unequal)
+    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
+    assert len(unequal) == 0
+
 def test_compare_weights_numpy_dict_simple():
     """
     Checks whether the output of the numpy and the dict

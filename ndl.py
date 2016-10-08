@@ -4,6 +4,9 @@ import time
 import os
 import pyximport; pyximport.install()
 
+import threading
+from queue import Queue
+
 import numpy as np
 
 from . import count
@@ -333,6 +336,134 @@ def binary_inplace_numpy_ndl_parrallel(event_path, alpha, betas, lambda_, *,
 
         return weights
 
+def binary_inplace_numpy_ndl_parrallel_thread(event_path, alpha, betas, lambda_, *,
+                                       number_of_threads=2, sequence=10):
+    """
+    Calculate the weights for all_outcomes over all events in event_file
+    given by the files path.
+
+    This is a parallel python implementation using numpy, multiprocessing and
+    the binary format defined in preprocess.py.
+
+    Parameters
+    ==========
+    event_path : str
+        path to the event file
+    alpha : float
+        saliency of all cues
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    lambda_ : float
+
+    number_of_threads : int
+        a integer giving the number of threads in which the job should
+        executed
+    sequence : int
+        a integer giving the length of sublists generated from all outcomes
+
+    Returns
+    =======
+    weights : numpy.array of shape len(outcomes), len(cues)
+        weights[outcome_index][cue_index] gives the weight between outcome and cue.
+
+    """
+
+    # preprocessing
+    cue_map, outcome_map, all_outcome_indices = generate_mapping(
+                                                    event_path,
+                                                    number_of_processes=number_of_threads,
+                                                    binary=True)
+
+    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
+                                         outcome_map, overwrite=True,
+                                         number_of_processes=number_of_threads)
+
+    shape = (len(outcome_map),len(cue_map))
+    weights = np.zeros(shape, dtype=float)
+    beta1, beta2 = betas
+    binary_files = [os.path.join(BINARY_PATH, binary_file)
+                    for binary_file in os.listdir(BINARY_PATH)
+                    if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
+
+    lock = threading.Lock()
+
+    def do_work(part_list, weights):
+        for binary_file in binary_files:
+            ndl_c.learn_inplace(binary_file, weights, alpha,
+                                beta1, beta2, lambda_,
+                                np.array(part_list))
+
+        results.put(weights)
+
+    def worker():
+        while True:
+            part_list, weigths  = q.get()
+            do_work(part_list, weigths)
+            q.task_done()
+
+    q = Queue()
+    results = Queue()
+    for i in range(number_of_threads):
+         t = threading.Thread(target=worker)
+         t.daemon = True
+         t.start()
+
+    partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
+    for part_list in partlists_of_outcome_indices:
+        q.put((part_list, np.zeros(shape, dtype=float)))
+
+    q.join()
+
+    while not results.empty():
+        result = results.get()
+        weights = np.add(weights, result)
+
+
+    return weights
+
+def worker(id, binary_event_path, alpha, betas, lambda_, shape, q, r):
+    weights = np.zeros(shape, dtype=float)
+    beta1, beta2 = betas
+    binary_files = [os.path.join(binary_event_path, binary_file)
+                    for binary_file in os.listdir(binary_event_path)
+                    if os.path.isfile(os.path.join(binary_event_path, binary_file))]
+    while True:
+        part_list = q.get()
+        for binary_file in binary_files:
+            ndl_c.learn_inplace(binary_file, weights, alpha,
+                                beta1, beta2, lambda_,
+                                np.array(part_list))
+            q.task_done()
+    r.append(weights)
+
+class myThread (threading.Thread):
+    def __init__(self, id, binary_event_path, alpha, betas, lambda_, shape, queue):
+        self.id = id
+        self.binary_files = [os.path.join(binary_event_path, binary_file)
+                        for binary_file in os.listdir(binary_event_path)
+                        if os.path.isfile(os.path.join(binary_event_path, binary_file))]
+        self.binary_files.reverse()
+        self.event_path = binary_event_path
+        self.alpha = alpha
+        beta1, beta2 = betas
+        self.beta1 = beta1
+        self.beta2 = beta2
+        self.lambda_ = lambda_
+        self.queue = queue
+        self.weights = np.zeros(shape, dtype=float)
+    def run(self):
+        while not exitFlag:
+            queueLock.acquire()
+            if not workQueue.empty():
+                part_list = q.get()
+                queueLock.release()
+                for binary_file in self.binary_files:
+                    ndl_c.learn_inplace(binary_file, self.weights, self.alpha,
+                                                self.beta1, self.beta2, self.lambda_,
+                                                np.array(part_list))
+            else:
+                queueLock.release()
+            time.sleep(1)
 
 class JobCalculateWeightsInplace():
     """
