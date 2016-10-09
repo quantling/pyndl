@@ -388,40 +388,42 @@ def binary_inplace_numpy_ndl_parrallel_thread(event_path, alpha, betas, lambda_,
     lock = threading.Lock()
     exit_flag = 0
 
-    def do_work(part_list, weights):
+    def do_work(part_list):
+        weights = np.zeros(shape, dtype=float)
         for binary_file in binary_files:
             ndl_c.learn_inplace(binary_file, weights, alpha,
                                 beta1, beta2, lambda_,
                                 np.array(part_list))
 
-        results.put(weights)
+        results.append(weights)
 
     def worker():
         while exit_flag != 1:
-            part_list, weigths  = q.get()
-            do_work(part_list, weigths)
+            part_list  = q.get()
+            do_work(part_list)
             q.task_done()
 
     q = Queue()
-    results = Queue()
+    results = []
     threads = []
+
+    # Init Threads
     for i in range(number_of_threads):
          t = threading.Thread(target=worker)
          t.daemon = True
          t.start()
          threads.append(t)
 
+    # Fill Queue
     partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
     for part_list in partlists_of_outcome_indices:
-        q.put((part_list, np.zeros(shape, dtype=float)))
+        q.put(part_list)
 
     q.join()
     exit_flag = 1
 
-    while not results.empty():
-        result = results.get()
+    for result in results:
         weights = np.add(weights, result)
-
 
     return weights
 
