@@ -12,6 +12,7 @@ import numpy as np
 from . import count
 from . import preprocess
 from . import ndl_c
+from . import ndl_parallel
 
 
 try:
@@ -379,7 +380,7 @@ def binary_inplace_numpy_ndl_parrallel_thread(event_path, alpha, betas, lambda_,
                                          number_of_processes=number_of_threads)
 
     shape = (len(outcome_map),len(cue_map))
-    weights = np.zeros(shape, dtype=float)
+    weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
     beta1, beta2 = betas
     binary_files = [os.path.join(BINARY_PATH, binary_file)
                     for binary_file in os.listdir(BINARY_PATH)
@@ -388,14 +389,28 @@ def binary_inplace_numpy_ndl_parrallel_thread(event_path, alpha, betas, lambda_,
     lock = threading.Lock()
     exit_flag = 0
 
-    def do_work(part_list):
-        weights = np.zeros(shape, dtype=float)
-        for binary_file in binary_files:
-            ndl_c.learn_inplace(binary_file, weights, alpha,
-                                beta1, beta2, lambda_,
-                                np.array(part_list))
+#    partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
 
-        results.append(weights)
+
+
+    ndl_parallel.learn_inplace(binary_files, weights, alpha,
+                                beta1, beta2, lambda_,
+                                np.array(all_outcome_indices, dtype=np.uint64),
+                                sequence,
+                                number_of_threads)
+
+
+
+    return weights
+
+
+"""
+    def do_work(part_list):
+        nonlocal weights
+        for binary_file in binary_files:
+            ndl_c.learn_inplace_thread( binary_file, weights, alpha,
+                                        beta1, beta2, lambda_,
+                                        np.array(part_list))
 
     def worker():
         while exit_flag != 1:
@@ -404,7 +419,6 @@ def binary_inplace_numpy_ndl_parrallel_thread(event_path, alpha, betas, lambda_,
             q.task_done()
 
     q = Queue()
-    results = []
     threads = []
 
     # Init Threads
@@ -415,17 +429,16 @@ def binary_inplace_numpy_ndl_parrallel_thread(event_path, alpha, betas, lambda_,
          threads.append(t)
 
     # Fill Queue
-    partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
     for part_list in partlists_of_outcome_indices:
         q.put(part_list)
 
     q.join()
     exit_flag = 1
 
-    for result in results:
-        weights = np.add(weights, result)
-
     return weights
+
+"""
+
 
 
 class JobCalculateWeightsInplace():
