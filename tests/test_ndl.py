@@ -77,6 +77,7 @@ def test_compare_weights_numpy_inplace():
     result_dict_ndl = ndl.dict_ndl_simple(events, ALPHA, BETAS,
                                                       LAMBDA_, all_outcomes)
 
+
     assert len(result_dict_ndl) == len(result_inplace_ndl)
     #assert len(result_numpy_ndl[0]) == len(result_dict_ndl[0])
 
@@ -115,15 +116,20 @@ def test_compare_weights_numpy_inplace_parrallel_thread():
                                                                 ALPHA,
                                                                 BETAS,
                                                                 LAMBDA_)
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_dict_ndl = ndl.dict_ndl_simple(events, ALPHA, BETAS,
-                                                      LAMBDA_, all_outcomes)
 
-    assert len(result_dict_ndl) == len(result_inplace_ndl)
+
+    shape = (len(outcome_map),len(cue_map))
+    result_zeros = np.zeros(shape, dtype=np.float64, order='C')
+
+    #events = ndl.events(FILE_PATH, frequency=True)
+    #result_dict_ndl = ndl.dict_ndl_simple(events, ALPHA, BETAS,
+    #                                                  LAMBDA_, all_outcomes)
+
+    assert len(result_zeros) == len(result_inplace_ndl)
     #assert len(result_numpy_ndl[0]) == len(result_dict_ndl[0])
 
-    unequal = compare_arrays(FILE_PATH, result_inplace_ndl, result_dict_ndl,
-                             is_np_arr2=False)
+    unequal = compare_arrays(FILE_PATH, result_inplace_ndl, result_zeros,
+                             is_np_arr2=True)
     #print(unequal)
     print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
     assert len(unequal) == 0
