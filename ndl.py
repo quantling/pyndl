@@ -391,11 +391,9 @@ def binary_inplace_numpy_ndl_parrallel_thread(event_path, alpha, betas, lambda_,
 
 #    partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
 
-
-
     ndl_parallel.learn_inplace(binary_files, weights, alpha,
                                 beta1, beta2, lambda_,
-                                np.array(all_outcome_indices, dtype=np.uint64),
+                                np.array(all_outcome_indices, dtype=np.uint32),
                                 sequence,
                                 number_of_threads)
 
