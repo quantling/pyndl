@@ -49,7 +49,7 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
       filename_byte_string = binary_file_path.encode("UTF-8")
       fname = filename_byte_string
 
-      with nogil, parallel():
+      with nogil, parallel(num_threads=number_of_threads):
         for ii in range((length_all_outcomes // chunksize) + 1 ):
           start_val = ii * chunksize
           end_val = min(start_val + chunksize, length_all_outcomes)
@@ -162,7 +162,6 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
             max_number_of_outcomes = number_of_outcomes
             free(outcome_indices)
             outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
-        outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_outcomes)
         fread(outcome_indices, 4, number_of_outcomes, binary_file)
 
         # learn
