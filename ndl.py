@@ -338,7 +338,7 @@ def binary_inplace_numpy_ndl_parallel(event_path, alpha, betas, lambda_, *,
         return weights
 
 def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, *,
-                                       number_of_threads=2, sequence=10):
+                                       number_of_threads=8, sequence=10):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -372,14 +372,14 @@ def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, 
     # preprocessing
     cue_map, outcome_map, all_outcome_indices = generate_mapping(
                                                     event_path,
-                                                    number_of_processes=number_of_threads,
+                                                    number_of_processes=2,
                                                     binary=True)
 
     preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
                                          outcome_map, overwrite=True,
                                          number_of_processes=number_of_threads)
 
-    shape = (len(outcome_map),len(cue_map))
+    shape = (len(outcome_map), len(cue_map))
     weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
     beta1, beta2 = betas
     binary_files = [os.path.join(BINARY_PATH, binary_file)
@@ -390,6 +390,7 @@ def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, 
     exit_flag = 0
 
 #    partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
+
 
     ndl_parallel.learn_inplace(binary_files, weights, alpha,
                                 beta1, beta2, lambda_,
@@ -854,6 +855,7 @@ def generate_mapping(event_path, number_of_processes=2, binary=False): # TODO fi
         return (cue_map, outcome_map, all_outcome_indices)
     else:
         return (cue_map, outcome_map, all_outcomes)
+
 
 def slice_list(li, sequence):
     """

@@ -50,7 +50,7 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
       fname = filename_byte_string
 
       with nogil, parallel(num_threads=number_of_threads):
-        for ii in range((length_all_outcomes // chunksize) + 1 ):
+        for ii in prange((length_all_outcomes // chunksize) + 1 ):
           start_val = ii * chunksize
           end_val = min(start_val + chunksize, length_all_outcomes)
           if start_val == length_all_outcomes:

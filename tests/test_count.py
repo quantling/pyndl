@@ -16,6 +16,15 @@ def test_cues_outcomes():
     assert outcomes == outcomes3
 
 
+def test_cues_outcomes_multiprocess():
+    cues, outcomes = count.cues_outcomes(os.path.join(TEST_ROOT, "resources/events.tab"))
+    cues3, outcomes3 = count.cues_outcomes(os.path.join(TEST_ROOT, "resources/events.tab"),
+                                           number_of_processes=6,
+                                           verbose=False)
+    assert cues == cues3
+    assert outcomes == outcomes3
+
+
 def test_words_symbols():
     words, symbols = count.words_symbols(os.path.join(TEST_ROOT, "resources/corpus.txt"))
     words3, symbols3 = count.words_symbols(os.path.join(TEST_ROOT, "resources/corpus.txt"),
