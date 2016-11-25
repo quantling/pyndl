@@ -10,37 +10,21 @@ cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215
 cdef unsigned int CURRENT_VERSION = 2048 + 215
 
 if sizeof(unsigned int) != 4:
-    print('size_t %i bytes' % sizeof(unsigned int))
-    print('size_t %i bytes' % sizeof(size_t))
     raise ImportError('unsigned int needs to be 4 bytes not %i bytes' % sizeof(unsigned int))
 
 
-cdef bytes to_bytes(int_):
-    return int_.to_bytes(4, 'little')
-#    cdef bytes byte_ = (bytes) int_
-#    return byte_
-
-cdef int to_integer(byte_):
-    return int.from_bytes(byte_, "little")
-#    cdef int int_ = (int) byte_
-#    return int_
-
-cdef inline void read_next_long(void *data, FILE *binary_file) nogil:
+cdef inline void read_next_int(void *data, FILE *binary_file) nogil:
     fread(data, 4, 1, binary_file) # little endian
 
-
-#cdef int read_next_integer(binary_file):
-#    return int.from_bytes(binary_file.read(4), "little")
 
 cdef extern from "stdio.h":
     #FILE * fopen ( const char * filename, const char * mode )
     FILE *fopen(const char *, const char *) nogil
     #int fclose ( FILE * stream )
     int fclose(FILE *) nogil
-    ##ssize_t getline(char **lineptr, size_t *n, FILE *stream);
-    #ssize_t getline(char **, size_t *, FILE *)
     #size_t fread ( void *ptr, size_t size, size_t count, FILE *stream );
     size_t fread (void *, size_t, size_t, FILE *) nogil
+
 
 def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
                   double alpha, double beta1,
@@ -49,8 +33,7 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
                   unsigned int chunksize,
                   unsigned int number_of_threads):
 
-    cdef unsigned int n = weights.shape[0]  # number of outcomes == rows
-    cdef unsigned int m = weights.shape[1]  # number of cues == columns
+    cdef unsigned int mm = weights.shape[1]  # number of cues == columns
     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]
     cdef char* fname
@@ -72,7 +55,7 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
           end_val = min(start_val + chunksize, length_all_outcomes)
           if start_val == length_all_outcomes:
             break
-          error = learn_inplace_ptr(fname, weights_ptr, n, m, alpha, beta1,
+          error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
                             beta2, lambda_, all_outcomes_ptr, start_val,
                             end_val)
 
@@ -87,9 +70,10 @@ cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) 
         return True
     return False
 
+
 # ggf exception zurückgeben
 cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
-                        unsigned int nn, unsigned int mm,
+                        unsigned int mm,
                         double alpha, double beta1,
                         double beta2, double lambda_,
                         unsigned int* all_outcome_indices,
@@ -99,49 +83,59 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
 
     cdef unsigned int number_of_events, number_of_cues, number_of_outcomes, frequency_counter
     cdef double association_strength, update
-#    cdef np.ndarray[long] cue_indices, outcome_indices
-    cdef unsigned int magic_number, version, ii, jj, event, index
+    cdef unsigned int magic_number, version, ii, jj, event, index, appearance
     cdef unsigned int* cue_indices
     cdef unsigned int* outcome_indices
     cdef int has_frequency # should be changed to an equivalent of boolean
+    cdef unsigned int max_number_of_cues = 1024
+    cdef unsigned int max_number_of_outcomes = 1024
 
     cdef FILE* cfile
     binary_file = fopen(binary_file_path, "rb")
 
-    read_next_long(&magic_number, binary_file)
+    read_next_int(&magic_number, binary_file)
     if not magic_number == MAGIC_NUMBER:
-      return 1
-    read_next_long(&version, binary_file)
+        fclose(binary_file)
+        return 1
+    read_next_int(&version, binary_file)
     if version == CURRENT_VERSION_WITH_FREQ:
         has_frequency = True
     elif version == CURRENT_VERSION:
         has_frequency = False
     else:
-      weights[0] = version
-      return 2
+        weights[0] = version
+        fclose(binary_file)
+        return 2
 
-    read_next_long(&number_of_events, binary_file)
+    # preallocate memory
+    cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
+    outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
+
+    read_next_int(&number_of_events, binary_file)
 
     if not has_frequency:
       for event in range(number_of_events):
-
         # cues
-        read_next_long(&number_of_cues, binary_file)
-        cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_cues)
-        for jj in range(number_of_cues):
-          read_next_long(&cue_indices[jj], binary_file)
+        read_next_int(&number_of_cues, binary_file)
+        if number_of_cues > max_number_of_cues:
+            max_number_of_cues = number_of_cues
+            free(cue_indices)
+            cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
+        fread(cue_indices, 4, number_of_cues, binary_file)
 
         # outcomes
-        read_next_long(&number_of_outcomes, binary_file)
+        read_next_int(&number_of_outcomes, binary_file)
+        if number_of_outcomes > max_number_of_outcomes:
+            max_number_of_outcomes = number_of_outcomes
+            free(outcome_indices)
+            outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
         outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_outcomes)
-        for ii in range(number_of_outcomes):
-          read_next_long(&outcome_indices[ii], binary_file)
+        fread(outcome_indices, 4, number_of_outcomes, binary_file)
 
         # learn
         for ii in range(start, end):
             association_strength = 0.0
             for jj in range(number_of_cues):
-              #index = nn * cue_indices[jj] + all_outcome_indices[ii]
               index = cue_indices[jj] + mm * all_outcome_indices[ii]
               association_strength += weights[index]
             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
@@ -149,72 +143,47 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
             else:
               update = beta2 * (0.0 - association_strength)
             for jj in range(number_of_cues):
-              #index = nn * cue_indices[jj] + all_outcome_indices[ii]
               index = cue_indices[jj] + mm * all_outcome_indices[ii]
               weights[index] += alpha * update
-              #weights[all_outcome_indices * ii ][cue_indices * jj] += alpha * update
-              #weights[0] = 1.0
-              pass
 
-        free(cue_indices)
-        free(outcome_indices)
     else:
-      return 3
+      for event in range(number_of_events):
+        # cues
+        read_next_int(&number_of_cues, binary_file)
+        if number_of_cues > max_number_of_cues:
+            max_number_of_cues = number_of_cues
+            free(cue_indices)
+            cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
+        fread(cue_indices, 4, number_of_cues, binary_file)
+
+        # outcomes
+        read_next_int(&number_of_outcomes, binary_file)
+        if number_of_outcomes > max_number_of_outcomes:
+            max_number_of_outcomes = number_of_outcomes
+            free(outcome_indices)
+            outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
+        outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_outcomes)
+        fread(outcome_indices, 4, number_of_outcomes, binary_file)
+
+        # learn
+        # frequency
+        read_next_int(&frequency_counter, binary_file)
+        for appearance in range(frequency_counter):
+          for ii in range(start, end):
+            association_strength = 0.0
+            for jj in range(number_of_cues):
+              index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              association_strength += weights[index]
+            if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
+              update = beta1 * (lambda_ - association_strength)
+            else:
+              update = beta2 * (0.0 - association_strength)
+            for jj in range(number_of_cues):
+              index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              weights[index] += alpha * update
 
     fclose(binary_file)
+    free(cue_indices)
+    free(outcome_indices)
     return 0
-    ##################################################################
 
-
-        # else:
-        #     for event in range(nr_of_events):
-        #         # Cues
-        #         number_of_cues = read_next_integer(binary_file)
-        #         cue_indices = np.array([read_next_integer(binary_file)
-        #                             for ii in range(number_of_cues)], dtype=int) # evtl gleich in _update_... indizieren
-        #         # outcomes
-        #         number_of_outcomes = read_next_integer(binary_file)
-        #         outcome_indices = np.array([read_next_integer(binary_file)
-        #                                 for ii in range(number_of_outcomes)],
-        #                                 dtype=int)
-        #         # frequency
-        #         frequency_counter = read_next_integer(binary_file)
-        #         for appearance in range(frequency_counter):
-        #             for outcome_index in all_outcome_indices:
-        #                 association_strength = 0.0
-        #                 for cue_index in cue_indices:
-        #                     association_strength += weights[outcome_index][cue_index]
-        #                 if outcome_index in outcome_indices:
-        #                     update = beta1 * (lambda_ - association_strength)
-        #                 else:
-        #                     update = beta2 * (0.0 - association_strength)
-        #                 for cue_index in cue_indices:
-        #                     weights[outcome_index][cue_index] += alpha * update
-
-
-
-def slice_list(li, sequence):
-    """
-    Slices a list in sublists with the length sequence.
-
-    Parameters
-    ==========
-    li : list
-         list which should be sliced in sublists
-    sequence : int
-         integer which determines the length of the sublists
-
-    Returns
-    =======
-    seq_list : list of lists
-        a list of sublists with the length sequence
-
-    """
-    assert len(li) == len(set(li))
-    ii = 0
-    seq_list = list()
-    while ii < len(li):
-        seq_list.append(li[ii:ii+sequence])
-        ii = ii+sequence
-
-    return seq_list
