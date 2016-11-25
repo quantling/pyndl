@@ -58,7 +58,7 @@ def events(event_path, *, frequency=False):
                 for _ in range(frequency):
                     yield (cues, outcomes)
 
-def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *,
+def dict_ndl_parallel(event_path, alphas, betas, all_outcomes, *,
                        number_of_processes=2, sequence=10,
                        frequency_in_event_file=False):
     """
@@ -110,7 +110,7 @@ def dict_ndl_parrallel(event_path, alphas, betas, all_outcomes, *,
 
         return weights
 
-def numpy_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, cue_map,
+def numpy_ndl_parallel(event_path, alphas, betas, all_outcomes, *, cue_map,
                         outcome_map, number_of_processes=2, sequence=10,
                         frequency_in_event_file=False):
     """
@@ -166,7 +166,7 @@ def numpy_ndl_parrallel(event_path, alphas, betas, all_outcomes, *, cue_map,
 
         return weights
 
-def binary_numpy_ndl_parrallel(event_path, alpha, betas, lambda_, *,
+def binary_numpy_ndl_parallel(event_path, alpha, betas, lambda_, *,
                                 number_of_processes=2, sequence=10):
     """
     Calculate the weights for all_outcomes over all events in event_file
@@ -277,7 +277,7 @@ def binary_inplace_numpy_ndl(event_path, alpha, betas, lambda_, *,
                                       np.array(all_outcome_indices))
     return weights
 
-def binary_inplace_numpy_ndl_parrallel(event_path, alpha, betas, lambda_, *,
+def binary_inplace_numpy_ndl_parallel(event_path, alpha, betas, lambda_, *,
                                        number_of_processes=2, sequence=10):
     """
     Calculate the weights for all_outcomes over all events in event_file
@@ -337,7 +337,7 @@ def binary_inplace_numpy_ndl_parrallel(event_path, alpha, betas, lambda_, *,
 
         return weights
 
-def binary_inplace_numpy_ndl_parrallel_thread(event_path, alpha, betas, lambda_, *,
+def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, *,
                                        number_of_threads=2, sequence=10):
     """
     Calculate the weights for all_outcomes over all events in event_file

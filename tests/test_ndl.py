@@ -87,11 +87,11 @@ def test_compare_weights_numpy_inplace():
     print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
     assert len(unequal) == 0
 
-def test_compare_weights_numpy_inplace_parrallel():
+def test_compare_weights_numpy_inplace_parallel():
 
     alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
 
-    result_inplace_ndl = ndl.binary_inplace_numpy_ndl_parrallel(FILE_PATH,
+    result_inplace_ndl = ndl.binary_inplace_numpy_ndl_parallel(FILE_PATH,
                                                                 ALPHA,
                                                                 BETAS,
                                                                 LAMBDA_)
@@ -108,11 +108,11 @@ def test_compare_weights_numpy_inplace_parrallel():
     print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
     assert len(unequal) == 0
 
-def test_compare_weights_numpy_inplace_parrallel_thread():
+def test_compare_weights_numpy_inplace_parallel_thread():
 
     alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
 
-    result_inplace_ndl = ndl.binary_inplace_numpy_ndl_parrallel_thread(FILE_PATH,
+    result_inplace_ndl = ndl.binary_inplace_numpy_ndl_parallel_thread(FILE_PATH,
                                                                 ALPHA,
                                                                 BETAS,
                                                                 LAMBDA_)
@@ -172,14 +172,14 @@ def test_compare_weights_numpy_parallel():
     result_numpy_ndl = ndl.numpy_ndl(events, alphas, betas, all_outcomes,
                                      cue_map=cue_map, outcome_map=outcome_map)
 
-    result_numpy_ndl_parrallel = ndl.numpy_ndl_parrallel(FILE_PATH, alphas,
+    result_numpy_ndl_parallel = ndl.numpy_ndl_parallel(FILE_PATH, alphas,
                                                          betas, all_outcomes,
                                                          cue_map=cue_map,
                                                          outcome_map=outcome_map,
                                                          frequency_in_event_file=True)
 
 
-    unequal = compare_arrays(FILE_PATH, result_numpy_ndl, result_numpy_ndl_parrallel)
+    unequal = compare_arrays(FILE_PATH, result_numpy_ndl, result_numpy_ndl_parallel)
     #print(unequal)
     print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
     assert len(unequal) == 0
@@ -211,7 +211,7 @@ def test_compare_weights_numpy_binary():
     print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
     assert len(unequal) == 0
 
-def test_compare_weights_binary_numpy_ndl_parrallel():
+def test_compare_weights_binary_numpy_ndl_parallel():
     """
     Checks whether the output of the parallel and the not parallel
     implementation of binary_numpy_ndl is equal.
@@ -225,8 +225,8 @@ def test_compare_weights_binary_numpy_ndl_parrallel():
     alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map, fixed_alpha=ALPHA, fixed_beta=BETAS, numpy=True)
     cues, outcomes = count.cues_outcomes(FILE_PATH)
 
-    # parrallel version
-    weights_parrallel, duration_parrallel = clock(ndl.binary_numpy_ndl_parrallel,
+    # parallel version
+    weights_parallel, duration_parallel = clock(ndl.binary_numpy_ndl_parallel,
                                                   (FILE_PATH, ALPHA,
                                                   BETAS, LAMBDA_))
 
@@ -237,7 +237,7 @@ def test_compare_weights_binary_numpy_ndl_parrallel():
                                              BETAS, LAMBDA_))
 
 
-    unequal = compare_arrays(FILE_PATH, weights_parrallel, weights_binary)
+    unequal = compare_arrays(FILE_PATH, weights_parallel, weights_binary)
     #print(unequal)
     print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
     assert len(unequal) == 0
@@ -253,7 +253,7 @@ def test_compare_weights_dict_parallel():
 
     events = ndl.events(FILE_PATH, frequency=True)
     result_not_parallel = ndl.dict_ndl(events, alphas, betas, all_outcomes)
-    result_parallel = ndl.dict_ndl_parrallel(FILE_PATH, alphas, betas, all_outcomes, frequency_in_event_file=True)
+    result_parallel = ndl.dict_ndl_parallel(FILE_PATH, alphas, betas, all_outcomes, frequency_in_event_file=True)
 
     for outcome, cue_dict in result_parallel.items():
         for cue in cue_dict:
@@ -313,13 +313,13 @@ def test_compare_time_parallel():
 
     alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
 
-    result_not_parallel, duration_not_parrallel = clock(ndl.dict_ndl, (FILE_PATH, alphas, betas, all_outcomes))
+    result_not_parallel, duration_not_parallel = clock(ndl.dict_ndl, (FILE_PATH, alphas, betas, all_outcomes))
 
-    result_parallel, duration_parrallel = clock(ndl.dict_ndl_parrallel, (FILE_PATH, alphas, betas, all_outcomes))
+    result_parallel, duration_parallel = clock(ndl.dict_ndl_parallel, (FILE_PATH, alphas, betas, all_outcomes))
 
     # For small files this test is expected to fail. Otherwise it is expected
-    # that a parrallel implementation of dict_ndl should be faster.
-    assert duration_parrallel < duration_not_parrallel
+    # that a parallel implementation of dict_ndl should be faster.
+    assert duration_parallel < duration_not_parallel
     for outcome, cue_dict in result_parallel.items():
         for cue in cue_dict:
             assert result_parallel[outcome][cue] == result_not_parallel[outcome][cue]
