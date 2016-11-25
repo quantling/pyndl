@@ -5,3 +5,5 @@ __pycache__/
 tests/__pycache__/
 .coverage*
 htmlcov/
+.cache/
+*.swp

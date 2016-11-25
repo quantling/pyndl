@@ -49,8 +49,8 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
                   unsigned int chunksize,
                   unsigned int number_of_threads):
 
-    cdef unsigned int n = weights.shape[0]
-    cdef unsigned int m = weights.shape[1]
+    cdef unsigned int n = weights.shape[0]  # number of outcomes == rows
+    cdef unsigned int m = weights.shape[1]  # number of cues == columns
     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]
     cdef char* fname
@@ -89,7 +89,7 @@ cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) 
 
 # ggf exception zurückgeben
 cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
-                        unsigned int n, unsigned int m,
+                        unsigned int nn, unsigned int mm,
                         double alpha, double beta1,
                         double beta2, double lambda_,
                         unsigned int* all_outcome_indices,
@@ -100,7 +100,7 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
     cdef unsigned int number_of_events, number_of_cues, number_of_outcomes, frequency_counter
     cdef double association_strength, update
 #    cdef np.ndarray[long] cue_indices, outcome_indices
-    cdef unsigned int magic_number, version, ii, jj, event
+    cdef unsigned int magic_number, version, ii, jj, event, index
     cdef unsigned int* cue_indices
     cdef unsigned int* outcome_indices
     cdef int has_frequency # should be changed to an equivalent of boolean
@@ -125,32 +125,36 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
     if not has_frequency:
       for event in range(number_of_events):
 
-        # Cues
+        # cues
         read_next_long(&number_of_cues, binary_file)
         cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_cues)
-        for ii in range(number_of_cues):
-          read_next_long(&cue_indices[ii], binary_file)
+        for jj in range(number_of_cues):
+          read_next_long(&cue_indices[jj], binary_file)
 
         # outcomes
         read_next_long(&number_of_outcomes, binary_file)
         outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_outcomes)
-        for jj in range(number_of_outcomes):
-          read_next_long(&outcome_indices[jj], binary_file)
+        for ii in range(number_of_outcomes):
+          read_next_long(&outcome_indices[ii], binary_file)
 
-        for jj in range(start, end):
+        # learn
+        for ii in range(start, end):
             association_strength = 0.0
-            for ii in range(number_of_cues):
-              association_strength += weights[m * ii + jj]
+            for jj in range(number_of_cues):
+              #index = nn * cue_indices[jj] + all_outcome_indices[ii]
+              index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              association_strength += weights[index]
             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
               update = beta1 * (lambda_ - association_strength)
             else:
               update = beta2 * (0.0 - association_strength)
-            for ii in range(number_of_cues):
-              #weights[0] = 1.0
-              weights[m * ii + jj] += alpha * update
+            for jj in range(number_of_cues):
+              #index = nn * cue_indices[jj] + all_outcome_indices[ii]
+              index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              weights[index] += alpha * update
               #weights[all_outcome_indices * ii ][cue_indices * jj] += alpha * update
-              # weights[0] += alpha * update
-              #pass
+              #weights[0] = 1.0
+              pass
 
         free(cue_indices)
         free(outcome_indices)
