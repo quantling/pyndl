@@ -324,6 +324,27 @@ def test_compare_time_parallel():
         for cue in cue_dict:
             assert result_parallel[outcome][cue] == result_not_parallel[outcome][cue]
 
+@slow
+def test_compare_time_dict_inplace_parallel_thread():
+    file_path = os.path.join(TEST_ROOT, 'resources/bnc_tri2l_1k.events')
+    cues, outcomes = count.cues_outcomes(file_path)
+    all_outcomes = list(outcomes.keys())
+
+    events = ndl.events(file_path, frequency=True)
+    result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl_simple, (events, ALPHA, BETAS, LAMBDA_, all_outcomes))
+
+    result_inplace_ndl, duration_parallel = clock(ndl.binary_inplace_numpy_ndl_parallel_thread, (file_path, ALPHA, BETAS, LAMBDA_), number_of_threads=4)
+
+    print('parallel: %.3e  dict: %.3e' % (duration_parallel, duration_not_parallel))
+    assert duration_parallel < duration_not_parallel
+
+    assert len(result_dict_ndl) == len(result_inplace_ndl)
+    unequal = compare_arrays(file_path, result_inplace_ndl, result_dict_ndl, is_np_arr2=False)
+    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
+    assert len(unequal) == 0
+
+
+
 def test_slice_list():
 
     l1 = [0,1,2,3,4,5,6,7,8,9]
