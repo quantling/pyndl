@@ -2,7 +2,7 @@ from collections import defaultdict, OrderedDict
 import multiprocessing
 import time
 import os
-import pyximport; pyximport.install()
+import pyximport #; pyximport.install()
 
 import threading
 from queue import Queue
@@ -377,7 +377,7 @@ def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, 
 
     preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
                                          outcome_map, overwrite=True,
-                                         number_of_processes=number_of_threads)
+                                         number_of_processes=2)
 
     shape = (len(outcome_map), len(cue_map))
     weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
@@ -385,11 +385,6 @@ def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, 
     binary_files = [os.path.join(BINARY_PATH, binary_file)
                     for binary_file in os.listdir(BINARY_PATH)
                     if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
-
-    lock = threading.Lock()
-    exit_flag = 0
-
-#    partlists_of_outcome_indices = slice_list(all_outcome_indices,sequence)
 
 
     ndl_parallel.learn_inplace(binary_files, weights, alpha,
@@ -401,43 +396,6 @@ def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, 
 
 
     return weights
-
-
-"""
-    def do_work(part_list):
-        nonlocal weights
-        for binary_file in binary_files:
-            ndl_c.learn_inplace_thread( binary_file, weights, alpha,
-                                        beta1, beta2, lambda_,
-                                        np.array(part_list))
-
-    def worker():
-        while exit_flag != 1:
-            part_list  = q.get()
-            do_work(part_list)
-            q.task_done()
-
-    q = Queue()
-    threads = []
-
-    # Init Threads
-    for i in range(number_of_threads):
-         t = threading.Thread(target=worker)
-         t.daemon = True
-         t.start()
-         threads.append(t)
-
-    # Fill Queue
-    for part_list in partlists_of_outcome_indices:
-        q.put(part_list)
-
-    q.join()
-    exit_flag = 1
-
-    return weights
-
-"""
-
 
 
 class JobCalculateWeightsInplace():
