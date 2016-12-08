@@ -1,7 +1,7 @@
 import numpy as np
 cimport numpy as np
 cimport cython
-from cython.parallel cimport parallel, prange, threadid
+from cython.parallel cimport parallel, prange
 from libc.stdlib cimport abort, malloc, free
 from libc.stdio cimport *
 
@@ -39,7 +39,6 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
     cdef char* fname
     cdef unsigned int start_val, end_val, ii, number_parts
     cdef int error = 4
-    cdef int thread_id = -1
 
   #  cdef String
     # weights muss contigousarray sein und mode=c, siehe:
@@ -53,8 +52,6 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
       number_parts = (length_all_outcomes // chunksize) + 1
 
       with nogil, parallel(num_threads=number_of_threads):
-        thread_id = threadid()
-        printf("Thread ID: %d\n", thread_id)
         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
           start_val = ii * chunksize
           end_val = min(start_val + chunksize, length_all_outcomes)
