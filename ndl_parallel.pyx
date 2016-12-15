@@ -64,6 +64,34 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
     if (error != 0):
         raise IOError('binary files does not have proper format, error code %i' % error)
 
+def learn_inplace_2(binary_file_paths, np.ndarray[double, ndim=2] weights,
+                  double alpha, double beta1,
+                  double beta2, double lambda_,
+                  np.ndarray[unsigned int, ndim=1] all_outcomes):
+
+    cdef unsigned int mm = weights.shape[1]  # number of cues == columns
+    cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
+    cdef unsigned int length_all_outcomes = all_outcomes.shape[0]
+    cdef char* fname
+    cdef unsigned int start_val, end_val
+    cdef int error = 4
+
+  #  cdef String
+    # weights muss contigousarray sein und mode=c, siehe:
+    #cdef np.ndarray[np.uint32_t, ndim=3, mode = 'c'] np_buff = np.ascontiguousarray(im, dtype = np.uint32)
+    cdef double* weights_ptr = <double *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
+
+    for binary_file_path in binary_file_paths: #
+      filename_byte_string = binary_file_path.encode("UTF-8")
+      fname = filename_byte_string
+
+      with nogil:
+          error = 0
+          error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
+                            beta2, lambda_, all_outcomes_ptr, 0,
+                            length_all_outcomes)
+    if (error != 0):
+        raise IOError('binary files does not have proper format, error code %i' % error)
 
 cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:
     cdef unsigned int ii
@@ -187,4 +215,3 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
     free(cue_indices)
     free(outcome_indices)
     return 0
-
