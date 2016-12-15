@@ -338,7 +338,7 @@ def binary_inplace_numpy_ndl_parallel(event_path, alpha, betas, lambda_, *,
         return weights
 
 def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, *,
-                                       number_of_threads=8, sequence=10):
+                                       number_of_threads=2, sequence=10):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -386,6 +386,91 @@ def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, 
                     for binary_file in os.listdir(BINARY_PATH)
                     if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
 
+    part_lists = slice_list(all_outcome_indices,sequence)
+
+    is_active = True
+    working_queue = Queue(len(part_lists))
+    threads = []
+    queue_lock = threading.Lock()
+
+    def worker():
+        while is_active:
+            queue_lock.acquire()
+            if not working_queue.empty():
+                data = working_queue.get()
+                ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
+                                            beta1, beta2, lambda_,
+                                            data)
+            queue_lock.release()
+
+    for thread_id in range(number_of_threads):
+        thread = threading.Thread(target=worker)
+        thread.start()
+        threads.append(thread)
+
+    queue_lock.acquire()
+    for partlist in part_lists:
+        working_queue.put(np.array(partlist, dtype=np.uint32))
+    queue_lock.release()
+
+    while not working_queue.empty():
+        pass
+
+    is_active = False
+
+    for thread in threads:
+        thread.join()
+
+    return weights
+
+def binary_inplace_numpy_ndl_parallel_openmp(event_path, alpha, betas, lambda_, *,
+                                             number_of_threads=8, sequence=10):
+    """
+    Calculate the weights for all_outcomes over all events in event_file
+    given by the files path.
+
+    This is a parallel python implementation using numpy, multiprocessing and
+    the binary format defined in preprocess.py.
+
+    Parameters
+    ==========
+    event_path : str
+        path to the event file
+    alpha : float
+        saliency of all cues
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    lambda_ : float
+
+    number_of_threads : int
+        a integer giving the number of threads in which the job should
+        executed
+    sequence : int
+        a integer giving the length of sublists generated from all outcomes
+
+    Returns
+    =======
+    weights : numpy.array of shape len(outcomes), len(cues)
+        weights[outcome_index][cue_index] gives the weight between outcome and cue.
+
+    """
+
+    # preprocessing
+    cue_map, outcome_map, all_outcome_indices = generate_mapping(
+                                                    event_path,
+                                                    number_of_processes=2,
+                                                    binary=True)
+
+    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
+                                         outcome_map, overwrite=True,
+                                         number_of_processes=2)
+
+    shape = (len(outcome_map), len(cue_map))
+    weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
+    beta1, beta2 = betas
+    binary_files = [os.path.join(BINARY_PATH, binary_file)
+                    for binary_file in os.listdir(BINARY_PATH)
+                    if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
 
     ndl_parallel.learn_inplace(binary_files, weights, alpha,
                                 beta1, beta2, lambda_,
@@ -393,10 +478,7 @@ def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, 
                                 sequence,
                                 number_of_threads)
 
-
-
     return weights
-
 
 class JobCalculateWeightsInplace():
     """
