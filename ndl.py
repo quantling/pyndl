@@ -388,35 +388,28 @@ def binary_inplace_numpy_ndl_parallel_thread(event_path, alpha, betas, lambda_, 
 
     part_lists = slice_list(all_outcome_indices,sequence)
 
-    is_active = True
     working_queue = Queue(len(part_lists))
     threads = []
     queue_lock = threading.Lock()
 
     def worker():
-        while is_active:
-            queue_lock.acquire()
-            if not working_queue.empty():
+        while True:
+            with queue_lock:
+                if working_queue.empty():
+                    break
                 data = working_queue.get()
                 ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
                                             beta1, beta2, lambda_,
                                             data)
-            queue_lock.release()
+
+    with queue_lock:
+        for partlist in part_lists:
+            working_queue.put(np.array(partlist, dtype=np.uint32))
 
     for thread_id in range(number_of_threads):
         thread = threading.Thread(target=worker)
         thread.start()
         threads.append(thread)
-
-    queue_lock.acquire()
-    for partlist in part_lists:
-        working_queue.put(np.array(partlist, dtype=np.uint32))
-    queue_lock.release()
-
-    while not working_queue.empty():
-        pass
-
-    is_active = False
 
     for thread in threads:
         thread.join()
