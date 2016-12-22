@@ -13,251 +13,72 @@ import numpy as np
 slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
                           reason="need --runslow option to run")
 
-
 from .. import ndl, count, preprocess
 
 TEST_ROOT = os.path.dirname(__file__)
 FILE_PATH = os.path.join(TEST_ROOT, "resources/event_file_tiny.tab")
 BINARY_PATH = os.path.join(TEST_ROOT, "binary_resources/")
-
-
-
-#file_path = os.path.join(TEST_ROOT, 'resources/event_file_tiny.tab')#minigeco_wordcues_mini.tab')
-reference_path = os.path.join(TEST_ROOT, 'reference/weights_event_tiny_R_ndl2.csv')
-cues, outcomes = count.cues_outcomes(FILE_PATH)
-
-cue_map, outcome_map, all_outcomes = ndl.generate_mapping(FILE_PATH,number_of_processes=2)
+REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_tiny.csv')
 
 LAMBDA_ = 1.0
 ALPHA = 0.1
 BETAS = (0.1, 0.1)
 
-def test_compare_weights_dict():
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map, fixed_alpha=ALPHA, fixed_beta=BETAS)
+def test_dict_ndl():
+    cue_map, outcome_map, all_outcomes = ndl.generate_mapping(FILE_PATH, number_of_processes=2)
+    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map,
+                                        fixed_alpha=ALPHA, fixed_beta=BETAS)
 
     events = ndl.events(FILE_PATH, frequency=True)
     result_dict_ndl = ndl.dict_ndl(events, alphas, betas, all_outcomes)
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_dict_ndl_simple = ndl.dict_ndl_simple(events, ALPHA, BETAS, LAMBDA_, all_outcomes)
 
-    unequal = compare_arrays(FILE_PATH, result_dict_ndl, result_dict_ndl_simple,
-                             is_np_arr1=False, is_np_arr2=False)
-    #print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
+    unequal, unequal_ratio = compare_with_ndl2(FILE_PATH,
+                                               result_dict_ndl,
+                                               REFERENCE_PATH)
+
+    print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
-def test_compare_weights_numpy():
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map,
-                                        fixed_alpha=ALPHA, fixed_beta=BETAS,
-                                        numpy=True)
+def test_dict_ndl_simple():
+    result_dict_ndl_simple = ndl.dict_ndl_simple(FILE_PATH,
+                                                 ALPHA,
+                                                 BETAS,
+                                                 LAMBDA_)
 
+    unequal, unequal_ratio = compare_with_ndl2(FILE_PATH,
+                                               result_dict_ndl_simple,
+                                               REFERENCE_PATH)
 
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_numpy_ndl = ndl.numpy_ndl(events, alphas, betas, all_outcomes,
-                                     cue_map=cue_map, outcome_map=outcome_map)
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_numpy_ndl_simple = ndl.numpy_ndl_simple(events, ALPHA, betas,
-                                                   all_outcomes, cue_map=cue_map,
-                                                   outcome_map=outcome_map)
-
-    unequal = compare_arrays(FILE_PATH, result_numpy_ndl, result_numpy_ndl_simple)
-    #print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
+    print('%.2f ratio unequal' % unequal_ratio)
+#    print(unequal) # TODO remove after debugging
     assert len(unequal) == 0
 
-def test_compare_weights_numpy_inplace():
+def test_thread_ndl_simple():
+    result_thread_ndl_simple = ndl.thread_ndl_simple(FILE_PATH,
+                                                     ALPHA,
+                                                     BETAS,
+                                                     LAMBDA_)
 
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
+    unequal, unequal_ratio = compare_with_ndl2(FILE_PATH,
+                                               result_thread_ndl_simple,
+                                               REFERENCE_PATH)
 
-    result_inplace_ndl = ndl.binary_inplace_numpy_ndl(FILE_PATH,
-                                                      ALPHA,
-                                                      BETAS,
-                                                      LAMBDA_)
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_dict_ndl = ndl.dict_ndl_simple(events, ALPHA, BETAS,
-                                                      LAMBDA_, all_outcomes)
-
-
-    assert len(result_dict_ndl) == len(result_inplace_ndl)
-    #assert len(result_numpy_ndl[0]) == len(result_dict_ndl[0])
-
-    unequal = compare_arrays(FILE_PATH, result_inplace_ndl, result_dict_ndl,
-                             is_np_arr2=False)
-    #print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
+    print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
-def test_compare_weights_numpy_inplace_parallel():
+def test_openmp_ndl_simple():
+    result_openmp_ndl_simple = ndl.openmp_ndl_simple(FILE_PATH,
+                                                     ALPHA,
+                                                     BETAS,
+                                                     LAMBDA_)
 
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
+    unequal, unequal_ratio = compare_with_ndl2(FILE_PATH,
+                                               result_openmp_ndl_simple,
+                                               REFERENCE_PATH)
 
-    result_inplace_ndl = ndl.binary_inplace_numpy_ndl_parallel(FILE_PATH,
-                                                                ALPHA,
-                                                                BETAS,
-                                                                LAMBDA_)
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_dict_ndl = ndl.dict_ndl_simple(events, ALPHA, BETAS,
-                                                      LAMBDA_, all_outcomes)
-
-    assert len(result_dict_ndl) == len(result_inplace_ndl)
-    #assert len(result_numpy_ndl[0]) == len(result_dict_ndl[0])
-
-    unequal = compare_arrays(FILE_PATH, result_inplace_ndl, result_dict_ndl,
-                             is_np_arr2=False)
-    #print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
+    print('%.2f ratio unequal' % unequal_ratio)
+    #print(unequal) # TODO remove after debugging
     assert len(unequal) == 0
-
-def test_compare_weights_numpy_inplace_parallel_thread():
-
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
-
-    result_inplace_ndl = ndl.binary_inplace_numpy_ndl_parallel_thread(FILE_PATH,
-                                                                ALPHA,
-                                                                BETAS,
-                                                                LAMBDA_)
-
-
-    shape = (len(outcome_map),len(cue_map))
-    result_zeros = np.zeros(shape, dtype=np.float64, order='C')
-
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_dict_ndl = ndl.dict_ndl_simple(events, ALPHA, BETAS, LAMBDA_,
-                                          all_outcomes)
-
-    assert len(result_zeros) == len(result_inplace_ndl)
-    assert len(result_dict_ndl) == len(result_inplace_ndl)
-    #assert len(result_numpy_ndl[0]) == len(result_dict_ndl[0])
-
-    #unequal = compare_arrays(FILE_PATH, result_inplace_ndl, result_zeros, is_np_arr2=True)
-    unequal = compare_arrays(FILE_PATH, result_inplace_ndl, result_dict_ndl, is_np_arr2=False)
-    #print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
-    assert len(unequal) == 0
-
-def test_compare_weights_numpy_dict_simple():
-    """
-    Checks whether the output of the numpy and the dict
-    implementation of ndl is equal.
-
-    """
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
-
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_dict_ndl = ndl.dict_ndl_simple(events, ALPHA, BETAS, LAMBDA_, all_outcomes)
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_numpy_ndl = ndl.numpy_ndl_simple(events, ALPHA, BETAS, all_outcomes,
-                                            cue_map=cue_map,
-                                            outcome_map=outcome_map)
-
-    assert len(result_numpy_ndl) == len(result_dict_ndl)
-
-    unequal = compare_arrays(FILE_PATH, result_dict_ndl, result_numpy_ndl,
-                             is_np_arr1=False)
-    #print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
-    assert len(unequal) == 0
-
-def test_compare_weights_numpy_parallel():
-    """
-    Checks whether the output of the parallel and the not parallel
-    implementation of numpy_ndl is equal.
-
-    """
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map,
-                                        fixed_alpha=ALPHA, fixed_beta=BETAS,
-                                        numpy=True)
-
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_numpy_ndl = ndl.numpy_ndl(events, alphas, betas, all_outcomes,
-                                     cue_map=cue_map, outcome_map=outcome_map)
-
-    result_numpy_ndl_parallel = ndl.numpy_ndl_parallel(FILE_PATH, alphas,
-                                                         betas, all_outcomes,
-                                                         cue_map=cue_map,
-                                                         outcome_map=outcome_map,
-                                                         frequency_in_event_file=True)
-
-
-    unequal = compare_arrays(FILE_PATH, result_numpy_ndl, result_numpy_ndl_parallel)
-    #print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
-    assert len(unequal) == 0
-
-def test_compare_weights_numpy_binary():
-    """
-    Checks whether the output of the binary and the normal
-    implementation of numpy_ndl is equal.
-
-    """
-
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map,
-                                        fixed_alpha=ALPHA, fixed_beta=BETAS,
-                                        numpy=True)
-
-    # Numpy version
-    events = ndl.events(FILE_PATH, frequency=True)
-    weights_numpy, duration = clock(ndl.numpy_ndl,
-                                    (events, alphas, betas, all_outcomes),
-                                    cue_map=cue_map, outcome_map=outcome_map)
-
-    all_outcome_indices = [outcome_map[outcome] for outcome in all_outcomes]
-    weights_binary, duration_binary = clock(ndl.binary_numpy_ndl,
-                                            (FILE_PATH, ALPHA, BETAS,
-                                            LAMBDA_))
-
-    unequal = compare_arrays(FILE_PATH, weights_numpy, weights_binary)
-    #print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
-    assert len(unequal) == 0
-
-def test_compare_weights_binary_numpy_ndl_parallel():
-    """
-    Checks whether the output of the parallel and the not parallel
-    implementation of binary_numpy_ndl is equal.
-
-    """
-    # preprocess and create binary event_file
-    abs_file_path = os.path.join(TEST_ROOT, "resources/event_file_tiny.tab")
-    abs_binary_path = os.path.join(TEST_ROOT, "binary_resources/")
-
-    cue_map, outcome_map, all_outcome_indices= ndl.generate_mapping(FILE_PATH,number_of_processes=2,binary=True)
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map, fixed_alpha=ALPHA, fixed_beta=BETAS, numpy=True)
-    cues, outcomes = count.cues_outcomes(FILE_PATH)
-
-    # parallel version
-    weights_parallel, duration_parallel = clock(ndl.binary_numpy_ndl_parallel,
-                                                  (FILE_PATH, ALPHA,
-                                                  BETAS, LAMBDA_))
-
-
-    # Binary version
-    weights_binary, duration_binary = clock(ndl.binary_numpy_ndl,
-                                            (FILE_PATH, ALPHA,
-                                             BETAS, LAMBDA_))
-
-
-    unequal = compare_arrays(FILE_PATH, weights_parallel, weights_binary)
-    #print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(outcome_map) * len(cue_map))))
-    assert len(unequal) == 0
-
-def test_compare_weights_dict_parallel():
-    """
-    Checks whether the output of the parallel and the not parallel
-    implementation of dict_ndl is equal.
-
-    """
-
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
-
-    events = ndl.events(FILE_PATH, frequency=True)
-    result_not_parallel = ndl.dict_ndl(events, alphas, betas, all_outcomes)
-    result_parallel = ndl.dict_ndl_parallel(FILE_PATH, alphas, betas, all_outcomes, frequency_in_event_file=True)
-
-    for outcome, cue_dict in result_parallel.items():
-        for cue in cue_dict:
-            assert result_parallel[outcome][cue] == result_not_parallel[outcome][cue]
 
 @slow
 def test_compare_weights_ndl2():
@@ -268,14 +89,14 @@ def test_compare_weights_ndl2():
     R code to generate the results::
 
         library(ndl2)
-        learner <- learnWeightsTabular('resources/bnc_tri2l_1k.events', alpha=0.1, beta=0.1)
+        learner <- learnWeightsTabular('event_file_tiny.tab', alpha=0.1, beta=0.1, lambda=1.0)
         wm <- learner$getWeights()
-        write.csv(wm, 'reference/weights_bnc_tri2l_1k_R_ndl2.csv')
+        write.csv(wm, 'weights_event_file_tiny.csv')
 
     """
     result_ndl2 = defaultdict(lambda: defaultdict(float))
 
-    with open(reference_path, 'rt') as reference_file:
+    with open(REFERENCE_PATH, 'rt') as reference_file:
         first_line = reference_file.readline()
         outcomes = first_line.split(',')[1:]
         outcomes = [outcome.strip('"') for outcome in outcomes]
@@ -285,55 +106,19 @@ def test_compare_weights_ndl2():
             for ii, outcome in enumerate(outcomes):
                 result_ndl2[outcome][cue] = float(cue_weights[ii])
 
-    file_path = os.path.join(TEST_ROOT, 'resources/bnc_tri2l_1k.events')
-    alphas = betas = defaultdict(lambda: 0.1)
-    events = ndl.events(file_path, frequency=True)
-    result_python = ndl.dict_ndl(events, alphas, betas, all_outcomes)
+    result_python = ndl.dict_ndl_simple(FILE_PATH, ALPHA, BETAS, LAMBDA_)
 
-    unequal = list()
-    for outcome, cue_dict in result_python.items():
-        for cue in cue_dict:
-            if not np.isclose(result_ndl2[outcome][cue], result_python[outcome][cue], rtol=1e-02, atol=1e-05):
-                unequal.append((outcome, cue, result_ndl2[outcome][cue], result_python[outcome][cue]))
-
-    print(unequal)
-    print('%.2f ratio unequal' % (len(unequal) / (len(result_python.keys()) * len(list(result_python.values())[0].keys()))))
+    unequal = compare_arrays(FILE_PATH, result_ndl2, result_python,
+                             is_np_arr1=False, is_np_arr2=False)
     assert len(unequal) == 0
 
 @slow
-def test_compare_time_parallel():
-    """
-    Compares the times to execute the implementations of dict_ndl.
-
-    """
-
-    # we need a bigger event file for the timing
-    cues, outcomes = count.cues_outcomes(FILE_PATH)
-    all_outcomes = list(outcomes.keys())
-
-    alphas, betas = generate_alpha_beta(FILE_PATH, cue_map, outcome_map)
-
-    result_not_parallel, duration_not_parallel = clock(ndl.dict_ndl, (FILE_PATH, alphas, betas, all_outcomes))
-
-    result_parallel, duration_parallel = clock(ndl.dict_ndl_parallel, (FILE_PATH, alphas, betas, all_outcomes))
-
-    # For small files this test is expected to fail. Otherwise it is expected
-    # that a parallel implementation of dict_ndl should be faster.
-    assert duration_parallel < duration_not_parallel
-    for outcome, cue_dict in result_parallel.items():
-        for cue in cue_dict:
-            assert result_parallel[outcome][cue] == result_not_parallel[outcome][cue]
-
-@slow
 def test_compare_time_dict_inplace_parallel_thread():
-    file_path = os.path.join(TEST_ROOT, 'resources/bnc_tri2l_1k.events')
-    cues, outcomes = count.cues_outcomes(file_path)
-    all_outcomes = list(outcomes.keys())
+    cue_map, outcome_map, all_outcomes = ndl.generate_mapping(FILE_PATH, number_of_processes=2)
 
-    events = ndl.events(file_path, frequency=True)
-    result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl_simple, (events, ALPHA, BETAS, LAMBDA_, all_outcomes))
+    result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl_simple, (FILE_PATH, ALPHA, BETAS, LAMBDA_))
 
-    result_inplace_ndl, duration_parallel = clock(ndl.binary_inplace_numpy_ndl_parallel_thread, (file_path, ALPHA, BETAS, LAMBDA_), number_of_threads=4)
+    result_thread_ndl, duration_parallel = clock(ndl.thread_ndl_simple, (FILE_PATH, ALPHA, BETAS, LAMBDA_), number_of_threads=4)
 
     print('parallel: %.3e  dict: %.3e' % (duration_parallel, duration_not_parallel))
     assert duration_parallel < duration_not_parallel
@@ -355,7 +140,8 @@ def test_slice_list():
     res2 = ndl.slice_list(l1,3)
     assert res2 == [[0,1,2],[3,4,5],[6,7,8],[9]]
 
-def generate_alpha_beta(file_path, cue_map, outcome_map, *, fixed_alpha=0.3, fixed_beta=(0.3,0.1), numpy=False):
+def generate_alpha_beta(file_path, cue_map, outcome_map, *, fixed_alpha=0.1,
+                        fixed_beta=(0.1,0.1), numpy=False):
     betas = fixed_beta
 
     events = ndl.events(file_path, frequency=True)
@@ -412,3 +198,94 @@ def compare_arrays(file_path, arr1, arr2,* ,is_np_arr1=True, is_np_arr2=True):
                 unequal.append((outcome, cue, value1, value2))
 
     return unequal
+
+def compare_with_ndl2(file_path, wm, reference_file_path):
+    """
+    Compares a weightmatrix with the weightmatrix calculated by ndl2.
+
+    Parameters
+    ==========
+    file_path : str
+        path to the event file
+    wm : dict or numpy.ndarray
+        weightmatrix learned on file_path by a pyndl function
+    reference_file_path : str
+        one value for successful prediction (reward) one for punishment
+
+    Returns
+    =======
+    unequal : list
+        list of the unequal cells
+    unequal_ratio: float
+        ratio of unequal cells in wm in comparison to the ndl2 weightmatrix
+
+    """
+
+    wm_ndl2 = defaultdict(lambda: defaultdict(float))
+    cues_ndl = set()
+
+    with open(reference_file_path, 'rt') as reference_file:
+        first_line = reference_file.readline().strip()
+        outcomes = first_line.split(',')[1:]
+        outcomes = [outcome.strip('"') for outcome in outcomes]
+        for line in reference_file:
+            cue, *cue_weights = line.split(',')
+            cue = cue.strip('"')
+            cues_ndl.add(cue) # TODO remove after debugging
+            for ii, outcome in enumerate(outcomes):
+                wm_ndl2[outcome][cue] = float(cue_weights[ii])
+
+    if type(wm) == np.ndarray:
+        cue_map, outcome_map, all_outcomes = ndl.generate_mapping(file_path,
+                                                                  number_of_processes=2)
+        is_np_array = True
+    else:
+        is_np_array = False
+
+    cues, outcomes = count.cues_outcomes(file_path)
+    unequal = list()
+
+    assert len(wm_ndl2.keys()) == len(outcomes)
+    assert len(cues_ndl) == len(cues)
+    # write_weights_to_file("weights_pyndl.csv", wm, cues, outcomes)
+    # TODO remove after debugging
+
+    for outcome in outcomes:
+        for cue in cues:
+            if is_np_array:
+                outcome_index = outcome_map[outcome]
+                cue_index = cue_map[cue]
+                value1 = wm[outcome_index][cue_index]
+            else:
+                value1 = wm[outcome][cue]
+
+            value2 = wm_ndl2[outcome][cue]
+
+            if not np.isclose(value1, value2, rtol=1e-02, atol=1e-05):
+                unequal.append((outcome, cue, value1, value2))
+
+
+    unequal_ratio = len(unequal) / (len(outcomes) * len(cues))
+    return (unequal, unequal_ratio)
+
+def write_weights_to_file(file_path, weights, cues, outcomes):
+    if type(weights) == np.ndarray:
+        is_np_array = True
+    else:
+        is_np_array = False
+    with open(file_path, 'w') as o_file:
+        o_file.write('""')
+        for outcome in sorted(outcomes):
+            o_file.write(',"%s"' % outcome)
+        o_file.write("\n")
+        for cue in sorted(cues):
+            o_file.write('"%s"' % cue)
+            for outcome in sorted(outcomes):
+                if is_np_array:
+                    outcome_index = outcome_map[outcome]
+                    cue_index = cue_map[cue]
+                    value = weights[outcome_index][cue_index]
+                else:
+                    value = weights[outcome][cue]
+                o_file.write(',%s' % value)
+            o_file.write("\n")
