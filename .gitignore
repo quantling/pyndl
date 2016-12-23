@@ -7,3 +7,7 @@ tests/__pycache__/
 htmlcov/
 .cache/
 *.swp
+ndl_c.c
+notebooks/
+prof/
+pyndl.tar.gz

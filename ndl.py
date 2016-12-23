@@ -1,8 +1,7 @@
 from collections import defaultdict, OrderedDict
-import multiprocessing
-import time
 import os
-import pyximport #; pyximport.install()
+import pyximport
+pyximport.install()
 
 import threading
 from queue import Queue
@@ -14,14 +13,10 @@ from . import preprocess
 from . import ndl_c
 from . import ndl_parallel
 
-
-try:
-    from numba import jit
-except ImportError:
-    jit = lambda x: x
-
-# Path where the binary resources are temporaly stored
+# Path where the binary resources are temporarily stored
+# TODO use tmpfile for that
 BINARY_PATH = os.path.join(os.path.dirname(__file__), "tests/binary_resources/")
+
 
 def events(event_path, *, frequency=False):
     """
@@ -58,13 +53,14 @@ def events(event_path, *, frequency=False):
                 for _ in range(frequency):
                     yield (cues, outcomes)
 
-def thread_ndl_simple(event_path, alpha, betas, lambda_, *,
+
+def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
                                        number_of_threads=2, sequence=10):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
 
-    This is a parallel python implementation using numpy, multiprocessing and
+    This is a parallel python implementation using numpy, multithreading and
     the binary format defined in preprocess.py.
 
     Parameters
@@ -119,9 +115,8 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_, *,
                 if working_queue.empty():
                     break
                 data = working_queue.get()
-                ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
-                                            beta1, beta2, lambda_,
-                                            data)
+            ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
+                                         beta1, beta2, lambda_, data)
 
     with queue_lock:
         for partlist in part_lists:
@@ -137,13 +132,14 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_, *,
 
     return weights
 
-def openmp_ndl_simple(event_path, alpha, betas, lambda_, *,
+
+def openmp_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
                                              number_of_threads=8, sequence=10):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
 
-    This is a parallel python implementation using numpy, multiprocessing and
+    This is a parallel python implementation using numpy, multithreading and
     the binary format defined in preprocess.py.
 
     Parameters
@@ -194,22 +190,31 @@ def openmp_ndl_simple(event_path, alpha, betas, lambda_, *,
 
     return weights
 
-def dict_ndl(event_list, alphas, betas, all_outcomes):
+
+def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None):
     """
-    Calculate the weigths for all_outcomes over all events in event_file.
+    Calculate the weights for all_outcomes over all events in event_file.
 
     This is a pure python implementation using dicts.
+
+    Notes
+    =====
+    Outcomes will only be considered to be part of all_outcomes after they
+    have been seen the first time within the events. If you want to learn some
+    events from the beginning you need to give them as keys in the initial
+    weights.
 
     Parameters
     ==========
     events : generator or str
         generates cues, outcomes pairs or the path to the event file
-    alphas : dict
+    alphas : dict or float
         a (default)dict having cues as keys and a value below 1 as value
-    betas : dict
-        a (default)dict having outcomes as keys and a value below 1 as value
-    all_outcomes : list
-        a list of all outcomes of interest
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    lambda_ : float
+    weights : dict of dicts or None
+        initial weights
 
     Returns
     =======
@@ -219,71 +224,34 @@ def dict_ndl(event_list, alphas, betas, all_outcomes):
         weights[outcome][cue] gives the weight between outcome and cue.
 
     """
-    lambda_ = 1.0
-    beta1, beta2 = betas
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
-    weights = defaultdict(lambda: defaultdict(float))
+    if weights is None:
+        weights = defaultdict(lambda: defaultdict(float))
+
+    beta1, beta2 = betas
+    all_outcomes = set(weights.keys())
 
     if isinstance(event_list, str):
-        event_list = events(event_list)
+        event_list = events(event_list, frequency=True)
+    if isinstance(alphas, float):
+        alpha = alphas
+        alphas = defaultdict(lambda: alpha)
 
     for cues, outcomes in event_list:
+        all_outcomes.update(outcomes)
         for outcome in all_outcomes:
             association_strength = sum(weights[outcome][cue] for cue in cues)
             if outcome in outcomes:
                 update = beta1 * (lambda_ - association_strength)
             else:
                 update = beta2 * (0 - association_strength)
+            #for cue in set(cues):  # TODO How do we want to learn in events where we have the same cue multiple times?
             for cue in cues:
                 weights[outcome][cue] += alphas[cue] * update
 
     return weights
 
-def dict_ndl_simple(event_path, alpha, betas, lambda_):
-    """
-    Calculate the weigths for all_outcomes over all events in event_file.
-
-    This is a pure python implementation using dicts.
-
-    Parameters
-    ==========
-    events : generator or str
-        generates cues, outcomes pairs or the path to the event file
-    alpha : floatall_outcomes
-    betas : (float, float)
-        one value for successful prediction (reward) one for punishment
-    all_outcomes : list
-        a list of all outcomes of interest
-
-    Returns
-    =======
-    weights : dict of dicts of floats
-        the first dict has outcomes as keys and dicts as values
-        the second dict has cues as keys and weights as values
-        weights[outcome][cue] gives the weight between outcome and cue.
-
-    """
-    # weights can be seen as an infinite outcome by cue matrix
-    # weights[outcome][cue]
-    weights = defaultdict(lambda: defaultdict(float))
-
-    beta1, beta2 = betas
-
-    all_outcomes = generate_all_outcomes(event_path)
-    event_list = events(event_path, frequency=True)
-
-    for cues, outcomes in event_list:
-        for outcome in all_outcomes:
-            association_strength = sum(weights[outcome][cue] for cue in cues)
-            if outcome in outcomes:
-                update = beta1 * (lambda_ - association_strength)
-            else:
-                update = beta2 * (0 - association_strength)
-            for cue in cues:
-                weights[outcome][cue] += alpha * update
-
-    return weights
 
 def activations(cues, weights):
     if isinstance(weights, dict):
@@ -295,6 +263,7 @@ def activations(cues, weights):
 
 # NOTE: In the original code some stuff was differently handled for multiple
 # cues and multiple outcomes.
+
 
 def generate_all_outcomes(event_path):
     """
@@ -314,6 +283,7 @@ def generate_all_outcomes(event_path):
     all_outcomes = list(outcomes.keys())
 
     return all_outcomes
+
 
 def generate_mapping(event_path, number_of_processes=2, binary=False): # TODO find better name
     """
@@ -374,6 +344,7 @@ def slice_list(li, sequence):
         ii = ii+sequence
 
     return seq_list
+
 
 if __name__ == '__main__':
     with open('tests/resources/event_file.tab', 'rt') as event_file:
