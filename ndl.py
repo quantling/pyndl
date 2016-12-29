@@ -239,6 +239,9 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None):
         alphas = defaultdict(lambda: alpha)
 
     for cues, outcomes in event_list:
+        #cues = set(cues)  # TODO How do we want to learn in events where we have the same cue multiple times?
+        #if len(cues) != len(set(cues)):
+        #    raise ValueError('cues needs to be unique: "%s"' % ', '.join(cues))
         all_outcomes.update(outcomes)
         for outcome in all_outcomes:
             association_strength = sum(weights[outcome][cue] for cue in cues)
@@ -246,7 +249,6 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None):
                 update = beta1 * (lambda_ - association_strength)
             else:
                 update = beta2 * (0 - association_strength)
-            #for cue in set(cues):  # TODO How do we want to learn in events where we have the same cue multiple times?
             for cue in cues:
                 weights[outcome][cue] += alphas[cue] * update
 
