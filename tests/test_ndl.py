@@ -43,8 +43,8 @@ def test_dict_ndl_vs_thread_ndl_simple():
     assert len(unequal) == 0
 
 def test_multiple_cues_dict_ndl_vs_thread_ndl_simple():
-    result_dict_ndl = ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS)
-    result_thread_ndl_simple = ndl.thread_ndl_simple(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS)
+    result_dict_ndl = ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, make_unique=True)
+    result_thread_ndl_simple = ndl.thread_ndl_simple(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, make_unique=True)
 
     unequal, unequal_ratio = compare_arrays(FILE_PATH_MULTIPLE_CUES, result_dict_ndl,
                                             result_thread_ndl_simple,

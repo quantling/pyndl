@@ -64,7 +64,7 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
 
 
 def process_occurrences(occurrences, outfile, *,
-        cue_structure="trigrams_to_word"):
+        cue_structure="trigrams_to_word", make_unique=True):
     """
     Process the occurrences and write them to outfile.
 
@@ -75,6 +75,8 @@ def process_occurrences(occurrences, outfile, *,
         special symbols.
     outfile : file handle
     cue_structure : {'bigrams_to_word', 'trigrams_to_word', 'word_to_word'}
+    make_unique : bool
+        if True make cues and outcomes per event unique
 
     """
     if cue_structure == "bigrams_to_word":
@@ -88,7 +90,10 @@ def process_occurrences(occurrences, outfile, *,
                         range(len(phrase_string) - 2 + 1))
             if not bigrams or not occurrence:
                 continue
-            outfile.write("_".join(bigrams) + "\t" + occurrence + "\t1\n")
+            if make_unique:
+                outfile.write("_".join(set(bigrams)) + "\t" + occurrence + "\t1\n")
+            else:
+                outfile.write("_".join(bigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "trigrams_to_word":
         for cues, outcomes in occurrences:
             if cues and outcomes:
@@ -100,12 +105,18 @@ def process_occurrences(occurrences, outfile, *,
                         range(len(phrase_string) - 3 + 1))
             if not trigrams or not occurrence:
                 continue
-            outfile.write("_".join(trigrams) + "\t" + occurrence + "\t1\n")
+            if make_unique:
+                outfile.write("_".join(set(trigrams)) + "\t" + occurrence + "\t1\n")
+            else:
+                outfile.write("_".join(trigrams) + "\t" + occurrence + "\t1\n")
     elif cue_structure == "word_to_word":
         for cues, outcomes in occurrences:
             if not cues:
                 continue
-            outfile.write(cues + "\t" + outcomes + "\t1\n")
+            if make_unique:
+                outfile.write("_".join(set(cues.split("_"))) + "\t" + outcomes + "\t1\n")
+            else:
+                outfile.write(cues + "\t" + outcomes + "\t1\n")
     else:
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
@@ -119,6 +130,7 @@ def create_event_file(corpus_file,
                       event_options=(3,),  # number_of_words,
                       cue_structure="trigrams_to_word",
                       lower_case=False,
+                      make_unique=True,
                       verbose=False):
     """
     Create an text based event file from a corpus file.
@@ -140,6 +152,8 @@ def create_event_file(corpus_file,
     cue_structure: {"trigrams_to_word", "word_to_word", "bigrams_to_word"}
     lower_case : bool
         should the cues and outcomes be lower cased
+    make_unique : bool
+        create unique cues and outcomes per event
     verbose : bool
 
     Breaks / Separators
@@ -246,7 +260,8 @@ def create_event_file(corpus_file,
     def process_words(words):
         occurrences = gen_occurrences(words)
         process_occurrences(occurrences, outfile,
-                            cue_structure=cue_structure)
+                            cue_structure=cue_structure,
+                            make_unique=make_unique)
 
     def process_context(line):
         '''called when a context boundary is found.'''
@@ -537,7 +552,7 @@ def to_integer(byte_):
     return int.from_bytes(byte_, "little")
 
 
-def write_events(events, filename, *, start=0, stop=4294967295, store_freq=False):
+def write_events(events, filename, *, start=0, stop=4294967295, make_unique=None, store_freq=False):
     """
     Write out a list of events to a disk file in binary format.
 
@@ -550,6 +565,11 @@ def write_events(events, filename, *, start=0, stop=4294967295, store_freq=False
     filename : string
     start : first event to write (zero based index)
     stop : last event to write (zero based index; excluded)
+    make_unique : {None, True, False}
+        if None though a ValueError when the same cue is present multiple times
+        in the same event; True make cues and outcomes unique per event; False
+        keep multiple instances of the same cue or outcome (this is usually not
+        preferred!)
     store_freq : bool
         should the frequency information per event be stored, if False all
         frequencies need to be 1.
@@ -610,6 +630,15 @@ def write_events(events, filename, *, start=0, stop=4294967295, store_freq=False
             n_events += 1
             cue_ids, outcome_ids, frequency = event
 
+            if make_unique is None:
+                if len(cue_ids) != len(set(cue_ids)) or len(outcome_ids) != len(set(outcome_ids)):
+                    raise ValueError('event %i does not have unique cues or outcomes. Use make_unique=True in order to force unique cues and outcomes. Use make_unique=False to allow the same cue or outcome multiple times in the same event (not recommended)' % ii)
+            elif make_unique:
+                cue_ids = set(cue_ids)
+                outcome_ids = set(outcome_ids)
+            else:
+                pass
+
             # cues in event
             out_file.write(to_bytes(len(cue_ids)))
             for cue_id in cue_ids:
@@ -664,17 +693,32 @@ def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event
             yield event
 
 
-def _job_binary_event_file(*, file_name, event_file, cue_id_map,
-                            outcome_id_map, sort_within_event, start, stop, store_freq):
+def _job_binary_event_file(*,
+                           file_name,
+                           event_file,
+                           cue_id_map,
+                           outcome_id_map,
+                           sort_within_event,
+                           start,
+                           stop,
+                           make_unique,
+                           store_freq):
     # create generator which is not pickable
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=sort_within_event)
-    write_events(events, file_name, start=start, stop=stop, store_freq=store_freq)
+    write_events(events, file_name, start=start, stop=stop, make_unique=make_unique, store_freq=store_freq)
 
 
-def create_binary_event_files(event_file, path_name, cue_id_map,
+def create_binary_event_files(event_file,
+                              path_name,
+                              cue_id_map,
                               outcome_id_map,
-                              *, sort_within_event=False, number_of_processes=2,
-                              events_per_file=1000000, overwrite=False, store_freq=False,
+                              *,
+                              sort_within_event=False,
+                              number_of_processes=2,
+                              events_per_file=1000000,
+                              overwrite=False,
+                              make_unique=None,
+                              store_freq=False,
                               verbose=False):
     """
     Creates the binary event files for a tabular cue outcome frequency corpus.
@@ -695,7 +739,13 @@ def create_binary_event_files(event_file, path_name, cue_id_map,
     number_of_processes : int
         number of threads to use
     events_per_file : int
-    overwrite : overwrite files if they exist
+    overwrite : bool
+        overwrite files if they exist
+    make_unique : {None, True, False}
+        if None though a ValueError when the same cue is present multiple times
+        in the same event; True make cues and outcomes unique per event; False
+        keep multiple instances of the same cue or outcome (this is usually not
+        preferred!)
     store_freq : bool
         should the frequency be stored, otherwise it needs to be 1 for all events
     verbose : bool
@@ -737,6 +787,7 @@ def create_binary_event_files(event_file, path_name, cue_id_map,
                       "sort_within_event": sort_within_event,
                       "start": ii*events_per_file,
                       "stop": (ii+1)*events_per_file,
+                      "make_unique": make_unique,
                       "store_freq": store_freq,}
             try:
                 result = pool.apply_async(_job_binary_event_file,
