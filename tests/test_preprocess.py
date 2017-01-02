@@ -74,11 +74,7 @@ def test_create_event_file_trigrams_to_word():
                       event_structure="consecutive_words",
                       event_options=(3, ),
                       cue_structure="trigrams_to_word")
-    with open(event_file, "rt") as new_file:
-        lines_new = new_file.readlines()
-    with open(reference_file, "rt") as reference:
-        lines_reference = reference.readlines()
-    assert lines_new == lines_reference
+    compare_event_files(event_file, reference_file)
     os.remove(event_file)
 
 
@@ -89,11 +85,7 @@ def test_create_event_file_trigrams_to_word_line_based():
                       context_structure="document",
                       event_structure="line", event_options=(3, ),
                       cue_structure="trigrams_to_word")
-    with open(event_file, "rt") as new_file:
-        lines_new = new_file.readlines()
-    with open(reference_file, "rt") as reference:
-        lines_reference = reference.readlines()
-    assert lines_new == lines_reference
+    compare_event_files(event_file, reference_file)
     os.remove(event_file)
 
 
@@ -104,12 +96,9 @@ def test_create_event_file_bigrams_to_word():
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
-                      cue_structure="bigrams_to_word")
-    with open(event_file, "rt") as new_file:
-        lines_new = new_file.readlines()
-    with open(reference_file, "rt") as reference:
-        lines_reference = reference.readlines()
-    assert lines_new == lines_reference
+                      cue_structure="bigrams_to_word",
+                      make_unique=True)
+    compare_event_files(event_file, reference_file)
     os.remove(event_file)
 
 
@@ -120,11 +109,8 @@ def test_create_event_file_word_to_word():
                       context_structure="document",
                       event_structure="word_to_word", event_options=(2, 1),
                       cue_structure="word_to_word")
-    with open(event_file, "rt") as new_file:
-        lines_new = new_file.readlines()
-    with open(reference_file, "rt") as reference:
-        lines_reference = reference.readlines()
-    assert lines_new == lines_reference
+    compare_event_files(event_file, reference_file)
+
     os.remove(event_file)
 
 
@@ -194,28 +180,28 @@ def test_write_events():
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
     file_name = os.path.join(TEST_ROOT, "temp/events.bin")
     with pytest.raises(StopIteration):
-        write_events(events, file_name)
+        write_events(events, file_name, make_unique=True)
     os.remove(file_name)
 
     # start stop
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
-    write_events(events, file_name, start=10, stop=20)
+    write_events(events, file_name, start=10, stop=20, make_unique=True)
     os.remove(file_name)
 
     # no events
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
-    write_events(events, file_name, start=100000, stop=100010)
+    write_events(events, file_name, start=100000, stop=100010, make_unique=True)
 
     _job_binary_event_file(file_name=file_name, event_file=event_file,
                            cue_id_map=cue_id_map,
                            outcome_id_map=outcome_id_map,
                            sort_within_event=False,
-                           start=0, stop=10, store_freq=True)
+                           start=0, stop=10, make_unique=True, store_freq=True)
     _job_binary_event_file(file_name=file_name, event_file=event_file,
                            cue_id_map=cue_id_map,
                            outcome_id_map=outcome_id_map,
                            sort_within_event=False,
-                           start=0, stop=10, store_freq=False)
+                           start=0, stop=10, make_unique=True, store_freq=False)
     os.remove(file_name)
 
     # bad event file
@@ -240,7 +226,7 @@ def test_read_binary_file():
 
     cue_id_map, outcome_id_map, all_outcomes = ndl.generate_mapping(abs_file_path)
 
-    create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map, outcome_id_map, overwrite=True)
+    create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map, outcome_id_map, overwrite=True, make_unique=False)
 
     bin_events = read_binary_file(abs_binary_file_path)
     events = ndl.events(abs_file_path, frequency=True)
@@ -314,3 +300,22 @@ def test_preprocessing():
     #for file_ in os.listdir(path_name):
     #    os.remove(os.path.join(path_name, file_))
     #os.rmdir(path_name)
+
+
+def compare_event_files(newfile, oldfile):
+    with open(newfile, "rt") as new_file:
+        lines_new = new_file.readlines()
+    with open(oldfile, "rt") as reference:
+        lines_reference = reference.readlines()
+    assert len(lines_new) == len(lines_reference)
+    for ii in range(len(lines_new)):
+        cues, outcomes, freq = lines_new[ii].strip().split('\t')
+        cues = sorted(cues.split('_'))
+        outcomes = sorted(outcomes.split('_'))
+        ref_cues, ref_outcomes, ref_freq = lines_reference[ii].strip().split('\t')
+        ref_cues = sorted(ref_cues.split('_'))
+        ref_outcomes = sorted(ref_outcomes.split('_'))
+        assert cues == ref_cues
+        assert outcomes == ref_outcomes
+        assert freq == ref_freq
+
