@@ -23,6 +23,7 @@ BINARY_PATH = os.path.join(TEST_ROOT, "binary_resources/")
 #REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_tiny.csv')
 REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple.csv')
 REFERENCE_PATH_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple_ndl2.csv')
+REFERENCE_PATH_MULTIPLE_CUES_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_multiple_cues_ndl2.csv')
 
 LAMBDA_ = 1.0
 ALPHA = 0.1
@@ -67,7 +68,7 @@ def test_dict_ndl_vs_openmp_ndl_simple():
 
 # Test against external ndl2 results
 
-def test_compare_weights_rescorla():
+def test_compare_weights_ndl2():
     """
     Checks whether the output of the R learner implemented in ndl2 and the
     python implementation of dict_ndl is equal.
@@ -75,10 +76,10 @@ def test_compare_weights_rescorla():
     R code to generate the results::
 
         library(ndl2)
-        learner <- learnWeightsTabular('event_file_tiny.tab', alpha=0.1, beta=0.1, lambda=1.0)
+        learner <- learnWeightsTabular('event_file_simple.tab', alpha=0.1, beta=0.1, lambda=1.0)
         wm <- learner$getWeights()
         wm <- wm[order(rownames(wm)), order(colnames(wm))]
-        write.csv(wm, 'weights_event_file_tiny.csv')
+        write.csv(wm, 'weights_event_file_simple_ndl2.csv')
 
     """
     result_ndl2 = defaultdict(lambda: defaultdict(float))
@@ -119,7 +120,7 @@ def test_multiple_cues_dict_ndl_vs_ndl2():
     """
     result_ndl2 = defaultdict(lambda: defaultdict(float))
 
-    with open(os.path.join(TEST_ROOT, 'reference/weights_event_file_multiple_cues_ndl2.csv'), 'rt') as reference_file:
+    with open(REFERENCE_PATH_MULTIPLE_CUES_NDL2, 'rt') as reference_file:
         first_line = reference_file.readline().strip()
         outcomes = first_line.split(',')[1:]
         outcomes = [outcome.strip('"') for outcome in outcomes]
@@ -130,9 +131,9 @@ def test_multiple_cues_dict_ndl_vs_ndl2():
                 result_ndl2[outcome][cue] = float(cue_weights[ii])
 
 
-    result_python = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS)
+    result_python = ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, make_unique=False)
 
-    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_ndl2, result_python,
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_MULTIPLE_CUES, result_ndl2, result_python,
                              is_np_arr1=False, is_np_arr2=False)
     print(set(outcome for outcome, *_ in unequal))
     #print(unequal)
