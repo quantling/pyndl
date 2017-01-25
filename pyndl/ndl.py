@@ -1,5 +1,6 @@
 from collections import defaultdict, OrderedDict
 import os
+import tempfile
 import pyximport
 pyximport.install()  # noqa
 
@@ -12,11 +13,7 @@ from . import count
 from . import preprocess
 from . import ndl_parallel
 
-
-# Path where the binary resources are temporarily stored
-# TODO use tmpfile for that
-BINARY_PATH = os.path.join(os.path.dirname(__file__), "tests/binary_resources/")
-
+BINARY_PATH = tempfile.mkdtemp()
 
 def events(event_path, *, frequency=False):
     """
