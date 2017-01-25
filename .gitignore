@@ -11,3 +11,6 @@ ndl_c.c
 notebooks/
 prof/
 pyndl.tar.gz
+pyndl/tests/binary_resources/
+.venv/
+.#*
