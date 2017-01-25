@@ -3,7 +3,7 @@ PYTHON_VERSION := 3
 PYTHONPATH := .
 VENV := .venv
 PYTEST := env PYTHONPATH=$(PYTHONPATH) PYTEST=1 $(VENV)/bin/py.test
-PEP8 := env PYTHONPATH=$(PYTHONPATH) $(VENV)/bin/pep8 --repeat --ignore=E202,E501,E402
+PEP8 := env PYTHONPATH=$(PYTHONPATH) $(VENV)/bin/pep8 --repeat
 PYTHON := env PYTHONPATH=$(PYTHONPATH) $(VENV)/bin/python$(PYTHON_VERSION)
 PIP := $(VENV)/bin/pip
 
@@ -24,5 +24,6 @@ checkstyle: use-venv
 		$(PEP8) $(PYTHON_MODULES)
 test: use-venv
 		$(PYTEST) $(PYTHON_MODULES)
-
-.PHONY: default install test use-venv install-venv checkstyle
+test-slow: use-venv
+		$(PYTEST) --runslow $(PYTHON_MODULES)
+.PHONY: default install test use-venv install-venv checkstyle test-slow
