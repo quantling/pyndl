@@ -12,7 +12,7 @@ VIRTUALENV := /usr/bin/env virtualenv
 
 REQUIREMENTS := -r requirements.txt
 
-default: check-coding-style
+default: checkstyle test
 
 use-venv:
 		bash -c 'source $(VENV)/bin/activate'
