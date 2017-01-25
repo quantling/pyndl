@@ -1,7 +1,7 @@
 
 import numpy as np
 
-from .. import kalman
+from pyndl import kalman
 
 
 def DISABLEtest_covariance():

@@ -5,15 +5,15 @@ import os
 
 import pytest
 
-from ..preprocess import (create_event_file, filter_event_file,
+from pyndl.preprocess import (create_event_file, filter_event_file,
                           create_binary_event_files, bandsample,
                           event_generator, write_events,
                           _job_binary_event_file, JobFilter, to_bytes, to_integer, read_binary_file)
 
-from ..count import (cues_outcomes, load_counter)
-from .. import ndl
+from pyndl.count import (cues_outcomes, load_counter)
+from pyndl import ndl
 
-TEST_ROOT = os.path.dirname(__file__)
+TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
 RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 TINY_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus_tiny.txt")

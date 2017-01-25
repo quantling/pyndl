@@ -1,4 +1,4 @@
-from ..activation import activation_matrix
+from pyndl.activation import activation_matrix
 import numpy as np
 import time
 import gc

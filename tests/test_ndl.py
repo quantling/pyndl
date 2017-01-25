@@ -13,9 +13,9 @@ import numpy as np
 slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
                           reason="need --runslow option to run")
 
-from .. import ndl, count, preprocess
+from pyndl import ndl, count, preprocess
 
-TEST_ROOT = os.path.dirname(__file__)
+TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 #FILE_PATH = os.path.join(TEST_ROOT, "resources/event_file_tiny.tab")
 FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab")
 FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab")

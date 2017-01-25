@@ -3,7 +3,7 @@
 
 import os
 
-from .. import count
+from pyndl import count
 
 TEST_ROOT = os.path.dirname(__file__)
 
