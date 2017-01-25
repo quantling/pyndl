@@ -10,7 +10,6 @@ PIP := $(VENV)/bin/pip
 DEFAULT_PYTHON := /usr/bin/python$(PYTHON_VERSION)
 VIRTUALENV := /usr/bin/env virtualenv
 
-REQUIREMENTS := -r requirements.txt
 
 default: checkstyle test
 
@@ -19,11 +18,12 @@ use-venv:
 install-venv:
 		$(VIRTUALENV) -p $(DEFAULT_PYTHON) -q $(VENV)
 install: install-venv
-		$(PIP) install -q $(REQUIREMENTS)
+		$(PIP) install .
+		$(PIP) install '.[test]'
 checkstyle: use-venv
 		$(PEP8) $(PYTHON_MODULES)
 test: use-venv
-		$(PYTEST) $(PYTHON_MODULES)
+		$(PYTHON) setup.py test
 test-slow: use-venv
 		$(PYTEST) --runslow $(PYTHON_MODULES)
 .PHONY: default install test use-venv install-venv checkstyle test-slow
