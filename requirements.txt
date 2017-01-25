@@ -1,0 +1,6 @@
+pep8
+pylint
+pytest==3.0.0
+numpy
+matplotlib
+cython
