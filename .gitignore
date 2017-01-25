@@ -14,3 +14,9 @@ pyndl.tar.gz
 pyndl/tests/binary_resources/
 .venv/
 .#*
+.eggs/
+build/
+dist/
+*.so
+pyndl.egg-info/
+*.c
