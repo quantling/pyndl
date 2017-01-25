@@ -206,8 +206,9 @@ def test_write_events():
 
     # bad event file
     with pytest.raises(ValueError):
-        events = event_generator("./tests/resources/event_file_BAD.tab", cue_id_map,
-                                outcome_id_map)
+        event_bad_file = os.path.join(TEST_ROOT, "resources/event_file_BAD.tab")
+        events = event_generator(event_bad_file, cue_id_map,
+                                 outcome_id_map)
         # traverse generator
         for event in events:
             pass
@@ -247,7 +248,7 @@ def test_read_binary_file():
 
 
 def test_preprocessing():
-    corpus_file = "./tests/resources/corpus.txt"
+    corpus_file = os.path.join(TEST_ROOT, "resources/corpus.txt")
     event_file = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
     symbols = "abcdefghijklmnopqrstuvwxyzóąćęłńśźż"  # polish
 
