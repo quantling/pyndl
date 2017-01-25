@@ -9,11 +9,9 @@ This module provides functions in order to count
 """
 
 from collections import Counter
-import functools
 import itertools
 import multiprocessing
 import os
-import pickle
 import sys
 
 
@@ -58,11 +56,12 @@ def cues_outcomes(event_file_name,
     """
     with multiprocessing.Pool(number_of_processes) as pool:
         step = number_of_processes
-        results = pool.starmap(_job_cues_outcomes, ((event_file_name,
-                                                    start,
-                                                    step,
-                                                    verbose)
-                                      for start in range(number_of_processes)))
+        results = pool.starmap(_job_cues_outcomes,
+                               ((event_file_name,
+                                 start,
+                                 step,
+                                 verbose)
+                                for start in range(number_of_processes)))
         cues = Counter()
         outcomes = Counter()
         for cues_process, outcomes_process in results:
@@ -73,7 +72,6 @@ def cues_outcomes(event_file_name,
         print('\n...counting done.')
 
     return cues, outcomes
-
 
 
 def _job_words_symbols(corpus_file_name, start, step, lower_case=True,
@@ -205,4 +203,3 @@ if __name__ == '__main__':
 
     else:
         raise NotImplementedError("modus %s is not defined" % modus)
-

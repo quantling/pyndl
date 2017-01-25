@@ -34,6 +34,7 @@ __version__ = '0.2.0'
 FRAMES_PER_SECOND = 30
 PUNCTUATION = tuple(".,:;?!()[]'")
 
+
 def _parse_time_string(time_string):
     """
     parses string and returns time in seconds.
@@ -41,10 +42,10 @@ def _parse_time_string(time_string):
     """
     # make commas and colons the same symbol and split
     hours, minutes, seconds, frames = time_string.replace(',', ':').split(':')
-    return (float(hours) * 60 * 60
-            + float(minutes) * 60
-            + float(seconds)
-            + float(frames) / FRAMES_PER_SECOND)
+    return (float(hours) * 60 * 60 +
+            float(minutes) * 60 +
+            float(seconds) +
+            float(frames) / FRAMES_PER_SECOND)
 
 
 def read_clean_gzfile(gz_file_path, *, break_duration=2.0):
@@ -99,8 +100,8 @@ def read_clean_gzfile(gz_file_path, *, break_duration=2.0):
                 current_time = _parse_time_string(time_tag.get('value'))
 
                 # start
-                if (tag_type == 'S'
-                        and current_time - last_time > break_duration):
+                if (tag_type == 'S' and
+                        current_time - last_time > break_duration):
                     result = '\n' + result
                 # end
                 elif tag_type == 'E':
@@ -194,9 +195,8 @@ def main(directory, outfile, *, n_threads=1, verbose=False):
         duration = time.time() - start_time
         print("\nProcessed %i files. %i files where not found." %
               (len(gz_files), len(not_founds)))
-        print("Processing took %.2f seconds (%ih%.2im)." % (duration, duration
-                                                            // (60 * 60),
-                                                            duration // 60))
+        print("Processing took %.2f seconds (%ih%.2im)." %
+              (duration, duration // (60 * 60), duration // 60))
 
     if not_founds:
         # prevent overwriting files

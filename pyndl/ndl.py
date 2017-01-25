@@ -1,7 +1,7 @@
 from collections import defaultdict, OrderedDict
 import os
 import pyximport
-pyximport.install()
+pyximport.install()  # noqa
 
 import threading
 from queue import Queue
@@ -10,8 +10,8 @@ import numpy as np
 
 from . import count
 from . import preprocess
-from . import ndl_c
 from . import ndl_parallel
+
 
 # Path where the binary resources are temporarily stored
 # TODO use tmpfile for that
@@ -55,7 +55,7 @@ def events(event_path, *, frequency=False):
 
 
 def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
-                                       number_of_threads=2, sequence=10, make_unique=None):
+                      number_of_threads=2, sequence=10, make_unique=None):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -109,7 +109,7 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
                     for binary_file in os.listdir(BINARY_PATH)
                     if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
 
-    part_lists = slice_list(all_outcome_indices,sequence)
+    part_lists = slice_list(all_outcome_indices, sequence)
 
     working_queue = Queue(len(part_lists))
     threads = []
@@ -140,7 +140,7 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
 
 
 def openmp_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
-                                             number_of_threads=8, sequence=10, make_unique=None):
+                      number_of_threads=8, sequence=10, make_unique=None):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -195,10 +195,10 @@ def openmp_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
                     if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
 
     ndl_parallel.learn_inplace(binary_files, weights, alpha,
-                                beta1, beta2, lambda_,
-                                np.array(all_outcome_indices, dtype=np.uint32),
-                                sequence,
-                                number_of_threads)
+                               beta1, beta2, lambda_,
+                               np.array(all_outcome_indices, dtype=np.uint32),
+                               sequence,
+                               number_of_threads)
 
     return weights
 
@@ -257,8 +257,10 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, make_uniqu
 
     for cues, outcomes in event_list:
         if make_unique is None:
-            if len(cues) != len(set(cues)) or len(outcomes) != len(set(outcomes)):
-                raise ValueError('cues or outcomes needs to be unique: cues "%s"; outcomes "%s"; use make_unique=True' % (' '.join(cues), ' '.join(outcomes)))
+            if (len(cues) != len(set(cues)) or
+                    len(outcomes) != len(set(outcomes))):
+                raise ValueError('cues or outcomes needs to be unique: cues "%s"; outcomes "%s"; use make_unique=True' %
+                                 (' '.join(cues), ' '.join(outcomes)))
         elif make_unique:
             cues = set(cues)
             outcomes = set(outcomes)
@@ -310,7 +312,7 @@ def generate_all_outcomes(event_path):
     return all_outcomes
 
 
-def generate_mapping(event_path, number_of_processes=2, binary=False): # TODO find better name
+def generate_mapping(event_path, number_of_processes=2, binary=False):  # TODO find better name
     """
     Generates OrderedDicts of all cues and outcomes to use indizes in the numpy
     implementation.

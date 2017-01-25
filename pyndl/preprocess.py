@@ -64,7 +64,7 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
 
 
 def process_occurrences(occurrences, outfile, *,
-        cue_structure="trigrams_to_word", make_unique=True):
+                        cue_structure="trigrams_to_word", make_unique=True):
     """
     Process the occurrences and write them to outfile.
 
@@ -87,7 +87,7 @@ def process_occurrences(occurrences, outfile, *,
                 occurrence = cues + outcomes
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
             bigrams = (phrase_string[i:(i + 2)] for i in
-                        range(len(phrase_string) - 2 + 1))
+                       range(len(phrase_string) - 2 + 1))
             if not bigrams or not occurrence:
                 continue
             if make_unique:
@@ -245,7 +245,7 @@ def create_event_file(corpus_file,
             return occurrences
         elif event_structure == 'line':
             # (cues, outcomes) with empty outcomes
-            return [('_'.join(words), ''),]
+            return [('_'.join(words), ''), ]
 
     def process_line(line):
         if lower_case:
@@ -320,7 +320,6 @@ def create_event_file(corpus_file,
                 process_words(words)
 
 
-
 class JobFilter():
     """
     Stores the persistent information over several jobs and exposes a job
@@ -336,16 +335,15 @@ class JobFilter():
     def return_empty_string():
         return ''
 
-
     def __init__(self, keep_cues, keep_outcomes, remove_cues, remove_outcomes,
                  cue_map, outcome_map):
-        if ((cue_map is not None and remove_cues is not None)
-                or (cue_map is not None and keep_cues != 'all')
-                or (remove_cues is not None and keep_cues != 'all')):
+        if ((cue_map is not None and remove_cues is not None) or
+                (cue_map is not None and keep_cues != 'all') or
+                (remove_cues is not None and keep_cues != 'all')):
             raise ValueError('You can either specify keep_cues, remove_cues, or cue_map.')
-        if ((outcome_map is not None and remove_outcomes is not None)
-                or (outcome_map is not None and keep_outcomes != 'all')
-                or (remove_outcomes is not None and keep_outcomes != 'all')):
+        if ((outcome_map is not None and remove_outcomes is not None) or
+                (outcome_map is not None and keep_outcomes != 'all') or
+                (remove_outcomes is not None and keep_outcomes != 'all')):
             raise ValueError('You can either specify keep_outcomes, remove_outcomes, or outcome_map.')
 
         if cue_map is not None:
@@ -373,48 +371,37 @@ class JobFilter():
             self.keep_outcomes = set(keep_outcomes)
             self.process_outcomes = self.process_outcomes_keep
 
-
     def process_cues(self, cues):
         raise NotImplementedError("Needs to be implemented or assigned by a specific method.")
-
 
     def process_cues_map(self, cues):
         cues = [self.cue_map[cue] for cue in cues]
         return [cue for cue in cues if cue]
 
-
     def process_cues_remove(self, cues):
         return [cue for cue in cues if cue not in self.remove_cues]
-
 
     def process_cues_keep(self, cues):
         return [cue for cue in cues if cue in self.keep_cues]
 
-
     def process_cues_all(self, cues):
         return cues
 
-
     def process_outcomes(self, outcomes):
         raise NotImplementedError("Needs to be implemented or assigned by a specific method.")
-
 
     def process_outcomes_map(self, outcomes):
         outcomes = [self.outcome_map[outcome] for outcome in outcomes]
         return [outcome for outcome in outcomes if outcome]
 
-
     def process_outcomes_remove(self, outcomes):
         return [outcome for outcome in outcomes if outcome not in self.remove_outcomes]
-
 
     def process_outcomes_keep(self, outcomes):
         return [outcome for outcome in outcomes if outcome in self.keep_outcomes]
 
-
     def process_outcomes_all(self, outcomes):
         return outcomes
-
 
     def job(self, line):
         try:
@@ -501,12 +488,13 @@ def filter_event_file(input_event_file, output_event_file, *,
 
 
 ################
-## Preprocessing
+#  Preprocessing
 ################
 
 MAGIC_NUMBER = 14159265
 CURRENT_VERSION_WITH_FREQ = 215
 CURRENT_VERSION = 2048 + 215
+
 
 def read_binary_file(binary_file_path):
     with open(binary_file_path, "rb") as binary_file:
@@ -530,23 +518,25 @@ def read_binary_file(binary_file_path):
                 # outcomes
                 number_of_outcomes = to_integer(binary_file.read(4))
                 outcome_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_outcomes)]
-                yield (cue_ids,outcome_ids)
+                yield (cue_ids, outcome_ids)
         else:
             for event in range(nr_of_events):
-                #cues
+                # cues
                 number_of_cues = to_integer(binary_file.read(4))
                 cue_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_cues)]
-                #outcomes
+                # outcomes
                 number_of_outcomes = to_integer(binary_file.read(4))
                 outcome_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_outcomes)]
                 # frequency
 
                 frequency_counter = to_integer(binary_file.read(4))
                 for appearance in frequency_counter:
-                    yield (cue_ids,outcome_ids)
+                    yield (cue_ids, outcome_ids)
+
 
 def to_bytes(int_):
     return int_.to_bytes(4, 'little')
+
 
 def to_integer(byte_):
     return int.from_bytes(byte_, "little")
@@ -632,7 +622,11 @@ def write_events(events, filename, *, start=0, stop=4294967295, make_unique=None
 
             if make_unique is None:
                 if len(cue_ids) != len(set(cue_ids)) or len(outcome_ids) != len(set(outcome_ids)):
-                    raise ValueError('event %i does not have unique cues or outcomes. Use make_unique=True in order to force unique cues and outcomes. Use make_unique=False to allow the same cue or outcome multiple times in the same event (not recommended)' % ii)
+                    raise ValueError(''.join([
+                        'event %i does not have unique cues or outcomes.'
+                        'Use make_unique=True in order to force unique cues and outcomes.'
+                        'Use make_unique=False to allow the same cue or outcome multiple'
+                        'times in the same event (not recommended)']) % ii)
             elif make_unique:
                 cue_ids = set(cue_ids)
                 outcome_ids = set(outcome_ids)
@@ -664,7 +658,6 @@ def write_events(events, filename, *, start=0, stop=4294967295, make_unique=None
 
     if n_events == 0:
         os.remove(filename)
-
 
 
 def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event=False):
@@ -780,15 +773,17 @@ def create_binary_event_files(event_file,
 
         ii = 0
         while True:
-            kwargs = {"file_name": os.path.join(path_name, "events_0_%i.dat" % ii),
-                      "event_file": event_file,
-                      "cue_id_map": cue_id_map,
-                      "outcome_id_map": outcome_id_map,
-                      "sort_within_event": sort_within_event,
-                      "start": ii*events_per_file,
-                      "stop": (ii+1)*events_per_file,
-                      "make_unique": make_unique,
-                      "store_freq": store_freq,}
+            kwargs = {
+                "file_name": os.path.join(path_name, "events_0_%i.dat" % ii),
+                "event_file": event_file,
+                "cue_id_map": cue_id_map,
+                "outcome_id_map": outcome_id_map,
+                "sort_within_event": sort_within_event,
+                "start": ii*events_per_file,
+                "stop": (ii+1)*events_per_file,
+                "make_unique": make_unique,
+                "store_freq": store_freq,
+            }
             try:
                 result = pool.apply_async(_job_binary_event_file,
                                           kwds=kwargs,

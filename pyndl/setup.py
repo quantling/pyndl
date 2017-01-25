@@ -10,11 +10,11 @@ ext_modules = [
     ),
     Extension(
         "ndl_c",
-	["ndl_c.pyx"]
+        ["ndl_c.pyx"]
     )
 ]
 
 setup(
-#        name = 'cyndl',
-        ext_modules = cythonize(ext_modules)
+    # name = 'cyndl',
+    ext_modules=cythonize(ext_modules)
 )
