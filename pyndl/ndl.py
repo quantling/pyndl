@@ -15,6 +15,7 @@ from . import ndl_parallel
 
 BINARY_PATH = tempfile.mkdtemp()
 
+
 def events(event_path, *, frequency=False):
     """
     Yields events for all events in event_file.
