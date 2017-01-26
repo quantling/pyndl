@@ -4,7 +4,7 @@ from setuptools import setup, Extension
 # One time, to read the dependencies,
 # and after their installation.
 try:
-    from Cython.Build import cythonize
+    from Cython.Distutils import build_ext
     import numpy
 except ImportError as e:
     use_deps = False
@@ -19,27 +19,33 @@ def load_requirements(fn):
 
 
 if use_deps:
-    raise ValueError(numpy.get_include())
-    ext_modules = cythonize([
+    ext_modules = [
         Extension(
-            "ndl_parallel",
+            "pyndl.ndl_parallel",
             ["pyndl/ndl_parallel.pyx"],
             extra_compile_args=['-fopenmp'],
             extra_link_args=['-fopenmp'],
             include_dirs=[numpy.get_include()]
-        ),
-        Extension(
-            "ndl_c",
-            ["pyndl/ndl_c.pyx"]
         )
-    ])
+    ]
+    cmdclass = {'build_ext': build_ext}
 else:
-    ext_modules = []
+    ext_modules = [
+        Extension(
+            "pyndl.ndl_parallel",
+            ["pyndl/ndl_parallel.c"],
+            extra_compile_args=['-fopenmp'],
+            extra_link_args=['-fopenmp'],
+            include_dirs=[numpy.get_include()]
+        )
+    ]
+    cmdclass = {}
 
 setup(
     name='pyndl',
     version='0.1',
     packages=['pyndl'],
     install_requires=load_requirements('requirements.txt'),
-    ext_modules=ext_modules
+    ext_modules=ext_modules,
+    cmdclass=cmdclass
 )

@@ -1,8 +1,6 @@
 from collections import defaultdict, OrderedDict
 import os
 import tempfile
-import pyximport
-pyximport.install()  # noqa
 
 import threading
 from queue import Queue
