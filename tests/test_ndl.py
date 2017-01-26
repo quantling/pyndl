@@ -42,8 +42,8 @@ def test_dict_ndl_vs_thread_ndl_simple():
 
 
 def test_multiple_cues_dict_ndl_vs_thread_ndl_simple():
-    result_dict_ndl = ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, make_unique=True)
-    result_thread_ndl_simple = ndl.thread_ndl_simple(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, make_unique=True)
+    result_dict_ndl = ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, remove_duplicates=True)
+    result_thread_ndl_simple = ndl.thread_ndl_simple(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, remove_duplicates=True)
 
     unequal, unequal_ratio = compare_arrays(FILE_PATH_MULTIPLE_CUES, result_dict_ndl,
                                             result_thread_ndl_simple,
@@ -126,7 +126,7 @@ def test_multiple_cues_dict_ndl_vs_ndl2():
             for ii, outcome in enumerate(outcomes):
                 result_ndl2[outcome][cue] = float(cue_weights[ii])
 
-    result_python = ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, make_unique=False)
+    result_python = ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, remove_duplicates=False)
 
     unequal, unequal_ratio = compare_arrays(FILE_PATH_MULTIPLE_CUES, result_ndl2, result_python,
                                             is_np_arr1=False, is_np_arr2=False)
