@@ -7,6 +7,7 @@ from pyndl import count
 
 TEST_ROOT = os.path.dirname(__file__)
 
+
 def test_cues_outcomes():
     cues, outcomes = count.cues_outcomes(os.path.join(TEST_ROOT, "resources/events.tab"))
     cues3, outcomes3 = count.cues_outcomes(os.path.join(TEST_ROOT, "resources/events.tab"),

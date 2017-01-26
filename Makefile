@@ -1,4 +1,4 @@
-PYTHON_MODULES := pyndl
+PYTHON_MODULES := pyndl tests
 PYTHON_VERSION := 3
 PYTHONPATH := .
 VENV := .venv

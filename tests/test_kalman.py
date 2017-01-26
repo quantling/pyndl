@@ -31,5 +31,4 @@ def DISABLEtest_covariance():
     print(covmat_matrix[:10, :4])
     print("-" * 50)
     print(covmat_loop[:10, :4])
-    #assert np.all(covmat_matrix == covmat_loop)
-
+    # assert np.all(covmat_matrix == covmat_loop)
