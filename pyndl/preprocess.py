@@ -64,7 +64,7 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
 
 
 def process_occurrences(occurrences, outfile, *,
-                        cue_structure="trigrams_to_word", make_unique=True):
+                        cue_structure="trigrams_to_word", remove_duplicates=True):
     """
     Process the occurrences and write them to outfile.
 
@@ -75,7 +75,7 @@ def process_occurrences(occurrences, outfile, *,
         special symbols.
     outfile : file handle
     cue_structure : {'bigrams_to_word', 'trigrams_to_word', 'word_to_word'}
-    make_unique : bool
+    remove_duplicates : bool
         if True make cues and outcomes per event unique
 
     """
@@ -90,7 +90,7 @@ def process_occurrences(occurrences, outfile, *,
                        range(len(phrase_string) - 2 + 1))
             if not bigrams or not occurrence:
                 continue
-            if make_unique:
+            if remove_duplicates:
                 outfile.write("_".join(set(bigrams)) + "\t" + occurrence + "\t1\n")
             else:
                 outfile.write("_".join(bigrams) + "\t" + occurrence + "\t1\n")
@@ -105,7 +105,7 @@ def process_occurrences(occurrences, outfile, *,
                         range(len(phrase_string) - 3 + 1))
             if not trigrams or not occurrence:
                 continue
-            if make_unique:
+            if remove_duplicates:
                 outfile.write("_".join(set(trigrams)) + "\t" + occurrence + "\t1\n")
             else:
                 outfile.write("_".join(trigrams) + "\t" + occurrence + "\t1\n")
@@ -113,7 +113,7 @@ def process_occurrences(occurrences, outfile, *,
         for cues, outcomes in occurrences:
             if not cues:
                 continue
-            if make_unique:
+            if remove_duplicates:
                 outfile.write("_".join(set(cues.split("_"))) + "\t" + outcomes + "\t1\n")
             else:
                 outfile.write(cues + "\t" + outcomes + "\t1\n")
@@ -130,7 +130,7 @@ def create_event_file(corpus_file,
                       event_options=(3,),  # number_of_words,
                       cue_structure="trigrams_to_word",
                       lower_case=False,
-                      make_unique=True,
+                      remove_duplicates=True,
                       verbose=False):
     """
     Create an text based event file from a corpus file.
@@ -152,7 +152,7 @@ def create_event_file(corpus_file,
     cue_structure: {"trigrams_to_word", "word_to_word", "bigrams_to_word"}
     lower_case : bool
         should the cues and outcomes be lower cased
-    make_unique : bool
+    remove_duplicates : bool
         create unique cues and outcomes per event
     verbose : bool
 
@@ -261,7 +261,7 @@ def create_event_file(corpus_file,
         occurrences = gen_occurrences(words)
         process_occurrences(occurrences, outfile,
                             cue_structure=cue_structure,
-                            make_unique=make_unique)
+                            remove_duplicates=remove_duplicates)
 
     def process_context(line):
         '''called when a context boundary is found.'''
@@ -542,7 +542,7 @@ def to_integer(byte_):
     return int.from_bytes(byte_, "little")
 
 
-def write_events(events, filename, *, start=0, stop=4294967295, make_unique=None, store_freq=False):
+def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicates=None, store_freq=False):
     """
     Write out a list of events to a disk file in binary format.
 
@@ -555,7 +555,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, make_unique=None
     filename : string
     start : first event to write (zero based index)
     stop : last event to write (zero based index; excluded)
-    make_unique : {None, True, False}
+    remove_duplicates : {None, True, False}
         if None though a ValueError when the same cue is present multiple times
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
@@ -620,14 +620,14 @@ def write_events(events, filename, *, start=0, stop=4294967295, make_unique=None
             n_events += 1
             cue_ids, outcome_ids, frequency = event
 
-            if make_unique is None:
+            if remove_duplicates is None:
                 if len(cue_ids) != len(set(cue_ids)) or len(outcome_ids) != len(set(outcome_ids)):
                     raise ValueError(''.join([
                         'event %i does not have unique cues or outcomes.'
-                        'Use make_unique=True in order to force unique cues and outcomes.'
-                        'Use make_unique=False to allow the same cue or outcome multiple'
+                        'Use remove_duplicates=True in order to force unique cues and outcomes.'
+                        'Use remove_duplicates=False to allow the same cue or outcome multiple'
                         'times in the same event (not recommended)']) % ii)
-            elif make_unique:
+            elif remove_duplicates:
                 cue_ids = set(cue_ids)
                 outcome_ids = set(outcome_ids)
             else:
@@ -694,11 +694,11 @@ def _job_binary_event_file(*,
                            sort_within_event,
                            start,
                            stop,
-                           make_unique,
+                           remove_duplicates,
                            store_freq):
     # create generator which is not pickable
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=sort_within_event)
-    write_events(events, file_name, start=start, stop=stop, make_unique=make_unique, store_freq=store_freq)
+    write_events(events, file_name, start=start, stop=stop, remove_duplicates=remove_duplicates, store_freq=store_freq)
 
 
 def create_binary_event_files(event_file,
@@ -710,7 +710,7 @@ def create_binary_event_files(event_file,
                               number_of_processes=2,
                               events_per_file=1000000,
                               overwrite=False,
-                              make_unique=None,
+                              remove_duplicates=None,
                               store_freq=False,
                               verbose=False):
     """
@@ -734,7 +734,7 @@ def create_binary_event_files(event_file,
     events_per_file : int
     overwrite : bool
         overwrite files if they exist
-    make_unique : {None, True, False}
+    remove_duplicates : {None, True, False}
         if None though a ValueError when the same cue is present multiple times
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
@@ -781,7 +781,7 @@ def create_binary_event_files(event_file,
                 "sort_within_event": sort_within_event,
                 "start": ii*events_per_file,
                 "stop": (ii+1)*events_per_file,
-                "make_unique": make_unique,
+                "remove_duplicates": remove_duplicates,
                 "store_freq": store_freq,
             }
             try:
