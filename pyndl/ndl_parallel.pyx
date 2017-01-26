@@ -111,12 +111,11 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
                         unsigned int end) nogil:
 
 
-    cdef unsigned int number_of_events, number_of_cues, number_of_outcomes, frequency_counter
+    cdef unsigned int number_of_events, number_of_cues, number_of_outcomes
     cdef double association_strength, update
     cdef unsigned int magic_number, version, ii, jj, event, index, appearance
     cdef unsigned int* cue_indices
     cdef unsigned int* outcome_indices
-    cdef int has_frequency # should be changed to an equivalent of boolean
     cdef unsigned int max_number_of_cues = 1024
     cdef unsigned int max_number_of_outcomes = 1024
 
@@ -128,12 +127,9 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
         fclose(binary_file)
         return 1
     read_next_int(&version, binary_file)
-    if version == CURRENT_VERSION_WITH_FREQ:
-        has_frequency = True
-    elif version == CURRENT_VERSION:
-        has_frequency = False
+    if version == CURRENT_VERSION:
+        pass
     else:
-        weights[0] = version
         fclose(binary_file)
         return 2
 
@@ -143,8 +139,7 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
 
     read_next_int(&number_of_events, binary_file)
 
-    if not has_frequency:
-      for event in range(number_of_events):
+    for event in range(number_of_events):
         # cues
         read_next_int(&number_of_cues, binary_file)
         if number_of_cues > max_number_of_cues:
@@ -164,41 +159,6 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
 
         # learn
         for ii in range(start, end):
-            association_strength = 0.0
-            for jj in range(number_of_cues):
-              index = cue_indices[jj] + mm * all_outcome_indices[ii]
-              association_strength += weights[index]
-            if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
-              update = beta1 * (lambda_ - association_strength)
-            else:
-              update = beta2 * (0.0 - association_strength)
-            for jj in range(number_of_cues):
-              index = cue_indices[jj] + mm * all_outcome_indices[ii]
-              weights[index] += alpha * update
-
-    else:
-      for event in range(number_of_events):
-        # cues
-        read_next_int(&number_of_cues, binary_file)
-        if number_of_cues > max_number_of_cues:
-            max_number_of_cues = number_of_cues
-            free(cue_indices)
-            cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
-        fread(cue_indices, 4, number_of_cues, binary_file)
-
-        # outcomes
-        read_next_int(&number_of_outcomes, binary_file)
-        if number_of_outcomes > max_number_of_outcomes:
-            max_number_of_outcomes = number_of_outcomes
-            free(outcome_indices)
-            outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
-        fread(outcome_indices, 4, number_of_outcomes, binary_file)
-
-        # learn
-        # frequency
-        read_next_int(&frequency_counter, binary_file)
-        for appearance in range(frequency_counter):
-          for ii in range(start, end):
             association_strength = 0.0
             for jj in range(number_of_cues):
               index = cue_indices[jj] + mm * all_outcome_indices[ii]
