@@ -1,5 +1,5 @@
 PYTHON_MODULES := pyndl tests
-PYTHON_VERSION := 3
+PYTHON_VERSION := ''
 PYTHONPATH := .
 VENV := .venv
 PYTEST := env PYTHONPATH=$(PYTHONPATH) PYTEST=1 $(VENV)/bin/py.test
@@ -16,7 +16,7 @@ default: checkstyle test
 use-venv:
 		bash -c 'source $(VENV)/bin/activate'
 install-venv:
-		$(VIRTUALENV) -p $(DEFAULT_PYTHON) -q $(VENV)
+		test -d $(VENV) || $(VIRTUALENV) -p $(DEFAULT_PYTHON) -q $(VENV)
 install: install-venv
 		$(PIP) install .
 		$(PIP) install '.[test]'
