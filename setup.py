@@ -30,15 +30,7 @@ if use_deps:
     ]
     cmdclass = {'build_ext': build_ext}
 else:
-    ext_modules = [
-        Extension(
-            "pyndl.ndl_parallel",
-            ["pyndl/ndl_parallel.c"],
-            extra_compile_args=['-fopenmp'],
-            extra_link_args=['-fopenmp'],
-            include_dirs=[numpy.get_include()]
-        )
-    ]
+    ext_modules = []
     cmdclass = {}
 
 setup(
