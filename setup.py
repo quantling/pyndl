@@ -32,18 +32,10 @@ if use_cython:
 else:
     pass
 
-test_deps = load_requirements('requirements_test.txt')
-extras = {
-    'test': test_deps,
-}
-
 setup(
     name='pyndl',
     version='0.1',
     packages=['pyndl'],
     install_requires=load_requirements('requirements.txt'),
-    test_requires=test_deps,
-    setup_requires=['pytest-runner'],
-    extras_require=extras,
     ext_modules=ext_modules
 )
