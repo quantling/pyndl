@@ -3,7 +3,7 @@ from setuptools import setup, Extension
 
 try:
     from Cython.Build import cythonize
-except ModuleNotFoundError:
+except (ImportError, ModuleNotFoundError) as e:
     use_cython = False
 else:
     use_cython = True
