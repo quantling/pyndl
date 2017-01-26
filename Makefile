@@ -11,19 +11,16 @@ DEFAULT_PYTHON := /usr/bin/python$(PYTHON_VERSION)
 VIRTUALENV := /usr/bin/env virtualenv
 
 
-default: checkstyle test
-
-use-venv:
-		bash -c 'source $(VENV)/bin/activate'
-install-venv:
-		test -d $(VENV) || $(VIRTUALENV) -p $(DEFAULT_PYTHON) -q $(VENV)
+default:
+		tox
 install: install-venv
-		$(PIP) install .
-		$(PIP) install '.[test]'
-checkstyle: use-venv
-		$(PEP8) $(PYTHON_MODULES)
-test: use-venv
-		$(PYTHON) setup.py test
+		which tox > /dev/null || (echo "Please install tox (pip install tox)!" && exit 1) && echo "All right! Run with tox."
+checkstyle:
+		tox -e checkstyle
+test:
+		tox -e test
+test-versions:
+		tox -e $(tox -l | grep test | paste -d, -s)
 test-slow: use-venv
-		$(PYTEST) --runslow $(PYTHON_MODULES)
+		tox -e test -- --runslow
 .PHONY: default install test use-venv install-venv checkstyle test-slow

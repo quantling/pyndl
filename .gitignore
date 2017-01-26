@@ -19,4 +19,4 @@ build/
 dist/
 *.so
 pyndl.egg-info/
-*.c
+*.c.tox/
