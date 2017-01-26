@@ -96,7 +96,7 @@ def test_create_event_file_bigrams_to_word():
                       event_structure="consecutive_words",
                       event_options=(3, ),
                       cue_structure="bigrams_to_word",
-                      make_unique=True)
+                      remove_duplicates=True)
     compare_event_files(event_file, reference_file)
     os.remove(event_file)
 
@@ -179,28 +179,28 @@ def test_write_events():
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
     file_name = os.path.join(TEST_ROOT, "temp/events.bin")
     with pytest.raises(StopIteration):
-        write_events(events, file_name, make_unique=True)
+        write_events(events, file_name, remove_duplicates=True)
     os.remove(file_name)
 
     # start stop
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
-    write_events(events, file_name, start=10, stop=20, make_unique=True)
+    write_events(events, file_name, start=10, stop=20, remove_duplicates=True)
     os.remove(file_name)
 
     # no events
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
-    write_events(events, file_name, start=100000, stop=100010, make_unique=True)
+    write_events(events, file_name, start=100000, stop=100010, remove_duplicates=True)
 
     _job_binary_event_file(file_name=file_name, event_file=event_file,
                            cue_id_map=cue_id_map,
                            outcome_id_map=outcome_id_map,
                            sort_within_event=False,
-                           start=0, stop=10, make_unique=True, store_freq=True)
+                           start=0, stop=10, remove_duplicates=True, store_freq=True)
     _job_binary_event_file(file_name=file_name, event_file=event_file,
                            cue_id_map=cue_id_map,
                            outcome_id_map=outcome_id_map,
                            sort_within_event=False,
-                           start=0, stop=10, make_unique=True, store_freq=False)
+                           start=0, stop=10, remove_duplicates=True, store_freq=False)
     os.remove(file_name)
 
     # bad event file
@@ -229,7 +229,7 @@ def test_read_binary_file():
     cue_id_map, outcome_id_map, all_outcomes = ndl.generate_mapping(abs_file_path)
 
     create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map,
-                              outcome_id_map, overwrite=True, make_unique=False)
+                              outcome_id_map, overwrite=True, remove_duplicates=False)
 
     bin_events = read_binary_file(abs_binary_file_path)
     events = ndl.events(abs_file_path, frequency=True)

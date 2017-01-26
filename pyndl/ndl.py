@@ -51,7 +51,7 @@ def events(event_path, *, frequency=False):
 
 
 def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
-                      number_of_threads=2, sequence=10, make_unique=None):
+                      number_of_threads=2, sequence=10, remove_duplicates=None):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -74,7 +74,7 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
         executed
     sequence : int
         a integer giving the length of sublists generated from all outcomes
-    make_unique : {None, True, False}
+    remove_duplicates : {None, True, False}
         if None though a ValueError when the same cue is present multiple times
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
@@ -96,7 +96,7 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
     preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
                                          outcome_map, overwrite=True,
                                          number_of_processes=2,
-                                         make_unique=make_unique)
+                                         remove_duplicates=remove_duplicates)
 
     shape = (len(outcome_map), len(cue_map))
     weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
@@ -136,7 +136,7 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
 
 
 def openmp_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
-                      number_of_threads=8, sequence=10, make_unique=None):
+                      number_of_threads=8, sequence=10, remove_duplicates=None):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -159,7 +159,7 @@ def openmp_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
         executed
     sequence : int
         a integer giving the length of sublists generated from all outcomes
-    make_unique : {None, True, False}
+    remove_duplicates : {None, True, False}
         if None though a ValueError when the same cue is present multiple times
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
@@ -181,7 +181,7 @@ def openmp_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
     preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
                                          outcome_map, overwrite=True,
                                          number_of_processes=2,
-                                         make_unique=make_unique)
+                                         remove_duplicates=remove_duplicates)
 
     shape = (len(outcome_map), len(cue_map))
     weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
@@ -199,7 +199,7 @@ def openmp_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
     return weights
 
 
-def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, make_unique=None):
+def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_duplicates=None):
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
@@ -223,7 +223,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, make_uniqu
     lambda_ : float
     weights : dict of dicts or None
         initial weights
-    make_unique : {None, True, False}
+    remove_duplicates : {None, True, False}
         if None though a ValueError when the same cue is present multiple times
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
@@ -252,12 +252,14 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, make_uniqu
         alphas = defaultdict(lambda: alpha)
 
     for cues, outcomes in event_list:
-        if make_unique is None:
+        if remove_duplicates is None:
             if (len(cues) != len(set(cues)) or
                     len(outcomes) != len(set(outcomes))):
-                raise ValueError('cues or outcomes needs to be unique: cues "%s"; outcomes "%s"; use make_unique=True' %
-                                 (' '.join(cues), ' '.join(outcomes)))
-        elif make_unique:
+                raise ValueError('cues or outcomes needs to be unique: cues '
+                                 '"%s"; outcomes "%s"; use '
+                                 'remove_duplicates=True' % (' '.join(cues),
+                                 ' '.join(outcomes)))
+        elif remove_duplicates:
             cues = set(cues)
             outcomes = set(outcomes)
         else:
@@ -276,7 +278,14 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, make_uniqu
     return weights
 
 
-def activations(cues, weights):
+def activations(cues, weights, *, remove_duplicates=None):
+    if remove_duplicates is None:
+        if len(cues) != len(set(cues)):
+            raise ValueError("cues need to be unique or remove_duplicates needs "
+                             "to be set either to True or False.")
+    elif remove_duplicates:
+        cues = set(cues)
+
     if isinstance(weights, dict):
         activations_ = defaultdict(float)
         for outcome, cue_dict in weights.items():
