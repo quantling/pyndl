@@ -125,19 +125,19 @@ def test_job_filter():
     keep_cues = ["#of", "of#"]
     keep_outcomes = ["of", ]
     job = JobFilter(keep_cues, keep_outcomes, None, None, None, None)
-    line = '#of_alb_NEI_b_of#_XX\tterm_not_of\t3\n'
+    line = '#of_alb_NEI_b_of#_XX\tterm_not_of\n'
     new_line = job.job(line)
-    assert(new_line == '#of_of#\tof\t3\n')
+    assert(new_line == '#of_of#\tof\n')
     # no cues
-    line = 'alb_NEI_b_XX\tterm_not_of\t3\n'
+    line = 'alb_NEI_b_XX\tterm_not_of\n'
     new_line = job.job(line)
     assert(new_line is None)
     # no outcomes
-    line = '#of_alb_NEI_b_of#_XX\tterm_not\t3\n'
+    line = '#of_alb_NEI_b_of#_XX\tterm_not\n'
     new_line = job.job(line)
-    assert(new_line == '#of_of#\t\t3\n')
+    assert(new_line == '#of_of#\t\n')
     # neither cues nor outcomes
-    line = '#alb_NEI_b_XX\tterm_not\t3\n'
+    line = '#alb_NEI_b_XX\tterm_not\n'
     new_line = job.job(line)
     assert(new_line is None)
     with pytest.raises(ValueError):
@@ -195,12 +195,12 @@ def test_write_events():
                            cue_id_map=cue_id_map,
                            outcome_id_map=outcome_id_map,
                            sort_within_event=False,
-                           start=0, stop=10, remove_duplicates=True, store_freq=True)
+                           start=0, stop=10, remove_duplicates=True)
     _job_binary_event_file(file_name=file_name, event_file=event_file,
                            cue_id_map=cue_id_map,
                            outcome_id_map=outcome_id_map,
                            sort_within_event=False,
-                           start=0, stop=10, remove_duplicates=True, store_freq=False)
+                           start=0, stop=10, remove_duplicates=True)
     os.remove(file_name)
 
     # bad event file
@@ -232,7 +232,7 @@ def test_read_binary_file():
                               outcome_id_map, overwrite=True, remove_duplicates=False)
 
     bin_events = read_binary_file(abs_binary_file_path)
-    events = ndl.events(abs_file_path, frequency=True)
+    events = ndl.events(abs_file_path)
 
     for event, bin_event in zip(events, bin_events):
         cues, outcomes = event
@@ -311,12 +311,11 @@ def compare_event_files(newfile, oldfile):
         lines_reference = reference.readlines()
     assert len(lines_new) == len(lines_reference)
     for ii in range(len(lines_new)):
-        cues, outcomes, freq = lines_new[ii].strip().split('\t')
+        cues, outcomes = lines_new[ii].strip().split('\t')
         cues = sorted(cues.split('_'))
         outcomes = sorted(outcomes.split('_'))
-        ref_cues, ref_outcomes, ref_freq = lines_reference[ii].strip().split('\t')
+        ref_cues, ref_outcomes = lines_reference[ii].strip().split('\t')
         ref_cues = sorted(ref_cues.split('_'))
         ref_outcomes = sorted(ref_outcomes.split('_'))
         assert cues == ref_cues
         assert outcomes == ref_outcomes
-        assert freq == ref_freq

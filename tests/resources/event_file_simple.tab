@@ -1,18 +1,18 @@
-cues	outcomes	frequency
-a	A	1
-a_b	A	1
-b_c	B	1
-a_b_c	C	1
-c	C	1
-c	C	1
-c	C	1
-c	C	1
-a_b	A	1
-a_b	A	1
-a_b	A	1
-b_c	B	1
-b_c	B	1
-b_c	B	1
-a	A	1
-a	A	1
-a	A	1
+cues	outcomes
+a	A
+a_b	A
+b_c	B
+a_b_c	C
+c	C
+c	C
+c	C
+c	C
+a_b	A
+a_b	A
+a_b	A
+b_c	B
+b_c	B
+b_c	B
+a	A
+a	A
+a	A

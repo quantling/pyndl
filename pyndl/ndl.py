@@ -14,7 +14,7 @@ from . import ndl_parallel
 BINARY_PATH = tempfile.mkdtemp()
 
 
-def events(event_path, *, frequency=False):
+def events(event_path):
     """
     Yields events for all events in event_file.
 
@@ -22,8 +22,6 @@ def events(event_path, *, frequency=False):
     ==========
     event_path : str
         path to event file
-    frequency : bool
-        frequency should be in the event_file
 
     Yields
     ======
@@ -34,20 +32,11 @@ def events(event_path, *, frequency=False):
     with open(event_path, 'rt') as event_file:
         # skip header
         event_file.readline()
-        if not frequency:
-            for line in event_file:
-                cues, outcomes = line.strip('\n').split('\t')
-                cues = cues.split('_')
-                outcomes = outcomes.split('_')
-                yield (cues, outcomes)
-        else:
-            for line in event_file:
-                cues, outcomes, frequency = line.strip('\n').split('\t')
-                cues = cues.split('_')
-                outcomes = outcomes.split('_')
-                frequency = int(frequency)
-                for _ in range(frequency):
-                    yield (cues, outcomes)
+        for line in event_file:
+            cues, outcomes = line.strip('\n').split('\t')
+            cues = cues.split('_')
+            outcomes = outcomes.split('_')
+            yield (cues, outcomes)
 
 
 def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
@@ -246,7 +235,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
     all_outcomes = set(weights.keys())
 
     if isinstance(event_list, str):
-        event_list = events(event_list, frequency=True)
+        event_list = events(event_list)
     if isinstance(alphas, float):
         alpha = alphas
         alphas = defaultdict(lambda: alpha)
@@ -257,8 +246,8 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
                     len(outcomes) != len(set(outcomes))):
                 raise ValueError('cues or outcomes needs to be unique: cues '
                                  '"%s"; outcomes "%s"; use '
-                                 'remove_duplicates=True' % (' '.join(cues),
-                                 ' '.join(outcomes)))
+                                 'remove_duplicates=True' %
+                                 (' '.join(cues), ' '.join(outcomes)))
         elif remove_duplicates:
             cues = set(cues)
             outcomes = set(outcomes)
