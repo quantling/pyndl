@@ -19,6 +19,7 @@ def load_requirements(fn):
 
 
 if use_deps:
+    raise ValueError(numpy.get_include())
     ext_modules = cythonize([
         Extension(
             "ndl_parallel",
@@ -32,7 +33,6 @@ if use_deps:
             ["pyndl/ndl_c.pyx"]
         )
     ])
-    raise ValueError(numpy.get_include())
 else:
     ext_modules = []
 
