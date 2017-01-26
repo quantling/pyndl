@@ -25,22 +25,20 @@ if use_deps:
             ["pyndl/ndl_parallel.pyx"],
             extra_compile_args=['-fopenmp'],
             extra_link_args=['-fopenmp'],
+            include_dirs=[numpy.get_include()]
         ),
         Extension(
             "ndl_c",
             ["pyndl/ndl_c.pyx"]
         )
     ])
-    include_dirs = [numpy.get_include()]
 else:
     ext_modules = []
-    include_dirs = []
 
 setup(
     name='pyndl',
     version='0.1',
     packages=['pyndl'],
     install_requires=load_requirements('requirements.txt'),
-    ext_modules=ext_modules,
-    include_dirs=include_dirs
+    ext_modules=ext_modules
 )
