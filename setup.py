@@ -32,6 +32,7 @@ if use_deps:
             ["pyndl/ndl_c.pyx"]
         )
     ])
+    raise ValueError(numpy.get_include())
 else:
     ext_modules = []
 
