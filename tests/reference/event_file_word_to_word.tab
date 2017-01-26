@@ -1,30 +1,30 @@
-cues	outcomes	frequency
-w	Nigdy	1
-Nigdy	w	1
-adna	historii	1
-historii_kultura	adna	1
-historii_adna_nie	kultura	1
-kultura_adna_by	nie	1
-kultura_a_nie	by	1
-tak_by_nie	a	1
-skupiona_a_by	tak	1
-a_na_tak	skupiona	1
-skupiona_tak_swoim	na	1
-skupiona_wygl_na	swoim	1
-dzie_swoim_na	wygl	1
-tak_swoim_wygl	dzie	1
-dzie_jak_wygl	tak	1
-dzie_tak	jak	1
-by	Up	1
-Up	by	1
-Nie	Prophet	1
-Prophet_jak	Nie	1
-Nie_Prophet	jak	1
-by	Up	1
-co_Up	by	1
-by_Up	co	1
-co	uwierzysz	1
-uwierzysz	co	1
-wygl	co	1
-co_dzie	wygl	1
-co_wygl	dzie	1
+cues	outcomes
+w	Nigdy
+Nigdy	w
+adna	historii
+historii_kultura	adna
+historii_adna_nie	kultura
+kultura_adna_by	nie
+kultura_a_nie	by
+tak_by_nie	a
+skupiona_a_by	tak
+a_na_tak	skupiona
+skupiona_tak_swoim	na
+skupiona_wygl_na	swoim
+dzie_swoim_na	wygl
+tak_swoim_wygl	dzie
+dzie_jak_wygl	tak
+dzie_tak	jak
+by	Up
+Up	by
+Nie	Prophet
+Prophet_jak	Nie
+Nie_Prophet	jak
+by	Up
+co_Up	by
+by_Up	co
+co	uwierzysz
+uwierzysz	co
+wygl	co
+co_dzie	wygl
+co_wygl	dzie

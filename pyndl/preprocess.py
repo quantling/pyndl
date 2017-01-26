@@ -91,9 +91,9 @@ def process_occurrences(occurrences, outfile, *,
             if not bigrams or not occurrence:
                 continue
             if remove_duplicates:
-                outfile.write("_".join(set(bigrams)) + "\t" + occurrence + "\t1\n")
+                outfile.write("_".join(set(bigrams)) + "\t" + occurrence + "\n")
             else:
-                outfile.write("_".join(bigrams) + "\t" + occurrence + "\t1\n")
+                outfile.write("_".join(bigrams) + "\t" + occurrence + "\n")
     elif cue_structure == "trigrams_to_word":
         for cues, outcomes in occurrences:
             if cues and outcomes:
@@ -106,17 +106,17 @@ def process_occurrences(occurrences, outfile, *,
             if not trigrams or not occurrence:
                 continue
             if remove_duplicates:
-                outfile.write("_".join(set(trigrams)) + "\t" + occurrence + "\t1\n")
+                outfile.write("_".join(set(trigrams)) + "\t" + occurrence + "\n")
             else:
-                outfile.write("_".join(trigrams) + "\t" + occurrence + "\t1\n")
+                outfile.write("_".join(trigrams) + "\t" + occurrence + "\n")
     elif cue_structure == "word_to_word":
         for cues, outcomes in occurrences:
             if not cues:
                 continue
             if remove_duplicates:
-                outfile.write("_".join(set(cues.split("_"))) + "\t" + outcomes + "\t1\n")
+                outfile.write("_".join(set(cues.split("_"))) + "\t" + outcomes + "\n")
             else:
-                outfile.write(cues + "\t" + outcomes + "\t1\n")
+                outfile.write(cues + "\t" + outcomes + "\n")
     else:
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
@@ -272,7 +272,7 @@ def create_event_file(corpus_file,
 
     with open(corpus_file, "rt") as corpus:
         with open(event_file, "wt") as outfile:
-            outfile.write("cues\toutcomes\tfrequency\n")
+            outfile.write("cues\toutcomes\n")
 
             words = []
             for ii, line in enumerate(corpus):
@@ -405,12 +405,11 @@ class JobFilter():
 
     def job(self, line):
         try:
-            cues, outcomes, frequency = line.split("\t")
+            cues, outcomes = line.strip('\n').split("\t")
         except ValueError:
-            raise ValueError("tabular event file need to have three tab separated columns")
+            raise ValueError("tabular event file need to have two tab separated columns")
         cues = cues.split("_")
         outcomes = outcomes.split("_")
-        frequency = int(frequency)
         cues = self.process_cues(cues)
         outcomes = self.process_outcomes(outcomes)
         # no cues left?
@@ -418,7 +417,7 @@ class JobFilter():
         # background for the cues in that events.
         if not cues:
             return None
-        processed_line = ("%s\t%s\t%i\n" % ("_".join(cues), "_".join(outcomes), frequency))
+        processed_line = ("%s\t%s\n" % ("_".join(cues), "_".join(outcomes)))
         return processed_line
 
 
@@ -502,36 +501,20 @@ def read_binary_file(binary_file_path):
         if not magic_number == MAGIC_NUMBER:
             raise ValueError('Header does not match the magic number')
         version = to_integer(binary_file.read(4))
-        if version == CURRENT_VERSION_WITH_FREQ:
-            frequency = True
-        elif version == CURRENT_VERSION:
-            frequency = False
+        if version == CURRENT_VERSION:
+            pass
         else:
             raise ValueError('Version is incorrectly specified')
 
         nr_of_events = to_integer(binary_file.read(4))
-        if not frequency:
-            for event in range(nr_of_events):
-                # Cues
-                number_of_cues = to_integer(binary_file.read(4))
-                cue_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_cues)]
-                # outcomes
-                number_of_outcomes = to_integer(binary_file.read(4))
-                outcome_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_outcomes)]
-                yield (cue_ids, outcome_ids)
-        else:
-            for event in range(nr_of_events):
-                # cues
-                number_of_cues = to_integer(binary_file.read(4))
-                cue_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_cues)]
-                # outcomes
-                number_of_outcomes = to_integer(binary_file.read(4))
-                outcome_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_outcomes)]
-                # frequency
-
-                frequency_counter = to_integer(binary_file.read(4))
-                for appearance in frequency_counter:
-                    yield (cue_ids, outcome_ids)
+        for event in range(nr_of_events):
+            # Cues
+            number_of_cues = to_integer(binary_file.read(4))
+            cue_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_cues)]
+            # outcomes
+            number_of_outcomes = to_integer(binary_file.read(4))
+            outcome_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_outcomes)]
+            yield (cue_ids, outcome_ids)
 
 
 def to_bytes(int_):
@@ -542,7 +525,7 @@ def to_integer(byte_):
     return int.from_bytes(byte_, "little")
 
 
-def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicates=None, store_freq=False):
+def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicates=None):
     """
     Write out a list of events to a disk file in binary format.
 
@@ -551,7 +534,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
 
     Parameters
     ==========
-    events : iterator of (cue_ids, outcome_ids, frequency) triples called event
+    events : iterator of (cue_ids, outcome_ids) tuples called event
     filename : string
     start : first event to write (zero based index)
     stop : last event to write (zero based index; excluded)
@@ -560,13 +543,9 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
         preferred!)
-    store_freq : bool
-        should the frequency information per event be stored, if False all
-        frequencies need to be 1.
 
     Binary Format
     =============
-    Without frequency information::
 
         8 byte header
         nr of events
@@ -574,19 +553,6 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
         ids for every cue
         nr of outcomes in first event
         ids for every outcome
-        nr of cues in second event
-        ...
-
-
-    With frequency information (old format)::
-
-        8 byte header
-        nr of events
-        nr of cues in first event
-        ids for every cue
-        nr of outcomes in first event
-        ids for every outcome
-        frequency
         nr of cues in second event
         ...
 
@@ -599,10 +565,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
     with open(filename, "wb") as out_file:
         # 8 bytes header
         out_file.write(to_bytes(MAGIC_NUMBER))
-        if store_freq:
-            out_file.write(to_bytes(CURRENT_VERSION_WITH_FREQ))
-        else:
-            out_file.write(to_bytes(CURRENT_VERSION))
+        out_file.write(to_bytes(CURRENT_VERSION))
 
         # events
         # estimated number of events (will be rewritten if the actual number
@@ -618,7 +581,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
                 break
 
             n_events += 1
-            cue_ids, outcome_ids, frequency = event
+            cue_ids, outcome_ids = event
 
             if remove_duplicates is None:
                 if len(cue_ids) != len(set(cue_ids)) or len(outcome_ids) != len(set(outcome_ids)):
@@ -643,13 +606,6 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
             for outcome_id in outcome_ids:
                 out_file.write(to_bytes(outcome_id))
 
-            # frequency
-            if store_freq:
-                out_file.write(to_bytes(frequency))
-            else:
-                if frequency != 1:
-                    raise ValueError('All frequencies need to be 1 or use store_freq=True.')
-
         if n_events != n_events_estimate and not n_events == 0:
             # the generator was exhausted earlier
             out_file.seek(8)
@@ -666,23 +622,21 @@ def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event
         in_file.readline()
         for nn, line in enumerate(in_file):
             try:
-                cues, outcomes, frequency = line.split("\t")
+                cues, outcomes = line.strip('\n').split("\t")
             except ValueError:
                 raise ValueError("tabular event file need to have three tab separated columns")
             cues = cues.split("_")
             outcomes = outcomes.split("_")
-            frequency = int(frequency)
             # uses list and not generators; as generators can only be traversed once
             event = ([cue_id_map[cue] for cue in cues],
-                     [outcome_id_map[outcome] for outcome in outcomes],
-                     frequency)
+                     [outcome_id_map[outcome] for outcome in outcomes])
             if sort_within_event:
-                cue_ids, outcome_ids, frequency = event
+                cue_ids, outcome_ids = event
                 cue_ids = list(cue_ids)
                 cue_ids.sort()
                 outcome_ids = list(outcome_ids)
                 outcome_ids.sort()
-                event = (cue_ids, outcome_ids, frequency)
+                event = (cue_ids, outcome_ids)
             yield event
 
 
@@ -694,11 +648,10 @@ def _job_binary_event_file(*,
                            sort_within_event,
                            start,
                            stop,
-                           remove_duplicates,
-                           store_freq):
+                           remove_duplicates):
     # create generator which is not pickable
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=sort_within_event)
-    write_events(events, file_name, start=start, stop=stop, remove_duplicates=remove_duplicates, store_freq=store_freq)
+    write_events(events, file_name, start=start, stop=stop, remove_duplicates=remove_duplicates)
 
 
 def create_binary_event_files(event_file,
@@ -711,16 +664,15 @@ def create_binary_event_files(event_file,
                               events_per_file=1000000,
                               overwrite=False,
                               remove_duplicates=None,
-                              store_freq=False,
                               verbose=False):
     """
-    Creates the binary event files for a tabular cue outcome frequency corpus.
+    Creates the binary event files for a tabular cue outcome corpus.
 
     Parameters
     ==========
     event_file : str
         path to tab separated text file that contains all events in a cue
-        outcome frequency table.
+        outcome table.
     path_name : str
         folder name where to store the binary event files
     cue_id_map : dict (str -> int)
@@ -739,8 +691,6 @@ def create_binary_event_files(event_file,
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
         preferred!)
-    store_freq : bool
-        should the frequency be stored, otherwise it needs to be 1 for all events
     verbose : bool
 
     """
@@ -782,7 +732,6 @@ def create_binary_event_files(event_file,
                 "start": ii*events_per_file,
                 "stop": (ii+1)*events_per_file,
                 "remove_duplicates": remove_duplicates,
-                "store_freq": store_freq,
             }
             try:
                 result = pool.apply_async(_job_binary_event_file,

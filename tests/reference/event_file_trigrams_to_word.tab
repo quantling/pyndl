@@ -1,41 +1,41 @@
-cues	outcomes	frequency
-Nig_gdy_igd_#Ni_dy#	Nigdy	1
-dy#_#w#_#Ni_gdy_igd_Nig_y#w	Nigdy_w	1
-#w#	w	1
-ii#_tor_rii_his_#hi_ori_ist_sto	historii	1
-na#_ii#_tor_rii_his_#hi_i#a_ori_#ad_ist_adn_dna_sto	historii_adna	1
-na#_ii#_tor_#ku_rii_kul_ura_ra#_his_#hi_i#a_ori_#ad_ist_adn_a#k_dna_tur_ult_sto_ltu	historii_adna_kultura	1
-na#_#ku_kul_ura_ra#_a#k_nie_#ad_adn_a#n_dna_tur_#ni_ult_ie#_ltu	adna_kultura_nie	1
-#ku_by#_kul_ra#_nie_#ni_a#n_#by_tur_ult_ura_ie#_e#b_ltu	kultura_nie_by	1
-#a#_by#_y#a_nie_#by_#ni_ie#_e#b	nie_by_a	1
-#a#_by#_y#a_ak#_tak_a#t_#by_#ta	by_a_tak	1
-na#_#a#_pio_ak#_#sk_tak_sku_ion_a#t_kup_ona_k#s_#ta_upi	a_tak_skupiona	1
-na#_#na_pio_ak#_#sk_sku_tak_ion_kup_ona_a#n_k#s_#ta_upi	tak_skupiona_na	1
-im#_na#_#na_swo_pio_woi_#sk_sku_a#s_#sw_ion_kup_ona_a#n_oim_upi	skupiona_na_swoim	1
-im#_#na_na#_ygl_swo_m#w_woi_a#s_#sw_gl#_#wy_oim_wyg	na_swoim_wygl	1
-im#_dzi_ygl_swo_m#w_woi_l#d_#sw_zie_gl#_#wy_oim_ie#_#dz_wyg	swoim_wygl_dzie	1
-dzi_ygl_ak#_l#d_tak_zie_e#t_gl#_#wy_ie#_#ta_#dz_wyg	wygl_dzie_tak	1
-k#j_dzi_#dz_ak#_tak_e#t_zie_#ja_jak_#ta_ie#	dzie_tak_jak	1
-k#j_ak#_tak_#ja_jak_#ta	tak_jak	1
-ak#_#ja_jak	jak	1
-Up#_#Up	Up	1
-Up#_p#b_#Up_#by_by#	Up_by	1
-#by_by#	by	1
-et#_rop_Pro_phe_het_oph_#Pr	Prophet	1
-Nie_et#_t#N_#Ni_rop_Pro_phe_het_oph_#Pr_ie#	Prophet_Nie	1
-ak#_Nie_et#_t#N_#Ni_e#j_rop_Pro_#ja_jak_phe_het_oph_#Pr_ie#	Prophet_Nie_jak	1
-ak#_Nie_e#j_#Ni_#ja_jak_ie#	Nie_jak	1
-ak#_#ja_jak	jak	1
-Up#_#Up	Up	1
-Up#_p#b_#Up_#by_by#	Up_by	1
-y#c_by#_Up#_p#b_#co_#by_#Up_co#	Up_by_co	1
-y#c_#co_#by_co#_by#	by_co	1
-#co_co#	co	1
-#uw_sz#_wie_ier_zys_ysz_uwi_rzy_erz	uwierzysz	1
-#uw_sz#_wie_#co_ier_zys_ysz_z#c_uwi_rzy_erz_co#	uwierzysz_co	1
-#co_co#	co	1
-#co_co#	co	1
-ygl_#co_gl#_o#w_#wy_wyg_co#	co_wygl	1
-dzi_ygl_#co_l#d_zie_gl#_o#w_#wy_ie#_#dz_wyg_co#	co_wygl_dzie	1
-dzi_ygl_l#d_zie_gl#_#wy_ie#_#dz_wyg	wygl_dzie	1
-#dz_zie_ie#_dzi	dzie	1
+cues	outcomes
+Nig_gdy_igd_#Ni_dy#	Nigdy
+dy#_#w#_#Ni_gdy_igd_Nig_y#w	Nigdy_w
+#w#	w
+ii#_tor_rii_his_#hi_ori_ist_sto	historii
+na#_ii#_tor_rii_his_#hi_i#a_ori_#ad_ist_adn_dna_sto	historii_adna
+na#_ii#_tor_#ku_rii_kul_ura_ra#_his_#hi_i#a_ori_#ad_ist_adn_a#k_dna_tur_ult_sto_ltu	historii_adna_kultura
+na#_#ku_kul_ura_ra#_a#k_nie_#ad_adn_a#n_dna_tur_#ni_ult_ie#_ltu	adna_kultura_nie
+#ku_by#_kul_ra#_nie_#ni_a#n_#by_tur_ult_ura_ie#_e#b_ltu	kultura_nie_by
+#a#_by#_y#a_nie_#by_#ni_ie#_e#b	nie_by_a
+#a#_by#_y#a_ak#_tak_a#t_#by_#ta	by_a_tak
+na#_#a#_pio_ak#_#sk_tak_sku_ion_a#t_kup_ona_k#s_#ta_upi	a_tak_skupiona
+na#_#na_pio_ak#_#sk_sku_tak_ion_kup_ona_a#n_k#s_#ta_upi	tak_skupiona_na
+im#_na#_#na_swo_pio_woi_#sk_sku_a#s_#sw_ion_kup_ona_a#n_oim_upi	skupiona_na_swoim
+im#_#na_na#_ygl_swo_m#w_woi_a#s_#sw_gl#_#wy_oim_wyg	na_swoim_wygl
+im#_dzi_ygl_swo_m#w_woi_l#d_#sw_zie_gl#_#wy_oim_ie#_#dz_wyg	swoim_wygl_dzie
+dzi_ygl_ak#_l#d_tak_zie_e#t_gl#_#wy_ie#_#ta_#dz_wyg	wygl_dzie_tak
+k#j_dzi_#dz_ak#_tak_e#t_zie_#ja_jak_#ta_ie#	dzie_tak_jak
+k#j_ak#_tak_#ja_jak_#ta	tak_jak
+ak#_#ja_jak	jak
+Up#_#Up	Up
+Up#_p#b_#Up_#by_by#	Up_by
+#by_by#	by
+et#_rop_Pro_phe_het_oph_#Pr	Prophet
+Nie_et#_t#N_#Ni_rop_Pro_phe_het_oph_#Pr_ie#	Prophet_Nie
+ak#_Nie_et#_t#N_#Ni_e#j_rop_Pro_#ja_jak_phe_het_oph_#Pr_ie#	Prophet_Nie_jak
+ak#_Nie_e#j_#Ni_#ja_jak_ie#	Nie_jak
+ak#_#ja_jak	jak
+Up#_#Up	Up
+Up#_p#b_#Up_#by_by#	Up_by
+y#c_by#_Up#_p#b_#co_#by_#Up_co#	Up_by_co
+y#c_#co_#by_co#_by#	by_co
+#co_co#	co
+#uw_sz#_wie_ier_zys_ysz_uwi_rzy_erz	uwierzysz
+#uw_sz#_wie_#co_ier_zys_ysz_z#c_uwi_rzy_erz_co#	uwierzysz_co
+#co_co#	co
+#co_co#	co
+ygl_#co_gl#_o#w_#wy_wyg_co#	co_wygl
+dzi_ygl_#co_l#d_zie_gl#_o#w_#wy_ie#_#dz_wyg_co#	co_wygl_dzie
+dzi_ygl_l#d_zie_gl#_#wy_ie#_#dz_wyg	wygl_dzie
+#dz_zie_ie#_dzi	dzie
