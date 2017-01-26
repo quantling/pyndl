@@ -31,12 +31,11 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=True):
         # skip header
         dfile.readline()
         for nn, line in enumerate(itertools.islice(dfile, start, None, step)):
-            cues_line, outcomes_line, freq = line.split('\t')
-            freq = int(freq)
+            cues_line, outcomes_line = line.split('\t')
             for cue in cues_line.split('_'):
-                cues[cue] += freq
+                cues[cue] += 1
             for outcome in outcomes_line.strip().split('_'):
-                outcomes[outcome] += freq
+                outcomes[outcome] += 1
             if verbose and nn % 100000 == 0:
                 print('.', end='')
                 sys.stdout.flush()
