@@ -1,12 +1,15 @@
 from setuptools import setup, Extension
 
-
+# While setup, this file will be called twice:
+# One time, to read the dependencies,
+# and after their installation.
 try:
     from Cython.Build import cythonize
+    import numpy
 except ImportError as e:
-    use_cython = False
+    use_deps = False
 else:
-    use_cython = True
+    use_deps = True
 
 
 def load_requirements(fn):
@@ -15,8 +18,7 @@ def load_requirements(fn):
         return [x.rstrip() for x in list(f) if x and not x.startswith('#')]
 
 
-ext_modules = []
-if use_cython:
+if use_deps:
     ext_modules = cythonize([
         Extension(
             "ndl_parallel",
@@ -29,13 +31,16 @@ if use_cython:
             ["pyndl/ndl_c.pyx"]
         )
     ])
+    include_dirs = [numpy.get_include()]
 else:
-    pass
+    ext_modules = []
+    include_dirs = []
 
 setup(
     name='pyndl',
     version='0.1',
     packages=['pyndl'],
     install_requires=load_requirements('requirements.txt'),
-    ext_modules=ext_modules
+    ext_modules=ext_modules,
+    include_dirs=include_dirs
 )
