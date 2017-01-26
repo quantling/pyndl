@@ -3,7 +3,7 @@
 
 import os
 
-from .. import corpus
+from pyndl import corpus
 
 TEST_ROOT = os.path.dirname(__file__)
 

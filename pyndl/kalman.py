@@ -34,7 +34,7 @@ def update_covariance_matrix(covmat, cues_present_vec, *, noise_parameter=1):
     """
     if not cues_present_vec.shape[1] == 1:
         raise ValueError("cues_present_vec need to be a column vector.")
-    #if not isinstance(cues_present_vec, np.matrix):
+    # if not isinstance(cues_present_vec, np.matrix):
     #    raise ValueError("cues_present_vec need to be a np.matrix.")
 
     denominator = float(noise_parameter + cues_present_vec.T * (covmat *
@@ -59,16 +59,15 @@ def update_covariance_loop(covmat, cues_present, cue_index_map, *, noise_paramet
     idxs = [cue_index_map[cue] for cue in cues_present]
     denominator = float(noise_parameter + sum(covmat[idx, idx] for idx in idxs))
     # assuming the matrix is symmetric
-    cue_cov_sum = np.sum(covmat[:,idxs], axis=1)
+    cue_cov_sum = np.sum(covmat[:, idxs], axis=1)
     for nn, value in enumerate(cue_cov_sum):
         if value == 0:
             continue
         covmat[:, nn] -= float(value) * cue_cov_sum / denominator
 
 
-
 def update_mu_matrix(mumat, covmat, cues_present_vec, outcomes_present_vec, *,
-              noise_parameter=1):
+                     noise_parameter=1):
     """
     Update the mean matrix ``mumat`` in place (!!).
 
@@ -87,20 +86,20 @@ def update_mu_matrix(mumat, covmat, cues_present_vec, outcomes_present_vec, *,
 
     if not cues_present_vec.shape[1] == 1:
         raise ValueError("cues_present_vec need to be a column vector.")
-    #if not isinstance(cues_present_vec, np.matrix):
-    #    raise ValueError("cues_present_vec need to be a np.matrix.")
+    # if not isinstance(cues_present_vec, np.matrix):
+    #     raise ValueError("cues_present_vec need to be a np.matrix.")
     if not outcomes_present_vec.shape[1] == 1:
         raise ValueError("outcomes_present_vec need to be a column vector.")
-    #if not isinstance(outcomes_present_vec, np.matrix):
-    #    raise ValueError("outcomes_present_vec need to be a np.matrix.")
+    # if not isinstance(outcomes_present_vec, np.matrix):
+    #     raise ValueError("outcomes_present_vec need to be a np.matrix.")
 
     denominator = float(noise_parameter + cues_present_vec.T * covmat *
                         cues_present_vec)
     # inplace manipulation (bad behaviour, but memory efficient)
     # not memory efficient in this case
 
-    mumat += (covmat * (cues_present_vec * (outcomes_present_vec.T - cues_present_vec.T * mumat))) / denominator
-
+    mumat += (covmat * (cues_present_vec *
+                        (outcomes_present_vec.T - cues_present_vec.T * mumat))) / denominator
 
 
 def main():
@@ -127,15 +126,16 @@ def main():
     del tmp
 
     # mumat has cues as rows and outcomes as columns
-    mumat = np.matrix(np.zeros((len(cue_index_map), len(outcome_index_map)), dtype=np.double))
+    mumat = np.matrix(np.zeros((len(cue_index_map), len(outcome_index_map)),
+                               dtype=np.double))
     print("mumat: " + str(mumat.shape))
 
     # covmat has cues as rows and columns
     covmat = np.matrix(np.diag(np.ones(len(cue_index_map), dtype=np.double)))
 
     cue_vector = np.matrix(np.zeros((len(cue_index_map), 1)), dtype=np.double)
-    outcome_vector = np.matrix(np.zeros((len(outcome_index_map), 1)), dtype=np.double)
-
+    outcome_vector = np.matrix(np.zeros((len(outcome_index_map), 1)),
+                               dtype=np.double)
 
     # generating sparse column vectors out of event
     with open(events_file, "rt") as dfile:
@@ -157,8 +157,8 @@ def main():
             # first update mumat as it depends on covmat
             for ii in range(freq):
                 # apply dynamic change
-                #mumat = D * mumat  # D is identity
-                #covmat = D * covmat * D.T + U  # D is identity
+                # mumat = D * mumat  # D is identity
+                # covmat = D * covmat * D.T + U  # D is identity
 
                 # update with next event
                 update_mu_matrix(mumat, covmat, cue_vector, outcome_vector)
@@ -182,6 +182,5 @@ def main():
     plt.show()
 
 
-if __name__=="__main__":
+if __name__ == "__main__":
     main()
-

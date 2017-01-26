@@ -5,16 +5,15 @@ import os
 
 import pytest
 
-from ..preprocess import (create_event_file, filter_event_file,
-                          create_binary_event_files, bandsample,
-                          event_generator, write_events,
-                          _job_binary_event_file, JobFilter, to_bytes, to_integer, read_binary_file)
+from pyndl.preprocess import (create_event_file, filter_event_file,
+                              create_binary_event_files, bandsample,
+                              event_generator, write_events,
+                              _job_binary_event_file, JobFilter, to_bytes, to_integer, read_binary_file)
 
-from ..count import (cues_outcomes, load_counter)
-from .test_ndl import clock
-from .. import ndl
+from pyndl.count import (cues_outcomes, load_counter)
+from pyndl import ndl
 
-TEST_ROOT = os.path.dirname(__file__)
+TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
 RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 TINY_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus_tiny.txt")
@@ -27,7 +26,7 @@ def test_bandsample():
     assert len(outcome_freq_map_filtered) == 50
 
     outcome_freq_map_filtered_reference = load_counter(os.path.join(TEST_ROOT, 'reference/bandsampled_outcomes.tab'))
-    #assert outcome_freq_map_filtered == outcome_freq_map_filtered_reference
+    # assert outcome_freq_map_filtered == outcome_freq_map_filtered_reference
 
     bandsample(outcome_freq_map, 50, cutoff=1, verbose=True)
 
@@ -206,15 +205,18 @@ def test_write_events():
 
     # bad event file
     with pytest.raises(ValueError):
-        events = event_generator("./tests/resources/event_file_BAD.tab", cue_id_map,
-                                outcome_id_map)
+        event_bad_file = os.path.join(TEST_ROOT, "resources/event_file_BAD.tab")
+        events = event_generator(event_bad_file, cue_id_map,
+                                 outcome_id_map)
         # traverse generator
         for event in events:
             pass
 
+
 def test_byte_conversion():
     a = 184729172
     assert a == to_integer(to_bytes(a))
+
 
 def test_read_binary_file():
     file_path = "resources/event_file_tiny.tab"
@@ -226,12 +228,13 @@ def test_read_binary_file():
 
     cue_id_map, outcome_id_map, all_outcomes = ndl.generate_mapping(abs_file_path)
 
-    create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map, outcome_id_map, overwrite=True, make_unique=False)
+    create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map,
+                              outcome_id_map, overwrite=True, make_unique=False)
 
     bin_events = read_binary_file(abs_binary_file_path)
     events = ndl.events(abs_file_path, frequency=True)
 
-    for event, bin_event in zip(events,bin_events):
+    for event, bin_event in zip(events, bin_events):
         cues, outcomes = event
         bin_cues, bin_outcomes = bin_event
         if len(cues) != len(bin_cues):
@@ -247,7 +250,7 @@ def test_read_binary_file():
 
 
 def test_preprocessing():
-    corpus_file = "./tests/resources/corpus.txt"
+    corpus_file = os.path.join(TEST_ROOT, "resources/corpus.txt")
     event_file = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
     symbols = "abcdefghijklmnopqrstuvwxyzóąćęłńśźż"  # polish
 
@@ -276,30 +279,29 @@ def test_preprocessing():
     filter_event_file(event_file, event_file_filtered, keep_outcomes=outcomes)
 
     # TODO this is not working at the moment
-    ## create binary event files
-    #path_name = event_file_filtered + ".events"
-    #create_binary_event_files(event_file_filtered, path_name, cue_id_map,
-    #                          outcome_id_map, sort_within_event=False,
-    #                          number_of_processes=2, events_per_file=1000,
-    #                          verbose=True)
-    #with pytest.raises(IOError):
+    # create binary event files
+    # path_name = event_file_filtered + ".events"
+    # create_binary_event_files(event_file_filtered, path_name, cue_id_map,
+    #                           outcome_id_map, sort_within_event=False,
+    #                           number_of_processes=2, events_per_file=1000,
+    #                           verbose=True)
+    # with pytest.raises(IOError):
     #    create_binary_event_files(event_file_filtered, path_name, cue_id_map,
     #                            outcome_id_map, sort_within_event=False,
     #                            number_of_processes=2, events_per_file=1000,
     #                            verbose=True)
-    ## overwrite=True
-    #create_binary_event_files(event_file_filtered, path_name, cue_id_map,
+    # overwrite=True
+    # create_binary_event_files(event_file_filtered, path_name, cue_id_map,
     #                        outcome_id_map, sort_within_event=False,
     #                        number_of_processes=2, events_per_file=1000,
     #                        overwrite=True, verbose=True)
 
-
     # clean everything
     os.remove(event_file)
     os.remove(event_file_filtered)
-    #for file_ in os.listdir(path_name):
+    # for file_ in os.listdir(path_name):
     #    os.remove(os.path.join(path_name, file_))
-    #os.rmdir(path_name)
+    # os.rmdir(path_name)
 
 
 def compare_event_files(newfile, oldfile):
@@ -318,4 +320,3 @@ def compare_event_files(newfile, oldfile):
         assert cues == ref_cues
         assert outcomes == ref_outcomes
         assert freq == ref_freq
-
