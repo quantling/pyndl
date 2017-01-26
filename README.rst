@@ -2,6 +2,9 @@
 Readme
 ======
 
+.. image:: https://travis-ci.com/dekuenstle/pyndl.svg?token=nAo9MxVBWCT7YyFRxEP4&branch=master
+    :target: https://travis-ci.com/dekuenstle/pyndl
+
 This python3 package is a collection of useful script in order to run tasks on
 huge amounts of text file corpora.
 

@@ -1,4 +1,4 @@
-from ..activation import activation_matrix
+from pyndl.activation import activation_matrix
 import numpy as np
 import time
 import gc
@@ -44,16 +44,16 @@ def dont_test_activation_matrix_large():
     huge_event_cues = ['c'+str(i) for i in range(n_cues-30, n_cues)]
     huge_events_cues = [huge_event_cues for i in range(n_events)]
 
-    print("Estimated best case memory consumption: {} bytes".format(n_cues * n_outcomes * 8
-                                                                    + n_events * n_outcomes * 8 * 2))
+    print("Estimated best case memory consumption: {} bytes".format(n_cues * n_outcomes * 8 +
+                                                                    n_events * n_outcomes * 8 * 2))
 
     print("Start test...")
     gc.collect()
     asp, ncsp = time_test(activation_matrix,
-                    of="single threaded")(huge_events_cues, huge_weights, huge_cues, numThreads=1)
+                          of="single threaded")(huge_events_cues, huge_weights, huge_cues, numThreads=1)
     gc.collect()
     amp, ncmp = time_test(activation_matrix,
-                    of="multi threaded (8 threads)")(huge_events_cues, huge_weights, huge_cues, numThreads=8)
+                          of="multi threaded (8 threads)")(huge_events_cues, huge_weights, huge_cues, numThreads=8)
     del huge_weights
     del huge_events_cues
     gc.collect()
