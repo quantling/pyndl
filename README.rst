@@ -81,6 +81,12 @@ corpus file :
 settings file :
     A settings file contains all the settings for a resulting weight matrix.
 
+Install
+=======
+
+You can install this package with pip from a folder, git repository, or sdist bundle ::
+
+    pip install ~/pyndl/|git+ssh://git@github.com/<user>/pyndl.git|pyndl-<version>.tar.gz
 
 Testing
 =======
@@ -88,3 +94,7 @@ Check if the package does what it is supposed to do by running the test with ``p
 
     py.test-3 --cov-report html --cov=pyndl
 
+The more general way of testing - including unit tests, documentation checks and style checking - can be done via tox. Tox does testing in a virtual environment and installs all dependecies. ::
+
+    (pip install tox)
+    tox
