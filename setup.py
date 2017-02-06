@@ -13,7 +13,7 @@ else:
 
 
 def load_requirements(fn):
-    """ Read a requirements file and create a list that can be used in setup. """
+    """Read a requirements file and create a list that can be used in setup."""
     with open(fn, 'r') as f:
         return [x.rstrip() for x in list(f) if x and not x.startswith('#')]
 
