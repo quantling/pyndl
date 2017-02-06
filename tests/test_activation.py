@@ -1,8 +1,13 @@
-from pyndl.activation import activation_matrix
 import numpy as np
 import time
 import gc
 
+import pytest
+
+from pyndl.activation import activation_matrix
+
+slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
+                          reason="need --runslow option to run")
 
 def test_activation_matrix():
     weights = np.array([[0, 1], [1, 0], [0, 0]])
@@ -19,8 +24,8 @@ def test_activation_matrix():
     assert reference_new_cues == new_cues
     assert reference_new_cues == new_cues_mp
 
-
-def dont_test_activation_matrix_large():
+@slow
+def test_activation_matrix_large():
     """Test with a lot of data. Better run only with at least 12GB free RAM.
     """
     print("Start setup...")
