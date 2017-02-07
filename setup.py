@@ -58,7 +58,7 @@ setup(
         'Topic :: Scientific/Engineering :: Artificial Intelligence',
         'Topic :: Scientific/Engineering :: Information Analysis',
     ],
-    platforms=['Linux'],
+    platforms='Linux',
     packages=['pyndl'],
     install_requires=load_requirements('requirements.txt'),
     ext_modules=ext_modules,
