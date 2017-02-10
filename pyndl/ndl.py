@@ -122,6 +122,11 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
     for thread in threads:
         thread.join()
 
+    index_outcome_map = dict((value, key) for key, value in outcome_map.items())
+    index_cue_map = dict((value, key) for key, value in cue_map.items())
+    outcomes = [index_outcome_map[index] for index in range(shape[0])]
+    cues = [index_cue_map[index] for index in range(shape[1])]
+    weights = pd.DataFrame(weights, outcomes, cues)
 
     return weights
 
@@ -196,7 +201,7 @@ def openmp_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
     return weights
 
 
-def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_duplicates=None, keep_default_dict=False):
+def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_duplicates=None, make_data_frame=False):
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
@@ -225,6 +230,8 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
         preferred!)
+    make_data_frame : {False, True}
+        if True makes a pandas.DataFrame out of the dict of dicts.
 
     Returns
     =======
@@ -272,7 +279,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
             for cue in cues:
                 weights[outcome][cue] += alphas[cue] * update
 
-    if not keep_default_dict:
+    if make_data_frame:
         weights = pd.DataFrame(weights)
 
     return weights
