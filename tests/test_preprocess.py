@@ -248,6 +248,9 @@ def test_read_binary_file():
         for outcome, bin_outcome in zip(outcomes, bin_outcomes):
             assert outcome_id_map[outcome] == bin_outcome
 
+    # clean everything
+    os.remove(abs_binary_file_path)
+
 
 def test_preprocessing():
     corpus_file = os.path.join(TEST_ROOT, "resources/corpus.txt")
