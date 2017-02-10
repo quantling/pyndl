@@ -58,7 +58,7 @@ def test_dict_ndl_vs_openmp_ndl_simple():
 
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
                                             result_openmp_ndl_simple,
-                                            is_np_arr1=False, is_np_arr2=True)
+                                            is_np_arr1=False, is_np_arr2=False)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
