@@ -7,6 +7,8 @@ import time
 
 import pytest
 import numpy as np
+import xarray as xr
+import pandas as pd
 
 from pyndl import ndl, count
 
@@ -17,7 +19,6 @@ TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 # FILE_PATH = os.path.join(TEST_ROOT, "resources/event_file_tiny.tab")
 FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab")
 FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab")
-BINARY_PATH = os.path.join(TEST_ROOT, "binary_resources/")
 # REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_tiny.csv')
 REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple.csv')
 REFERENCE_PATH_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple_ndl2.csv')
@@ -28,43 +29,70 @@ ALPHA = 0.1
 BETAS = (0.1, 0.1)
 
 
+@pytest.fixture(scope='module')
+def result_ndl_threading():
+    return ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading')
+
+
+@pytest.fixture(scope='module')
+def result_ndl_openmp():
+    return ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp')
+
+
+@pytest.fixture(scope='module')
+def result_dict_ndl():
+    return ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS)
+
+
+def test_return_values(result_dict_ndl, result_ndl_threading, result_ndl_openmp):
+    # dict_ndl
+    assert isinstance(result_dict_ndl, defaultdict)
+    result = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array=True)
+    assert isinstance(result, xr.DataArray)
+    # openmp
+    assert isinstance(result_ndl_openmp, xr.DataArray)
+    # threading
+    assert isinstance(result_ndl_threading, xr.DataArray)
+
+
 # Test internal consistency
 
-def test_dict_ndl_vs_thread_ndl_simple():
-    result_dict_ndl = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS)
-    result_thread_ndl_simple = ndl.thread_ndl_simple(FILE_PATH_SIMPLE, ALPHA, BETAS)
-
+def test_dict_ndl_vs_ndl_threading(result_dict_ndl, result_ndl_threading):
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
-                                            result_thread_ndl_simple,
-                                            is_np_arr1=False, is_np_arr2=True)
+                                            result_ndl_threading)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
 
-def test_multiple_cues_dict_ndl_vs_thread_ndl_simple():
+def test_dict_ndl_data_array_vs_ndl_threading(result_ndl_threading):
+    result_dict_ndl = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array=True)
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
+                                            result_ndl_threading)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0
+
+
+def test_multiple_cues_dict_ndl_vs_ndl_threading():
     result_dict_ndl = ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, remove_duplicates=True)
-    result_thread_ndl_simple = ndl.thread_ndl_simple(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, remove_duplicates=True)
+    result_ndl_threading = ndl.ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, remove_duplicates=True, method='threading')
 
     unequal, unequal_ratio = compare_arrays(FILE_PATH_MULTIPLE_CUES, result_dict_ndl,
-                                            result_thread_ndl_simple,
-                                            is_np_arr1=False, is_np_arr2=True)
+                                            result_ndl_threading)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
 
-def test_dict_ndl_vs_openmp_ndl_simple():
+def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
     result_dict_ndl = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS)
-    result_openmp_ndl_simple = ndl.openmp_ndl_simple(FILE_PATH_SIMPLE, ALPHA, BETAS)
-
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
-                                            result_openmp_ndl_simple,
-                                            is_np_arr1=False, is_np_arr2=True)
+                                            result_ndl_openmp)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
 
 # Test against external ndl2 results
-def test_compare_weights_ndl2():
+def test_compare_weights_ndl2(result_dict_ndl):
     """
     Checks whether the output of the R learner implemented in ndl2 and the
     python implementation of dict_ndl is equal.
@@ -90,10 +118,7 @@ def test_compare_weights_ndl2():
             for ii, outcome in enumerate(outcomes):
                 result_ndl2[outcome][cue] = float(cue_weights[ii])
 
-    result_python = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS)
-
-    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_ndl2, result_python,
-                                            is_np_arr1=False, is_np_arr2=False)
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_ndl2, result_dict_ndl)
     print(set(outcome for outcome, *_ in unequal))
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
@@ -128,8 +153,7 @@ def test_multiple_cues_dict_ndl_vs_ndl2():
 
     result_python = ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, remove_duplicates=False)
 
-    unequal, unequal_ratio = compare_arrays(FILE_PATH_MULTIPLE_CUES, result_ndl2, result_python,
-                                            is_np_arr1=False, is_np_arr2=False)
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_MULTIPLE_CUES, result_ndl2, result_python)
     print(set(outcome for outcome, *_ in unequal))
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
@@ -173,8 +197,7 @@ def test_compare_weights_rescorla_vs_ndl2():
             for ii, outcome in enumerate(outcomes):
                 result_rescorla[outcome][cue] = float(cue_weights[ii])
 
-    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_ndl2, result_rescorla,
-                                            is_np_arr1=False, is_np_arr2=False)
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_ndl2, result_rescorla)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
@@ -186,13 +209,13 @@ def test_compare_time_dict_inplace_parallel_thread():
 
     result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl, (file_path, ALPHA, BETAS, LAMBDA_))
 
-    result_thread_ndl, duration_parallel = clock(ndl.thread_ndl_simple,
+    result_thread_ndl, duration_parallel = clock(ndl.ndl,
                                                  (file_path, ALPHA, BETAS, LAMBDA_),
-                                                 number_of_threads=4)
+                                                 number_of_threads=4, method='threading')
 
     assert len(result_dict_ndl) == len(result_thread_ndl)
 
-    unequal, unequal_ratio = compare_arrays(file_path, result_thread_ndl, result_dict_ndl, is_np_arr2=False)
+    unequal, unequal_ratio = compare_arrays(file_path, result_thread_ndl, result_dict_ndl)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
@@ -220,7 +243,7 @@ def clock(f, args, **kwargs):
     return result, duration
 
 
-def compare_arrays(file_path, arr1, arr2, *, is_np_arr1=True, is_np_arr2=True):
+def compare_arrays(file_path, arr1, arr2):
     cues, outcomes = count.cues_outcomes(file_path)
     cue_map, outcome_map, all_outcomes = ndl.generate_mapping(file_path, number_of_processes=2)
 
@@ -230,20 +253,20 @@ def compare_arrays(file_path, arr1, arr2, *, is_np_arr1=True, is_np_arr2=True):
 
     for outcome in outcomes:
         for cue in cues:
-            if is_np_arr1:
-                outcome_index = outcome_map[outcome]
-                cue_index = cue_map[cue]
-                value1 = arr1[outcome_index][cue_index]
-            else:
-                value1 = arr1[outcome][cue]
+            values = list()
+            for array in (arr1, arr2):
+                if isinstance(array, np.ndarray):
+                    outcome_index = outcome_map[outcome]
+                    cue_index = cue_map[cue]
+                    values.append(array[outcome_index][cue_index])
+                elif isinstance(array, xr.DataArray):
+                    values.append(array.loc[{'outcomes': outcome, 'cues': cue}])
+                elif isinstance(array, pd.DataFrame):
+                    values.append(array.loc[outcome][cue])
+                else:
+                    values.append(array[outcome][cue])
 
-            if is_np_arr2:
-                outcome_index = outcome_map[outcome]
-                cue_index = cue_map[cue]
-                value2 = arr2[outcome_index][cue_index]
-            else:
-                value2 = arr2[outcome][cue]
-
+            value1, value2 = values
             if not np.isclose(value1, value2, rtol=1e-02, atol=1e-05):
                 unequal.append((outcome, cue, value1, value2))
 
