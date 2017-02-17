@@ -23,6 +23,27 @@ pyndl
 This package mimics some of the functionality of the ndl2 R package.
 
 
+Installation
+------------
+Install with::
+
+    python setup.py install [--user]
+
+or development install with::
+
+    python setup.py develop
+
+
+Documentation
+-------------
+The documentation and the doc-strings within the source code should follow the
+numpy doc-string conventions (which are used by pandas as well).
+
+https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt
+
+http://pandas.pydata.org/pandas-docs/stable/contributing.html#contributing-to-the-documentation
+
+
 Important terminology
 =====================
 Some terminology used in these modules and scripts which descripe specific
