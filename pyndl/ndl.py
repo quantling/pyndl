@@ -86,11 +86,11 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     # preprocessing
     cue_map, outcome_map, all_outcome_indices = generate_mapping(
                                                     event_path,
-                                                    number_of_processes=2,
+                                                    number_of_processes=number_of_threads,
                                                     binary=True)
     preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
                                          outcome_map, overwrite=True,
-                                         number_of_processes=2,
+                                         number_of_processes=number_of_threads,
                                          remove_duplicates=remove_duplicates)
     shape = (len(outcome_map), len(cue_map))
 
@@ -240,9 +240,8 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
 
     if make_data_array:
         weights = pd.DataFrame(weights)
-        weights = xr.DataArray(weights)
-        weights = weights.rename({'dim_0': 'cues', 'dim_1': 'outcomes'})
-# TODO NaNs to zero!!!
+        weights.fillna(0.0, inplace=True)
+        weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'))
 
     return weights
 
