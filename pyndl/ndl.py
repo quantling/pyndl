@@ -21,12 +21,12 @@ def events(event_path):
     Yields events for all events in event_file.
 
     Parameters
-    ==========
+    ----------
     event_path : str
         path to event file
 
     Yields
-    ======
+    ------
     cues, outcomes : list, list
         a tuple of two lists containing cues and outcomes
 
@@ -52,7 +52,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     the binary format defined in preprocess.py.
 
     Parameters
-    ==========
+    ----------
     event_path : str
         path to the event file
     alpha : float
@@ -76,7 +76,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
         preferred!)
 
     Returns
-    =======
+    -------
     weights : xarray.DataArray
         with dimensions 'cues' and 'outcomes'. You can lookup the weights
         between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
@@ -160,14 +160,14 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
     This is a pure python implementation using dicts.
 
     Notes
-    =====
+    -----
     Outcomes will only be considered to be part of all_outcomes after they
     have been seen the first time within the events. If you want to learn some
     events from the beginning you need to give them as keys in the initial
     weights.
 
     Parameters
-    ==========
+    ----------
     events : generator or str
         generates cues, outcomes pairs or the path to the event file
     alphas : dict or float
@@ -186,7 +186,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
         if True makes a xarray.DataArray out of the dict of dicts.
 
     Returns
-    =======
+    -------
     weights : dict of dicts of floats
         the first dict has outcomes as keys and dicts as values
         the second dict has cues as keys and weights as values
@@ -268,14 +268,14 @@ def generate_mapping(event_path, number_of_processes=2, binary=False):  # TODO f
     implementation.
 
     Parameters
-    ==========
+    ----------
     event_path : str
         path to the event_file for which the mapping should be generated
     number_of_processes : int
          integer of how many processes should be used
 
     Returns
-    =======
+    -------
     cue_map: OrderedDict
         a OrderedDict mapping all cues to indizes
     outcome_map: OrderedDict
@@ -302,14 +302,14 @@ def slice_list(li, sequence):
     Slices a list in sublists with the length sequence.
 
     Parameters
-    ==========
+    ----------
     li : list
          list which should be sliced in sublists
     sequence : int
          integer which determines the length of the sublists
 
     Returns
-    =======
+    -------
     seq_list : list of lists
         a list of sublists with the length sequence
 

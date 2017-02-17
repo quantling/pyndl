@@ -21,7 +21,7 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=True):
     ``start`` event.
 
     Returns
-    =======
+    -------
     (cues, outcomes) : (collections.Counter, collections.Counter)
 
     """
@@ -49,7 +49,7 @@ def cues_outcomes(event_file_name,
     processes.
 
     Returns
-    =======
+    -------
     (cues, outcomes) : (collections.Counter, collections.Counter)
 
     """
@@ -88,7 +88,7 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=True,
         from the word and are not counted.
 
     Returns
-    =======
+    -------
     (words, symbols) : (collections.Counter, collections.Counter)
 
     """
@@ -118,7 +118,7 @@ def words_symbols(corpus_file_name,
     processes.
 
     Returns
-    =======
+    -------
     (words, symbols) : (collections.Counter, collections.Counter)
 
     """
