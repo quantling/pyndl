@@ -4,6 +4,6 @@ include LICENSE.txt
 include requirements.txt
 graft pyndl
 graft docs
-prune tests
+graft tests
 global-exclude __pycache__
 global-exclude *.py[co]
