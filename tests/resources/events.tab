@@ -1,1000 +1,1000 @@
-cues	outcomes	frequency
-#ha_hai_aid_ide_de#_e#l_#l#_l#e_#e#	haide_l_e	1
-#l#_l#e_#e#_e#f_#fr_fri_ric_ică_că#	l_e_frică	1
-#e#_e#f_#fr_fri_ric_ică_că#_ă#h_#ha_hai_aid_ide_de#	e_frică_haide	1
-#fr_fri_ric_ică_că#_ă#h_#ha_hai_aid_ide_de#_e#a_#ad_adi_dic_ică_că#	frică_haide_adică	1
-#ha_hai_aid_ide_de#_e#a_#ad_adi_dic_ică_că#_ă#s_#su_sun_unt_nt#	haide_adică_sunt	1
-#ad_adi_dic_ică_că#_ă#s_#su_sun_unt_nt#_t#d_#do_doa_oar_ar#	adică_sunt_doar	1
-#su_sun_unt_nt#_t#d_#do_doa_oar_ar#_r#e_#ex_exa_xam_ame_men_ene_nel_ele_le#	sunt_doar_examenele	1
-#do_doa_oar_ar#_r#e_#ex_exa_xam_ame_men_ene_nel_ele_le#_e#d_#da_dac_acă_că#	doar_examenele_dacă	1
-#ex_exa_xam_ame_men_ene_nel_ele_le#_e#d_#da_dac_acă_că#_ă#d_#da_dai_ai#	examenele_dacă_dai	1
-#da_dac_acă_că#_ă#d_#da_dai_ai#_i#u_#un_un#	dacă_dai_un	1
-#da_dai_ai#_i#u_#un_un#_n#t_#te_tes_est_st#	dai_un_test	1
-#un_un#_n#t_#te_tes_est_st#_t#s_#su_sun_unt_nt#	un_test_sunt	1
-#te_tes_est_st#_t#s_#su_sun_unt_nt#_t#f_#fe_fer_eri_ric_ici_cit_it#	test_sunt_fericit	1
-#su_sun_unt_nt#_t#f_#fe_fer_eri_ric_ici_cit_it#_t#a_#at_atâ_tât_âta_ta#	sunt_fericit_atâta	1
-#fe_fer_eri_ric_ici_cit_it#_t#a_#at_atâ_tât_âta_ta#_a#t_#ti_tim_imp_mp#	fericit_atâta_timp	1
-#at_atâ_tât_âta_ta#_a#t_#ti_tim_imp_mp#_p#c_#câ_cât_ât#	atâta_timp_cât	1
-#ti_tim_imp_mp#_p#c_#câ_cât_ât#_t#r_#re_rez_ezu_zul_ult_lta_tat_atu_tul_ul#	timp_cât_rezultatul	1
-#câ_cât_ât#_t#r_#re_rez_ezu_zul_ult_lta_tat_atu_tul_ul#_l#n_#nu_nu#	cât_rezultatul_nu	1
-#re_rez_ezu_zul_ult_lta_tat_atu_tul_ul#_l#n_#nu_nu#_u#e_#e#	rezultatul_nu_e	1
-#nu_nu#_u#e_#e#_e#r_#ro_roz_oz#	nu_e_roz	1
-#e#_e#r_#ro_roz_oz#_z#s_#sa_sau_au#	e_roz_sau	1
-#ro_roz_oz#_z#s_#sa_sau_au#_u#a_#al_alb_lba_bas_ast_str_tru_ru#	roz_sau_albastru	1
-#sa_sau_au#_u#a_#al_alb_lba_bas_ast_str_tru_ru#_u#d_#do_doa_oam_amn_mne_ne#	sau_albastru_doamne	1
-#al_alb_lba_bas_ast_str_tru_ru#_u#d_#do_doa_oam_amn_mne_ne#_e#d_#do_doa_oam_amn_mne_ne#	albastru_doamne_doamne	1
-#do_doa_oam_amn_mne_ne#_e#d_#do_doa_oam_amn_mne_ne#_e#b_#bi_bin_ine_ne#	doamne_doamne_bine	1
-#do_doa_oam_amn_mne_ne#_e#b_#bi_bin_ine_ne#_e#s_#sa_sau_au#	doamne_bine_sau	1
-#bi_bin_ine_ne#_e#s_#sa_sau_au#_u#d_#do_doa_oam_amn_mne_ne#	bine_sau_doamne	1
-#sa_sau_au#_u#d_#do_doa_oam_amn_mne_ne#_e#s_#si_sin_ing_ngu_gur_uru_rul_ul#	sau_doamne_singurul	1
-#do_doa_oam_amn_mne_ne#_e#s_#si_sin_ing_ngu_gur_uru_rul_ul#_l#m_#mo_mod_od#	doamne_singurul_mod	1
-#si_sin_ing_ngu_gur_uru_rul_ul#_l#m_#mo_mod_od#_d#i_#in_in#	singurul_mod_in	1
-#mo_mod_od#_d#i_#in_in#_n#c_#ca_car_are_re#	mod_in_care	1
-#in_in#_n#c_#ca_car_are_re#_e#o_#o#	in_care_o	1
-#ca_car_are_re#_e#o_#o#_o#s_#să_să#	care_o_să	1
-#o#_o#s_#să_să#_ă#m_#me_mer_erg_rgi_gi#	o_să_mergi	1
-#să_să#_ă#m_#me_mer_erg_rgi_gi#_i#l_#la_la#	să_mergi_la	1
-#me_mer_erg_rgi_gi#_i#l_#la_la#_a#c_#co_col_ole_leg_egi_giu_iu#	mergi_la_colegiu	1
-#la_la#_a#c_#co_col_ole_leg_egi_giu_iu#_u#e_#e#	la_colegiu_e	1
-#co_col_ole_leg_egi_giu_iu#_u#e_#e#_e#d_#da_dac_acă_că#	colegiu_e_dacă	1
-#e#_e#d_#da_dac_acă_că#_ă#b_#bi_bif_ifă_făm_ăm#	e_dacă_bifăm	1
-#da_dac_acă_că#_ă#b_#bi_bif_ifă_făm_ăm#_m#o_#or_orb_rb#	dacă_bifăm_orb	1
-#bi_bif_ifă_făm_ăm#_m#o_#or_orb_rb#_b#ş_#şi_şi#	bifăm_orb_şi	1
-#or_orb_rb#_b#ş_#şi_şi#_i#i_#in_ind_ndi_dia_ian_an#	orb_şi_indian	1
-#şi_şi#_i#i_#in_ind_ndi_dia_ian_an#_n#i_#in_in#	şi_indian_in	1
-#in_ind_ndi_dia_ian_an#_n#i_#in_in#_n#c_#ce_cer_ere_rer_ere_re#	indian_in_cerere	1
-#in_in#_n#c_#ce_cer_ere_rer_ere_re#_e#d_#do_doa_oam_amn_mne_ne#	in_cerere_doamne	1
-#ce_cer_ere_rer_ere_re#_e#d_#do_doa_oam_amn_mne_ne#_e#a_#a#	cerere_doamne_a	1
-#do_doa_oam_amn_mne_ne#_e#a_#a#_a#l_#lu_lua_uat_at#	doamne_a_luat	1
-#a#_a#l_#lu_lua_uat_at#_t#e_#e#	a_luat_e	1
-#lu_lua_uat_at#_t#e_#e#_e#u_#un_un#	luat_e_un	1
-#e#_e#u_#un_un#_n#m_#mi_mir_ira_rac_aco_col_ol#	e_un_miracol	1
-#un_un#_n#m_#mi_mir_ira_rac_aco_col_ol#_l#a_#a#	un_miracol_a	1
-#mi_mir_ira_rac_aco_col_ol#_l#a_#a#_a#d_#de_des_esc_scu_cur_urc_rca_cat_at#	miracol_a_descurcat	1
-#a#_a#d_#de_des_esc_scu_cur_urc_rca_cat_at#_t#d_#de_de#	a_descurcat_de	1
-#de_des_esc_scu_cur_urc_rca_cat_at#_t#d_#de_de#_e#m_#mi_min_inu_nun_une_ne#	descurcat_de_minune	1
-#de_de#_e#m_#mi_min_inu_nun_une_ne#_e#d_#da_da#	de_minune_da	1
-#mi_min_inu_nun_une_ne#_e#d_#da_da#_a#d_#da_da#	minune_da_da	1
-#da_da#_a#d_#da_da#_a#a_#am_am#	da_da_am	1
-#da_da#_a#a_#am_am#_m#d_#de_des_esc_scu_cur_urc_rca_cat_at#	da_am_descurcat	1
-#am_am#_m#d_#de_des_esc_scu_cur_urc_rca_cat_at#_t#b_#bi_bin_ine_ne#	am_descurcat_bine	1
-#de_des_esc_scu_cur_urc_rca_cat_at#_t#b_#bi_bin_ine_ne#_e#a_#am_am#	descurcat_bine_am	1
-#bi_bin_ine_ne#_e#a_#am_am#_m#d_#de_des_esc_scu_cur_urc_rca_cat_at#	bine_am_descurcat	1
-#am_am#_m#d_#de_des_esc_scu_cur_urc_rca_cat_at#_t#b_#bi_bin_ine_ne#	am_descurcat_bine	1
-#de_des_esc_scu_cur_urc_rca_cat_at#_t#b_#bi_bin_ine_ne#_e#a_#ai_ai#	descurcat_bine_ai	1
-#bi_bin_ine_ne#_e#a_#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#	bine_ai_făcut	1
-#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#_t#b_#bi_bin_ine_ne#	ai_făcut_bine	1
-#fă_făc_ăcu_cut_ut#_t#b_#bi_bin_ine_ne#_e#d_#dr_dra_rag_agă_gă#	făcut_bine_dragă	1
-#bi_bin_ine_ne#_e#d_#dr_dra_rag_agă_gă#_ă#s_#su_sun_unt_nte_tem_em#	bine_dragă_suntem	1
-#dr_dra_rag_agă_gă#_ă#s_#su_sun_unt_nte_tem_em#_m#a_#aş_aşa_şa#	dragă_suntem_aşa	1
-#su_sun_unt_nte_tem_em#_m#a_#aş_aşa_şa#_a#d_#de_de#	suntem_aşa_de	1
-#aş_aşa_şa#_a#d_#de_de#_e#m_#mâ_mân_ând_ndr_dri_ri#	aşa_de_mândri	1
-#de_de#_e#m_#mâ_mân_ând_ndr_dri_ri#_i#d_#de_de#	de_mândri_de	1
-#mâ_mân_ând_ndr_dri_ri#_i#d_#de_de#_e#t_#ti_tin_ine_ne#	mândri_de_tine	1
-#de_de#_e#t_#ti_tin_ine_ne#_e#d_#dr_dra_rag_agă_gă#	de_tine_dragă	1
-#ti_tin_ine_ne#_e#d_#dr_dra_rag_agă_gă#_ă#t_#ta_tat_ată_tă#	tine_dragă_tată	1
-#dr_dra_rag_agă_gă#_ă#t_#ta_tat_ată_tă#_ă#s_#su_sun_unt_nt#	dragă_tată_sunt	1
-#ta_tat_ată_tă#_ă#s_#su_sun_unt_nt#_t#a_#aş_aşa_şa#	tată_sunt_aşa	1
-#su_sun_unt_nt#_t#a_#aş_aşa_şa#_a#d_#de_de#	sunt_aşa_de	1
-#aş_aşa_şa#_a#d_#de_de#_e#m_#mâ_mân_ând_ndr_dră_ră#	aşa_de_mândră	1
-#de_de#_e#m_#mâ_mân_ând_ndr_dră_ră#_ă#a_#ar_ar#	de_mândră_ar	1
-#mâ_mân_ând_ndr_dră_ră#_ă#a_#ar_ar#_r#t_#tr_tre_reb_ebu_bui_ui#	mândră_ar_trebui	1
-#ar_ar#_r#t_#tr_tre_reb_ebu_bui_ui#_i#p_#po_poa_oat_ate_te#	ar_trebui_poate	1
-#tr_tre_reb_ebu_bui_ui#_i#p_#po_poa_oat_ate_te#_e#a_#ar_ar#	trebui_poate_ar	1
-#po_poa_oat_ate_te#_e#a_#ar_ar#_r#t_#tr_tre_reb_ebu_bui_ui#	poate_ar_trebui	1
-#ar_ar#_r#t_#tr_tre_reb_ebu_bui_ui#_i#s_#să_să#	ar_trebui_să	1
-#tr_tre_reb_ebu_bui_ui#_i#s_#să_să#_ă#f_#fa_fac_ac#	trebui_să_fac	1
-#să_să#_ă#f_#fa_fac_ac#_c#m_#ma_mai_ai#	să_fac_mai	1
-#fa_fac_ac#_c#m_#ma_mai_ai#_i#m_#mu_mul_ult_lte_te#	fac_mai_multe	1
-#ma_mai_ai#_i#m_#mu_mul_ult_lte_te#_e#l_#lu_luc_ucr_cru_rur_uri_ri#	mai_multe_lucruri	1
-#mu_mul_ult_lte_te#_e#l_#lu_luc_ucr_cru_rur_uri_ri#_i#d_#da_da#	multe_lucruri_da	1
-#lu_luc_ucr_cru_rur_uri_ri#_i#d_#da_da#_a#s_#sa_sau_au#	lucruri_da_sau	1
-#da_da#_a#s_#sa_sau_au#_u#a_#aş_aş#	da_sau_aş	1
-#sa_sau_au#_u#a_#aş_aş#_ş#p_#pu_put_ute_tea_ea#	sau_aş_putea	1
-#aş_aş#_ş#p_#pu_put_ute_tea_ea#_a#s_#să_să#	aş_putea_să	1
-#pu_put_ute_tea_ea#_a#s_#să_să#_ă#m_#mă_mă#	putea_să_mă	1
-#să_să#_ă#m_#mă_mă#_ă#i_#in_int_nti_tin_ind_nd#	să_mă_intind	1
-#mă_mă#_ă#i_#in_int_nti_tin_ind_nd#_d#u_#un_un#	mă_intind_un	1
-#in_int_nti_tin_ind_nd#_d#u_#un_un#_n#p_#pi_pic_ic#	intind_un_pic	1
-#un_un#_n#p_#pi_pic_ic#_c#ă_#ăs_ăst_sta_ta#	un_pic_ăsta	1
-#pi_pic_ic#_c#ă_#ăs_ăst_sta_ta#_a#e_#es_est_ste_te#	pic_ăsta_este	1
-#ăs_ăst_sta_ta#_a#e_#es_est_ste_te#_e#m_#mo_mot_oti_tiv_iv#	ăsta_este_motiv	1
-#es_est_ste_te#_e#m_#mo_mot_oti_tiv_iv#_v#s_#să_să#	este_motiv_să	1
-#mo_mot_oti_tiv_iv#_v#s_#să_să#_ă#s_#să_săr_ărb_rbă_băt_ăto_tor_ori_rim_im#	motiv_să_sărbătorim	1
-#să_să#_ă#s_#să_săr_ărb_rbă_băt_ăto_tor_ori_rim_im#_m#c_#ce_ce#	să_sărbătorim_ce	1
-#să_săr_ărb_rbă_băt_ăto_tor_ori_rim_im#_m#c_#ce_ce#_e#z_#zi_zic_ici_ci#	sărbătorim_ce_zici	1
-#ce_ce#_e#z_#zi_zic_ici_ci#_i#s_#să_să#	ce_zici_să	1
-#zi_zic_ici_ci#_i#s_#să_să#_ă#o_#o#	zici_să_o	1
-#să_să#_ă#o_#o#_o#d_#du_duc_uce_cem_em#	să_o_ducem	1
-#o#_o#d_#du_duc_uce_cem_em#_m#l_#la_la#	o_ducem_la	1
-#du_duc_uce_cem_em#_m#l_#la_la#_a#u_#un_un#	ducem_la_un	1
-#la_la#_a#u_#un_un#_n#r_#re_res_est_sta_tau_aur_ura_ran_ant_nt#	la_un_restaurant	1
-#un_un#_n#r_#re_res_est_sta_tau_aur_ura_ran_ant_nt#_t#b_#bu_bun_un#	un_restaurant_bun	1
-#re_res_est_sta_tau_aur_ura_ran_ant_nt#_t#b_#bu_bun_un#_n#n_#nu_nu#	restaurant_bun_nu	1
-#bu_bun_un#_n#n_#nu_nu#_u#f_#fa_fac_ace_cem_em#	bun_nu_facem	1
-#nu_nu#_u#f_#fa_fac_ace_cem_em#_m#a_#as_ast_sta_ta#	nu_facem_asta	1
-#fa_fac_ace_cem_em#_m#a_#as_ast_sta_ta#_a#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#	facem_asta_niciodată	1
-#as_ast_sta_ta#_a#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#a_#as_ast_sta_ta#	asta_niciodată_asta	1
-#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#a_#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#	niciodată_asta_pentru	1
-#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#_u#c_#că_că#	asta_pentru_că	1
-#pe_pen_ent_ntr_tru_ru#_u#c_#că_că#_ă#p_#pâ_pân_ână_nă#	pentru_că_până	1
-#că_că#_ă#p_#pâ_pân_ână_nă#_ă#a_#ac_acu_cum_um#	că_până_acum	1
-#pâ_pân_ână_nă#_ă#a_#ac_acu_cum_um#_m#n_#nu_nu#	până_acum_nu	1
-#ac_acu_cum_um#_m#n_#nu_nu#_u#a_#a#	acum_nu_a	1
-#nu_nu#_u#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	nu_a_făcut	1
-#a#_a#f_#fă_făc_ăcu_cut_ut#_t#n_#ni_nim_imi_mic_ic#	a_făcut_nimic	1
-#fă_făc_ăcu_cut_ut#_t#n_#ni_nim_imi_mic_ic#_c#c_#ca_car_are_re#	făcut_nimic_care	1
-#ni_nim_imi_mic_ic#_c#c_#ca_car_are_re#_e#s_#să_să#	nimic_care_să	1
-#ca_car_are_re#_e#s_#să_să#_ă#m_#me_mer_eri_rit_ite_te#	care_să_merite	1
-#să_să#_ă#m_#me_mer_eri_rit_ite_te#_e#s_#să_săr_ărb_rbă_băt_ăto_tor_ori_rit_it#	să_merite_sărbătorit	1
-#me_mer_eri_rit_ite_te#_e#s_#să_săr_ărb_rbă_băt_ăto_tor_ori_rit_it#_t#n_#nu_nu#	merite_sărbătorit_nu	1
-#să_săr_ărb_rbă_băt_ăto_tor_ori_rit_it#_t#n_#nu_nu#_u#e_#es_est_ste_te#	sărbătorit_nu_este	1
-#nu_nu#_u#e_#es_est_ste_te#_e#a_#ad_ade_dev_evă_văr_ăra_rat_at#	nu_este_adevărat	1
-#es_est_ste_te#_e#a_#ad_ade_dev_evă_văr_ăra_rat_at#_t#a_#ai_ai#	este_adevărat_ai	1
-#ad_ade_dev_evă_văr_ăra_rat_at#_t#a_#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#	adevărat_ai_reuşit	1
-#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#_t#a_#ai_ai#	ai_reuşit_ai	1
-#re_reu_euş_uşi_şit_it#_t#a_#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#	reuşit_ai_reuşit	1
-#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#_t#a_#ai_ai#	ai_reuşit_ai	1
-#re_reu_euş_uşi_şit_it#_t#a_#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#	reuşit_ai_făcut	1
-#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#_t#u_#un_un#	ai_făcut_un	1
-#fă_făc_ăcu_cut_ut#_t#u_#un_un#_n#b_#bo_boo_oom_om#	făcut_un_boom	1
-#un_un#_n#b_#bo_boo_oom_om#_m#i_#in_in#	un_boom_in	1
-#bo_boo_oom_om#_m#i_#in_in#_n#t_#to_toi_oi#	boom_in_toi	1
-#in_in#_n#t_#to_toi_oi#_i#a_#ai_ai#	in_toi_ai	1
-#to_toi_oi#_i#a_#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#	toi_ai_reuşit	1
-#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#_t#î_#în_în#	ai_reuşit_în	1
-#re_reu_euş_uşi_şit_it#_t#î_#în_în#_n#r_#re_reg_egu_gul_ulă_lă#	reuşit_în_regulă	1
-#în_în#_n#r_#re_reg_egu_gul_ulă_lă#_ă#d_#de_dec_eci_ci#	în_regulă_deci	1
-#re_reg_egu_gul_ulă_lă#_ă#d_#de_dec_eci_ci#_i#v_#vi_vin_ine_ner_eri_ri#	regulă_deci_vineri	1
-#de_dec_eci_ci#_i#v_#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#	deci_vineri_seară	1
-#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#_ă#s_#să_să#	vineri_seară_să	1
-#se_sea_ear_ară_ră#_ă#s_#să_să#_ă#o_#o#	seară_să_o	1
-#să_să#_ă#o_#o#_o#d_#du_duc_uce_cem_em#	să_o_ducem	1
-#o#_o#d_#du_duc_uce_cem_em#_m#l_#la_la#	o_ducem_la	1
-#du_duc_uce_cem_em#_m#l_#la_la#_a#c_#ci_cin_ină_nă#	ducem_la_cină	1
-#la_la#_a#c_#ci_cin_ină_nă#_ă#b_#bi_bin_ine_ne#	la_cină_bine	1
-#ci_cin_ină_nă#_ă#b_#bi_bin_ine_ne#_e#v_#vi_vin_ine_ner_eri_ri#	cină_bine_vineri	1
-#bi_bin_ine_ne#_e#v_#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#	bine_vineri_seară	1
-#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#_ă#r_#ră_răm_ămâ_mân_âne_ne#	vineri_seară_rămâne	1
-#se_sea_ear_ară_ră#_ă#r_#ră_răm_ămâ_mân_âne_ne#_e#c_#ca_car_are_re#	seară_rămâne_care	1
-#ră_răm_ămâ_mân_âne_ne#_e#c_#ca_car_are_re#_e#i_#im_imi_mi#	rămâne_care_imi	1
-#ca_car_are_re#_e#i_#im_imi_mi#_i#a_#ad_adu_duc_uce_ce#	care_imi_aduce	1
-#im_imi_mi#_i#a_#ad_adu_duc_uce_ce#_e#a_#am_ami_min_int_nte_te#	imi_aduce_aminte	1
-#ad_adu_duc_uce_ce#_e#a_#am_ami_min_int_nte_te#_e#n_#nu_nu#	aduce_aminte_nu	1
-#am_ami_min_int_nte_te#_e#n_#nu_nu#_u#o_#o#	aminte_nu_o	1
-#nu_nu#_u#o_#o#_o#s_#să_să#	nu_o_să	1
-#o#_o#s_#să_să#_ă#c_#cr_cre_rez_ezi_zi#	o_să_crezi	1
-#să_să#_ă#c_#cr_cre_rez_ezi_zi#_i#a_#as_ast_sta_ta#	să_crezi_asta	1
-#cr_cre_rez_ezi_zi#_i#a_#as_ast_sta_ta#_a#a_#am_am#	crezi_asta_am	1
-#as_ast_sta_ta#_a#a_#am_am#_m#i_#in_int_ntâ_tâl_âln_lni_nit_it#	asta_am_intâlnit	1
-#am_am#_m#i_#in_int_ntâ_tâl_âln_lni_nit_it#_t#c_#cu_cu#	am_intâlnit_cu	1
-#in_int_ntâ_tâl_âln_lni_nit_it#_t#c_#cu_cu#_u#t_#ti_tin_ina_na#	intâlnit_cu_tina	1
-#cu_cu#_u#t_#ti_tin_ina_na#_a#ş_#şi_şi#	cu_tina_şi	1
-#ti_tin_ina_na#_a#ş_#şi_şi#_i#m_#mi_mit_itc_tch_ch#	tina_şi_mitch	1
-#şi_şi#_i#m_#mi_mit_itc_tch_ch#_h#l_#li_lie_ieb_ebe_ber_erm_rma_man_an#	şi_mitch_lieberman	1
-#mi_mit_itc_tch_ch#_h#l_#li_lie_ieb_ebe_ber_erm_rma_man_an#_n#l_#la_la#	mitch_lieberman_la	1
-#li_lie_ieb_ebe_ber_erm_rma_man_an#_n#l_#la_la#_a#a_#al_ali_lim_ime_men_ent_nta_tar_ară_ră#	lieberman_la_alimentară	1
-#la_la#_a#a_#al_ali_lim_ime_men_ent_nta_tar_ară_ră#_ă#ş_#şi_şi#	la_alimentară_şi	1
-#al_ali_lim_ime_men_ent_nta_tar_ară_ră#_ă#ş_#şi_şi#_i#a_#au_au#	alimentară_şi_au	1
-#şi_şi#_i#a_#au_au#_u#i_#in_inv_nvi_vit_ita_tat_at#	şi_au_invitat	1
-#au_au#_u#i_#in_inv_nvi_vit_ita_tat_at#_t#l_#la_la#	au_invitat_la	1
-#in_inv_nvi_vit_ita_tat_at#_t#l_#la_la#_a#e_#ei_ei#	invitat_la_ei	1
-#la_la#_a#e_#ei_ei#_i#p_#pe_pen_ent_ntr_tru_ru#	la_ei_pentru	1
-#ei_ei#_i#p_#pe_pen_ent_ntr_tru_ru#_u#c_#ci_cin_ină_nă#	ei_pentru_cină	1
-#pe_pen_ent_ntr_tru_ru#_u#c_#ci_cin_ină_nă#_ă#s_#se_ser_eri_rio_ios_os#	pentru_cină_serios	1
-#ci_cin_ină_nă#_ă#s_#se_ser_eri_rio_ios_os#_s#c_#cu_cui_ui#	cină_serios_cui	1
-#se_ser_eri_rio_ios_os#_s#c_#cu_cui_ui#_i#i_#ii_ii#	serios_cui_ii	1
-#cu_cui_ui#_i#i_#ii_ii#_i#p_#pa_pas_asă_să#	cui_ii_pasă	1
-#ii_ii#_i#p_#pa_pas_asă_să#_ă#n_#nu_nu#	ii_pasă_nu	1
-#pa_pas_asă_să#_ă#n_#nu_nu#_u#ş_#şt_şti_tii_ii#	pasă_nu_ştii	1
-#nu_nu#_u#ş_#şt_şti_tii_ii#_i#c_#ce_ce#	nu_ştii_ce	1
-#şt_şti_tii_ii#_i#c_#ce_ce#_e#s_#sp_spu_pun_une_ne#	ştii_ce_spune	1
-#ce_ce#_e#s_#sp_spu_pun_une_ne#_e#l_#lu_lum_ume_mea_ea#	ce_spune_lumea	1
-#sp_spu_pun_une_ne#_e#l_#lu_lum_ume_mea_ea#_a#d_#de_des_esp_spr_pre_re#	spune_lumea_despre	1
-#lu_lum_ume_mea_ea#_a#d_#de_des_esp_spr_pre_re#_e#e_#ei_ei#	lumea_despre_ei	1
-#de_des_esp_spr_pre_re#_e#e_#ei_ei#_i#d_#di_din_in#	despre_ei_din	1
-#ei_ei#_i#d_#di_din_in#_n#c_#câ_cât_âte_te#	ei_din_câte	1
-#di_din_in#_n#c_#câ_cât_âte_te#_e#ş_#şt_şti_tiu_iu#	din_câte_ştiu	1
-#câ_cât_âte_te#_e#ş_#şt_şti_tiu_iu#_u#n_#nu_nu#	câte_ştiu_nu	1
-#şt_şti_tiu_iu#_u#n_#nu_nu#_u#s_#su_sun_unt_nt#	ştiu_nu_sunt	1
-#nu_nu#_u#s_#su_sun_unt_nt#_t#f_#fi_fid_ide_del_eli_li#	nu_sunt_fideli	1
-#su_sun_unt_nt#_t#f_#fi_fid_ide_del_eli_li#_i#n_#nu_nu#	sunt_fideli_nu	1
-#fi_fid_ide_del_eli_li#_i#n_#nu_nu#_u#s_#su_sun_unt_nt#	fideli_nu_sunt	1
-#nu_nu#_u#s_#su_sun_unt_nt#_t#f_#fi_fid_ide_del_eli_li#	nu_sunt_fideli	1
-#su_sun_unt_nt#_t#f_#fi_fid_ide_del_eli_li#_i#a_#ad_adi_dic_ică_că#	sunt_fideli_adică	1
-#fi_fid_ide_del_eli_li#_i#a_#ad_adi_dic_ică_că#_ă#f_#fa_fac_ac#	fideli_adică_fac	1
-#ad_adi_dic_ică_că#_ă#f_#fa_fac_ac#_c#s_#sc_sch_chi_him_imb_mb#	adică_fac_schimb	1
-#fa_fac_ac#_c#s_#sc_sch_chi_him_imb_mb#_b#d_#de_de#	fac_schimb_de	1
-#sc_sch_chi_him_imb_mb#_b#d_#de_de#_e#n_#ne_nev_eve_ves_est_ste_te#	schimb_de_neveste	1
-#de_de#_e#n_#ne_nev_eve_ves_est_ste_te#_e#s_#su_sun_unt_nt#	de_neveste_sunt	1
-#ne_nev_eve_ves_est_ste_te#_e#s_#su_sun_unt_nt#_t#i_#iu_iub_ubi_bit_ito_tor_ori_ri#	neveste_sunt_iubitori	1
-#su_sun_unt_nt#_t#i_#iu_iub_ubi_bit_ito_tor_ori_ri#_i#f_#fa_fac_ac#	sunt_iubitori_fac	1
-#iu_iub_ubi_bit_ito_tor_ori_ri#_i#f_#fa_fac_ac#_c#p_#pa_par_art_rte_te#	iubitori_fac_parte	1
-#fa_fac_ac#_c#p_#pa_par_art_rte_te#_e#d_#di_din_in#	fac_parte_din	1
-#pa_par_art_rte_te#_e#d_#di_din_in#_n#s_#st_sti_til_ilu_lul_ul#	parte_din_stilul	1
-#di_din_in#_n#s_#st_sti_til_ilu_lul_ul#_l#d_#de_de#	din_stilul_de	1
-#st_sti_til_ilu_lul_ul#_l#d_#de_de#_e#v_#vi_via_iaţ_aţă_ţă#	stilul_de_viaţă	1
-#de_de#_e#v_#vi_via_iaţ_aţă_ţă#_ă#d_#da_da#	de_viaţă_da	1
-#vi_via_iaţ_aţă_ţă#_ă#d_#da_da#_a#ş_#şi_şi#	viaţă_da_şi	1
-#da_da#_a#ş_#şi_şi#_i#s_#si_sin_inc_nce_cer_er#	da_şi_sincer	1
-#şi_şi#_i#s_#si_sin_inc_nce_cer_er#_r#s_#su_sun_unt_nt#	şi_sincer_sunt	1
-#si_sin_inc_nce_cer_er#_r#s_#su_sun_unt_nt#_t#u_#un_un#	sincer_sunt_un	1
-#su_sun_unt_nt#_t#u_#un_un#_n#p_#pi_pic_ic#	sunt_un_pic	1
-#un_un#_n#p_#pi_pic_ic#_c#i_#in_ing_ngr_gri_rij_ijo_jor_ora_rat_ată_tă#	un_pic_ingrijorată	1
-#pi_pic_ic#_c#i_#in_ing_ngr_gri_rij_ijo_jor_ora_rat_ată_tă#_ă#s_#se_se#	pic_ingrijorată_se	1
-#in_ing_ngr_gri_rij_ijo_jor_ora_rat_ată_tă#_ă#s_#se_se#_e#p_#pa_par_are_re#	ingrijorată_se_pare	1
-#se_se#_e#p_#pa_par_are_re#_e#c_#că_că#	se_pare_că	1
-#pa_par_are_re#_e#c_#că_că#_ă#ş_#şt_şti_tii_ii#	pare_că_ştii	1
-#că_că#_ă#ş_#şt_şti_tii_ii#_i#a_#ar_arg_rgo_gou_oul_ul#	că_ştii_argoul	1
-#şt_şti_tii_ii#_i#a_#ar_arg_rgo_gou_oul_ul#_l#ş_#şi_şi#	ştii_argoul_şi	1
-#ar_arg_rgo_gou_oul_ul#_l#ş_#şi_şi#_i#c_#ce_ce#	argoul_şi_ce	1
-#şi_şi#_i#c_#ce_ce#_e#a_#ai_ai#	şi_ce_ai	1
-#ce_ce#_e#a_#ai_ai#_i#s_#sp_spu_pus_us#	ce_ai_spus	1
-#ai_ai#_i#s_#sp_spu_pus_us#_s#a_#am_am#	ai_spus_am	1
-#sp_spu_pus_us#_s#a_#am_am#_m#s_#sp_spu_pus_us#	spus_am_spus	1
-#am_am#_m#s_#sp_spu_pus_us#_s#c_#că_că#	am_spus_că	1
-#sp_spu_pus_us#_s#c_#că_că#_ă#i_#ii_ii#	spus_că_ii	1
-#că_că#_ă#i_#ii_ii#_i#v_#vo_voi_oi#	că_ii_voi	1
-#ii_ii#_i#v_#vo_voi_oi#_i#a_#an_anu_nun_unţ_nţa_ţa#	ii_voi_anunţa	1
-#vo_voi_oi#_i#a_#an_anu_nun_unţ_nţa_ţa#_a#c_#ce_ce#	voi_anunţa_ce	1
-#an_anu_nun_unţ_nţa_ţa#_a#c_#ce_ce#_e#e_#e#	anunţa_ce_e	1
-#ce_ce#_e#e_#e#_e#d_#de_de#	ce_e_de	1
-#e#_e#d_#de_de#_e#a_#an_anu_nun_unţ_nţa_ţat_at#	e_de_anunţat	1
-#de_de#_e#a_#an_anu_nun_unţ_nţa_ţat_at#_t#n_#nu_nu#	de_anunţat_nu	1
-#an_anu_nun_unţ_nţa_ţat_at#_t#n_#nu_nu#_u#ş_#şt_şti_tia_iam_am#	anunţat_nu_ştiam	1
-#nu_nu#_u#ş_#şt_şti_tia_iam_am#_m#c_#ce_ce#	nu_ştiam_ce	1
-#şt_şti_tia_iam_am#_m#c_#ce_ce#_e#a_#al_alt_ltc_tce_cev_eva_va#	ştiam_ce_altceva	1
-#ce_ce#_e#a_#al_alt_ltc_tce_cev_eva_va#_a#s_#să_să#	ce_altceva_să	1
-#al_alt_ltc_tce_cev_eva_va#_a#s_#să_să#_ă#s_#sp_spu_pun_un#	altceva_să_spun	1
-#să_să#_ă#s_#sp_spu_pun_un#_n#d_#de_dec_ecâ_cât_ât#	să_spun_decât	1
-#sp_spu_pun_un#_n#d_#de_dec_ecâ_cât_ât#_t#e_#ev_evi_vid_ide_den_ent_nt#	spun_decât_evident	1
-#de_dec_ecâ_cât_ât#_t#e_#ev_evi_vid_ide_den_ent_nt#_t#c_#că_că#	decât_evident_că	1
-#ev_evi_vid_ide_den_ent_nt#_t#c_#că_că#_ă#n_#nu_nu#	evident_că_nu	1
-#că_că#_ă#n_#nu_nu#_u#m_#me_mer_erg_rge_gem_em#	că_nu_mergem	1
-#nu_nu#_u#m_#me_mer_erg_rge_gem_em#_m#b_#bi_bin_ine_ne#	nu_mergem_bine	1
-#me_mer_erg_rge_gem_em#_m#b_#bi_bin_ine_ne#_e#b_#bi_bin_ine_ne#	mergem_bine_bine	1
-#bi_bin_ine_ne#_e#b_#bi_bin_ine_ne#_e#p_#pe_pen_ent_ntr_tru_ru#	bine_bine_pentru	1
-#bi_bin_ine_ne#_e#p_#pe_pen_ent_ntr_tru_ru#_u#c_#că_că#	bine_pentru_că	1
-#pe_pen_ent_ntr_tru_ru#_u#c_#că_că#_ă#n_#ni_nic_ici_ci#	pentru_că_nici	1
-#că_că#_ă#n_#ni_nic_ici_ci#_i#e_#eu_eu#	că_nici_eu	1
-#ni_nic_ici_ci#_i#e_#eu_eu#_u#n_#nu_nu#	nici_eu_nu	1
-#eu_eu#_u#n_#nu_nu#_u#v_#vr_vre_rea_eau_au#	eu_nu_vreau	1
-#nu_nu#_u#v_#vr_vre_rea_eau_au#_u#s_#să_să#	nu_vreau_să	1
-#vr_vre_rea_eau_au#_u#s_#să_să#_ă#m_#me_mer_erg_rg#	vreau_să_merg	1
-#să_să#_ă#m_#me_mer_erg_rg#_g#d_#de_dec_ecâ_cât_ât#	să_merg_decât	1
-#me_mer_erg_rg#_g#d_#de_dec_ecâ_cât_ât#_t#d_#da_dac_acă_că#	merg_decât_dacă	1
-#de_dec_ecâ_cât_ât#_t#d_#da_dac_acă_că#_ă#t_#tu_tu#	decât_dacă_tu	1
-#da_dac_acă_că#_ă#t_#tu_tu#_u#v_#vr_vre_rei_ei#	dacă_tu_vrei	1
-#tu_tu#_u#v_#vr_vre_rei_ei#_i#n_#nu_nu#	tu_vrei_nu	1
-#vr_vre_rei_ei#_i#n_#nu_nu#_u#n_#nu_nu#	vrei_nu_nu	1
-#nu_nu#_u#n_#nu_nu#_u#e_#eu_eu#	nu_nu_eu	1
-#nu_nu#_u#e_#eu_eu#_u#n_#nu_nu#	nu_eu_nu	1
-#eu_eu#_u#n_#nu_nu#_u#v_#vr_vre_rea_eau_au#	eu_nu_vreau	1
-#nu_nu#_u#v_#vr_vre_rea_eau_au#_u#s_#să_să#	nu_vreau_să	1
-#vr_vre_rea_eau_au#_u#s_#să_să#_ă#m_#me_mer_erg_rg#	vreau_să_merg	1
-#să_să#_ă#m_#me_mer_erg_rg#_g#d_#de_de#	să_merg_de	1
-#me_mer_erg_rg#_g#d_#de_de#_e#c_#ce_ce#	merg_de_ce	1
-#de_de#_e#c_#ce_ce#_e#t_#tu_tu#	de_ce_tu	1
-#ce_ce#_e#t_#tu_tu#_u#v_#vr_vre_rei_ei#	ce_tu_vrei	1
-#tu_tu#_u#v_#vr_vre_rei_ei#_i#s_#să_să#	tu_vrei_să	1
-#vr_vre_rei_ei#_i#s_#să_să#_ă#m_#me_mer_erg_rgi_gi#	vrei_să_mergi	1
-#să_să#_ă#m_#me_mer_erg_rgi_gi#_i#n_#nu_nu#	să_mergi_nu	1
-#me_mer_erg_rgi_gi#_i#n_#nu_nu#_u#n_#nu_nu#	mergi_nu_nu	1
-#nu_nu#_u#n_#nu_nu#_u#e_#eu_eu#	nu_nu_eu	1
-#nu_nu#_u#e_#eu_eu#_u#n_#nu_nu#	nu_eu_nu	1
-#eu_eu#_u#n_#nu_nu#_u#a_#aş_aş#	eu_nu_aş	1
-#nu_nu#_u#a_#aş_aş#_ş#l_#lă_lăs_ăsa_sa#	nu_aş_lăsa	1
-#aş_aş#_ş#l_#lă_lăs_ăsa_sa#_a#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#	aş_lăsa_niciodată	1
-#lă_lăs_ăsa_sa#_a#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#u_#un_un#	lăsa_niciodată_un	1
-#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#u_#un_un#_n#a_#al_alt_lt#	niciodată_un_alt	1
-#un_un#_n#a_#al_alt_lt#_t#b_#bă_băr_ărb_rba_bat_at#	un_alt_bărbat	1
-#al_alt_lt#_t#b_#bă_băr_ărb_rba_bat_at#_t#s_#să_să#	alt_bărbat_să	1
-#bă_băr_ărb_rba_bat_at#_t#s_#să_să#_ă#t_#te_te#	bărbat_să_te	1
-#să_să#_ă#t_#te_te#_e#a_#at_ati_tin_ing_ngă_gă#	să_te_atingă	1
-#te_te#_e#a_#at_ati_tin_ing_ngă_gă#_ă#d_#da_da#	te_atingă_da	1
-#at_ati_tin_ing_ngă_gă#_ă#d_#da_da#_a#ş_#şi_şi#	atingă_da_şi	1
-#da_da#_a#ş_#şi_şi#_i#e_#eu_eu#	da_şi_eu	1
-#şi_şi#_i#e_#eu_eu#_u#n_#nu_nu#	şi_eu_nu	1
-#eu_eu#_u#n_#nu_nu#_u#a_#aş_aş#	eu_nu_aş	1
-#nu_nu#_u#a_#aş_aş#_ş#l_#lă_lăs_ăsa_sa#	nu_aş_lăsa	1
-#aş_aş#_ş#l_#lă_lăs_ăsa_sa#_a#n_#ni_nic_ico_cod_oda_dat_ată_tă#	aş_lăsa_nicodată	1
-#lă_lăs_ăsa_sa#_a#n_#ni_nic_ico_cod_oda_dat_ată_tă#_ă#o_#o#	lăsa_nicodată_o	1
-#ni_nic_ico_cod_oda_dat_ată_tă#_ă#o_#o#_o#a_#al_alt_ltă_tă#	nicodată_o_altă	1
-#o#_o#a_#al_alt_ltă_tă#_ă#f_#fe_fem_eme_mei_eie_ie#	o_altă_femeie	1
-#al_alt_ltă_tă#_ă#f_#fe_fem_eme_mei_eie_ie#_e#s_#să_să#	altă_femeie_să	1
-#fe_fem_eme_mei_eie_ie#_e#s_#să_să#_ă#t_#te_te#	femeie_să_te	1
-#să_să#_ă#t_#te_te#_e#a_#at_ati_tin_ing_ngă_gă#	să_te_atingă	1
-#te_te#_e#a_#at_ati_tin_ing_ngă_gă#_ă#d_#da_da#	te_atingă_da	1
-#at_ati_tin_ing_ngă_gă#_ă#d_#da_da#_a#ş_#şi_şi#	atingă_da_şi	1
-#da_da#_a#ş_#şi_şi#_i#e_#eu_eu#	da_şi_eu	1
-#şi_şi#_i#e_#eu_eu#_u#n_#nu_nu#	şi_eu_nu	1
-#eu_eu#_u#n_#nu_nu#_u#a_#aş_aş#	eu_nu_aş	1
-#nu_nu#_u#a_#aş_aş#_ş#l_#lă_lăs_ăsa_sa#	nu_aş_lăsa	1
-#aş_aş#_ş#l_#lă_lăs_ăsa_sa#_a#n_#ni_nic_ico_cod_oda_dat_ată_tă#	aş_lăsa_nicodată	1
-#lă_lăs_ăsa_sa#_a#n_#ni_nic_ico_cod_oda_dat_ată_tă#_ă#o_#o#	lăsa_nicodată_o	1
-#ni_nic_ico_cod_oda_dat_ată_tă#_ă#o_#o#_o#a_#al_alt_ltă_tă#	nicodată_o_altă	1
-#o#_o#a_#al_alt_ltă_tă#_ă#f_#fe_fem_eme_mei_eie_ie#	o_altă_femeie	1
-#al_alt_ltă_tă#_ă#f_#fe_fem_eme_mei_eie_ie#_e#s_#să_să#	altă_femeie_să	1
-#fe_fem_eme_mei_eie_ie#_e#s_#să_să#_ă#t_#te_te#	femeie_să_te	1
-#să_să#_ă#t_#te_te#_e#a_#at_ati_tin_ing_ngă_gă#	să_te_atingă	1
-#te_te#_e#a_#at_ati_tin_ing_ngă_gă#_ă#n_#nu_nu#	te_atingă_nu	1
-#at_ati_tin_ing_ngă_gă#_ă#n_#nu_nu#_u#e_#e#	atingă_nu_e	1
-#nu_nu#_u#e_#e#_e#a_#ad_ade_dev_evă_văr_ăra_rat_at#	nu_e_adevărat	1
-#e#_e#a_#ad_ade_dev_evă_văr_ăra_rat_at#_t#d_#do_doa_oar_ar#	e_adevărat_doar	1
-#ad_ade_dev_evă_văr_ăra_rat_at#_t#d_#do_doa_oar_ar#_r#l_#l#	adevărat_doar_l	1
-#do_doa_oar_ar#_r#l_#l#_l#ş_#şi_şi#	doar_l_şi	1
-#l#_l#ş_#şi_şi#_i#t_#te_te#	l_şi_te	1
-#şi_şi#_i#t_#te_te#_e#c_#că_că#	şi_te_că	1
-#te_te#_e#c_#că_că#_ă#i_#iţ_iţi_ţi#	te_că_iţi	1
-#că_că#_ă#i_#iţ_iţi_ţi#_i#c_#co_con_onv_nvi_vin_in#	că_iţi_convin	1
-#iţ_iţi_ţi#_i#c_#co_con_onv_nvi_vin_in#_n#t_#to_toa_oat_ate_te#	iţi_convin_toate	1
-#co_con_onv_nvi_vin_in#_n#t_#to_toa_oat_ate_te#_e#c_#ce_cer_eri_rin_inţ_nţe_ţel_ele_le#	convin_toate_cerinţele	1
-#to_toa_oat_ate_te#_e#c_#ce_cer_eri_rin_inţ_nţe_ţel_ele_le#_e#d_#da_dav_ave_ve#	toate_cerinţele_dave	1
-#ce_cer_eri_rin_inţ_nţe_ţel_ele_le#_e#d_#da_dav_ave_ve#_e#m_#mu_mul_ulţ_lţu_ţum_ume_mes_esc_sc#	cerinţele_dave_mulţumesc	1
-#da_dav_ave_ve#_e#m_#mu_mul_ulţ_lţu_ţum_ume_mes_esc_sc#_c#c_#că_că#	dave_mulţumesc_că	1
-#mu_mul_ulţ_lţu_ţum_ume_mes_esc_sc#_c#c_#că_că#_ă#a_#ai_ai#	mulţumesc_că_ai	1
-#că_că#_ă#a_#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#	că_ai_făcut	1
-#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#_t#p_#po_pol_oli_liţ_iţa_ţa#	ai_făcut_poliţa	1
-#fă_făc_ăcu_cut_ut#_t#p_#po_pol_oli_liţ_iţa_ţa#_a#a_#as_ast_sta_ta#	făcut_poliţa_asta	1
-#po_pol_oli_liţ_iţa_ţa#_a#a_#as_ast_sta_ta#_a#a_#aş_aşa_şa#	poliţa_asta_aşa	1
-#as_ast_sta_ta#_a#a_#aş_aşa_şa#_a#d_#de_de#	asta_aşa_de	1
-#aş_aşa_şa#_a#d_#de_de#_e#r_#re_rep_epe_ped_ede_de#	aşa_de_repede	1
-#de_de#_e#r_#re_rep_epe_ped_ede_de#_e#s_#si_sin_inc_nce_cer_er#	de_repede_sincer	1
-#re_rep_epe_ped_ede_de#_e#s_#si_sin_inc_nce_cer_er#_r#s_#să_să#	repede_sincer_să	1
-#si_sin_inc_nce_cer_er#_r#s_#să_să#_ă#f_#fi_fiu_iu#	sincer_să_fiu	1
-#să_să#_ă#f_#fi_fiu_iu#_u#b_#bo_bob_ob#	să_fiu_bob	1
-#fi_fiu_iu#_u#b_#bo_bob_ob#_b#n_#nu_nu#	fiu_bob_nu	1
-#bo_bob_ob#_b#n_#nu_nu#_u#a_#aş_aş#	bob_nu_aş	1
-#nu_nu#_u#a_#aş_aş#_ş#p_#pu_put_ute_tea_ea#	nu_aş_putea	1
-#aş_aş#_ş#p_#pu_put_ute_tea_ea#_a#d_#do_dor_orm_rmi_mi#	aş_putea_dormi	1
-#pu_put_ute_tea_ea#_a#d_#do_dor_orm_rmi_mi#_i#d_#da_dac_acă_că#	putea_dormi_dacă	1
-#do_dor_orm_rmi_mi#_i#d_#da_dac_acă_că#_ă#a_#aş_aş#	dormi_dacă_aş	1
-#da_dac_acă_că#_ă#a_#aş_aş#_ş#ş_#şt_şti_tii_ii#	dacă_aş_ştii	1
-#aş_aş#_ş#ş_#şt_şti_tii_ii#_i#c_#că_că#	aş_ştii_că	1
-#şt_şti_tii_ii#_i#c_#că_că#_ă#f_#fa_fam_ami_mil_ili_lia_ia#	ştii_că_familia	1
-#că_că#_ă#f_#fa_fam_ami_mil_ili_lia_ia#_a#t_#ta_ta#	că_familia_ta	1
-#fa_fam_ami_mil_ili_lia_ia#_a#t_#ta_ta#_a#n_#nu_nu#	familia_ta_nu	1
-#ta_ta#_a#n_#nu_nu#_u#e_#e#	ta_nu_e	1
-#nu_nu#_u#e_#e#_e#p_#pr_pro_rot_ote_tej_eja_jat_ată_tă#	nu_e_protejată	1
-#e#_e#p_#pr_pro_rot_ote_tej_eja_jat_ată_tă#_ă#ş_#şt_şti_tii_ii#	e_protejată_ştii	1
-#pr_pro_rot_ote_tej_eja_jat_ată_tă#_ă#ş_#şt_şti_tii_ii#_i#n_#ni_nim_imi_mic_ic#	protejată_ştii_nimic	1
-#şt_şti_tii_ii#_i#n_#ni_nim_imi_mic_ic#_c#n_#nu_nu#	ştii_nimic_nu	1
-#ni_nim_imi_mic_ic#_c#n_#nu_nu#_u#e_#e#	nimic_nu_e	1
-#nu_nu#_u#e_#e#_e#m_#ma_mai_ai#	nu_e_mai	1
-#e#_e#m_#ma_mai_ai#_i#i_#im_imp_mpo_por_ort_rta_tan_ant_nt#	e_mai_important	1
-#ma_mai_ai#_i#i_#im_imp_mpo_por_ort_rta_tan_ant_nt#_t#c_#ca_ca#	mai_important_ca	1
-#im_imp_mpo_por_ort_rta_tan_ant_nt#_t#c_#ca_ca#_a#f_#fa_fam_ami_mil_ili_lia_ia#	important_ca_familia	1
-#ca_ca#_a#f_#fa_fam_ami_mil_ili_lia_ia#_a#t_#ta_tat_ată_tă#	ca_familia_tată	1
-#fa_fam_ami_mil_ili_lia_ia#_a#t_#ta_tat_ată_tă#_ă#n_#nu_nu#	familia_tată_nu	1
-#ta_tat_ată_tă#_ă#n_#nu_nu#_u#a_#ac_acu_cum_um#	tată_nu_acum	1
-#nu_nu#_u#a_#ac_acu_cum_um#_m#l_#la_lar_arr_rry_ry#	nu_acum_larry	1
-#ac_acu_cum_um#_m#l_#la_lar_arr_rry_ry#_y#l_#lu_luc_ucr_cre_rez_ez#	acum_larry_lucrez	1
-#la_lar_arr_rry_ry#_y#l_#lu_luc_ucr_cre_rez_ez#_z#v_#vo_voi_oia_iam_am#	larry_lucrez_voiam	1
-#lu_luc_ucr_cre_rez_ez#_z#v_#vo_voi_oia_iam_am#_m#ţ_#ţi_ţi#	lucrez_voiam_ţi	1
-#vo_voi_oia_iam_am#_m#ţ_#ţi_ţi#_i#s_#sp_spu_pun_un#	voiam_ţi_spun	1
-#ţi_ţi#_i#s_#sp_spu_pun_un#_n#c_#că_că#	ţi_spun_că	1
-#sp_spu_pun_un#_n#c_#că_că#_ă#a_#am_am#	spun_că_am	1
-#că_că#_ă#a_#am_am#_m#t_#te_ter_erm_rmi_min_ina_nat_at#	că_am_terminat	1
-#am_am#_m#t_#te_ter_erm_rmi_min_ina_nat_at#_t#d_#de_de#	am_terminat_de	1
-#te_ter_erm_rmi_min_ina_nat_at#_t#d_#de_de#_e#r_#re_rep_epa_par_ara_rat_at#	terminat_de_reparat	1
-#de_de#_e#r_#re_rep_epa_par_ara_rat_at#_t#c_#ca_cal_alc_lcu_cul_ula_lat_ato_tor_oru_rul_ul#	de_reparat_calculatorul	1
-#re_rep_epa_par_ara_rat_at#_t#c_#ca_cal_alc_lcu_cul_ula_lat_ato_tor_oru_rul_ul#_l#a_#a#	reparat_calculatorul_a	1
-#ca_cal_alc_lcu_cul_ula_lat_ato_tor_oru_rul_ul#_l#a_#a#_a#t_#tr_tre_reb_ebu_bui_uit_it#	calculatorul_a_trebuit	1
-#a#_a#t_#tr_tre_reb_ebu_bui_uit_it#_t#d_#do_doa_oar_ar#	a_trebuit_doar	1
-#tr_tre_reb_ebu_bui_uit_it#_t#d_#do_doa_oar_ar#_r#s_#să_să#	trebuit_doar_să	1
-#do_doa_oar_ar#_r#s_#să_să#_ă#ş_#şt_şte_ter_erg_rg#	doar_să_şterg	1
-#să_să#_ă#ş_#şt_şte_ter_erg_rg#_g#f_#fi_fiş_işi_şie_ier_ere_rel_ele_le#	să_şterg_fişierele	1
-#şt_şte_ter_erg_rg#_g#f_#fi_fiş_işi_şie_ier_ere_rel_ele_le#_e#a_#al_ale_lea_ea#	şterg_fişierele_alea	1
-#fi_fiş_işi_şie_ier_ere_rel_ele_le#_e#a_#al_ale_lea_ea#_a#t_#te_tem_emp_mpo_por_ora_rar_are_re#	fişierele_alea_temporare	1
-#al_ale_lea_ea#_a#t_#te_tem_emp_mpo_por_ora_rar_are_re#_e#e_#er_era_rau_au#	alea_temporare_erau	1
-#te_tem_emp_mpo_por_ora_rar_are_re#_e#e_#er_era_rau_au#_u#m_#mu_mul_ult_lte_te#	temporare_erau_multe	1
-#er_era_rau_au#_u#m_#mu_mul_ult_lte_te#_e#p_#po_poz_oze_ze#	erau_multe_poze	1
-#mu_mul_ult_lte_te#_e#p_#po_poz_oze_ze#_e#c_#cu_cu#	multe_poze_cu	1
-#po_poz_oze_ze#_e#c_#cu_cu#_u#f_#fa_fam_ami_mil_ili_lia_ia#	poze_cu_familia	1
-#cu_cu#_u#f_#fa_fam_ami_mil_ili_lia_ia#_a#m_#mu_mul_ult_lte_te#	cu_familia_multe	1
-#fa_fam_ami_mil_ili_lia_ia#_a#m_#mu_mul_ult_lte_te#_e#p_#po_poz_oze_ze#	familia_multe_poze	1
-#mu_mul_ult_lte_te#_e#p_#po_poz_oze_ze#_e#c_#cu_cu#	multe_poze_cu	1
-#po_poz_oze_ze#_e#c_#cu_cu#_u#f_#fa_fam_ami_mil_ili_lia_ia#	poze_cu_familia	1
-#cu_cu#_u#f_#fa_fam_ami_mil_ili_lia_ia#_a#o_#or_ori_ric_icu_cum_um#	cu_familia_oricum	1
-#fa_fam_ami_mil_ili_lia_ia#_a#o_#or_ori_ric_icu_cum_um#_m#a_#a#	familia_oricum_a	1
-#or_ori_ric_icu_cum_um#_m#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	oricum_a_făcut	1
-#a#_a#f_#fă_făc_ăcu_cut_ut#_t#p_#pl_plă_lăc_ăce_cer_ere_re#	a_făcut_plăcere	1
-#fă_făc_ăcu_cut_ut#_t#p_#pl_plă_lăc_ăce_cer_ere_re#_e#s_#să_să#	făcut_plăcere_să	1
-#pl_plă_lăc_ăce_cer_ere_re#_e#s_#să_să#_ă#v_#vă_vă#	plăcere_să_vă	1
-#să_să#_ă#v_#vă_vă#_ă#c_#cu_cun_uno_nos_osc_sc#	să_vă_cunosc	1
-#vă_vă#_ă#c_#cu_cun_uno_nos_osc_sc#_c#d_#dl_dle_le#	vă_cunosc_dle	1
-#cu_cun_uno_nos_osc_sc#_c#d_#dl_dle_le#_e#c_#co_coo_oop_ope_per_er#	cunosc_dle_cooper	1
-#dl_dle_le#_e#c_#co_coo_oop_ope_per_er#_r#c_#ce_ce#	dle_cooper_ce	1
-#co_coo_oop_ope_per_er#_r#c_#ce_ce#_e#f_#fi_fiu_iu#	cooper_ce_fiu	1
-#ce_ce#_e#f_#fi_fiu_iu#_u#g_#gr_gro_roz_oza_zav_av#	ce_fiu_grozav	1
-#fi_fiu_iu#_u#g_#gr_gro_roz_oza_zav_av#_v#a_#av_ave_veţ_eţi_ţi#	fiu_grozav_aveţi	1
-#gr_gro_roz_oza_zav_av#_v#a_#av_ave_veţ_eţi_ţi#_i#d_#da_da#	grozav_aveţi_da	1
-#av_ave_veţ_eţi_ţi#_i#d_#da_da#_a#e_#e#	aveţi_da_e	1
-#da_da#_a#e_#e#_e#u_#un_un#	da_e_un	1
-#e#_e#u_#un_un#_n#c_#co_cop_opi_pil_il#	e_un_copil	1
-#un_un#_n#c_#co_cop_opi_pil_il#_l#m_#mi_min_inu_nun_una_nat_at#	un_copil_minunat	1
-#co_cop_opi_pil_il#_l#m_#mi_min_inu_nun_una_nat_at#_t#d_#da_dav_ave_ve#	copil_minunat_dave	1
-#mi_min_inu_nun_una_nat_at#_t#d_#da_dav_ave_ve#_e#p_#po_pot_ot#	minunat_dave_pot	1
-#da_dav_ave_ve#_e#p_#po_pot_ot#_t#s_#să_să#	dave_pot_să	1
-#po_pot_ot#_t#s_#să_să#_ă#i_#iţ_iţi_ţi#	pot_să_iţi	1
-#să_să#_ă#i_#iţ_iţi_ţi#_i#c_#ce_cer_er#	să_iţi_cer	1
-#iţ_iţi_ţi#_i#c_#ce_cer_er#_r#o_#o#	iţi_cer_o	1
-#ce_cer_er#_r#o_#o#_o#f_#fa_fav_avo_voa_oar_are_re#	cer_o_favoare	1
-#o#_o#f_#fa_fav_avo_voa_oar_are_re#_e#l_#la_lar_arr_rry_ry#	o_favoare_larry	1
-#fa_fav_avo_voa_oar_are_re#_e#l_#la_lar_arr_rry_ry#_y#l_#la_lar_arr_rr#	favoare_larry_larr	1
-#la_lar_arr_rry_ry#_y#l_#la_lar_arr_rr#_r#c_#ce_ce#	larry_larr_ce	1
-#la_lar_arr_rr#_r#c_#ce_ce#_e#f_#fa_fac_aci_ci#	larr_ce_faci	1
-#ce_ce#_e#f_#fa_fac_aci_ci#_i#l_#la_lar_arr_rry_ry#	ce_faci_larry	1
-#fa_fac_aci_ci#_i#l_#la_lar_arr_rry_ry#_y#c_#ci_cin_ine_ne#	faci_larry_cine	1
-#la_lar_arr_rry_ry#_y#c_#ci_cin_ine_ne#_e#e_#e#	larry_cine_e	1
-#ci_cin_ine_ne#_e#e_#e#_e#b_#bă_băi_ăia_iat_atu_tul_ul#	cine_e_băiatul	1
-#e#_e#b_#bă_băi_ăia_iat_atu_tul_ul#_l#m_#me_meu_eu#	e_băiatul_meu	1
-#bă_băi_ăia_iat_atu_tul_ul#_l#m_#me_meu_eu#_u#c_#ci_cin_ine_ne#	băiatul_meu_cine	1
-#me_meu_eu#_u#c_#ci_cin_ine_ne#_e#e_#e#	meu_cine_e	1
-#ci_cin_ine_ne#_e#e_#e#_e#a_#am_ami_mic_icu_cul_ul#	cine_e_amicul	1
-#e#_e#a_#am_ami_mic_icu_cul_ul#_l#m_#me_meu_eu#	e_amicul_meu	1
-#am_ami_mic_icu_cul_ul#_l#m_#me_meu_eu#_u#c_#ci_cin_ine_ne#	amicul_meu_cine	1
-#me_meu_eu#_u#c_#ci_cin_ine_ne#_e#e_#e#	meu_cine_e	1
-#ci_cin_ine_ne#_e#e_#e#_e#p_#pr_pri_rie_iet_ete_ten_enu_nul_ul#	cine_e_prietenul	1
-#e#_e#p_#pr_pri_rie_iet_ete_ten_enu_nul_ul#_l#m_#me_meu_eu#	e_prietenul_meu	1
-#pr_pri_rie_iet_ete_ten_enu_nul_ul#_l#m_#me_meu_eu#_u#m_#mi_mik_ike_ke#	prietenul_meu_mike	1
-#me_meu_eu#_u#m_#mi_mik_ike_ke#_e#c_#cr_cre_red_ed#	meu_mike_cred	1
-#mi_mik_ike_ke#_e#c_#cr_cre_red_ed#_d#c_#că_că#	mike_cred_că	1
-#cr_cre_red_ed#_d#c_#că_că#_ă#e_#e#	cred_că_e	1
-#că_că#_ă#e_#e#_e#l_#la_la#	că_e_la	1
-#e#_e#l_#la_la#_a#e_#el_el#	e_la_el	1
-#la_la#_a#e_#el_el#_l#i_#in_in#	la_el_in	1
-#el_el#_l#i_#in_in#_n#c_#ca_cam_ame_mer_eră_ră#	el_in_cameră	1
-#in_in#_n#c_#ca_cam_ame_mer_eră_ră#_ă#m_#mă_mă#	in_cameră_mă	1
-#ca_cam_ame_mer_eră_ră#_ă#m_#mă_mă#_ă#f_#fa_fac_aci_ci#	cameră_mă_faci	1
-#mă_mă#_ă#f_#fa_fac_aci_ci#_i#s_#să_să#	mă_faci_să	1
-#fa_fac_aci_ci#_i#s_#să_să#_ă#r_#râ_râd_âd#	faci_să_râd	1
-#să_să#_ă#r_#râ_râd_âd#_d#t_#tu_tu#	să_râd_tu	1
-#râ_râd_âd#_d#t_#tu_tu#_u#h_#ha_ha#	râd_tu_ha	1
-#tu_tu#_u#h_#ha_ha#_a#h_#ha_ha#	tu_ha_ha	1
-#ha_ha#_a#h_#ha_ha#_a#h_#ha_ha#	ha_ha_ha	1
-#ha_ha#_a#h_#ha_ha#_a#h_#ha_ha#	ha_ha_ha	1
-#ha_ha#_a#h_#ha_ha#_a#h_#ha_ha#	ha_ha_ha	1
-#ha_ha#_a#h_#ha_ha#_a#n_#nu_nu#	ha_ha_nu	1
-#ha_ha#_a#n_#nu_nu#_u#m_#ma_mai_ai#	ha_nu_mai	1
-#nu_nu#_u#m_#ma_mai_ai#_i#f_#fi_fii_ii#	nu_mai_fii	1
-#ma_mai_ai#_i#f_#fi_fii_ii#_i#d_#dr_dră_răg_ăgu_guţ_uţ#	mai_fii_drăguţ	1
-#fi_fii_ii#_i#d_#dr_dră_răg_ăgu_guţ_uţ#_ţ#c_#cu_cu#	fii_drăguţ_cu	1
-#dr_dră_răg_ăgu_guţ_uţ#_ţ#c_#cu_cu#_u#m_#mi_min_ine_ne#	drăguţ_cu_mine	1
-#cu_cu#_u#m_#mi_min_ine_ne#_e#m_#mi_mi#	cu_mine_mi	1
-#mi_min_ine_ne#_e#m_#mi_mi#_i#c_#ce_ce#	mine_mi_ce	1
-#mi_mi#_i#c_#ce_ce#_e#a_#a#	mi_ce_a	1
-#ce_ce#_e#a_#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#	ce_a_intâmplat	1
-#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#n_#nu_nu#	a_intâmplat_nu	1
-#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#n_#nu_nu#_u#a_#a#	intâmplat_nu_a	1
-#nu_nu#_u#a_#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#	nu_a_intâmplat	1
-#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#n_#ni_nim_imi_mic_ic#	a_intâmplat_nimic	1
-#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#n_#ni_nim_imi_mic_ic#_c#d_#de_de#	intâmplat_nimic_de	1
-#ni_nim_imi_mic_ic#_c#d_#de_de#_e#c_#ce_ce#	nimic_de_ce	1
-#de_de#_e#c_#ce_ce#_e#m_#me_mer_ere_reu_eu#	de_ce_mereu	1
-#ce_ce#_e#m_#me_mer_ere_reu_eu#_u#t_#te_te#	ce_mereu_te	1
-#me_mer_ere_reu_eu#_u#t_#te_te#_e#g_#gâ_gân_ând_nde_deş_eşt_şti_ti#	mereu_te_gândeşti	1
-#te_te#_e#g_#gâ_gân_ând_nde_deş_eşt_şti_ti#_i#l_#la_la#	te_gândeşti_la	1
-#gâ_gân_ând_nde_deş_eşt_şti_ti#_i#l_#la_la#_a#c_#ce_ce#	gândeşti_la_ce	1
-#la_la#_a#c_#ce_ce#_e#e_#e#	la_ce_e	1
-#ce_ce#_e#e_#e#_e#m_#ma_mai_ai#	ce_e_mai	1
-#e#_e#m_#ma_mai_ai#_i#r_#ră_rău_ău#	e_mai_rău	1
-#ma_mai_ai#_i#r_#ră_rău_ău#_u#î_#în_în#	mai_rău_în	1
-#ră_rău_ău#_u#î_#în_în#_n#o_#or_ori_ric_ice_ce#	rău_în_orice	1
-#în_în#_n#o_#or_ori_ric_ice_ce#_e#c_#ca_caz_az#	în_orice_caz	1
-#or_ori_ric_ice_ce#_e#c_#ca_caz_az#_z#c_#cl_cli_lie_ien_ent_ntu_tul_ul#	orice_caz_clientul	1
-#ca_caz_az#_z#c_#cl_cli_lie_ien_ent_ntu_tul_ul#_l#a_#ac_ace_cel_ela_la#	caz_clientul_acela	1
-#cl_cli_lie_ien_ent_ntu_tul_ul#_l#a_#ac_ace_cel_ela_la#_a#p_#pe_pe#	clientul_acela_pe	1
-#ac_ace_cel_ela_la#_a#p_#pe_pe#_e#c_#ca_car_are_re#	acela_pe_care	1
-#pe_pe#_e#c_#ca_car_are_re#_e#a_#ai_ai#	pe_care_ai	1
-#ca_car_are_re#_e#a_#ai_ai#_i#i_#in_int_ntâ_tâl_âln_lni_nit_it#	care_ai_intâlnit	1
-#ai_ai#_i#i_#in_int_ntâ_tâl_âln_lni_nit_it#_t#b_#bo_bob_ob#	ai_intâlnit_bob	1
-#in_int_ntâ_tâl_âln_lni_nit_it#_t#b_#bo_bob_ob#_b#c_#cr_cre_red_ede_de#	intâlnit_bob_crede	1
-#bo_bob_ob#_b#c_#cr_cre_red_ede_de#_e#c_#că_că#	bob_crede_că	1
-#cr_cre_red_ede_de#_e#c_#că_că#_ă#e_#eş_eşt_şti_ti#	crede_că_eşti	1
-#că_că#_ă#e_#eş_eşt_şti_ti#_i#d_#dr_dră_răg_ăgu_guţ_uţ#	că_eşti_drăguţ	1
-#eş_eşt_şti_ti#_i#d_#dr_dră_răg_ăgu_guţ_uţ#_ţ#ş_#şi_şi#	eşti_drăguţ_şi	1
-#dr_dră_răg_ăgu_guţ_uţ#_ţ#ş_#şi_şi#_i#v_#vr_vre_rea_ea#	drăguţ_şi_vrea	1
-#şi_şi#_i#v_#vr_vre_rea_ea#_a#s_#să_să#	şi_vrea_să	1
-#vr_vre_rea_ea#_a#s_#să_să#_ă#ş_#şt_şti_tie_ie#	vrea_să_ştie	1
-#să_să#_ă#ş_#şt_şti_tie_ie#_e#d_#da_dac_acă_că#	să_ştie_dacă	1
-#şt_şti_tie_ie#_e#d_#da_dac_acă_că#_ă#e_#eş_eşt_şti_ti#	ştie_dacă_eşti	1
-#da_dac_acă_că#_ă#e_#eş_eşt_şti_ti#_i#l_#li_lib_ibe_ber_er#	dacă_eşti_liber	1
-#eş_eşt_şti_ti#_i#l_#li_lib_ibe_ber_er#_r#v_#vi_vin_ine_ner_eri_ri#	eşti_liber_vineri	1
-#li_lib_ibe_ber_er#_r#v_#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#	liber_vineri_seară	1
-#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#_ă#n_#nu_nu#	vineri_seară_nu	1
-#se_sea_ear_ară_ră#_ă#n_#nu_nu#_u#n_#nu_nu#	seară_nu_nu	1
-#nu_nu#_u#n_#nu_nu#_u#p_#pe_pen_ent_ntr_tru_ru#	nu_nu_pentru	1
-#nu_nu#_u#p_#pe_pen_ent_ntr_tru_ru#_u#e_#el_el#	nu_pentru_el	1
-#pe_pen_ent_ntr_tru_ru#_u#e_#el_el#_l#a_#ar_are_re#	pentru_el_are	1
-#el_el#_l#a_#ar_are_re#_e#o_#o#	el_are_o	1
-#ar_are_re#_e#o_#o#_o#f_#fi_fii_iic_ică_că#	are_o_fiică	1
-#o#_o#f_#fi_fii_iic_ică_că#_ă#t_#ti_tif_iff_ffa_fan_any_ny#	o_fiică_tiffany	1
-#fi_fii_iic_ică_că#_ă#t_#ti_tif_iff_ffa_fan_any_ny#_y#e_#e#	fiică_tiffany_e	1
-#ti_tif_iff_ffa_fan_any_ny#_y#e_#e#_e#d_#de_de#	tiffany_e_de	1
-#e#_e#d_#de_de#_e#v_#vâ_vâr_ârs_rst_sta_ta#	e_de_vârsta	1
-#de_de#_e#v_#vâ_vâr_ârs_rst_sta_ta#_a#t_#ta_ta#	de_vârsta_ta	1
-#vâ_vâr_ârs_rst_sta_ta#_a#t_#ta_ta#_a#m_#me_mer_ers_rsi_si#	vârsta_ta_mersi	1
-#ta_ta#_a#m_#me_mer_ers_rsi_si#_i#d_#da_dar_ar#	ta_mersi_dar	1
-#me_mer_ers_rsi_si#_i#d_#da_dar_ar#_r#n_#nu_nu#	mersi_dar_nu	1
-#da_dar_ar#_r#n_#nu_nu#_u#h_#ha_hai_aid_ide_de#	dar_nu_haide	1
-#nu_nu#_u#h_#ha_hai_aid_ide_de#_e#l_#la_lar_arr_rry_ry#	nu_haide_larry	1
-#ha_hai_aid_ide_de#_e#l_#la_lar_arr_rry_ry#_y#a_#am_am#	haide_larry_am	1
-#la_lar_arr_rry_ry#_y#a_#am_am#_m#n_#ne_nev_evo_voi_oie_ie#	larry_am_nevoie	1
-#am_am#_m#n_#ne_nev_evo_voi_oie_ie#_e#s_#să_să#	am_nevoie_să	1
-#ne_nev_evo_voi_oie_ie#_e#s_#să_să#_ă#f_#fa_fac_aci_ci#	nevoie_să_faci	1
-#să_să#_ă#f_#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#	să_faci_asta	1
-#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#	faci_asta_pentru	1
-#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#	asta_pentru_mine	1
-#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#_e#a_#ar_ar#	pentru_mine_ar	1
-#mi_min_ine_ne#_e#a_#ar_ar#_r#p_#pu_put_ute_tea_ea#	mine_ar_putea	1
-#ar_ar#_r#p_#pu_put_ute_tea_ea#_a#i_#in_ins_nse_sem_emn_mna_na#	ar_putea_insemna	1
-#pu_put_ute_tea_ea#_a#i_#in_ins_nse_sem_emn_mna_na#_a#u_#un_un#	putea_insemna_un	1
-#in_ins_nse_sem_emn_mna_na#_a#u_#un_un#_n#c_#co_com_omi_mis_isi_sio_ion_on#	insemna_un_comision	1
-#un_un#_n#c_#co_com_omi_mis_isi_sio_ion_on#_n#u_#ur_uri_ria_iaş_aş#	un_comision_uriaş	1
-#co_com_omi_mis_isi_sio_ion_on#_n#u_#ur_uri_ria_iaş_aş#_ş#p_#pe_pen_ent_ntr_tru_ru#	comision_uriaş_pentru	1
-#ur_uri_ria_iaş_aş#_ş#p_#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#	uriaş_pentru_mine	1
-#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#_e#ş_#şi_şi#	pentru_mine_şi	1
-#mi_min_ine_ne#_e#ş_#şi_şi#_i#a_#ar_ar#	mine_şi_ar	1
-#şi_şi#_i#a_#ar_ar#_r#p_#pu_put_ute_tea_ea#	şi_ar_putea	1
-#ar_ar#_r#p_#pu_put_ute_tea_ea#_a#d_#du_duc_uce_ce#	ar_putea_duce	1
-#pu_put_ute_tea_ea#_a#d_#du_duc_uce_ce#_e#l_#la_la#	putea_duce_la	1
-#du_duc_uce_ce#_e#l_#la_la#_a#m_#mu_mul_ult_lte_te#	duce_la_multe	1
-#la_la#_a#m_#mu_mul_ult_lte_te#_e#a_#af_afa_fac_ace_cer_eri_ri#	la_multe_afaceri	1
-#mu_mul_ult_lte_te#_e#a_#af_afa_fac_ace_cer_eri_ri#_i#u_#ui_uit_ite_te#	multe_afaceri_uite	1
-#af_afa_fac_ace_cer_eri_ri#_i#u_#ui_uit_ite_te#_e#d_#da_dac_acă_că#	afaceri_uite_dacă	1
-#ui_uit_ite_te#_e#d_#da_dac_acă_că#_ă#f_#fa_fac_aci_ci#	uite_dacă_faci	1
-#da_dac_acă_că#_ă#f_#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#	dacă_faci_asta	1
-#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#	faci_asta_pentru	1
-#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#	asta_pentru_mine	1
-#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#_e#o_#o#	pentru_mine_o	1
-#mi_min_ine_ne#_e#o_#o#_o#s_#să_să#	mine_o_să	1
-#o#_o#s_#să_să#_ă#i_#iţ_iţi_ţi#	o_să_iţi	1
-#să_să#_ă#i_#iţ_iţi_ţi#_i#c_#cu_cum_ump_mpă_păr_ăr#	să_iţi_cumpăr	1
-#iţ_iţi_ţi#_i#c_#cu_cum_ump_mpă_păr_ăr#_r#n_#no_nou_oul_ul#	iţi_cumpăr_noul	1
-#cu_cum_ump_mpă_păr_ăr#_r#n_#no_nou_oul_ul#_l#s_#se_set_et#	cumpăr_noul_set	1
-#no_nou_oul_ul#_l#s_#se_set_et#_t#d_#de_de#	noul_set_de	1
-#se_set_et#_t#d_#de_de#_e#ş_#şa_şah_ah#	set_de_şah	1
-#de_de#_e#ş_#şa_şah_ah#_h#s_#st_stă_tăp_ăpâ_pân_ânu_nul_ul#	de_şah_stăpânul	1
-#şa_şah_ah#_h#s_#st_stă_tăp_ăpâ_pân_ânu_nul_ul#_l#i_#in_ine_nel_ele_lel_elo_lor_or#	şah_stăpânul_inelelor	1
-#st_stă_tăp_ăpâ_pân_ânu_nul_ul#_l#i_#in_ine_nel_ele_lel_elo_lor_or#_r#d_#du_dup_upă_pă#	stăpânul_inelelor_după	1
-#in_ine_nel_ele_lel_elo_lor_or#_r#d_#du_dup_upă_pă#_ă#c_#ca_car_are_re#	inelelor_după_care	1
-#du_dup_upă_pă#_ă#c_#ca_car_are_re#_e#t_#to_tot_ot#	după_care_tot	1
-#ca_car_are_re#_e#t_#to_tot_ot#_t#p_#pl_plâ_lân_âng_ngi_gi#	care_tot_plângi	1
-#to_tot_ot#_t#p_#pl_plâ_lân_âng_ngi_gi#_i#c_#ce_ce#	tot_plângi_ce	1
-#pl_plâ_lân_âng_ngi_gi#_i#c_#ce_ce#_e#z_#zi_zic_ici_ci#	plângi_ce_zici	1
-#ce_ce#_e#z_#zi_zic_ici_ci#_i#d_#de_de#	ce_zici_de	1
-#zi_zic_ici_ci#_i#d_#de_de#_e#a_#as_ast_sta_ta#	zici_de_asta	1
-#de_de#_e#a_#as_ast_sta_ta#_a#b_#bi_bin_ine_ne#	de_asta_bine	1
-#as_ast_sta_ta#_a#b_#bi_bin_ine_ne#_e#î_#în_în#	asta_bine_în	1
-#bi_bin_ine_ne#_e#î_#în_în#_n#r_#re_reg_egu_gul_ulă_lă#	bine_în_regulă	1
-#în_în#_n#r_#re_reg_egu_gul_ulă_lă#_ă#o_#o#	în_regulă_o	1
-#re_reg_egu_gul_ulă_lă#_ă#o_#o#_o#f_#fa_fac_ac#	regulă_o_fac	1
-#o#_o#f_#fa_fac_ac#_c#p_#pe_pen_ent_ntr_tru_ru#	o_fac_pentru	1
-#fa_fac_ac#_c#p_#pe_pen_ent_ntr_tru_ru#_u#t_#ti_tin_ine_ne#	fac_pentru_tine	1
-#pe_pen_ent_ntr_tru_ru#_u#t_#ti_tin_ine_ne#_e#m_#me_mer_ers_rsi_si#	pentru_tine_mersi	1
-#ti_tin_ine_ne#_e#m_#me_mer_ers_rsi_si#_i#c_#ce_ce#	tine_mersi_ce	1
-#me_mer_ers_rsi_si#_i#c_#ce_ce#_e#f_#fr_fra_rai_aie_ier_er#	mersi_ce_fraier	1
-#ce_ce#_e#f_#fr_fra_rai_aie_ier_er#_r#a_#aş_aş#	ce_fraier_aş	1
-#fr_fra_rai_aie_ier_er#_r#a_#aş_aş#_ş#f_#fi_fi#	fraier_aş_fi	1
-#aş_aş#_ş#f_#fi_fi#_i#m_#me_mer_ers_rs#	aş_fi_mers	1
-#fi_fi#_i#m_#me_mer_ers_rs#_s#o_#or_ori_ric_icu_cum_um#	fi_mers_oricum	1
-#me_mer_ers_rs#_s#o_#or_ori_ric_icu_cum_um#_m#o_#o#	mers_oricum_o	1
-#or_ori_ric_icu_cum_um#_m#o_#o#_o#i_#in_int_ntâ_tâl_âln_lni_nir_ire_re#	oricum_o_intâlnire	1
-#o#_o#i_#in_int_ntâ_tâl_âln_lni_nir_ire_re#_e#a_#am_am#	o_intâlnire_am	1
-#in_int_ntâ_tâl_âln_lni_nir_ire_re#_e#a_#am_am#_m#o_#o#	intâlnire_am_o	1
-#am_am#_m#o_#o#_o#i_#in_int_ntâ_tâl_âln_lni_nir_ire_re#	am_o_intâlnire	1
-#o#_o#i_#in_int_ntâ_tâl_âln_lni_nir_ire_re#_e#t_#tr_tra_rad_adu_duc_uce_cer_ere_rea_ea#	o_intâlnire_traducerea	1
-#in_int_ntâ_tâl_âln_lni_nir_ire_re#_e#t_#tr_tra_rad_adu_duc_uce_cer_ere_rea_ea#_a#ş_#şi_şi#	intâlnire_traducerea_şi	1
-#tr_tra_rad_adu_duc_uce_cer_ere_rea_ea#_a#ş_#şi_şi#_i#a_#ad_ada_dap_apt_pta_tar_are_rea_ea#	traducerea_şi_adaptarea	1
-#şi_şi#_i#a_#ad_ada_dap_apt_pta_tar_are_rea_ea#_a#ş_#şi_şi#	şi_adaptarea_şi	1
-#ad_ada_dap_apt_pta_tar_are_rea_ea#_a#ş_#şi_şi#_i#n_#ne_neb_ebu_bun_uni_nic_ic#	adaptarea_şi_nebunic	1
-#şi_şi#_i#n_#ne_neb_ebu_bun_uni_nic_ic#_c#t_#tu_tu#	şi_nebunic_tu	1
-#ne_neb_ebu_bun_uni_nic_ic#_c#t_#tu_tu#_u#n_#nu_nu#	nebunic_tu_nu	1
-#tu_tu#_u#n_#nu_nu#_u#i_#in_inv_nve_veţ_eţi_ţi#	tu_nu_inveţi	1
-#nu_nu#_u#i_#in_inv_nve_veţ_eţi_ţi#_i#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#	nu_inveţi_niciodată	1
-#in_inv_nve_veţ_eţi_ţi#_i#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#a_#am_am#	inveţi_niciodată_am	1
-#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#a_#am_am#_m#u_#un_un#	niciodată_am_un	1
-#am_am#_m#u_#un_un#_n#n_#no_nou_ou#	am_un_nou	1
-#un_un#_n#n_#no_nou_ou#_u#s_#sc_sco_cor_or#	un_nou_scor	1
-#no_nou_ou#_u#s_#sc_sco_cor_or#_r#m_#ma_mar_are_re#	nou_scor_mare	1
-#sc_sco_cor_or#_r#m_#ma_mar_are_re#_e#b_#ba_ba#	scor_mare_ba	1
-#ma_mar_are_re#_e#b_#ba_ba#_a#n_#nu_nu#	mare_ba_nu	1
-#ba_ba#_a#n_#nu_nu#_u#b_#ba_ba#	ba_nu_ba	1
-#nu_nu#_u#b_#ba_ba#_a#d_#da_da#	nu_ba_da	1
-#ba_ba#_a#d_#da_da#_a#b_#ba_ba#	ba_da_ba	1
-#da_da#_a#b_#ba_ba#_a#n_#nu_nu#	da_ba_nu	1
-#ba_ba#_a#n_#nu_nu#_u#t_#tr_tre_reb_ebu_bui_uie_ie#	ba_nu_trebuie	1
-#nu_nu#_u#t_#tr_tre_reb_ebu_bui_uie_ie#_e#s_#să_să#	nu_trebuie_să	1
-#tr_tre_reb_ebu_bui_uie_ie#_e#s_#să_să#_ă#i_#in_inv_nve_veţ_eţi_ţi#	trebuie_să_inveţi	1
-#să_să#_ă#i_#in_inv_nve_veţ_eţi_ţi#_i#ş_#şt_şti_tii_ii#	să_inveţi_ştii	1
-#in_inv_nve_veţ_eţi_ţi#_i#ş_#şt_şti_tii_ii#_i#s_#so_sor_ora_ra#	inveţi_ştii_sora	1
-#şt_şti_tii_ii#_i#s_#so_sor_ora_ra#_a#t_#ta_ta#	ştii_sora_ta	1
-#so_sor_ora_ra#_a#t_#ta_ta#_a#t_#to_toc_ocm_cma_mai_ai#	sora_ta_tocmai	1
-#ta_ta#_a#t_#to_toc_ocm_cma_mai_ai#_i#a_#a#	ta_tocmai_a	1
-#to_toc_ocm_cma_mai_ai#_i#a_#a#_a#l_#lu_lua_uat_at#	tocmai_a_luat	1
-#a#_a#l_#lu_lua_uat_at#_t#l_#la_la#	a_luat_la	1
-#lu_lua_uat_at#_t#l_#la_la#_a#e_#ex_exa_xam_ame_men_en#	luat_la_examen	1
-#la_la#_a#e_#ex_exa_xam_ame_men_en#_n#d_#da_da#	la_examen_da	1
-#ex_exa_xam_ame_men_en#_n#d_#da_da#_a#e_#e#	examen_da_e	1
-#da_da#_a#e_#e#_e#i_#im_imp_mpr_pre_res_esi_sio_ion_ona_nan_ant_nt#	da_e_impresionant	1
-#e#_e#i_#im_imp_mpr_pre_res_esi_sio_ion_ona_nan_ant_nt#_t#a_#ap_apr_pro_roa_oap_ape_pe#	e_impresionant_aproape	1
-#im_imp_mpr_pre_res_esi_sio_ion_ona_nan_ant_nt#_t#a_#ap_apr_pro_roa_oap_ape_pe#_e#c_#că_că#	impresionant_aproape_că	1
-#ap_apr_pro_roa_oap_ape_pe#_e#c_#că_că#_ă#t_#te_te#	aproape_că_te	1
-#că_că#_ă#t_#te_te#_e#f_#fa_fac_ace_ce#	că_te_face	1
-#te_te#_e#f_#fa_fac_ace_ce#_e#s_#să_să#	te_face_să	1
-#fa_fac_ace_ce#_e#s_#să_să#_ă#t_#te_te#	face_să_te	1
-#să_să#_ă#t_#te_te#_e#i_#in_int_ntr_tre_reb_ebi_bi#	să_te_intrebi	1
-#te_te#_e#i_#in_int_ntr_tre_reb_ebi_bi#_i#c_#cu_cum_um#	te_intrebi_cum	1
-#in_int_ntr_tre_reb_ebi_bi#_i#c_#cu_cum_um#_m#a_#a#	intrebi_cum_a	1
-#cu_cum_um#_m#a_#a#_a#r_#re_reu_euş_uşi_şit_it#	cum_a_reuşit	1
-#a#_a#r_#re_reu_euş_uşi_şit_it#_t#m_#mi_mik_ike_ke#	a_reuşit_mike	1
-#re_reu_euş_uşi_şit_it#_t#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	reuşit_mike_mike	1
-#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	mike_mike_mike	1
-#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	mike_mike_mike	1
-#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	mike_mike_mike	1
-#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	mike_mike_mike	1
-#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#v_#ve_ver_erd_rde_del_ele_le#	mike_mike_verdele	1
-#mi_mik_ike_ke#_e#v_#ve_ver_erd_rde_del_ele_le#_e#n_#nu_nu#	mike_verdele_nu	1
-#ve_ver_erd_rde_del_ele_le#_e#n_#nu_nu#_u#i_#iţ_iţi_ţi#	verdele_nu_iţi	1
-#nu_nu#_u#i_#iţ_iţi_ţi#_i#s_#st_stă_tă#	nu_iţi_stă	1
-#iţ_iţi_ţi#_i#s_#st_stă_tă#_ă#b_#bi_bin_ine_ne#	iţi_stă_bine	1
-#st_stă_tă#_ă#b_#bi_bin_ine_ne#_e#h_#ha_hai_aid_ide_de#	stă_bine_haide	1
-#bi_bin_ine_ne#_e#h_#ha_hai_aid_ide_de#_e#t_#ta_tat_ată_tă#	bine_haide_tată	1
-#ha_hai_aid_ide_de#_e#t_#ta_tat_ată_tă#_ă#a_#ar_are_re#	haide_tată_are	1
-#ta_tat_ată_tă#_ă#a_#ar_are_re#_e#n_#no_not_ote_te#	tată_are_note	1
-#ar_are_re#_e#n_#no_not_ote_te#_e#p_#pr_pro_roa_oas_ast_ste_te#	are_note_proaste	1
-#no_not_ote_te#_e#p_#pr_pro_roa_oas_ast_ste_te#_e#n_#nu_nu#	note_proaste_nu	1
-#pr_pro_roa_oas_ast_ste_te#_e#n_#nu_nu#_u#i_#in_inv_nva_vaţ_aţă_ţă#	proaste_nu_invaţă	1
-#nu_nu#_u#i_#in_inv_nva_vaţ_aţă_ţă#_ă#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#	nu_invaţă_niciodată	1
-#in_inv_nva_vaţ_aţă_ţă#_ă#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#ş_#şi_şi#	invaţă_niciodată_şi	1
-#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#ş_#şi_şi#_i#a_#ap_apo_poi_oi#	niciodată_şi_apoi	1
-#şi_şi#_i#a_#ap_apo_poi_oi#_i#c_#ca_ca#	şi_apoi_ca	1
-#ap_apo_poi_oi#_i#c_#ca_ca#_a#p_#pr_pri_rin_in#	apoi_ca_prin	1
-#ca_ca#_a#p_#pr_pri_rin_in#_n#m_#mi_min_inu_nun_une_ne#	ca_prin_minune	1
-#pr_pri_rin_in#_n#m_#mi_min_inu_nun_une_ne#_e#i_#ia_ia#	prin_minune_ia	1
-#mi_min_inu_nun_une_ne#_e#i_#ia_ia#_a#n_#no_not_otă_tă#	minune_ia_notă	1
-#ia_ia#_a#n_#no_not_otă_tă#_ă#m_#ma_mar_are_re#	ia_notă_mare	1
-#no_not_otă_tă#_ă#m_#ma_mar_are_re#_e#l_#la_la#	notă_mare_la	1
-#ma_mar_are_re#_e#l_#la_la#_a#e_#ex_exa_xam_ame_men_ent_nt#	mare_la_exament	1
-#la_la#_a#e_#ex_exa_xam_ame_men_ent_nt#_t#ş_#şt_şti_tii_ii#	la_exament_ştii	1
-#ex_exa_xam_ame_men_ent_nt#_t#ş_#şt_şti_tii_ii#_i#e_#eş_eşt_şti_ti#	exament_ştii_eşti	1
-#şt_şti_tii_ii#_i#e_#eş_eşt_şti_ti#_i#f_#fo_foa_oar_art_rte_te#	ştii_eşti_foarte	1
-#eş_eşt_şti_ti#_i#f_#fo_foa_oar_art_rte_te#_e#c_#ci_cin_ini_nic_ic#	eşti_foarte_cinic	1
-#fo_foa_oar_art_rte_te#_e#c_#ci_cin_ini_nic_ic#_c#ş_#şt_şti_tia_iai_ai#	foarte_cinic_ştiai	1
-#ci_cin_ini_nic_ic#_c#ş_#şt_şti_tia_iai_ai#_i#a_#as_ast_sta_ta#	cinic_ştiai_asta	1
-#şt_şti_tia_iai_ai#_i#a_#as_ast_sta_ta#_a#d_#da_da#	ştiai_asta_da	1
-#as_ast_sta_ta#_a#d_#da_da#_a#m_#mă_mă#	asta_da_mă	1
-#da_da#_a#m_#mă_mă#_ă#i_#in_int_ntr_tre_reb_eb#	da_mă_intreb	1
-#mă_mă#_ă#i_#in_int_ntr_tre_reb_eb#_b#d_#de_de#	mă_intreb_de	1
-#in_int_ntr_tre_reb_eb#_b#d_#de_de#_e#u_#un_und_nde_de#	intreb_de_unde	1
-#de_de#_e#u_#un_und_nde_de#_e#a_#am_am#	de_unde_am	1
-#un_und_nde_de#_e#a_#am_am#_m#o_#o#	unde_am_o	1
-#am_am#_m#o_#o#_o#î_#în_în#	am_o_în	1
-#o#_o#î_#în_în#_n#r_#re_reg_egu_gul_ulă_lă#	o_în_regulă	1
-#în_în#_n#r_#re_reg_egu_gul_ulă_lă#_ă#s_#su_sun_unt_nte_tem_em#	în_regulă_suntem	1
-#re_reg_egu_gul_ulă_lă#_ă#s_#su_sun_unt_nte_tem_em#_m#p_#pr_pre_reg_egă_găt_ăti_tiţ_iţi_ţi#	regulă_suntem_pregătiţi	1
-#su_sun_unt_nte_tem_em#_m#p_#pr_pre_reg_egă_găt_ăti_tiţ_iţi_ţi#_i#p_#pe_pen_ent_ntr_tru_ru#	suntem_pregătiţi_pentru	1
-#pr_pre_reg_egă_găt_ăti_tiţ_iţi_ţi#_i#p_#pe_pen_ent_ntr_tru_ru#_u#c_#ci_cin_ina_na#	pregătiţi_pentru_cina	1
-#pe_pen_ent_ntr_tru_ru#_u#c_#ci_cin_ina_na#_a#c_#cu_cu#	pentru_cina_cu	1
-#ci_cin_ina_na#_a#c_#cu_cu#_u#h_#hi_hil_ill_lla_lar_ary_ry#	cina_cu_hillary	1
-#cu_cu#_u#h_#hi_hil_ill_lla_lar_ary_ry#_y#d_#de_de#	cu_hillary_de	1
-#hi_hil_ill_lla_lar_ary_ry#_y#d_#de_de#_e#m_#mâ_mâi_âin_ine_ne#	hillary_de_mâine	1
-#de_de#_e#m_#mâ_mâi_âin_ine_ne#_e#s_#se_sea_ear_ară_ră#	de_mâine_seară	1
-#mâ_mâi_âin_ine_ne#_e#s_#se_sea_ear_ară_ră#_ă#ş_#şt_şti_tii_ii#	mâine_seară_ştii	1
-#se_sea_ear_ară_ră#_ă#ş_#şt_şti_tii_ii#_i#s_#su_sun_unt_nt#	seară_ştii_sunt	1
-#şt_şti_tii_ii#_i#s_#su_sun_unt_nt#_t#f_#fo_foa_oar_art_rte_te#	ştii_sunt_foarte	1
-#su_sun_unt_nt#_t#f_#fo_foa_oar_art_rte_te#_e#m_#mâ_mân_ând_ndr_dră_ră#	sunt_foarte_mândră	1
-#fo_foa_oar_art_rte_te#_e#m_#mâ_mân_ând_ndr_dră_ră#_ă#d_#de_de#	foarte_mândră_de	1
-#mâ_mân_ând_ndr_dră_ră#_ă#d_#de_de#_e#e_#ea_ea#	mândră_de_ea	1
-#de_de#_e#e_#ea_ea#_a#d_#da_da#	de_ea_da	1
-#ea_ea#_a#d_#da_da#_a#p_#pr_pre_res_esu_sup_upu_pun_un#	ea_da_presupun	1
-#da_da#_a#p_#pr_pre_res_esu_sup_upu_pun_un#_n#c_#ce_ce#	da_presupun_ce	1
-#pr_pre_res_esu_sup_upu_pun_un#_n#c_#ce_ce#_e#i_#in_ins_nse_sea_eam_amn_mnă_nă#	presupun_ce_inseamnă	1
-#ce_ce#_e#i_#in_ins_nse_sea_eam_amn_mnă_nă#_ă#a_#as_ast_sta_ta#	ce_inseamnă_asta	1
-#in_ins_nse_sea_eam_amn_mnă_nă#_ă#a_#as_ast_sta_ta#_a#n_#ni_nim_imi_mic_ic#	inseamnă_asta_nimic	1
-#as_ast_sta_ta#_a#n_#ni_nim_imi_mic_ic#_c#n_#ni_nim_imi_mic_ic#	asta_nimic_nimic	1
-#ni_nim_imi_mic_ic#_c#n_#ni_nim_imi_mic_ic#_c#m_#mă_mă#	nimic_nimic_mă	1
-#ni_nim_imi_mic_ic#_c#m_#mă_mă#_ă#i_#in_int_ntr_tre_reb_eba_bam_am#	nimic_mă_intrebam	1
-#mă_mă#_ă#i_#in_int_ntr_tre_reb_eba_bam_am#_m#c_#cu_cum_um#	mă_intrebam_cum	1
-#in_int_ntr_tre_reb_eba_bam_am#_m#c_#cu_cum_um#_m#a_#a#	intrebam_cum_a	1
-#cu_cum_um#_m#a_#a#_a#r_#re_reu_euş_uşi_şit_it#	cum_a_reuşit	1
-#a#_a#r_#re_reu_euş_uşi_şit_it#_t#a_#a#	a_reuşit_a	1
-#re_reu_euş_uşi_şit_it#_t#a_#a#_a#c_#co_con_onc_nce_cen_ent_ntr_tra_rat_at#	reuşit_a_concentrat	1
-#a#_a#c_#co_con_onc_nce_cen_ent_ntr_tra_rat_at#_t#a_#a#	a_concentrat_a	1
-#co_con_onc_nce_cen_ent_ntr_tra_rat_at#_t#a_#a#_a#i_#in_inv_nvă_văţ_ăţa_ţat_at#	concentrat_a_invăţat	1
-#a#_a#i_#in_inv_nvă_văţ_ăţa_ţat_at#_t#d_#da_da#	a_invăţat_da	1
-#in_inv_nvă_văţ_ăţa_ţat_at#_t#d_#da_da#_a#a_#a#	invăţat_da_a	1
-#da_da#_a#a_#a#_a#c_#co_con_onc_nce_cen_ent_ntr_tra_rat_at#	da_a_concentrat	1
-#a#_a#c_#co_con_onc_nce_cen_ent_ntr_tra_rat_at#_t#a_#a#	a_concentrat_a	1
-#co_con_onc_nce_cen_ent_ntr_tra_rat_at#_t#a_#a#_a#i_#in_inv_nvă_văţ_ăţa_ţat_at#	concentrat_a_invăţat	1
-#a#_a#i_#in_inv_nvă_văţ_ăţa_ţat_at#_t#a_#a#	a_invăţat_a	1
-#in_inv_nvă_văţ_ăţa_ţat_at#_t#a_#a#_a#c_#co_cop_opi_pia_iat_at#	invăţat_a_copiat	1
-#a#_a#c_#co_cop_opi_pia_iat_at#_t#c_#ce_ce#	a_copiat_ce	1
-#co_cop_opi_pia_iat_at#_t#c_#ce_ce#_e#d_#de_des_esp_spr_pre_re#	copiat_ce_despre	1
-#ce_ce#_e#d_#de_des_esp_spr_pre_re#_e#c_#ce_ce#	ce_despre_ce	1
-#de_des_esp_spr_pre_re#_e#c_#ce_ce#_e#v_#vo_vor_orb_rbe_beş_eşt_şti_ti#	despre_ce_vorbeşti	1
-#ce_ce#_e#v_#vo_vor_orb_rbe_beş_eşt_şti_ti#_i#v_#vo_vor_orb_rbe_bes_esc_sc#	ce_vorbeşti_vorbesc	1
-#vo_vor_orb_rbe_beş_eşt_şti_ti#_i#v_#vo_vor_orb_rbe_bes_esc_sc#_c#d_#de_des_esp_spr_pre_re#	vorbeşti_vorbesc_despre	1
-#vo_vor_orb_rbe_bes_esc_sc#_c#d_#de_des_esp_spr_pre_re#_e#e_#es_est_ste_te#	vorbesc_despre_este	1
-#de_des_esp_spr_pre_re#_e#e_#es_est_ste_te#_e#o_#o#	despre_este_o	1
-#es_est_ste_te#_e#o_#o#_o#n_#no_not_ota_ta#	este_o_nota	1
-#o#_o#n_#no_not_ota_ta#_a#m_#ma_mar_are_re#	o_nota_mare	1
-#no_not_ota_ta#_a#m_#ma_mar_are_re#_e#p_#pe_pen_ent_ntr_tru_ru#	nota_mare_pentru	1
-#ma_mar_are_re#_e#p_#pe_pen_ent_ntr_tru_ru#_u#o_#or_ori_ric_ici_cin_ine_ne#	mare_pentru_oricine	1
-#pe_pen_ent_ntr_tru_ru#_u#o_#or_ori_ric_ici_cin_ine_ne#_e#m_#ma_mai_ai#	pentru_oricine_mai	1
-#or_ori_ric_ici_cin_ine_ne#_e#m_#ma_mai_ai#_i#a_#al_ale_les_es#	oricine_mai_ales	1
-#ma_mai_ai#_i#a_#al_ale_les_es#_s#h_#hi_hil_ill_lla_lar_ary_ry#	mai_ales_hillary	1
-#al_ale_les_es#_s#h_#hi_hil_ill_lla_lar_ary_ry#_y#c_#ca_car_are_re#	ales_hillary_care	1
-#hi_hil_ill_lla_lar_ary_ry#_y#c_#ca_car_are_re#_e#ş_#şt_şti_tim_im#	hillary_care_ştim	1
-#ca_car_are_re#_e#ş_#şt_şti_tim_im#_m#c_#cu_cu#	care_ştim_cu	1
-#şt_şti_tim_im#_m#c_#cu_cu#_u#t_#to_toţ_oţi_ţii_ii#	ştim_cu_toţii	1
-#cu_cu#_u#t_#to_toţ_oţi_ţii_ii#_i#c_#că_că#	cu_toţii_că	1
-#to_toţ_oţi_ţii_ii#_i#c_#că_că#_ă#t_#tr_tri_ric_ico_cot_ote_tea_eaz_ază_ză#	toţii_că_tricotează	1
-#că_că#_ă#t_#tr_tri_ric_ico_cot_ote_tea_eaz_ază_ză#_ă#c_#cu_cu#	că_tricotează_cu	1
-#tr_tri_ric_ico_cot_ote_tea_eaz_ază_ză#_ă#c_#cu_cu#_u#o_#o#	tricotează_cu_o	1
-#cu_cu#_u#o_#o#_o#a_#an_and_ndr_dre_rea_ea#	cu_o_andrea	1
-#o#_o#a_#an_and_ndr_dre_rea_ea#_a#a_#ai_ai#	o_andrea_ai	1
-#an_and_ndr_dre_rea_ea#_a#a_#ai_ai#_i#i_#ie_ieş_eşi_şit_it#	andrea_ai_ieşit	1
-#ai_ai#_i#i_#ie_ieş_eşi_şit_it#_t#d_#di_din_in#	ai_ieşit_din	1
-#ie_ieş_eşi_şit_it#_t#d_#di_din_in#_n#m_#mi_min_inţ_nţi_ţi#	ieşit_din_minţi	1
-#di_din_in#_n#m_#mi_min_inţ_nţi_ţi#_i#d_#da_da#	din_minţi_da	1
-#mi_min_inţ_nţi_ţi#_i#d_#da_da#_a#a_#ar_ar#	minţi_da_ar	1
-#da_da#_a#a_#ar_ar#_r#p_#pu_put_ute_tea_ea#	da_ar_putea	1
-#ar_ar#_r#p_#pu_put_ute_tea_ea#_a#s_#să_să#	ar_putea_să	1
-#pu_put_ute_tea_ea#_a#s_#să_să#_ă#i_#im_imi_mi#	putea_să_imi	1
-#să_să#_ă#i_#im_imi_mi#_i#f_#fi_fi#	să_imi_fi	1
-#im_imi_mi#_i#f_#fi_fi#_i#i_#ie_ieş_eşi_şit_it#	imi_fi_ieşit	1
-#fi_fi#_i#i_#ie_ieş_eşi_şit_it#_t#d_#di_din_in#	fi_ieşit_din	1
-#ie_ieş_eşi_şit_it#_t#d_#di_din_in#_n#m_#mi_min_inţ_nţi_ţi#	ieşit_din_minţi	1
-#di_din_in#_n#m_#mi_min_inţ_nţi_ţi#_i#d_#da_dar_ar#	din_minţi_dar	1
-#mi_min_inţ_nţi_ţi#_i#d_#da_dar_ar#_r#a_#am_am#	minţi_dar_am	1
-#da_dar_ar#_r#a_#am_am#_m#s_#se_sen_ent_nti_tim_ime_men_ent_ntu_tul_ul#	dar_am_sentimentul	1
-#am_am#_m#s_#se_sen_ent_nti_tim_ime_men_ent_ntu_tul_ul#_l#c_#că_că#	am_sentimentul_că	1
-#se_sen_ent_nti_tim_ime_men_ent_ntu_tul_ul#_l#c_#că_că#_ă#a_#a#	sentimentul_că_a	1
-#că_că#_ă#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	că_a_făcut	1
-#a#_a#f_#fă_făc_ăcu_cut_ut#_t#c_#ce_cev_eva_va#	a_făcut_ceva	1
-#fă_făc_ăcu_cut_ut#_t#c_#ce_cev_eva_va#_a#n_#nu_nu#	făcut_ceva_nu	1
-#ce_cev_eva_va#_a#n_#nu_nu#_u#ş_#şt_şti_tiu_iu#	ceva_nu_ştiu	1
-#nu_nu#_u#ş_#şt_şti_tiu_iu#_u#c_#ce_ce#	nu_ştiu_ce	1
-#şt_şti_tiu_iu#_u#c_#ce_ce#_e#d_#da_dar_ar#	ştiu_ce_dar	1
-#ce_ce#_e#d_#da_dar_ar#_r#a_#a#	ce_dar_a	1
-#da_dar_ar#_r#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	dar_a_făcut	1
-#a#_a#f_#fă_făc_ăcu_cut_ut#_t#c_#ce_cev_eva_va#	a_făcut_ceva	1
-#fă_făc_ăcu_cut_ut#_t#c_#ce_cev_eva_va#_a#c_#ce_ce#	făcut_ceva_ce	1
-#ce_cev_eva_va#_a#c_#ce_ce#_e#a_#a#	ceva_ce_a	1
-#ce_ce#_e#a_#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#	ce_a_intâmplat	1
-#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#c_#cu_cu#	a_intâmplat_cu	1
-#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#c_#cu_cu#_u#t_#ti_tin_ine_ne#	intâmplat_cu_tine	1
-#cu_cu#_u#t_#ti_tin_ine_ne#_e#c_#ce_cev_eva_va#	cu_tine_ceva	1
-#ti_tin_ine_ne#_e#c_#ce_cev_eva_va#_a#b_#bu_bun_un#	tine_ceva_bun	1
-#ce_cev_eva_va#_a#b_#bu_bun_un#_n#a_#a#	ceva_bun_a	1
-#bu_bun_un#_n#a_#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#	bun_a_intâmplat	1
-#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#ş_#şi_şi#	a_intâmplat_şi	1
-#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#ş_#şi_şi#_i#n_#nu_nu#	intâmplat_şi_nu	1
-#şi_şi#_i#n_#nu_nu#_u#p_#po_poţ_oţi_ţi#	şi_nu_poţi	1
-#nu_nu#_u#p_#po_poţ_oţi_ţi#_i#s_#să_să#	nu_poţi_să	1
-#po_poţ_oţi_ţi#_i#s_#să_să#_ă#t_#te_te#	poţi_să_te	1
-#să_să#_ă#t_#te_te#_e#b_#bu_buc_ucu_cur_uri_ri#	să_te_bucuri	1
-#te_te#_e#b_#bu_buc_ucu_cur_uri_ri#_i#d_#de_de#	te_bucuri_de	1
-#bu_buc_ucu_cur_uri_ri#_i#d_#de_de#_e#a_#as_ast_sta_ta#	bucuri_de_asta	1
-#de_de#_e#a_#as_ast_sta_ta#_a#t_#tr_tre_reb_ebu_bui_uie_ie#	de_asta_trebuie	1
-#as_ast_sta_ta#_a#t_#tr_tre_reb_ebu_bui_uie_ie#_e#s_#să_să#	asta_trebuie_să	1
-#tr_tre_reb_ebu_bui_uie_ie#_e#s_#să_să#_ă#s_#st_str_tri_ric_ici_ci#	trebuie_să_strici	1
-#să_să#_ă#s_#st_str_tri_ric_ici_ci#_i#t_#to_tot_otu_tul_ul#	să_strici_totul	1
-#st_str_tri_ric_ici_ci#_i#t_#to_tot_otu_tul_ul#_l#h_#ha_hai_aid_ide_de#	strici_totul_haide	1
-#to_tot_otu_tul_ul#_l#h_#ha_hai_aid_ide_de#_e#n_#nu_nu#	totul_haide_nu	1
-#ha_hai_aid_ide_de#_e#n_#nu_nu#_u#p_#po_poţ_oţi_ţi#	haide_nu_poţi	1
-#nu_nu#_u#p_#po_poţ_oţi_ţi#_i#s_#să_să#	nu_poţi_să	1
-#po_poţ_oţi_ţi#_i#s_#să_să#_ă#u_#ui_uiţ_iţi_ţi#	poţi_să_uiţi	1
-#să_să#_ă#u_#ui_uiţ_iţi_ţi#_i#t_#to_tot_otu_tul_ul#	să_uiţi_totul	1
-#ui_uiţ_iţi_ţi#_i#t_#to_tot_otu_tul_ul#_l#ş_#şi_şi#	uiţi_totul_şi	1
-#to_tot_otu_tul_ul#_l#ş_#şi_şi#_i#s_#să_să#	totul_şi_să	1
-#şi_şi#_i#s_#să_să#_ă#t_#te_te#	şi_să_te	1
-#să_să#_ă#t_#te_te#_e#b_#bu_buc_ucu_cur_uri_ri#	să_te_bucuri	1
-#te_te#_e#b_#bu_buc_ucu_cur_uri_ri#_i#c_#cu_cum_umv_mva_va#	te_bucuri_cumva	1
-#bu_buc_ucu_cur_uri_ri#_i#c_#cu_cum_umv_mva_va#_a#a_#ab_abi_bia_ia#	bucuri_cumva_abia	1
-#cu_cum_umv_mva_va#_a#a_#ab_abi_bia_ia#_a#a_#ai_ai#	cumva_abia_ai	1
-#ab_abi_bia_ia#_a#a_#ai_ai#_i#c_#cu_cun_uno_nos_osc_scu_cut_ut#	abia_ai_cunoscut	1
-#ai_ai#_i#c_#cu_cun_uno_nos_osc_scu_cut_ut#_t#n_#nu_nu#	ai_cunoscut_nu	1
-#cu_cun_uno_nos_osc_scu_cut_ut#_t#n_#nu_nu#_u#u_#ui_uit_it#	cunoscut_nu_uit	1
-#nu_nu#_u#u_#ui_uit_it#_t#n_#nu_nu#	nu_uit_nu	1
-#ui_uit_it#_t#n_#nu_nu#_u#a_#am_am#	uit_nu_am	1
-#nu_nu#_u#a_#am_am#_m#o_#o#	nu_am_o	1
-#am_am#_m#o_#o#_o#c_#co_col_ole_lec_ecţ_cţi_ţie_ie#	am_o_colecţie	1
-#o#_o#c_#co_col_ole_lec_ecţ_cţi_ţie_ie#_e#d_#de_de#	o_colecţie_de	1
-#co_col_ole_lec_ecţ_cţi_ţie_ie#_e#d_#de_de#_e#t_#tr_tri_rim_imb_mbe_be#	colecţie_de_trimbe	1
-#de_de#_e#t_#tr_tri_rim_imb_mbe_be#_e#n_#nu_nu#	de_trimbe_nu	1
-#tr_tri_rim_imb_mbe_be#_e#n_#nu_nu#_u#s_#sc_scu_cul_ulp_lpt_pte_tez_ez#	trimbe_nu_sculptez	1
-#nu_nu#_u#s_#sc_scu_cul_ulp_lpt_pte_tez_ez#_z#n_#nu_nu#	nu_sculptez_nu	1
-#sc_scu_cul_ulp_lpt_pte_tez_ez#_z#n_#nu_nu#_u#a_#am_am#	sculptez_nu_am	1
-#nu_nu#_u#a_#am_am#_m#u_#un_un#	nu_am_un	1
-#am_am#_m#u_#un_un#_n#r_#ra_rad_adi_dio_io#	am_un_radio	1
-#un_un#_n#r_#ra_rad_adi_dio_io#_o#a_#a#	un_radio_a	1
-#ra_rad_adi_dio_io#_o#a_#a#_a#s_#st_str_tri_ric_ica_ca#	radio_a_strica	1
-#a#_a#s_#st_str_tri_ric_ica_ca#_a#l_#lu_luc_ucr_cru_rur_uri_ril_ile_le#	a_strica_lucrurile	1
-#st_str_tri_ric_ica_ca#_a#l_#lu_luc_ucr_cru_rur_uri_ril_ile_le#_e#e_#e#	strica_lucrurile_e	1
-#lu_luc_ucr_cru_rur_uri_ril_ile_le#_e#e_#e#_e#u_#ul_ul#	lucrurile_e_ul	1
-#e#_e#u_#ul_ul#_l#m_#me_meu_eu#	e_ul_meu	1
-#ul_ul#_l#m_#me_meu_eu#_u#c_#cr_cre_red_ed#	ul_meu_cred	1
-#me_meu_eu#_u#c_#cr_cre_red_ed#_d#c_#că_că#	meu_cred_că	1
-#cr_cre_red_ed#_d#c_#că_că#_ă#o_#o#	cred_că_o	1
-#că_că#_ă#o_#o#_o#m_#ma_maş_aşi_şin_ină_nă#	că_o_maşină	1
-#o#_o#m_#ma_maş_aşi_şin_ină_nă#_ă#t_#to_toc_ocm_cma_mai_ai#	o_maşină_tocmai	1
-#ma_maş_aşi_şin_ină_nă#_ă#t_#to_toc_ocm_cma_mai_ai#_i#a_#a#	maşină_tocmai_a	1
-#to_toc_ocm_cma_mai_ai#_i#a_#a#_a#p_#pa_par_arc_rca_cat_at#	tocmai_a_parcat	1
-#a#_a#p_#pa_par_arc_rca_cat_at#_t#c_#cu_cum_um#	a_parcat_cum	1
-#pa_par_arc_rca_cat_at#_t#c_#cu_cum_um#_m#e_#e#	parcat_cum_e	1
-#cu_cum_um#_m#e_#e#_e#r_#re_res_esp_spi_pir_ira_raţ_aţi_ţia_ia#	cum_e_respiraţia	1
-#e#_e#r_#re_res_esp_spi_pir_ira_raţ_aţi_ţia_ia#_a#m_#me_mea_ea#	e_respiraţia_mea	1
-#re_res_esp_spi_pir_ira_raţ_aţi_ţia_ia#_a#m_#me_mea_ea#_a#n_#nu_nu#	respiraţia_mea_nu	1
-#me_mea_ea#_a#n_#nu_nu#_u#d_#de_des_est_stu_tul_ul#	mea_nu_destul	1
-#nu_nu#_u#d_#de_des_est_stu_tul_ul#_l#d_#de_de#	nu_destul_de	1
-#de_des_est_stu_tul_ul#_l#d_#de_de#_e#b_#bu_bun_ună_nă#	destul_de_bună	1
-#de_de#_e#b_#bu_bun_ună_nă#_ă#c_#ca_ca#	de_bună_ca	1
-#bu_bun_ună_nă#_ă#c_#ca_ca#_a#s_#să_să#	bună_ca_să	1
-#ca_ca#_a#s_#să_să#_ă#m_#ma_mai_ai#	ca_să_mai	1
-#să_să#_ă#m_#ma_mai_ai#_i#f_#fa_fac_aci_ci#	să_mai_faci	1
-#ma_mai_ai#_i#f_#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#	mai_faci_asta	1
-#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#_a#v_#vr_vre_reo_eod_oda_dat_ată_tă#	faci_asta_vreodată	1
-#as_ast_sta_ta#_a#v_#vr_vre_reo_eod_oda_dat_ată_tă#_ă#n_#nu_nu#	asta_vreodată_nu	1
-#vr_vre_reo_eod_oda_dat_ată_tă#_ă#n_#nu_nu#_u#i_#im_imi_mi#	vreodată_nu_imi	1
-#nu_nu#_u#i_#im_imi_mi#_i#v_#vi_vin_ine_ne#	nu_imi_vine	1
-#im_imi_mi#_i#v_#vi_vin_ine_ne#_e#s_#să_să#	imi_vine_să	1
-#vi_vin_ine_ne#_e#s_#să_să#_ă#c_#cr_cre_red_ed#	vine_să_cred	1
-#să_să#_ă#c_#cr_cre_red_ed#_d#c_#că_că#	să_cred_că	1
-#cr_cre_red_ed#_d#c_#că_că#_ă#i_#il_il#	cred_că_il	1
-#că_că#_ă#i_#il_il#_l#c_#co_cod_odo_doş_oşe_şeş_eşt_şti_ti#	că_il_codoşeşti	1
-#il_il#_l#c_#co_cod_odo_doş_oşe_şeş_eşt_şti_ti#_i#p_#pe_pe#	il_codoşeşti_pe	1
-#co_cod_odo_doş_oşe_şeş_eşt_şti_ti#_i#p_#pe_pe#_e#f_#fi_fiu_iul_ul#	codoşeşti_pe_fiul	1
-#pe_pe#_e#f_#fi_fiu_iul_ul#_l#t_#tă_tău_ău#	pe_fiul_tău	1
-#fi_fiu_iul_ul#_l#t_#tă_tău_ău#_u#m_#mi_mi#	fiul_tău_mi	1
-#tă_tău_ău#_u#m_#mi_mi#_i#v_#vi_vin_ine_ne#	tău_mi_vine	1
-#mi_mi#_i#v_#vi_vin_ine_ne#_e#s_#să_să#	mi_vine_să	1
-#vi_vin_ine_ne#_e#s_#să_să#_ă#c_#cr_cre_red_ed#	vine_să_cred	1
-#să_să#_ă#c_#cr_cre_red_ed#_d#c_#că_că#	să_cred_că	1
-#cr_cre_red_ed#_d#c_#că_că#_ă#a_#am_am#	cred_că_am	1
-#că_că#_ă#a_#am_am#_m#g_#gă_găs_ăsi_sit_it#	că_am_găsit	1
-#am_am#_m#g_#gă_găs_ăsi_sit_it#_t#u_#un_un#	am_găsit_un	1
-#gă_găs_ăsi_sit_it#_t#u_#un_un#_n#c_#cl_cli_lie_ien_ent_nt#	găsit_un_client	1
-#un_un#_n#c_#cl_cli_lie_ien_ent_nt#_t#s_#sa_sal_alu_lut_ut#	un_client_salut	1
-#cl_cli_lie_ien_ent_nt#_t#s_#sa_sal_alu_lut_ut#_t#b_#bo_bob_ob#	client_salut_bob	1
-#sa_sal_alu_lut_ut#_t#b_#bo_bob_ob#_b#c_#ce_ce#	salut_bob_ce	1
-#bo_bob_ob#_b#c_#ce_ce#_e#m_#ma_mai_ai#	bob_ce_mai	1
-#ce_ce#_e#m_#ma_mai_ai#_i#f_#fa_fac_aci_ci#	ce_mai_faci	1
-#ma_mai_ai#_i#f_#fa_fac_aci_ci#_i#s_#sa_sal_alu_lut_ut#	mai_faci_salut	1
-#fa_fac_aci_ci#_i#s_#sa_sal_alu_lut_ut#_t#d_#da_dav_ave_ve#	faci_salut_dave	1
-#sa_sal_alu_lut_ut#_t#d_#da_dav_ave_ve#_e#c_#cu_cum_um#	salut_dave_cum	1
-#da_dav_ave_ve#_e#c_#cu_cum_um#_m#i_#iţ_iţi_ţi#	dave_cum_iţi	1
-#cu_cum_um#_m#i_#iţ_iţi_ţi#_i#m_#ma_mai_ai#	cum_iţi_mai	1
-#iţ_iţi_ţi#_i#m_#ma_mai_ai#_i#m_#me_mer_erg_rge_ge#	iţi_mai_merge	1
-#ma_mai_ai#_i#m_#me_mer_erg_rge_ge#_e#a_#ac_ace_cea_eas_ast_sta_ta#	mai_merge_aceasta	1
-#me_mer_erg_rge_ge#_e#a_#ac_ace_cea_eas_ast_sta_ta#_a#e_#es_est_ste_te#	merge_aceasta_este	1
-#ac_ace_cea_eas_ast_sta_ta#_a#e_#es_est_ste_te#_e#f_#fi_fii_iic_ica_ca#	aceasta_este_fiica	1
-#es_est_ste_te#_e#f_#fi_fii_iic_ica_ca#_a#m_#me_mea_ea#	este_fiica_mea	1
-#fi_fii_iic_ica_ca#_a#m_#me_mea_ea#_a#t_#ti_tif_iff_ffa_fan_any_ny#	fiica_mea_tiffany	1
-#me_mea_ea#_a#t_#ti_tif_iff_ffa_fan_any_ny#_y#b_#bu_bun_ună_nă#	mea_tiffany_bună	1
-#ti_tif_iff_ffa_fan_any_ny#_y#b_#bu_bun_ună_nă#_ă#t_#ti_tif_iff_ffa_fan_any_ny#	tiffany_bună_tiffany	1
-#bu_bun_ună_nă#_ă#t_#ti_tif_iff_ffa_fan_any_ny#_y#i_#in_int_ntr_tră_ră#	bună_tiffany_intră	1
-#ti_tif_iff_ffa_fan_any_ny#_y#i_#in_int_ntr_tră_ră#_ă#f_#fr_fru_rum_umo_moa_oas_asă_să#	tiffany_intră_frumoasă	1
-#in_int_ntr_tră_ră#_ă#f_#fr_fru_rum_umo_moa_oas_asă_să#_ă#g_#ge_gea_eac_acă_că#	intră_frumoasă_geacă	1
-#fr_fru_rum_umo_moa_oas_asă_să#_ă#g_#ge_gea_eac_acă_că#_ă#b_#bu_bun_uni_nic_ica_ca#	frumoasă_geacă_bunica	1
-#ge_gea_eac_acă_că#_ă#b_#bu_bun_uni_nic_ica_ca#_a#m_#me_mea_ea#	geacă_bunica_mea	1
-#bu_bun_uni_nic_ica_ca#_a#m_#me_mea_ea#_a#a_#a#	bunica_mea_a	1
-#me_mea_ea#_a#a_#a#_a#m_#mu_mur_uri_rit_it#	mea_a_murit	1
-#a#_a#m_#mu_mur_uri_rit_it#_t#i_#in_in#	a_murit_in	1
-#mu_mur_uri_rit_it#_t#i_#in_in#_n#e_#ea_ea#	murit_in_ea	1
-#in_in#_n#e_#ea_ea#_a#î_#îm_îmi_mi#	in_ea_îmi	1
-#ea_ea#_a#î_#îm_îmi_mi#_i#p_#pa_par_are_re#	ea_îmi_pare	1
-#îm_îmi_mi#_i#p_#pa_par_are_re#_e#r_#ră_rău_ău#	îmi_pare_rău	1
-#pa_par_are_re#_e#r_#ră_rău_ău#_u#b_#bu_bun_ună_nă#	pare_rău_bună	1
-#ră_rău_ău#_u#b_#bu_bun_ună_nă#_ă#e_#eu_eu#	rău_bună_eu	1
-#bu_bun_ună_nă#_ă#e_#eu_eu#_u#s_#su_sun_unt_nt#	bună_eu_sunt	1
-#eu_eu#_u#s_#su_sun_unt_nt#_t#l_#la_lar_arr_rry_ry#	eu_sunt_larry	1
-#su_sun_unt_nt#_t#l_#la_lar_arr_rry_ry#_y#î_#îm_îmi_mi#	sunt_larry_îmi	1
-#la_lar_arr_rry_ry#_y#î_#îm_îmi_mi#_i#p_#pa_par_are_re#	larry_îmi_pare	1
-#îm_îmi_mi#_i#p_#pa_par_are_re#_e#b_#bi_bin_ine_ne#	îmi_pare_bine	1
-#pa_par_are_re#_e#b_#bi_bin_ine_ne#_e#s_#să_să#	pare_bine_să	1
-#bi_bin_ine_ne#_e#s_#să_să#_ă#t_#te_te#	bine_să_te	1
-#să_să#_ă#t_#te_te#_e#c_#cu_cun_uno_nos_osc_sc#	să_te_cunosc	1
-#te_te#_e#c_#cu_cun_uno_nos_osc_sc#_c#î_#în_îna_nai_ain_int_nte_te#	te_cunosc_înainte	1
-#cu_cun_uno_nos_osc_sc#_c#î_#în_îna_nai_ain_int_nte_te#_e#s_#să_să#	cunosc_înainte_să	1
-#în_îna_nai_ain_int_nte_te#_e#s_#să_să#_ă#p_#pl_ple_lec_ecă_căm_ăm#	înainte_să_plecăm	1
-#să_să#_ă#p_#pl_ple_lec_ecă_căm_ăm#_m#m_#mă_mă#	să_plecăm_mă	1
-#pl_ple_lec_ecă_căm_ăm#_m#m_#mă_mă#_ă#d_#du_duc_uc#	plecăm_mă_duc	1
-#mă_mă#_ă#d_#du_duc_uc#_c#s_#să_să#	mă_duc_să	1
-#du_duc_uc#_c#s_#să_să#_ă#m_#mă_mă#	duc_să_mă	1
-#să_să#_ă#m_#mă_mă#_ă#i_#im_imp_mpr_pro_ros_osp_spă_păt_ăte_tez_ez#	să_mă_improspătez	1
-#mă_mă#_ă#i_#im_imp_mpr_pro_ros_osp_spă_păt_ăte_tez_ez#_z#ş_#şi_şi#	mă_improspătez_şi	1
-#im_imp_mpr_pro_ros_osp_spă_păt_ăte_tez_ez#_z#ş_#şi_şi#_i#c_#câ_cât_ât#	improspătez_şi_cât	1
-#şi_şi#_i#c_#câ_cât_ât#_t#t_#ti_tim_imp_mp#	şi_cât_timp	1
-#câ_cât_ât#_t#t_#ti_tim_imp_mp#_p#a_#aş_aşt_şte_tep_epţ_pţi_ţi#	cât_timp_aştepţi	1
-#ti_tim_imp_mp#_p#a_#aş_aşt_şte_tep_epţ_pţi_ţi#_i#v_#vr_vre_rei_ei#	timp_aştepţi_vrei	1
-#aş_aşt_şte_tep_epţ_pţi_ţi#_i#v_#vr_vre_rei_ei#_i#s_#să_să#	aştepţi_vrei_să	1
-#vr_vre_rei_ei#_i#s_#să_să#_ă#i_#iţ_iţi_ţi#	vrei_să_iţi	1
-#să_să#_ă#i_#iţ_iţi_ţi#_i#a_#ad_adu_duc_uc#	să_iţi_aduc	1
-#iţ_iţi_ţi#_i#a_#ad_adu_duc_uc#_c#c_#ce_cev_eva_va#	iţi_aduc_ceva	1
-#ad_adu_duc_uc#_c#c_#ce_cev_eva_va#_a#u_#un_un#	aduc_ceva_un	1
-#ce_cev_eva_va#_a#u_#un_un#_n#s_#su_suc_uc#	ceva_un_suc	1
-#un_un#_n#s_#su_suc_uc#_c#n_#ni_niş_işt_şte_te#	un_suc_nişte	1
-#su_suc_uc#_c#n_#ni_niş_işt_şte_te#_e#c_#co_cov_ovr_vri_rig_ige_gei_ei#	suc_nişte_covrigei	1
-#ni_niş_işt_şte_te#_e#c_#co_cov_ovr_vri_rig_ige_gei_ei#_i#u_#un_un#	nişte_covrigei_un	1
-#co_cov_ovr_vri_rig_ige_gei_ei#_i#u_#un_un#_n#e_#ex_exo_xor_orc_rci_cis_ist_st#	covrigei_un_exorcist	1
-#un_un#_n#e_#ex_exo_xor_orc_rci_cis_ist_st#_t#p_#pr_pre_res_esu_sup_upu_pun_un#	un_exorcist_presupun	1
-#ex_exo_xor_orc_rci_cis_ist_st#_t#p_#pr_pre_res_esu_sup_upu_pun_un#_n#c_#că_că#	exorcist_presupun_că	1
-#pr_pre_res_esu_sup_upu_pun_un#_n#c_#că_că#_ă#a_#aş_aş#	presupun_că_aş	1
-#că_că#_ă#a_#aş_aş#_ş#p_#pu_put_ute_tea_ea#	că_aş_putea	1
-#aş_aş#_ş#p_#pu_put_ute_tea_ea#_a#b_#be_bea_ea#	aş_putea_bea	1
-#pu_put_ute_tea_ea#_a#b_#be_bea_ea#_a#c_#ce_cev_eva_va#	putea_bea_ceva	1
-#be_bea_ea#_a#c_#ce_cev_eva_va#_a#d_#de_de#	bea_ceva_de	1
-#ce_cev_eva_va#_a#d_#de_de#_e#c_#ce_ce#	ceva_de_ce	1
-#de_de#_e#c_#ce_ce#_e#s_#să_să#	de_ce_să	1
-#ce_ce#_e#s_#să_să#_ă#n_#nu_nu#	ce_să_nu	1
-#să_să#_ă#n_#nu_nu#_u#i_#iţ_iţi_ţi#	să_nu_iţi	1
-#nu_nu#_u#i_#iţ_iţi_ţi#_i#a_#ar_ară_răt_ăt#	nu_iţi_arăt	1
-#iţ_iţi_ţi#_i#a_#ar_ară_răt_ăt#_t#c_#ce_ce#	iţi_arăt_ce	1
-#ar_ară_răt_ăt#_t#c_#ce_ce#_e#a_#av_ave_vem_em#	arăt_ce_avem	1
-#ce_ce#_e#a_#av_ave_vem_em#_m#p_#pă_păi_ăi#	ce_avem_păi	1
-#av_ave_vem_em#_m#p_#pă_păi_ăi#_i#t_#ti_tif_iff_ffa_fan_any_ny#	avem_păi_tiffany	1
-#pă_păi_ăi#_i#t_#ti_tif_iff_ffa_fan_any_ny#_y#e_#e#	păi_tiffany_e	1
-#ti_tif_iff_ffa_fan_any_ny#_y#e_#e#_e#f_#fr_fru_rum_umu_muş_uşi_şic_ică_că#	tiffany_e_frumuşică	1
-#e#_e#f_#fr_fru_rum_umu_muş_uşi_şic_ică_că#_ă#t_#te_te#	e_frumuşică_te	1
-#fr_fru_rum_umu_muş_uşi_şic_ică_că#_ă#t_#te_te#_e#r_#ro_rog_og#	frumuşică_te_rog	1
-#te_te#_e#r_#ro_rog_og#_g#e_#e#	te_rog_e	1
-#ro_rog_og#_g#e_#e#_e#u_#un_un#	rog_e_un	1
-#e#_e#u_#un_un#_n#c_#co_coş_oşm_şma_mar_ar#	e_un_coşmar	1
-#un_un#_n#c_#co_coş_oşm_şma_mar_ar#_r#v_#vr_vre_rea_eau_au#	un_coşmar_vreau	1
-#co_coş_oşm_şma_mar_ar#_r#v_#vr_vre_rea_eau_au#_u#s_#să_să#	coşmar_vreau_să	1
-#vr_vre_rea_eau_au#_u#s_#să_să#_ă#o_#o#	vreau_să_o	1
-#să_să#_ă#o_#o#_o#l_#la_las_as#	să_o_las	1
-#o#_o#l_#la_las_as#_s#u_#un_un#	o_las_un	1
-#la_las_as#_s#u_#un_un#_n#c_#câ_câm_âmp_mp#	las_un_câmp	1
-#un_un#_n#c_#câ_câm_âmp_mp#_p#a_#ai_aia_ia#	un_câmp_aia	1
-#câ_câm_âmp_mp#_p#a_#ai_aia_ia#_a#s_#să_să#	câmp_aia_să	1
-#ai_aia_ia#_a#s_#să_să#_ă#m_#mă_mă#	aia_să_mă	1
-#să_să#_ă#m_#mă_mă#_ă#m_#mu_mut_ut#	să_mă_mut	1
-#mă_mă#_ă#m_#mu_mut_ut#_t#ş_#şi_şi#	mă_mut_şi	1
-#mu_mut_ut#_t#ş_#şi_şi#_i#a_#ap_apo_poi_oi#	mut_şi_apoi	1
-#şi_şi#_i#a_#ap_apo_poi_oi#_i#s_#să_să#	şi_apoi_să	1
-#ap_apo_poi_oi#_i#s_#să_să#_ă#m_#mă_mă#	apoi_să_mă	1
-#să_să#_ă#m_#mă_mă#_ă#s_#si_sin_inu_nuc_uci_cid_id#	să_mă_sinucid	1
-#mă_mă#_ă#s_#si_sin_inu_nuc_uci_cid_id#_d#c_#ca_ca#	mă_sinucid_ca	1
-#si_sin_inu_nuc_uci_cid_id#_d#c_#ca_ca#_a#s_#să_să#	sinucid_ca_să	1
-#ca_ca#_a#s_#să_să#_ă#m_#mă_mă#	ca_să_mă	1
-#să_să#_ă#m_#mă_mă#_ă#a_#as_asi_sig_igu_gur_ur#	să_mă_asigur	1
-#mă_mă#_ă#a_#as_asi_sig_igu_gur_ur#_r#c_#că_că#	mă_asigur_că	1
-#as_asi_sig_igu_gur_ur#_r#c_#că_că#_ă#n_#nu_nu#	asigur_că_nu	1
-#că_că#_ă#n_#nu_nu#_u#m_#mă_mă#	că_nu_mă	1
-#nu_nu#_u#m_#mă_mă#_ă#g_#gă_găs_ăse_seş_eşt_şte_te#	nu_mă_găseşte	1
-#mă_mă#_ă#g_#gă_găs_ăse_seş_eşt_şte_te#_e#ş_#şt_şti_tiu_iu#	mă_găseşte_ştiu	1
-#gă_găs_ăse_seş_eşt_şte_te#_e#ş_#şt_şti_tiu_iu#_u#c_#ce_ce#	găseşte_ştiu_ce	1
-#şt_şti_tiu_iu#_u#c_#ce_ce#_e#v_#vr_vre_rei_ei#	ştiu_ce_vrei	1
-#ce_ce#_e#v_#vr_vre_rei_ei#_i#s_#să_să#	ce_vrei_să	1
-#vr_vre_rei_ei#_i#s_#să_să#_ă#s_#sp_spu_pui_ui#	vrei_să_spui	1
-#să_să#_ă#s_#sp_spu_pui_ui#_i#a_#an_anu_nul_ul#	să_spui_anul	1
-#sp_spu_pui_ui#_i#a_#an_anu_nul_ul#_l#t_#tr_tre_rec_eci_cit_it#	spui_anul_trecit	1
-#an_anu_nul_ul#_l#t_#tr_tre_rec_eci_cit_it#_t#l_#la_lar_arr_rry_ry#	anul_trecit_larry	1
-#tr_tre_rec_eci_cit_it#_t#l_#la_lar_arr_rry_ry#_y#a_#a#	trecit_larry_a	1
-#la_lar_arr_rry_ry#_y#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	larry_a_făcut	1
-#a#_a#f_#fă_făc_ăcu_cut_ut#_t#u_#un_un#	a_făcut_un	1
-#fă_făc_ăcu_cut_ut#_t#u_#un_un#_n#m_#mu_muz_uzi_zic_ica_cal_al#	făcut_un_muzical	1
-#un_un#_n#m_#mu_muz_uzi_zic_ica_cal_al#_l#ş_#şi_şi#	un_muzical_şi	1
-#mu_muz_uzi_zic_ica_cal_al#_l#ş_#şi_şi#_i#t_#ti_tif_iff_ffa_fan_any_ny#	muzical_şi_tiffany	1
-#şi_şi#_i#t_#ti_tif_iff_ffa_fan_any_ny#_y#c_#cu_cum_um#	şi_tiffany_cum	1
-#ti_tif_iff_ffa_fan_any_ny#_y#c_#cu_cum_um#_m#i_#iţ_iţi_ţi#	tiffany_cum_iţi	1
-#cu_cum_um#_m#i_#iţ_iţi_ţi#_i#p_#pl_pla_lac_ace_ce#	cum_iţi_place	1
-#iţ_iţi_ţi#_i#p_#pl_pla_lac_ace_ce#_e#l_#la_la#	iţi_place_la	1
-#pl_pla_lac_ace_ce#_e#l_#la_la#_a#l_#li_lic_ice_ceu_eu#	place_la_liceu	1
-#la_la#_a#l_#li_lic_ice_ceu_eu#_u#î_#îl_îl#	la_liceu_îl	1
-#li_lic_ice_ceu_eu#_u#î_#îl_îl#_l#d_#de_det_ete_tes_est_st#	liceu_îl_detest	1
-#îl_îl#_l#d_#de_det_ete_tes_est_st#_t#d_#di_dis_isp_spr_pre_reţ_eţu_ţui_uie_ies_esc_sc#	îl_detest_dispreţuiesc	1
-#de_det_ete_tes_est_st#_t#d_#di_dis_isp_spr_pre_reţ_eţu_ţui_uie_ies_esc_sc#_c#f_#fi_fie_iec_eca_car_are_re#	detest_dispreţuiesc_fiecare	1
-#di_dis_isp_spr_pre_reţ_eţu_ţui_uie_ies_esc_sc#_c#f_#fi_fie_iec_eca_car_are_re#_e#p_#pe_per_ers_rso_soa_oan_ană_nă#	dispreţuiesc_fiecare_persoană	1
-#fi_fie_iec_eca_car_are_re#_e#p_#pe_per_ers_rso_soa_oan_ană_nă#_ă#a_#ac_aco_col_olo_lo#	fiecare_persoană_acolo	1
-#pe_per_ers_rso_soa_oan_ană_nă#_ă#a_#ac_aco_col_olo_lo#_o#m_#ma_mai_ai#	persoană_acolo_mai	1
-#ac_aco_col_olo_lo#_o#m_#ma_mai_ai#_i#b_#bi_bin_ine_ne#	acolo_mai_bine	1
-#ma_mai_ai#_i#b_#bi_bin_ine_ne#_e#a_#aş_aş#	mai_bine_aş	1
-#bi_bin_ine_ne#_e#a_#aş_aş#_ş#s_#sm_smu_mul_ulg_lge_ge#	bine_aş_smulge	1
-#aş_aş#_ş#s_#sm_smu_mul_ulg_lge_ge#_e#o_#oc_och_chi_hii_ii#	aş_smulge_ochii	1
-#sm_smu_mul_ulg_lge_ge#_e#o_#oc_och_chi_hii_ii#_i#d_#de_dec_ecâ_cât_ât#	smulge_ochii_decât	1
-#oc_och_chi_hii_ii#_i#d_#de_dec_ecâ_cât_ât#_t#s_#să_să#	ochii_decât_să	1
+cues	outcomes
+#ha_hai_aid_ide_de#_e#l_#l#_l#e_#e#	haide_l_e
+#l#_l#e_#e#_e#f_#fr_fri_ric_ică_că#	l_e_frică
+#e#_e#f_#fr_fri_ric_ică_că#_ă#h_#ha_hai_aid_ide_de#	e_frică_haide
+#fr_fri_ric_ică_că#_ă#h_#ha_hai_aid_ide_de#_e#a_#ad_adi_dic_ică_că#	frică_haide_adică
+#ha_hai_aid_ide_de#_e#a_#ad_adi_dic_ică_că#_ă#s_#su_sun_unt_nt#	haide_adică_sunt
+#ad_adi_dic_ică_că#_ă#s_#su_sun_unt_nt#_t#d_#do_doa_oar_ar#	adică_sunt_doar
+#su_sun_unt_nt#_t#d_#do_doa_oar_ar#_r#e_#ex_exa_xam_ame_men_ene_nel_ele_le#	sunt_doar_examenele
+#do_doa_oar_ar#_r#e_#ex_exa_xam_ame_men_ene_nel_ele_le#_e#d_#da_dac_acă_că#	doar_examenele_dacă
+#ex_exa_xam_ame_men_ene_nel_ele_le#_e#d_#da_dac_acă_că#_ă#d_#da_dai_ai#	examenele_dacă_dai
+#da_dac_acă_că#_ă#d_#da_dai_ai#_i#u_#un_un#	dacă_dai_un
+#da_dai_ai#_i#u_#un_un#_n#t_#te_tes_est_st#	dai_un_test
+#un_un#_n#t_#te_tes_est_st#_t#s_#su_sun_unt_nt#	un_test_sunt
+#te_tes_est_st#_t#s_#su_sun_unt_nt#_t#f_#fe_fer_eri_ric_ici_cit_it#	test_sunt_fericit
+#su_sun_unt_nt#_t#f_#fe_fer_eri_ric_ici_cit_it#_t#a_#at_atâ_tât_âta_ta#	sunt_fericit_atâta
+#fe_fer_eri_ric_ici_cit_it#_t#a_#at_atâ_tât_âta_ta#_a#t_#ti_tim_imp_mp#	fericit_atâta_timp
+#at_atâ_tât_âta_ta#_a#t_#ti_tim_imp_mp#_p#c_#câ_cât_ât#	atâta_timp_cât
+#ti_tim_imp_mp#_p#c_#câ_cât_ât#_t#r_#re_rez_ezu_zul_ult_lta_tat_atu_tul_ul#	timp_cât_rezultatul
+#câ_cât_ât#_t#r_#re_rez_ezu_zul_ult_lta_tat_atu_tul_ul#_l#n_#nu_nu#	cât_rezultatul_nu
+#re_rez_ezu_zul_ult_lta_tat_atu_tul_ul#_l#n_#nu_nu#_u#e_#e#	rezultatul_nu_e
+#nu_nu#_u#e_#e#_e#r_#ro_roz_oz#	nu_e_roz
+#e#_e#r_#ro_roz_oz#_z#s_#sa_sau_au#	e_roz_sau
+#ro_roz_oz#_z#s_#sa_sau_au#_u#a_#al_alb_lba_bas_ast_str_tru_ru#	roz_sau_albastru
+#sa_sau_au#_u#a_#al_alb_lba_bas_ast_str_tru_ru#_u#d_#do_doa_oam_amn_mne_ne#	sau_albastru_doamne
+#al_alb_lba_bas_ast_str_tru_ru#_u#d_#do_doa_oam_amn_mne_ne#_e#d_#do_doa_oam_amn_mne_ne#	albastru_doamne_doamne
+#do_doa_oam_amn_mne_ne#_e#d_#do_doa_oam_amn_mne_ne#_e#b_#bi_bin_ine_ne#	doamne_doamne_bine
+#do_doa_oam_amn_mne_ne#_e#b_#bi_bin_ine_ne#_e#s_#sa_sau_au#	doamne_bine_sau
+#bi_bin_ine_ne#_e#s_#sa_sau_au#_u#d_#do_doa_oam_amn_mne_ne#	bine_sau_doamne
+#sa_sau_au#_u#d_#do_doa_oam_amn_mne_ne#_e#s_#si_sin_ing_ngu_gur_uru_rul_ul#	sau_doamne_singurul
+#do_doa_oam_amn_mne_ne#_e#s_#si_sin_ing_ngu_gur_uru_rul_ul#_l#m_#mo_mod_od#	doamne_singurul_mod
+#si_sin_ing_ngu_gur_uru_rul_ul#_l#m_#mo_mod_od#_d#i_#in_in#	singurul_mod_in
+#mo_mod_od#_d#i_#in_in#_n#c_#ca_car_are_re#	mod_in_care
+#in_in#_n#c_#ca_car_are_re#_e#o_#o#	in_care_o
+#ca_car_are_re#_e#o_#o#_o#s_#să_să#	care_o_să
+#o#_o#s_#să_să#_ă#m_#me_mer_erg_rgi_gi#	o_să_mergi
+#să_să#_ă#m_#me_mer_erg_rgi_gi#_i#l_#la_la#	să_mergi_la
+#me_mer_erg_rgi_gi#_i#l_#la_la#_a#c_#co_col_ole_leg_egi_giu_iu#	mergi_la_colegiu
+#la_la#_a#c_#co_col_ole_leg_egi_giu_iu#_u#e_#e#	la_colegiu_e
+#co_col_ole_leg_egi_giu_iu#_u#e_#e#_e#d_#da_dac_acă_că#	colegiu_e_dacă
+#e#_e#d_#da_dac_acă_că#_ă#b_#bi_bif_ifă_făm_ăm#	e_dacă_bifăm
+#da_dac_acă_că#_ă#b_#bi_bif_ifă_făm_ăm#_m#o_#or_orb_rb#	dacă_bifăm_orb
+#bi_bif_ifă_făm_ăm#_m#o_#or_orb_rb#_b#ş_#şi_şi#	bifăm_orb_şi
+#or_orb_rb#_b#ş_#şi_şi#_i#i_#in_ind_ndi_dia_ian_an#	orb_şi_indian
+#şi_şi#_i#i_#in_ind_ndi_dia_ian_an#_n#i_#in_in#	şi_indian_in
+#in_ind_ndi_dia_ian_an#_n#i_#in_in#_n#c_#ce_cer_ere_rer_ere_re#	indian_in_cerere
+#in_in#_n#c_#ce_cer_ere_rer_ere_re#_e#d_#do_doa_oam_amn_mne_ne#	in_cerere_doamne
+#ce_cer_ere_rer_ere_re#_e#d_#do_doa_oam_amn_mne_ne#_e#a_#a#	cerere_doamne_a
+#do_doa_oam_amn_mne_ne#_e#a_#a#_a#l_#lu_lua_uat_at#	doamne_a_luat
+#a#_a#l_#lu_lua_uat_at#_t#e_#e#	a_luat_e
+#lu_lua_uat_at#_t#e_#e#_e#u_#un_un#	luat_e_un
+#e#_e#u_#un_un#_n#m_#mi_mir_ira_rac_aco_col_ol#	e_un_miracol
+#un_un#_n#m_#mi_mir_ira_rac_aco_col_ol#_l#a_#a#	un_miracol_a
+#mi_mir_ira_rac_aco_col_ol#_l#a_#a#_a#d_#de_des_esc_scu_cur_urc_rca_cat_at#	miracol_a_descurcat
+#a#_a#d_#de_des_esc_scu_cur_urc_rca_cat_at#_t#d_#de_de#	a_descurcat_de
+#de_des_esc_scu_cur_urc_rca_cat_at#_t#d_#de_de#_e#m_#mi_min_inu_nun_une_ne#	descurcat_de_minune
+#de_de#_e#m_#mi_min_inu_nun_une_ne#_e#d_#da_da#	de_minune_da
+#mi_min_inu_nun_une_ne#_e#d_#da_da#_a#d_#da_da#	minune_da_da
+#da_da#_a#d_#da_da#_a#a_#am_am#	da_da_am
+#da_da#_a#a_#am_am#_m#d_#de_des_esc_scu_cur_urc_rca_cat_at#	da_am_descurcat
+#am_am#_m#d_#de_des_esc_scu_cur_urc_rca_cat_at#_t#b_#bi_bin_ine_ne#	am_descurcat_bine
+#de_des_esc_scu_cur_urc_rca_cat_at#_t#b_#bi_bin_ine_ne#_e#a_#am_am#	descurcat_bine_am
+#bi_bin_ine_ne#_e#a_#am_am#_m#d_#de_des_esc_scu_cur_urc_rca_cat_at#	bine_am_descurcat
+#am_am#_m#d_#de_des_esc_scu_cur_urc_rca_cat_at#_t#b_#bi_bin_ine_ne#	am_descurcat_bine
+#de_des_esc_scu_cur_urc_rca_cat_at#_t#b_#bi_bin_ine_ne#_e#a_#ai_ai#	descurcat_bine_ai
+#bi_bin_ine_ne#_e#a_#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#	bine_ai_făcut
+#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#_t#b_#bi_bin_ine_ne#	ai_făcut_bine
+#fă_făc_ăcu_cut_ut#_t#b_#bi_bin_ine_ne#_e#d_#dr_dra_rag_agă_gă#	făcut_bine_dragă
+#bi_bin_ine_ne#_e#d_#dr_dra_rag_agă_gă#_ă#s_#su_sun_unt_nte_tem_em#	bine_dragă_suntem
+#dr_dra_rag_agă_gă#_ă#s_#su_sun_unt_nte_tem_em#_m#a_#aş_aşa_şa#	dragă_suntem_aşa
+#su_sun_unt_nte_tem_em#_m#a_#aş_aşa_şa#_a#d_#de_de#	suntem_aşa_de
+#aş_aşa_şa#_a#d_#de_de#_e#m_#mâ_mân_ând_ndr_dri_ri#	aşa_de_mândri
+#de_de#_e#m_#mâ_mân_ând_ndr_dri_ri#_i#d_#de_de#	de_mândri_de
+#mâ_mân_ând_ndr_dri_ri#_i#d_#de_de#_e#t_#ti_tin_ine_ne#	mândri_de_tine
+#de_de#_e#t_#ti_tin_ine_ne#_e#d_#dr_dra_rag_agă_gă#	de_tine_dragă
+#ti_tin_ine_ne#_e#d_#dr_dra_rag_agă_gă#_ă#t_#ta_tat_ată_tă#	tine_dragă_tată
+#dr_dra_rag_agă_gă#_ă#t_#ta_tat_ată_tă#_ă#s_#su_sun_unt_nt#	dragă_tată_sunt
+#ta_tat_ată_tă#_ă#s_#su_sun_unt_nt#_t#a_#aş_aşa_şa#	tată_sunt_aşa
+#su_sun_unt_nt#_t#a_#aş_aşa_şa#_a#d_#de_de#	sunt_aşa_de
+#aş_aşa_şa#_a#d_#de_de#_e#m_#mâ_mân_ând_ndr_dră_ră#	aşa_de_mândră
+#de_de#_e#m_#mâ_mân_ând_ndr_dră_ră#_ă#a_#ar_ar#	de_mândră_ar
+#mâ_mân_ând_ndr_dră_ră#_ă#a_#ar_ar#_r#t_#tr_tre_reb_ebu_bui_ui#	mândră_ar_trebui
+#ar_ar#_r#t_#tr_tre_reb_ebu_bui_ui#_i#p_#po_poa_oat_ate_te#	ar_trebui_poate
+#tr_tre_reb_ebu_bui_ui#_i#p_#po_poa_oat_ate_te#_e#a_#ar_ar#	trebui_poate_ar
+#po_poa_oat_ate_te#_e#a_#ar_ar#_r#t_#tr_tre_reb_ebu_bui_ui#	poate_ar_trebui
+#ar_ar#_r#t_#tr_tre_reb_ebu_bui_ui#_i#s_#să_să#	ar_trebui_să
+#tr_tre_reb_ebu_bui_ui#_i#s_#să_să#_ă#f_#fa_fac_ac#	trebui_să_fac
+#să_să#_ă#f_#fa_fac_ac#_c#m_#ma_mai_ai#	să_fac_mai
+#fa_fac_ac#_c#m_#ma_mai_ai#_i#m_#mu_mul_ult_lte_te#	fac_mai_multe
+#ma_mai_ai#_i#m_#mu_mul_ult_lte_te#_e#l_#lu_luc_ucr_cru_rur_uri_ri#	mai_multe_lucruri
+#mu_mul_ult_lte_te#_e#l_#lu_luc_ucr_cru_rur_uri_ri#_i#d_#da_da#	multe_lucruri_da
+#lu_luc_ucr_cru_rur_uri_ri#_i#d_#da_da#_a#s_#sa_sau_au#	lucruri_da_sau
+#da_da#_a#s_#sa_sau_au#_u#a_#aş_aş#	da_sau_aş
+#sa_sau_au#_u#a_#aş_aş#_ş#p_#pu_put_ute_tea_ea#	sau_aş_putea
+#aş_aş#_ş#p_#pu_put_ute_tea_ea#_a#s_#să_să#	aş_putea_să
+#pu_put_ute_tea_ea#_a#s_#să_să#_ă#m_#mă_mă#	putea_să_mă
+#să_să#_ă#m_#mă_mă#_ă#i_#in_int_nti_tin_ind_nd#	să_mă_intind
+#mă_mă#_ă#i_#in_int_nti_tin_ind_nd#_d#u_#un_un#	mă_intind_un
+#in_int_nti_tin_ind_nd#_d#u_#un_un#_n#p_#pi_pic_ic#	intind_un_pic
+#un_un#_n#p_#pi_pic_ic#_c#ă_#ăs_ăst_sta_ta#	un_pic_ăsta
+#pi_pic_ic#_c#ă_#ăs_ăst_sta_ta#_a#e_#es_est_ste_te#	pic_ăsta_este
+#ăs_ăst_sta_ta#_a#e_#es_est_ste_te#_e#m_#mo_mot_oti_tiv_iv#	ăsta_este_motiv
+#es_est_ste_te#_e#m_#mo_mot_oti_tiv_iv#_v#s_#să_să#	este_motiv_să
+#mo_mot_oti_tiv_iv#_v#s_#să_să#_ă#s_#să_săr_ărb_rbă_băt_ăto_tor_ori_rim_im#	motiv_să_sărbătorim
+#să_să#_ă#s_#să_săr_ărb_rbă_băt_ăto_tor_ori_rim_im#_m#c_#ce_ce#	să_sărbătorim_ce
+#să_săr_ărb_rbă_băt_ăto_tor_ori_rim_im#_m#c_#ce_ce#_e#z_#zi_zic_ici_ci#	sărbătorim_ce_zici
+#ce_ce#_e#z_#zi_zic_ici_ci#_i#s_#să_să#	ce_zici_să
+#zi_zic_ici_ci#_i#s_#să_să#_ă#o_#o#	zici_să_o
+#să_să#_ă#o_#o#_o#d_#du_duc_uce_cem_em#	să_o_ducem
+#o#_o#d_#du_duc_uce_cem_em#_m#l_#la_la#	o_ducem_la
+#du_duc_uce_cem_em#_m#l_#la_la#_a#u_#un_un#	ducem_la_un
+#la_la#_a#u_#un_un#_n#r_#re_res_est_sta_tau_aur_ura_ran_ant_nt#	la_un_restaurant
+#un_un#_n#r_#re_res_est_sta_tau_aur_ura_ran_ant_nt#_t#b_#bu_bun_un#	un_restaurant_bun
+#re_res_est_sta_tau_aur_ura_ran_ant_nt#_t#b_#bu_bun_un#_n#n_#nu_nu#	restaurant_bun_nu
+#bu_bun_un#_n#n_#nu_nu#_u#f_#fa_fac_ace_cem_em#	bun_nu_facem
+#nu_nu#_u#f_#fa_fac_ace_cem_em#_m#a_#as_ast_sta_ta#	nu_facem_asta
+#fa_fac_ace_cem_em#_m#a_#as_ast_sta_ta#_a#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#	facem_asta_niciodată
+#as_ast_sta_ta#_a#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#a_#as_ast_sta_ta#	asta_niciodată_asta
+#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#a_#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#	niciodată_asta_pentru
+#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#_u#c_#că_că#	asta_pentru_că
+#pe_pen_ent_ntr_tru_ru#_u#c_#că_că#_ă#p_#pâ_pân_ână_nă#	pentru_că_până
+#că_că#_ă#p_#pâ_pân_ână_nă#_ă#a_#ac_acu_cum_um#	că_până_acum
+#pâ_pân_ână_nă#_ă#a_#ac_acu_cum_um#_m#n_#nu_nu#	până_acum_nu
+#ac_acu_cum_um#_m#n_#nu_nu#_u#a_#a#	acum_nu_a
+#nu_nu#_u#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	nu_a_făcut
+#a#_a#f_#fă_făc_ăcu_cut_ut#_t#n_#ni_nim_imi_mic_ic#	a_făcut_nimic
+#fă_făc_ăcu_cut_ut#_t#n_#ni_nim_imi_mic_ic#_c#c_#ca_car_are_re#	făcut_nimic_care
+#ni_nim_imi_mic_ic#_c#c_#ca_car_are_re#_e#s_#să_să#	nimic_care_să
+#ca_car_are_re#_e#s_#să_să#_ă#m_#me_mer_eri_rit_ite_te#	care_să_merite
+#să_să#_ă#m_#me_mer_eri_rit_ite_te#_e#s_#să_săr_ărb_rbă_băt_ăto_tor_ori_rit_it#	să_merite_sărbătorit
+#me_mer_eri_rit_ite_te#_e#s_#să_săr_ărb_rbă_băt_ăto_tor_ori_rit_it#_t#n_#nu_nu#	merite_sărbătorit_nu
+#să_săr_ărb_rbă_băt_ăto_tor_ori_rit_it#_t#n_#nu_nu#_u#e_#es_est_ste_te#	sărbătorit_nu_este
+#nu_nu#_u#e_#es_est_ste_te#_e#a_#ad_ade_dev_evă_văr_ăra_rat_at#	nu_este_adevărat
+#es_est_ste_te#_e#a_#ad_ade_dev_evă_văr_ăra_rat_at#_t#a_#ai_ai#	este_adevărat_ai
+#ad_ade_dev_evă_văr_ăra_rat_at#_t#a_#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#	adevărat_ai_reuşit
+#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#_t#a_#ai_ai#	ai_reuşit_ai
+#re_reu_euş_uşi_şit_it#_t#a_#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#	reuşit_ai_reuşit
+#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#_t#a_#ai_ai#	ai_reuşit_ai
+#re_reu_euş_uşi_şit_it#_t#a_#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#	reuşit_ai_făcut
+#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#_t#u_#un_un#	ai_făcut_un
+#fă_făc_ăcu_cut_ut#_t#u_#un_un#_n#b_#bo_boo_oom_om#	făcut_un_boom
+#un_un#_n#b_#bo_boo_oom_om#_m#i_#in_in#	un_boom_in
+#bo_boo_oom_om#_m#i_#in_in#_n#t_#to_toi_oi#	boom_in_toi
+#in_in#_n#t_#to_toi_oi#_i#a_#ai_ai#	in_toi_ai
+#to_toi_oi#_i#a_#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#	toi_ai_reuşit
+#ai_ai#_i#r_#re_reu_euş_uşi_şit_it#_t#î_#în_în#	ai_reuşit_în
+#re_reu_euş_uşi_şit_it#_t#î_#în_în#_n#r_#re_reg_egu_gul_ulă_lă#	reuşit_în_regulă
+#în_în#_n#r_#re_reg_egu_gul_ulă_lă#_ă#d_#de_dec_eci_ci#	în_regulă_deci
+#re_reg_egu_gul_ulă_lă#_ă#d_#de_dec_eci_ci#_i#v_#vi_vin_ine_ner_eri_ri#	regulă_deci_vineri
+#de_dec_eci_ci#_i#v_#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#	deci_vineri_seară
+#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#_ă#s_#să_să#	vineri_seară_să
+#se_sea_ear_ară_ră#_ă#s_#să_să#_ă#o_#o#	seară_să_o
+#să_să#_ă#o_#o#_o#d_#du_duc_uce_cem_em#	să_o_ducem
+#o#_o#d_#du_duc_uce_cem_em#_m#l_#la_la#	o_ducem_la
+#du_duc_uce_cem_em#_m#l_#la_la#_a#c_#ci_cin_ină_nă#	ducem_la_cină
+#la_la#_a#c_#ci_cin_ină_nă#_ă#b_#bi_bin_ine_ne#	la_cină_bine
+#ci_cin_ină_nă#_ă#b_#bi_bin_ine_ne#_e#v_#vi_vin_ine_ner_eri_ri#	cină_bine_vineri
+#bi_bin_ine_ne#_e#v_#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#	bine_vineri_seară
+#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#_ă#r_#ră_răm_ămâ_mân_âne_ne#	vineri_seară_rămâne
+#se_sea_ear_ară_ră#_ă#r_#ră_răm_ămâ_mân_âne_ne#_e#c_#ca_car_are_re#	seară_rămâne_care
+#ră_răm_ămâ_mân_âne_ne#_e#c_#ca_car_are_re#_e#i_#im_imi_mi#	rămâne_care_imi
+#ca_car_are_re#_e#i_#im_imi_mi#_i#a_#ad_adu_duc_uce_ce#	care_imi_aduce
+#im_imi_mi#_i#a_#ad_adu_duc_uce_ce#_e#a_#am_ami_min_int_nte_te#	imi_aduce_aminte
+#ad_adu_duc_uce_ce#_e#a_#am_ami_min_int_nte_te#_e#n_#nu_nu#	aduce_aminte_nu
+#am_ami_min_int_nte_te#_e#n_#nu_nu#_u#o_#o#	aminte_nu_o
+#nu_nu#_u#o_#o#_o#s_#să_să#	nu_o_să
+#o#_o#s_#să_să#_ă#c_#cr_cre_rez_ezi_zi#	o_să_crezi
+#să_să#_ă#c_#cr_cre_rez_ezi_zi#_i#a_#as_ast_sta_ta#	să_crezi_asta
+#cr_cre_rez_ezi_zi#_i#a_#as_ast_sta_ta#_a#a_#am_am#	crezi_asta_am
+#as_ast_sta_ta#_a#a_#am_am#_m#i_#in_int_ntâ_tâl_âln_lni_nit_it#	asta_am_intâlnit
+#am_am#_m#i_#in_int_ntâ_tâl_âln_lni_nit_it#_t#c_#cu_cu#	am_intâlnit_cu
+#in_int_ntâ_tâl_âln_lni_nit_it#_t#c_#cu_cu#_u#t_#ti_tin_ina_na#	intâlnit_cu_tina
+#cu_cu#_u#t_#ti_tin_ina_na#_a#ş_#şi_şi#	cu_tina_şi
+#ti_tin_ina_na#_a#ş_#şi_şi#_i#m_#mi_mit_itc_tch_ch#	tina_şi_mitch
+#şi_şi#_i#m_#mi_mit_itc_tch_ch#_h#l_#li_lie_ieb_ebe_ber_erm_rma_man_an#	şi_mitch_lieberman
+#mi_mit_itc_tch_ch#_h#l_#li_lie_ieb_ebe_ber_erm_rma_man_an#_n#l_#la_la#	mitch_lieberman_la
+#li_lie_ieb_ebe_ber_erm_rma_man_an#_n#l_#la_la#_a#a_#al_ali_lim_ime_men_ent_nta_tar_ară_ră#	lieberman_la_alimentară
+#la_la#_a#a_#al_ali_lim_ime_men_ent_nta_tar_ară_ră#_ă#ş_#şi_şi#	la_alimentară_şi
+#al_ali_lim_ime_men_ent_nta_tar_ară_ră#_ă#ş_#şi_şi#_i#a_#au_au#	alimentară_şi_au
+#şi_şi#_i#a_#au_au#_u#i_#in_inv_nvi_vit_ita_tat_at#	şi_au_invitat
+#au_au#_u#i_#in_inv_nvi_vit_ita_tat_at#_t#l_#la_la#	au_invitat_la
+#in_inv_nvi_vit_ita_tat_at#_t#l_#la_la#_a#e_#ei_ei#	invitat_la_ei
+#la_la#_a#e_#ei_ei#_i#p_#pe_pen_ent_ntr_tru_ru#	la_ei_pentru
+#ei_ei#_i#p_#pe_pen_ent_ntr_tru_ru#_u#c_#ci_cin_ină_nă#	ei_pentru_cină
+#pe_pen_ent_ntr_tru_ru#_u#c_#ci_cin_ină_nă#_ă#s_#se_ser_eri_rio_ios_os#	pentru_cină_serios
+#ci_cin_ină_nă#_ă#s_#se_ser_eri_rio_ios_os#_s#c_#cu_cui_ui#	cină_serios_cui
+#se_ser_eri_rio_ios_os#_s#c_#cu_cui_ui#_i#i_#ii_ii#	serios_cui_ii
+#cu_cui_ui#_i#i_#ii_ii#_i#p_#pa_pas_asă_să#	cui_ii_pasă
+#ii_ii#_i#p_#pa_pas_asă_să#_ă#n_#nu_nu#	ii_pasă_nu
+#pa_pas_asă_să#_ă#n_#nu_nu#_u#ş_#şt_şti_tii_ii#	pasă_nu_ştii
+#nu_nu#_u#ş_#şt_şti_tii_ii#_i#c_#ce_ce#	nu_ştii_ce
+#şt_şti_tii_ii#_i#c_#ce_ce#_e#s_#sp_spu_pun_une_ne#	ştii_ce_spune
+#ce_ce#_e#s_#sp_spu_pun_une_ne#_e#l_#lu_lum_ume_mea_ea#	ce_spune_lumea
+#sp_spu_pun_une_ne#_e#l_#lu_lum_ume_mea_ea#_a#d_#de_des_esp_spr_pre_re#	spune_lumea_despre
+#lu_lum_ume_mea_ea#_a#d_#de_des_esp_spr_pre_re#_e#e_#ei_ei#	lumea_despre_ei
+#de_des_esp_spr_pre_re#_e#e_#ei_ei#_i#d_#di_din_in#	despre_ei_din
+#ei_ei#_i#d_#di_din_in#_n#c_#câ_cât_âte_te#	ei_din_câte
+#di_din_in#_n#c_#câ_cât_âte_te#_e#ş_#şt_şti_tiu_iu#	din_câte_ştiu
+#câ_cât_âte_te#_e#ş_#şt_şti_tiu_iu#_u#n_#nu_nu#	câte_ştiu_nu
+#şt_şti_tiu_iu#_u#n_#nu_nu#_u#s_#su_sun_unt_nt#	ştiu_nu_sunt
+#nu_nu#_u#s_#su_sun_unt_nt#_t#f_#fi_fid_ide_del_eli_li#	nu_sunt_fideli
+#su_sun_unt_nt#_t#f_#fi_fid_ide_del_eli_li#_i#n_#nu_nu#	sunt_fideli_nu
+#fi_fid_ide_del_eli_li#_i#n_#nu_nu#_u#s_#su_sun_unt_nt#	fideli_nu_sunt
+#nu_nu#_u#s_#su_sun_unt_nt#_t#f_#fi_fid_ide_del_eli_li#	nu_sunt_fideli
+#su_sun_unt_nt#_t#f_#fi_fid_ide_del_eli_li#_i#a_#ad_adi_dic_ică_că#	sunt_fideli_adică
+#fi_fid_ide_del_eli_li#_i#a_#ad_adi_dic_ică_că#_ă#f_#fa_fac_ac#	fideli_adică_fac
+#ad_adi_dic_ică_că#_ă#f_#fa_fac_ac#_c#s_#sc_sch_chi_him_imb_mb#	adică_fac_schimb
+#fa_fac_ac#_c#s_#sc_sch_chi_him_imb_mb#_b#d_#de_de#	fac_schimb_de
+#sc_sch_chi_him_imb_mb#_b#d_#de_de#_e#n_#ne_nev_eve_ves_est_ste_te#	schimb_de_neveste
+#de_de#_e#n_#ne_nev_eve_ves_est_ste_te#_e#s_#su_sun_unt_nt#	de_neveste_sunt
+#ne_nev_eve_ves_est_ste_te#_e#s_#su_sun_unt_nt#_t#i_#iu_iub_ubi_bit_ito_tor_ori_ri#	neveste_sunt_iubitori
+#su_sun_unt_nt#_t#i_#iu_iub_ubi_bit_ito_tor_ori_ri#_i#f_#fa_fac_ac#	sunt_iubitori_fac
+#iu_iub_ubi_bit_ito_tor_ori_ri#_i#f_#fa_fac_ac#_c#p_#pa_par_art_rte_te#	iubitori_fac_parte
+#fa_fac_ac#_c#p_#pa_par_art_rte_te#_e#d_#di_din_in#	fac_parte_din
+#pa_par_art_rte_te#_e#d_#di_din_in#_n#s_#st_sti_til_ilu_lul_ul#	parte_din_stilul
+#di_din_in#_n#s_#st_sti_til_ilu_lul_ul#_l#d_#de_de#	din_stilul_de
+#st_sti_til_ilu_lul_ul#_l#d_#de_de#_e#v_#vi_via_iaţ_aţă_ţă#	stilul_de_viaţă
+#de_de#_e#v_#vi_via_iaţ_aţă_ţă#_ă#d_#da_da#	de_viaţă_da
+#vi_via_iaţ_aţă_ţă#_ă#d_#da_da#_a#ş_#şi_şi#	viaţă_da_şi
+#da_da#_a#ş_#şi_şi#_i#s_#si_sin_inc_nce_cer_er#	da_şi_sincer
+#şi_şi#_i#s_#si_sin_inc_nce_cer_er#_r#s_#su_sun_unt_nt#	şi_sincer_sunt
+#si_sin_inc_nce_cer_er#_r#s_#su_sun_unt_nt#_t#u_#un_un#	sincer_sunt_un
+#su_sun_unt_nt#_t#u_#un_un#_n#p_#pi_pic_ic#	sunt_un_pic
+#un_un#_n#p_#pi_pic_ic#_c#i_#in_ing_ngr_gri_rij_ijo_jor_ora_rat_ată_tă#	un_pic_ingrijorată
+#pi_pic_ic#_c#i_#in_ing_ngr_gri_rij_ijo_jor_ora_rat_ată_tă#_ă#s_#se_se#	pic_ingrijorată_se
+#in_ing_ngr_gri_rij_ijo_jor_ora_rat_ată_tă#_ă#s_#se_se#_e#p_#pa_par_are_re#	ingrijorată_se_pare
+#se_se#_e#p_#pa_par_are_re#_e#c_#că_că#	se_pare_că
+#pa_par_are_re#_e#c_#că_că#_ă#ş_#şt_şti_tii_ii#	pare_că_ştii
+#că_că#_ă#ş_#şt_şti_tii_ii#_i#a_#ar_arg_rgo_gou_oul_ul#	că_ştii_argoul
+#şt_şti_tii_ii#_i#a_#ar_arg_rgo_gou_oul_ul#_l#ş_#şi_şi#	ştii_argoul_şi
+#ar_arg_rgo_gou_oul_ul#_l#ş_#şi_şi#_i#c_#ce_ce#	argoul_şi_ce
+#şi_şi#_i#c_#ce_ce#_e#a_#ai_ai#	şi_ce_ai
+#ce_ce#_e#a_#ai_ai#_i#s_#sp_spu_pus_us#	ce_ai_spus
+#ai_ai#_i#s_#sp_spu_pus_us#_s#a_#am_am#	ai_spus_am
+#sp_spu_pus_us#_s#a_#am_am#_m#s_#sp_spu_pus_us#	spus_am_spus
+#am_am#_m#s_#sp_spu_pus_us#_s#c_#că_că#	am_spus_că
+#sp_spu_pus_us#_s#c_#că_că#_ă#i_#ii_ii#	spus_că_ii
+#că_că#_ă#i_#ii_ii#_i#v_#vo_voi_oi#	că_ii_voi
+#ii_ii#_i#v_#vo_voi_oi#_i#a_#an_anu_nun_unţ_nţa_ţa#	ii_voi_anunţa
+#vo_voi_oi#_i#a_#an_anu_nun_unţ_nţa_ţa#_a#c_#ce_ce#	voi_anunţa_ce
+#an_anu_nun_unţ_nţa_ţa#_a#c_#ce_ce#_e#e_#e#	anunţa_ce_e
+#ce_ce#_e#e_#e#_e#d_#de_de#	ce_e_de
+#e#_e#d_#de_de#_e#a_#an_anu_nun_unţ_nţa_ţat_at#	e_de_anunţat
+#de_de#_e#a_#an_anu_nun_unţ_nţa_ţat_at#_t#n_#nu_nu#	de_anunţat_nu
+#an_anu_nun_unţ_nţa_ţat_at#_t#n_#nu_nu#_u#ş_#şt_şti_tia_iam_am#	anunţat_nu_ştiam
+#nu_nu#_u#ş_#şt_şti_tia_iam_am#_m#c_#ce_ce#	nu_ştiam_ce
+#şt_şti_tia_iam_am#_m#c_#ce_ce#_e#a_#al_alt_ltc_tce_cev_eva_va#	ştiam_ce_altceva
+#ce_ce#_e#a_#al_alt_ltc_tce_cev_eva_va#_a#s_#să_să#	ce_altceva_să
+#al_alt_ltc_tce_cev_eva_va#_a#s_#să_să#_ă#s_#sp_spu_pun_un#	altceva_să_spun
+#să_să#_ă#s_#sp_spu_pun_un#_n#d_#de_dec_ecâ_cât_ât#	să_spun_decât
+#sp_spu_pun_un#_n#d_#de_dec_ecâ_cât_ât#_t#e_#ev_evi_vid_ide_den_ent_nt#	spun_decât_evident
+#de_dec_ecâ_cât_ât#_t#e_#ev_evi_vid_ide_den_ent_nt#_t#c_#că_că#	decât_evident_că
+#ev_evi_vid_ide_den_ent_nt#_t#c_#că_că#_ă#n_#nu_nu#	evident_că_nu
+#că_că#_ă#n_#nu_nu#_u#m_#me_mer_erg_rge_gem_em#	că_nu_mergem
+#nu_nu#_u#m_#me_mer_erg_rge_gem_em#_m#b_#bi_bin_ine_ne#	nu_mergem_bine
+#me_mer_erg_rge_gem_em#_m#b_#bi_bin_ine_ne#_e#b_#bi_bin_ine_ne#	mergem_bine_bine
+#bi_bin_ine_ne#_e#b_#bi_bin_ine_ne#_e#p_#pe_pen_ent_ntr_tru_ru#	bine_bine_pentru
+#bi_bin_ine_ne#_e#p_#pe_pen_ent_ntr_tru_ru#_u#c_#că_că#	bine_pentru_că
+#pe_pen_ent_ntr_tru_ru#_u#c_#că_că#_ă#n_#ni_nic_ici_ci#	pentru_că_nici
+#că_că#_ă#n_#ni_nic_ici_ci#_i#e_#eu_eu#	că_nici_eu
+#ni_nic_ici_ci#_i#e_#eu_eu#_u#n_#nu_nu#	nici_eu_nu
+#eu_eu#_u#n_#nu_nu#_u#v_#vr_vre_rea_eau_au#	eu_nu_vreau
+#nu_nu#_u#v_#vr_vre_rea_eau_au#_u#s_#să_să#	nu_vreau_să
+#vr_vre_rea_eau_au#_u#s_#să_să#_ă#m_#me_mer_erg_rg#	vreau_să_merg
+#să_să#_ă#m_#me_mer_erg_rg#_g#d_#de_dec_ecâ_cât_ât#	să_merg_decât
+#me_mer_erg_rg#_g#d_#de_dec_ecâ_cât_ât#_t#d_#da_dac_acă_că#	merg_decât_dacă
+#de_dec_ecâ_cât_ât#_t#d_#da_dac_acă_că#_ă#t_#tu_tu#	decât_dacă_tu
+#da_dac_acă_că#_ă#t_#tu_tu#_u#v_#vr_vre_rei_ei#	dacă_tu_vrei
+#tu_tu#_u#v_#vr_vre_rei_ei#_i#n_#nu_nu#	tu_vrei_nu
+#vr_vre_rei_ei#_i#n_#nu_nu#_u#n_#nu_nu#	vrei_nu_nu
+#nu_nu#_u#n_#nu_nu#_u#e_#eu_eu#	nu_nu_eu
+#nu_nu#_u#e_#eu_eu#_u#n_#nu_nu#	nu_eu_nu
+#eu_eu#_u#n_#nu_nu#_u#v_#vr_vre_rea_eau_au#	eu_nu_vreau
+#nu_nu#_u#v_#vr_vre_rea_eau_au#_u#s_#să_să#	nu_vreau_să
+#vr_vre_rea_eau_au#_u#s_#să_să#_ă#m_#me_mer_erg_rg#	vreau_să_merg
+#să_să#_ă#m_#me_mer_erg_rg#_g#d_#de_de#	să_merg_de
+#me_mer_erg_rg#_g#d_#de_de#_e#c_#ce_ce#	merg_de_ce
+#de_de#_e#c_#ce_ce#_e#t_#tu_tu#	de_ce_tu
+#ce_ce#_e#t_#tu_tu#_u#v_#vr_vre_rei_ei#	ce_tu_vrei
+#tu_tu#_u#v_#vr_vre_rei_ei#_i#s_#să_să#	tu_vrei_să
+#vr_vre_rei_ei#_i#s_#să_să#_ă#m_#me_mer_erg_rgi_gi#	vrei_să_mergi
+#să_să#_ă#m_#me_mer_erg_rgi_gi#_i#n_#nu_nu#	să_mergi_nu
+#me_mer_erg_rgi_gi#_i#n_#nu_nu#_u#n_#nu_nu#	mergi_nu_nu
+#nu_nu#_u#n_#nu_nu#_u#e_#eu_eu#	nu_nu_eu
+#nu_nu#_u#e_#eu_eu#_u#n_#nu_nu#	nu_eu_nu
+#eu_eu#_u#n_#nu_nu#_u#a_#aş_aş#	eu_nu_aş
+#nu_nu#_u#a_#aş_aş#_ş#l_#lă_lăs_ăsa_sa#	nu_aş_lăsa
+#aş_aş#_ş#l_#lă_lăs_ăsa_sa#_a#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#	aş_lăsa_niciodată
+#lă_lăs_ăsa_sa#_a#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#u_#un_un#	lăsa_niciodată_un
+#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#u_#un_un#_n#a_#al_alt_lt#	niciodată_un_alt
+#un_un#_n#a_#al_alt_lt#_t#b_#bă_băr_ărb_rba_bat_at#	un_alt_bărbat
+#al_alt_lt#_t#b_#bă_băr_ărb_rba_bat_at#_t#s_#să_să#	alt_bărbat_să
+#bă_băr_ărb_rba_bat_at#_t#s_#să_să#_ă#t_#te_te#	bărbat_să_te
+#să_să#_ă#t_#te_te#_e#a_#at_ati_tin_ing_ngă_gă#	să_te_atingă
+#te_te#_e#a_#at_ati_tin_ing_ngă_gă#_ă#d_#da_da#	te_atingă_da
+#at_ati_tin_ing_ngă_gă#_ă#d_#da_da#_a#ş_#şi_şi#	atingă_da_şi
+#da_da#_a#ş_#şi_şi#_i#e_#eu_eu#	da_şi_eu
+#şi_şi#_i#e_#eu_eu#_u#n_#nu_nu#	şi_eu_nu
+#eu_eu#_u#n_#nu_nu#_u#a_#aş_aş#	eu_nu_aş
+#nu_nu#_u#a_#aş_aş#_ş#l_#lă_lăs_ăsa_sa#	nu_aş_lăsa
+#aş_aş#_ş#l_#lă_lăs_ăsa_sa#_a#n_#ni_nic_ico_cod_oda_dat_ată_tă#	aş_lăsa_nicodată
+#lă_lăs_ăsa_sa#_a#n_#ni_nic_ico_cod_oda_dat_ată_tă#_ă#o_#o#	lăsa_nicodată_o
+#ni_nic_ico_cod_oda_dat_ată_tă#_ă#o_#o#_o#a_#al_alt_ltă_tă#	nicodată_o_altă
+#o#_o#a_#al_alt_ltă_tă#_ă#f_#fe_fem_eme_mei_eie_ie#	o_altă_femeie
+#al_alt_ltă_tă#_ă#f_#fe_fem_eme_mei_eie_ie#_e#s_#să_să#	altă_femeie_să
+#fe_fem_eme_mei_eie_ie#_e#s_#să_să#_ă#t_#te_te#	femeie_să_te
+#să_să#_ă#t_#te_te#_e#a_#at_ati_tin_ing_ngă_gă#	să_te_atingă
+#te_te#_e#a_#at_ati_tin_ing_ngă_gă#_ă#d_#da_da#	te_atingă_da
+#at_ati_tin_ing_ngă_gă#_ă#d_#da_da#_a#ş_#şi_şi#	atingă_da_şi
+#da_da#_a#ş_#şi_şi#_i#e_#eu_eu#	da_şi_eu
+#şi_şi#_i#e_#eu_eu#_u#n_#nu_nu#	şi_eu_nu
+#eu_eu#_u#n_#nu_nu#_u#a_#aş_aş#	eu_nu_aş
+#nu_nu#_u#a_#aş_aş#_ş#l_#lă_lăs_ăsa_sa#	nu_aş_lăsa
+#aş_aş#_ş#l_#lă_lăs_ăsa_sa#_a#n_#ni_nic_ico_cod_oda_dat_ată_tă#	aş_lăsa_nicodată
+#lă_lăs_ăsa_sa#_a#n_#ni_nic_ico_cod_oda_dat_ată_tă#_ă#o_#o#	lăsa_nicodată_o
+#ni_nic_ico_cod_oda_dat_ată_tă#_ă#o_#o#_o#a_#al_alt_ltă_tă#	nicodată_o_altă
+#o#_o#a_#al_alt_ltă_tă#_ă#f_#fe_fem_eme_mei_eie_ie#	o_altă_femeie
+#al_alt_ltă_tă#_ă#f_#fe_fem_eme_mei_eie_ie#_e#s_#să_să#	altă_femeie_să
+#fe_fem_eme_mei_eie_ie#_e#s_#să_să#_ă#t_#te_te#	femeie_să_te
+#să_să#_ă#t_#te_te#_e#a_#at_ati_tin_ing_ngă_gă#	să_te_atingă
+#te_te#_e#a_#at_ati_tin_ing_ngă_gă#_ă#n_#nu_nu#	te_atingă_nu
+#at_ati_tin_ing_ngă_gă#_ă#n_#nu_nu#_u#e_#e#	atingă_nu_e
+#nu_nu#_u#e_#e#_e#a_#ad_ade_dev_evă_văr_ăra_rat_at#	nu_e_adevărat
+#e#_e#a_#ad_ade_dev_evă_văr_ăra_rat_at#_t#d_#do_doa_oar_ar#	e_adevărat_doar
+#ad_ade_dev_evă_văr_ăra_rat_at#_t#d_#do_doa_oar_ar#_r#l_#l#	adevărat_doar_l
+#do_doa_oar_ar#_r#l_#l#_l#ş_#şi_şi#	doar_l_şi
+#l#_l#ş_#şi_şi#_i#t_#te_te#	l_şi_te
+#şi_şi#_i#t_#te_te#_e#c_#că_că#	şi_te_că
+#te_te#_e#c_#că_că#_ă#i_#iţ_iţi_ţi#	te_că_iţi
+#că_că#_ă#i_#iţ_iţi_ţi#_i#c_#co_con_onv_nvi_vin_in#	că_iţi_convin
+#iţ_iţi_ţi#_i#c_#co_con_onv_nvi_vin_in#_n#t_#to_toa_oat_ate_te#	iţi_convin_toate
+#co_con_onv_nvi_vin_in#_n#t_#to_toa_oat_ate_te#_e#c_#ce_cer_eri_rin_inţ_nţe_ţel_ele_le#	convin_toate_cerinţele
+#to_toa_oat_ate_te#_e#c_#ce_cer_eri_rin_inţ_nţe_ţel_ele_le#_e#d_#da_dav_ave_ve#	toate_cerinţele_dave
+#ce_cer_eri_rin_inţ_nţe_ţel_ele_le#_e#d_#da_dav_ave_ve#_e#m_#mu_mul_ulţ_lţu_ţum_ume_mes_esc_sc#	cerinţele_dave_mulţumesc
+#da_dav_ave_ve#_e#m_#mu_mul_ulţ_lţu_ţum_ume_mes_esc_sc#_c#c_#că_că#	dave_mulţumesc_că
+#mu_mul_ulţ_lţu_ţum_ume_mes_esc_sc#_c#c_#că_că#_ă#a_#ai_ai#	mulţumesc_că_ai
+#că_că#_ă#a_#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#	că_ai_făcut
+#ai_ai#_i#f_#fă_făc_ăcu_cut_ut#_t#p_#po_pol_oli_liţ_iţa_ţa#	ai_făcut_poliţa
+#fă_făc_ăcu_cut_ut#_t#p_#po_pol_oli_liţ_iţa_ţa#_a#a_#as_ast_sta_ta#	făcut_poliţa_asta
+#po_pol_oli_liţ_iţa_ţa#_a#a_#as_ast_sta_ta#_a#a_#aş_aşa_şa#	poliţa_asta_aşa
+#as_ast_sta_ta#_a#a_#aş_aşa_şa#_a#d_#de_de#	asta_aşa_de
+#aş_aşa_şa#_a#d_#de_de#_e#r_#re_rep_epe_ped_ede_de#	aşa_de_repede
+#de_de#_e#r_#re_rep_epe_ped_ede_de#_e#s_#si_sin_inc_nce_cer_er#	de_repede_sincer
+#re_rep_epe_ped_ede_de#_e#s_#si_sin_inc_nce_cer_er#_r#s_#să_să#	repede_sincer_să
+#si_sin_inc_nce_cer_er#_r#s_#să_să#_ă#f_#fi_fiu_iu#	sincer_să_fiu
+#să_să#_ă#f_#fi_fiu_iu#_u#b_#bo_bob_ob#	să_fiu_bob
+#fi_fiu_iu#_u#b_#bo_bob_ob#_b#n_#nu_nu#	fiu_bob_nu
+#bo_bob_ob#_b#n_#nu_nu#_u#a_#aş_aş#	bob_nu_aş
+#nu_nu#_u#a_#aş_aş#_ş#p_#pu_put_ute_tea_ea#	nu_aş_putea
+#aş_aş#_ş#p_#pu_put_ute_tea_ea#_a#d_#do_dor_orm_rmi_mi#	aş_putea_dormi
+#pu_put_ute_tea_ea#_a#d_#do_dor_orm_rmi_mi#_i#d_#da_dac_acă_că#	putea_dormi_dacă
+#do_dor_orm_rmi_mi#_i#d_#da_dac_acă_că#_ă#a_#aş_aş#	dormi_dacă_aş
+#da_dac_acă_că#_ă#a_#aş_aş#_ş#ş_#şt_şti_tii_ii#	dacă_aş_ştii
+#aş_aş#_ş#ş_#şt_şti_tii_ii#_i#c_#că_că#	aş_ştii_că
+#şt_şti_tii_ii#_i#c_#că_că#_ă#f_#fa_fam_ami_mil_ili_lia_ia#	ştii_că_familia
+#că_că#_ă#f_#fa_fam_ami_mil_ili_lia_ia#_a#t_#ta_ta#	că_familia_ta
+#fa_fam_ami_mil_ili_lia_ia#_a#t_#ta_ta#_a#n_#nu_nu#	familia_ta_nu
+#ta_ta#_a#n_#nu_nu#_u#e_#e#	ta_nu_e
+#nu_nu#_u#e_#e#_e#p_#pr_pro_rot_ote_tej_eja_jat_ată_tă#	nu_e_protejată
+#e#_e#p_#pr_pro_rot_ote_tej_eja_jat_ată_tă#_ă#ş_#şt_şti_tii_ii#	e_protejată_ştii
+#pr_pro_rot_ote_tej_eja_jat_ată_tă#_ă#ş_#şt_şti_tii_ii#_i#n_#ni_nim_imi_mic_ic#	protejată_ştii_nimic
+#şt_şti_tii_ii#_i#n_#ni_nim_imi_mic_ic#_c#n_#nu_nu#	ştii_nimic_nu
+#ni_nim_imi_mic_ic#_c#n_#nu_nu#_u#e_#e#	nimic_nu_e
+#nu_nu#_u#e_#e#_e#m_#ma_mai_ai#	nu_e_mai
+#e#_e#m_#ma_mai_ai#_i#i_#im_imp_mpo_por_ort_rta_tan_ant_nt#	e_mai_important
+#ma_mai_ai#_i#i_#im_imp_mpo_por_ort_rta_tan_ant_nt#_t#c_#ca_ca#	mai_important_ca
+#im_imp_mpo_por_ort_rta_tan_ant_nt#_t#c_#ca_ca#_a#f_#fa_fam_ami_mil_ili_lia_ia#	important_ca_familia
+#ca_ca#_a#f_#fa_fam_ami_mil_ili_lia_ia#_a#t_#ta_tat_ată_tă#	ca_familia_tată
+#fa_fam_ami_mil_ili_lia_ia#_a#t_#ta_tat_ată_tă#_ă#n_#nu_nu#	familia_tată_nu
+#ta_tat_ată_tă#_ă#n_#nu_nu#_u#a_#ac_acu_cum_um#	tată_nu_acum
+#nu_nu#_u#a_#ac_acu_cum_um#_m#l_#la_lar_arr_rry_ry#	nu_acum_larry
+#ac_acu_cum_um#_m#l_#la_lar_arr_rry_ry#_y#l_#lu_luc_ucr_cre_rez_ez#	acum_larry_lucrez
+#la_lar_arr_rry_ry#_y#l_#lu_luc_ucr_cre_rez_ez#_z#v_#vo_voi_oia_iam_am#	larry_lucrez_voiam
+#lu_luc_ucr_cre_rez_ez#_z#v_#vo_voi_oia_iam_am#_m#ţ_#ţi_ţi#	lucrez_voiam_ţi
+#vo_voi_oia_iam_am#_m#ţ_#ţi_ţi#_i#s_#sp_spu_pun_un#	voiam_ţi_spun
+#ţi_ţi#_i#s_#sp_spu_pun_un#_n#c_#că_că#	ţi_spun_că
+#sp_spu_pun_un#_n#c_#că_că#_ă#a_#am_am#	spun_că_am
+#că_că#_ă#a_#am_am#_m#t_#te_ter_erm_rmi_min_ina_nat_at#	că_am_terminat
+#am_am#_m#t_#te_ter_erm_rmi_min_ina_nat_at#_t#d_#de_de#	am_terminat_de
+#te_ter_erm_rmi_min_ina_nat_at#_t#d_#de_de#_e#r_#re_rep_epa_par_ara_rat_at#	terminat_de_reparat
+#de_de#_e#r_#re_rep_epa_par_ara_rat_at#_t#c_#ca_cal_alc_lcu_cul_ula_lat_ato_tor_oru_rul_ul#	de_reparat_calculatorul
+#re_rep_epa_par_ara_rat_at#_t#c_#ca_cal_alc_lcu_cul_ula_lat_ato_tor_oru_rul_ul#_l#a_#a#	reparat_calculatorul_a
+#ca_cal_alc_lcu_cul_ula_lat_ato_tor_oru_rul_ul#_l#a_#a#_a#t_#tr_tre_reb_ebu_bui_uit_it#	calculatorul_a_trebuit
+#a#_a#t_#tr_tre_reb_ebu_bui_uit_it#_t#d_#do_doa_oar_ar#	a_trebuit_doar
+#tr_tre_reb_ebu_bui_uit_it#_t#d_#do_doa_oar_ar#_r#s_#să_să#	trebuit_doar_să
+#do_doa_oar_ar#_r#s_#să_să#_ă#ş_#şt_şte_ter_erg_rg#	doar_să_şterg
+#să_să#_ă#ş_#şt_şte_ter_erg_rg#_g#f_#fi_fiş_işi_şie_ier_ere_rel_ele_le#	să_şterg_fişierele
+#şt_şte_ter_erg_rg#_g#f_#fi_fiş_işi_şie_ier_ere_rel_ele_le#_e#a_#al_ale_lea_ea#	şterg_fişierele_alea
+#fi_fiş_işi_şie_ier_ere_rel_ele_le#_e#a_#al_ale_lea_ea#_a#t_#te_tem_emp_mpo_por_ora_rar_are_re#	fişierele_alea_temporare
+#al_ale_lea_ea#_a#t_#te_tem_emp_mpo_por_ora_rar_are_re#_e#e_#er_era_rau_au#	alea_temporare_erau
+#te_tem_emp_mpo_por_ora_rar_are_re#_e#e_#er_era_rau_au#_u#m_#mu_mul_ult_lte_te#	temporare_erau_multe
+#er_era_rau_au#_u#m_#mu_mul_ult_lte_te#_e#p_#po_poz_oze_ze#	erau_multe_poze
+#mu_mul_ult_lte_te#_e#p_#po_poz_oze_ze#_e#c_#cu_cu#	multe_poze_cu
+#po_poz_oze_ze#_e#c_#cu_cu#_u#f_#fa_fam_ami_mil_ili_lia_ia#	poze_cu_familia
+#cu_cu#_u#f_#fa_fam_ami_mil_ili_lia_ia#_a#m_#mu_mul_ult_lte_te#	cu_familia_multe
+#fa_fam_ami_mil_ili_lia_ia#_a#m_#mu_mul_ult_lte_te#_e#p_#po_poz_oze_ze#	familia_multe_poze
+#mu_mul_ult_lte_te#_e#p_#po_poz_oze_ze#_e#c_#cu_cu#	multe_poze_cu
+#po_poz_oze_ze#_e#c_#cu_cu#_u#f_#fa_fam_ami_mil_ili_lia_ia#	poze_cu_familia
+#cu_cu#_u#f_#fa_fam_ami_mil_ili_lia_ia#_a#o_#or_ori_ric_icu_cum_um#	cu_familia_oricum
+#fa_fam_ami_mil_ili_lia_ia#_a#o_#or_ori_ric_icu_cum_um#_m#a_#a#	familia_oricum_a
+#or_ori_ric_icu_cum_um#_m#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	oricum_a_făcut
+#a#_a#f_#fă_făc_ăcu_cut_ut#_t#p_#pl_plă_lăc_ăce_cer_ere_re#	a_făcut_plăcere
+#fă_făc_ăcu_cut_ut#_t#p_#pl_plă_lăc_ăce_cer_ere_re#_e#s_#să_să#	făcut_plăcere_să
+#pl_plă_lăc_ăce_cer_ere_re#_e#s_#să_să#_ă#v_#vă_vă#	plăcere_să_vă
+#să_să#_ă#v_#vă_vă#_ă#c_#cu_cun_uno_nos_osc_sc#	să_vă_cunosc
+#vă_vă#_ă#c_#cu_cun_uno_nos_osc_sc#_c#d_#dl_dle_le#	vă_cunosc_dle
+#cu_cun_uno_nos_osc_sc#_c#d_#dl_dle_le#_e#c_#co_coo_oop_ope_per_er#	cunosc_dle_cooper
+#dl_dle_le#_e#c_#co_coo_oop_ope_per_er#_r#c_#ce_ce#	dle_cooper_ce
+#co_coo_oop_ope_per_er#_r#c_#ce_ce#_e#f_#fi_fiu_iu#	cooper_ce_fiu
+#ce_ce#_e#f_#fi_fiu_iu#_u#g_#gr_gro_roz_oza_zav_av#	ce_fiu_grozav
+#fi_fiu_iu#_u#g_#gr_gro_roz_oza_zav_av#_v#a_#av_ave_veţ_eţi_ţi#	fiu_grozav_aveţi
+#gr_gro_roz_oza_zav_av#_v#a_#av_ave_veţ_eţi_ţi#_i#d_#da_da#	grozav_aveţi_da
+#av_ave_veţ_eţi_ţi#_i#d_#da_da#_a#e_#e#	aveţi_da_e
+#da_da#_a#e_#e#_e#u_#un_un#	da_e_un
+#e#_e#u_#un_un#_n#c_#co_cop_opi_pil_il#	e_un_copil
+#un_un#_n#c_#co_cop_opi_pil_il#_l#m_#mi_min_inu_nun_una_nat_at#	un_copil_minunat
+#co_cop_opi_pil_il#_l#m_#mi_min_inu_nun_una_nat_at#_t#d_#da_dav_ave_ve#	copil_minunat_dave
+#mi_min_inu_nun_una_nat_at#_t#d_#da_dav_ave_ve#_e#p_#po_pot_ot#	minunat_dave_pot
+#da_dav_ave_ve#_e#p_#po_pot_ot#_t#s_#să_să#	dave_pot_să
+#po_pot_ot#_t#s_#să_să#_ă#i_#iţ_iţi_ţi#	pot_să_iţi
+#să_să#_ă#i_#iţ_iţi_ţi#_i#c_#ce_cer_er#	să_iţi_cer
+#iţ_iţi_ţi#_i#c_#ce_cer_er#_r#o_#o#	iţi_cer_o
+#ce_cer_er#_r#o_#o#_o#f_#fa_fav_avo_voa_oar_are_re#	cer_o_favoare
+#o#_o#f_#fa_fav_avo_voa_oar_are_re#_e#l_#la_lar_arr_rry_ry#	o_favoare_larry
+#fa_fav_avo_voa_oar_are_re#_e#l_#la_lar_arr_rry_ry#_y#l_#la_lar_arr_rr#	favoare_larry_larr
+#la_lar_arr_rry_ry#_y#l_#la_lar_arr_rr#_r#c_#ce_ce#	larry_larr_ce
+#la_lar_arr_rr#_r#c_#ce_ce#_e#f_#fa_fac_aci_ci#	larr_ce_faci
+#ce_ce#_e#f_#fa_fac_aci_ci#_i#l_#la_lar_arr_rry_ry#	ce_faci_larry
+#fa_fac_aci_ci#_i#l_#la_lar_arr_rry_ry#_y#c_#ci_cin_ine_ne#	faci_larry_cine
+#la_lar_arr_rry_ry#_y#c_#ci_cin_ine_ne#_e#e_#e#	larry_cine_e
+#ci_cin_ine_ne#_e#e_#e#_e#b_#bă_băi_ăia_iat_atu_tul_ul#	cine_e_băiatul
+#e#_e#b_#bă_băi_ăia_iat_atu_tul_ul#_l#m_#me_meu_eu#	e_băiatul_meu
+#bă_băi_ăia_iat_atu_tul_ul#_l#m_#me_meu_eu#_u#c_#ci_cin_ine_ne#	băiatul_meu_cine
+#me_meu_eu#_u#c_#ci_cin_ine_ne#_e#e_#e#	meu_cine_e
+#ci_cin_ine_ne#_e#e_#e#_e#a_#am_ami_mic_icu_cul_ul#	cine_e_amicul
+#e#_e#a_#am_ami_mic_icu_cul_ul#_l#m_#me_meu_eu#	e_amicul_meu
+#am_ami_mic_icu_cul_ul#_l#m_#me_meu_eu#_u#c_#ci_cin_ine_ne#	amicul_meu_cine
+#me_meu_eu#_u#c_#ci_cin_ine_ne#_e#e_#e#	meu_cine_e
+#ci_cin_ine_ne#_e#e_#e#_e#p_#pr_pri_rie_iet_ete_ten_enu_nul_ul#	cine_e_prietenul
+#e#_e#p_#pr_pri_rie_iet_ete_ten_enu_nul_ul#_l#m_#me_meu_eu#	e_prietenul_meu
+#pr_pri_rie_iet_ete_ten_enu_nul_ul#_l#m_#me_meu_eu#_u#m_#mi_mik_ike_ke#	prietenul_meu_mike
+#me_meu_eu#_u#m_#mi_mik_ike_ke#_e#c_#cr_cre_red_ed#	meu_mike_cred
+#mi_mik_ike_ke#_e#c_#cr_cre_red_ed#_d#c_#că_că#	mike_cred_că
+#cr_cre_red_ed#_d#c_#că_că#_ă#e_#e#	cred_că_e
+#că_că#_ă#e_#e#_e#l_#la_la#	că_e_la
+#e#_e#l_#la_la#_a#e_#el_el#	e_la_el
+#la_la#_a#e_#el_el#_l#i_#in_in#	la_el_in
+#el_el#_l#i_#in_in#_n#c_#ca_cam_ame_mer_eră_ră#	el_in_cameră
+#in_in#_n#c_#ca_cam_ame_mer_eră_ră#_ă#m_#mă_mă#	in_cameră_mă
+#ca_cam_ame_mer_eră_ră#_ă#m_#mă_mă#_ă#f_#fa_fac_aci_ci#	cameră_mă_faci
+#mă_mă#_ă#f_#fa_fac_aci_ci#_i#s_#să_să#	mă_faci_să
+#fa_fac_aci_ci#_i#s_#să_să#_ă#r_#râ_râd_âd#	faci_să_râd
+#să_să#_ă#r_#râ_râd_âd#_d#t_#tu_tu#	să_râd_tu
+#râ_râd_âd#_d#t_#tu_tu#_u#h_#ha_ha#	râd_tu_ha
+#tu_tu#_u#h_#ha_ha#_a#h_#ha_ha#	tu_ha_ha
+#ha_ha#_a#h_#ha_ha#_a#h_#ha_ha#	ha_ha_ha
+#ha_ha#_a#h_#ha_ha#_a#h_#ha_ha#	ha_ha_ha
+#ha_ha#_a#h_#ha_ha#_a#h_#ha_ha#	ha_ha_ha
+#ha_ha#_a#h_#ha_ha#_a#n_#nu_nu#	ha_ha_nu
+#ha_ha#_a#n_#nu_nu#_u#m_#ma_mai_ai#	ha_nu_mai
+#nu_nu#_u#m_#ma_mai_ai#_i#f_#fi_fii_ii#	nu_mai_fii
+#ma_mai_ai#_i#f_#fi_fii_ii#_i#d_#dr_dră_răg_ăgu_guţ_uţ#	mai_fii_drăguţ
+#fi_fii_ii#_i#d_#dr_dră_răg_ăgu_guţ_uţ#_ţ#c_#cu_cu#	fii_drăguţ_cu
+#dr_dră_răg_ăgu_guţ_uţ#_ţ#c_#cu_cu#_u#m_#mi_min_ine_ne#	drăguţ_cu_mine
+#cu_cu#_u#m_#mi_min_ine_ne#_e#m_#mi_mi#	cu_mine_mi
+#mi_min_ine_ne#_e#m_#mi_mi#_i#c_#ce_ce#	mine_mi_ce
+#mi_mi#_i#c_#ce_ce#_e#a_#a#	mi_ce_a
+#ce_ce#_e#a_#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#	ce_a_intâmplat
+#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#n_#nu_nu#	a_intâmplat_nu
+#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#n_#nu_nu#_u#a_#a#	intâmplat_nu_a
+#nu_nu#_u#a_#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#	nu_a_intâmplat
+#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#n_#ni_nim_imi_mic_ic#	a_intâmplat_nimic
+#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#n_#ni_nim_imi_mic_ic#_c#d_#de_de#	intâmplat_nimic_de
+#ni_nim_imi_mic_ic#_c#d_#de_de#_e#c_#ce_ce#	nimic_de_ce
+#de_de#_e#c_#ce_ce#_e#m_#me_mer_ere_reu_eu#	de_ce_mereu
+#ce_ce#_e#m_#me_mer_ere_reu_eu#_u#t_#te_te#	ce_mereu_te
+#me_mer_ere_reu_eu#_u#t_#te_te#_e#g_#gâ_gân_ând_nde_deş_eşt_şti_ti#	mereu_te_gândeşti
+#te_te#_e#g_#gâ_gân_ând_nde_deş_eşt_şti_ti#_i#l_#la_la#	te_gândeşti_la
+#gâ_gân_ând_nde_deş_eşt_şti_ti#_i#l_#la_la#_a#c_#ce_ce#	gândeşti_la_ce
+#la_la#_a#c_#ce_ce#_e#e_#e#	la_ce_e
+#ce_ce#_e#e_#e#_e#m_#ma_mai_ai#	ce_e_mai
+#e#_e#m_#ma_mai_ai#_i#r_#ră_rău_ău#	e_mai_rău
+#ma_mai_ai#_i#r_#ră_rău_ău#_u#î_#în_în#	mai_rău_în
+#ră_rău_ău#_u#î_#în_în#_n#o_#or_ori_ric_ice_ce#	rău_în_orice
+#în_în#_n#o_#or_ori_ric_ice_ce#_e#c_#ca_caz_az#	în_orice_caz
+#or_ori_ric_ice_ce#_e#c_#ca_caz_az#_z#c_#cl_cli_lie_ien_ent_ntu_tul_ul#	orice_caz_clientul
+#ca_caz_az#_z#c_#cl_cli_lie_ien_ent_ntu_tul_ul#_l#a_#ac_ace_cel_ela_la#	caz_clientul_acela
+#cl_cli_lie_ien_ent_ntu_tul_ul#_l#a_#ac_ace_cel_ela_la#_a#p_#pe_pe#	clientul_acela_pe
+#ac_ace_cel_ela_la#_a#p_#pe_pe#_e#c_#ca_car_are_re#	acela_pe_care
+#pe_pe#_e#c_#ca_car_are_re#_e#a_#ai_ai#	pe_care_ai
+#ca_car_are_re#_e#a_#ai_ai#_i#i_#in_int_ntâ_tâl_âln_lni_nit_it#	care_ai_intâlnit
+#ai_ai#_i#i_#in_int_ntâ_tâl_âln_lni_nit_it#_t#b_#bo_bob_ob#	ai_intâlnit_bob
+#in_int_ntâ_tâl_âln_lni_nit_it#_t#b_#bo_bob_ob#_b#c_#cr_cre_red_ede_de#	intâlnit_bob_crede
+#bo_bob_ob#_b#c_#cr_cre_red_ede_de#_e#c_#că_că#	bob_crede_că
+#cr_cre_red_ede_de#_e#c_#că_că#_ă#e_#eş_eşt_şti_ti#	crede_că_eşti
+#că_că#_ă#e_#eş_eşt_şti_ti#_i#d_#dr_dră_răg_ăgu_guţ_uţ#	că_eşti_drăguţ
+#eş_eşt_şti_ti#_i#d_#dr_dră_răg_ăgu_guţ_uţ#_ţ#ş_#şi_şi#	eşti_drăguţ_şi
+#dr_dră_răg_ăgu_guţ_uţ#_ţ#ş_#şi_şi#_i#v_#vr_vre_rea_ea#	drăguţ_şi_vrea
+#şi_şi#_i#v_#vr_vre_rea_ea#_a#s_#să_să#	şi_vrea_să
+#vr_vre_rea_ea#_a#s_#să_să#_ă#ş_#şt_şti_tie_ie#	vrea_să_ştie
+#să_să#_ă#ş_#şt_şti_tie_ie#_e#d_#da_dac_acă_că#	să_ştie_dacă
+#şt_şti_tie_ie#_e#d_#da_dac_acă_că#_ă#e_#eş_eşt_şti_ti#	ştie_dacă_eşti
+#da_dac_acă_că#_ă#e_#eş_eşt_şti_ti#_i#l_#li_lib_ibe_ber_er#	dacă_eşti_liber
+#eş_eşt_şti_ti#_i#l_#li_lib_ibe_ber_er#_r#v_#vi_vin_ine_ner_eri_ri#	eşti_liber_vineri
+#li_lib_ibe_ber_er#_r#v_#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#	liber_vineri_seară
+#vi_vin_ine_ner_eri_ri#_i#s_#se_sea_ear_ară_ră#_ă#n_#nu_nu#	vineri_seară_nu
+#se_sea_ear_ară_ră#_ă#n_#nu_nu#_u#n_#nu_nu#	seară_nu_nu
+#nu_nu#_u#n_#nu_nu#_u#p_#pe_pen_ent_ntr_tru_ru#	nu_nu_pentru
+#nu_nu#_u#p_#pe_pen_ent_ntr_tru_ru#_u#e_#el_el#	nu_pentru_el
+#pe_pen_ent_ntr_tru_ru#_u#e_#el_el#_l#a_#ar_are_re#	pentru_el_are
+#el_el#_l#a_#ar_are_re#_e#o_#o#	el_are_o
+#ar_are_re#_e#o_#o#_o#f_#fi_fii_iic_ică_că#	are_o_fiică
+#o#_o#f_#fi_fii_iic_ică_că#_ă#t_#ti_tif_iff_ffa_fan_any_ny#	o_fiică_tiffany
+#fi_fii_iic_ică_că#_ă#t_#ti_tif_iff_ffa_fan_any_ny#_y#e_#e#	fiică_tiffany_e
+#ti_tif_iff_ffa_fan_any_ny#_y#e_#e#_e#d_#de_de#	tiffany_e_de
+#e#_e#d_#de_de#_e#v_#vâ_vâr_ârs_rst_sta_ta#	e_de_vârsta
+#de_de#_e#v_#vâ_vâr_ârs_rst_sta_ta#_a#t_#ta_ta#	de_vârsta_ta
+#vâ_vâr_ârs_rst_sta_ta#_a#t_#ta_ta#_a#m_#me_mer_ers_rsi_si#	vârsta_ta_mersi
+#ta_ta#_a#m_#me_mer_ers_rsi_si#_i#d_#da_dar_ar#	ta_mersi_dar
+#me_mer_ers_rsi_si#_i#d_#da_dar_ar#_r#n_#nu_nu#	mersi_dar_nu
+#da_dar_ar#_r#n_#nu_nu#_u#h_#ha_hai_aid_ide_de#	dar_nu_haide
+#nu_nu#_u#h_#ha_hai_aid_ide_de#_e#l_#la_lar_arr_rry_ry#	nu_haide_larry
+#ha_hai_aid_ide_de#_e#l_#la_lar_arr_rry_ry#_y#a_#am_am#	haide_larry_am
+#la_lar_arr_rry_ry#_y#a_#am_am#_m#n_#ne_nev_evo_voi_oie_ie#	larry_am_nevoie
+#am_am#_m#n_#ne_nev_evo_voi_oie_ie#_e#s_#să_să#	am_nevoie_să
+#ne_nev_evo_voi_oie_ie#_e#s_#să_să#_ă#f_#fa_fac_aci_ci#	nevoie_să_faci
+#să_să#_ă#f_#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#	să_faci_asta
+#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#	faci_asta_pentru
+#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#	asta_pentru_mine
+#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#_e#a_#ar_ar#	pentru_mine_ar
+#mi_min_ine_ne#_e#a_#ar_ar#_r#p_#pu_put_ute_tea_ea#	mine_ar_putea
+#ar_ar#_r#p_#pu_put_ute_tea_ea#_a#i_#in_ins_nse_sem_emn_mna_na#	ar_putea_insemna
+#pu_put_ute_tea_ea#_a#i_#in_ins_nse_sem_emn_mna_na#_a#u_#un_un#	putea_insemna_un
+#in_ins_nse_sem_emn_mna_na#_a#u_#un_un#_n#c_#co_com_omi_mis_isi_sio_ion_on#	insemna_un_comision
+#un_un#_n#c_#co_com_omi_mis_isi_sio_ion_on#_n#u_#ur_uri_ria_iaş_aş#	un_comision_uriaş
+#co_com_omi_mis_isi_sio_ion_on#_n#u_#ur_uri_ria_iaş_aş#_ş#p_#pe_pen_ent_ntr_tru_ru#	comision_uriaş_pentru
+#ur_uri_ria_iaş_aş#_ş#p_#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#	uriaş_pentru_mine
+#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#_e#ş_#şi_şi#	pentru_mine_şi
+#mi_min_ine_ne#_e#ş_#şi_şi#_i#a_#ar_ar#	mine_şi_ar
+#şi_şi#_i#a_#ar_ar#_r#p_#pu_put_ute_tea_ea#	şi_ar_putea
+#ar_ar#_r#p_#pu_put_ute_tea_ea#_a#d_#du_duc_uce_ce#	ar_putea_duce
+#pu_put_ute_tea_ea#_a#d_#du_duc_uce_ce#_e#l_#la_la#	putea_duce_la
+#du_duc_uce_ce#_e#l_#la_la#_a#m_#mu_mul_ult_lte_te#	duce_la_multe
+#la_la#_a#m_#mu_mul_ult_lte_te#_e#a_#af_afa_fac_ace_cer_eri_ri#	la_multe_afaceri
+#mu_mul_ult_lte_te#_e#a_#af_afa_fac_ace_cer_eri_ri#_i#u_#ui_uit_ite_te#	multe_afaceri_uite
+#af_afa_fac_ace_cer_eri_ri#_i#u_#ui_uit_ite_te#_e#d_#da_dac_acă_că#	afaceri_uite_dacă
+#ui_uit_ite_te#_e#d_#da_dac_acă_că#_ă#f_#fa_fac_aci_ci#	uite_dacă_faci
+#da_dac_acă_că#_ă#f_#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#	dacă_faci_asta
+#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#	faci_asta_pentru
+#as_ast_sta_ta#_a#p_#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#	asta_pentru_mine
+#pe_pen_ent_ntr_tru_ru#_u#m_#mi_min_ine_ne#_e#o_#o#	pentru_mine_o
+#mi_min_ine_ne#_e#o_#o#_o#s_#să_să#	mine_o_să
+#o#_o#s_#să_să#_ă#i_#iţ_iţi_ţi#	o_să_iţi
+#să_să#_ă#i_#iţ_iţi_ţi#_i#c_#cu_cum_ump_mpă_păr_ăr#	să_iţi_cumpăr
+#iţ_iţi_ţi#_i#c_#cu_cum_ump_mpă_păr_ăr#_r#n_#no_nou_oul_ul#	iţi_cumpăr_noul
+#cu_cum_ump_mpă_păr_ăr#_r#n_#no_nou_oul_ul#_l#s_#se_set_et#	cumpăr_noul_set
+#no_nou_oul_ul#_l#s_#se_set_et#_t#d_#de_de#	noul_set_de
+#se_set_et#_t#d_#de_de#_e#ş_#şa_şah_ah#	set_de_şah
+#de_de#_e#ş_#şa_şah_ah#_h#s_#st_stă_tăp_ăpâ_pân_ânu_nul_ul#	de_şah_stăpânul
+#şa_şah_ah#_h#s_#st_stă_tăp_ăpâ_pân_ânu_nul_ul#_l#i_#in_ine_nel_ele_lel_elo_lor_or#	şah_stăpânul_inelelor
+#st_stă_tăp_ăpâ_pân_ânu_nul_ul#_l#i_#in_ine_nel_ele_lel_elo_lor_or#_r#d_#du_dup_upă_pă#	stăpânul_inelelor_după
+#in_ine_nel_ele_lel_elo_lor_or#_r#d_#du_dup_upă_pă#_ă#c_#ca_car_are_re#	inelelor_după_care
+#du_dup_upă_pă#_ă#c_#ca_car_are_re#_e#t_#to_tot_ot#	după_care_tot
+#ca_car_are_re#_e#t_#to_tot_ot#_t#p_#pl_plâ_lân_âng_ngi_gi#	care_tot_plângi
+#to_tot_ot#_t#p_#pl_plâ_lân_âng_ngi_gi#_i#c_#ce_ce#	tot_plângi_ce
+#pl_plâ_lân_âng_ngi_gi#_i#c_#ce_ce#_e#z_#zi_zic_ici_ci#	plângi_ce_zici
+#ce_ce#_e#z_#zi_zic_ici_ci#_i#d_#de_de#	ce_zici_de
+#zi_zic_ici_ci#_i#d_#de_de#_e#a_#as_ast_sta_ta#	zici_de_asta
+#de_de#_e#a_#as_ast_sta_ta#_a#b_#bi_bin_ine_ne#	de_asta_bine
+#as_ast_sta_ta#_a#b_#bi_bin_ine_ne#_e#î_#în_în#	asta_bine_în
+#bi_bin_ine_ne#_e#î_#în_în#_n#r_#re_reg_egu_gul_ulă_lă#	bine_în_regulă
+#în_în#_n#r_#re_reg_egu_gul_ulă_lă#_ă#o_#o#	în_regulă_o
+#re_reg_egu_gul_ulă_lă#_ă#o_#o#_o#f_#fa_fac_ac#	regulă_o_fac
+#o#_o#f_#fa_fac_ac#_c#p_#pe_pen_ent_ntr_tru_ru#	o_fac_pentru
+#fa_fac_ac#_c#p_#pe_pen_ent_ntr_tru_ru#_u#t_#ti_tin_ine_ne#	fac_pentru_tine
+#pe_pen_ent_ntr_tru_ru#_u#t_#ti_tin_ine_ne#_e#m_#me_mer_ers_rsi_si#	pentru_tine_mersi
+#ti_tin_ine_ne#_e#m_#me_mer_ers_rsi_si#_i#c_#ce_ce#	tine_mersi_ce
+#me_mer_ers_rsi_si#_i#c_#ce_ce#_e#f_#fr_fra_rai_aie_ier_er#	mersi_ce_fraier
+#ce_ce#_e#f_#fr_fra_rai_aie_ier_er#_r#a_#aş_aş#	ce_fraier_aş
+#fr_fra_rai_aie_ier_er#_r#a_#aş_aş#_ş#f_#fi_fi#	fraier_aş_fi
+#aş_aş#_ş#f_#fi_fi#_i#m_#me_mer_ers_rs#	aş_fi_mers
+#fi_fi#_i#m_#me_mer_ers_rs#_s#o_#or_ori_ric_icu_cum_um#	fi_mers_oricum
+#me_mer_ers_rs#_s#o_#or_ori_ric_icu_cum_um#_m#o_#o#	mers_oricum_o
+#or_ori_ric_icu_cum_um#_m#o_#o#_o#i_#in_int_ntâ_tâl_âln_lni_nir_ire_re#	oricum_o_intâlnire
+#o#_o#i_#in_int_ntâ_tâl_âln_lni_nir_ire_re#_e#a_#am_am#	o_intâlnire_am
+#in_int_ntâ_tâl_âln_lni_nir_ire_re#_e#a_#am_am#_m#o_#o#	intâlnire_am_o
+#am_am#_m#o_#o#_o#i_#in_int_ntâ_tâl_âln_lni_nir_ire_re#	am_o_intâlnire
+#o#_o#i_#in_int_ntâ_tâl_âln_lni_nir_ire_re#_e#t_#tr_tra_rad_adu_duc_uce_cer_ere_rea_ea#	o_intâlnire_traducerea
+#in_int_ntâ_tâl_âln_lni_nir_ire_re#_e#t_#tr_tra_rad_adu_duc_uce_cer_ere_rea_ea#_a#ş_#şi_şi#	intâlnire_traducerea_şi
+#tr_tra_rad_adu_duc_uce_cer_ere_rea_ea#_a#ş_#şi_şi#_i#a_#ad_ada_dap_apt_pta_tar_are_rea_ea#	traducerea_şi_adaptarea
+#şi_şi#_i#a_#ad_ada_dap_apt_pta_tar_are_rea_ea#_a#ş_#şi_şi#	şi_adaptarea_şi
+#ad_ada_dap_apt_pta_tar_are_rea_ea#_a#ş_#şi_şi#_i#n_#ne_neb_ebu_bun_uni_nic_ic#	adaptarea_şi_nebunic
+#şi_şi#_i#n_#ne_neb_ebu_bun_uni_nic_ic#_c#t_#tu_tu#	şi_nebunic_tu
+#ne_neb_ebu_bun_uni_nic_ic#_c#t_#tu_tu#_u#n_#nu_nu#	nebunic_tu_nu
+#tu_tu#_u#n_#nu_nu#_u#i_#in_inv_nve_veţ_eţi_ţi#	tu_nu_inveţi
+#nu_nu#_u#i_#in_inv_nve_veţ_eţi_ţi#_i#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#	nu_inveţi_niciodată
+#in_inv_nve_veţ_eţi_ţi#_i#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#a_#am_am#	inveţi_niciodată_am
+#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#a_#am_am#_m#u_#un_un#	niciodată_am_un
+#am_am#_m#u_#un_un#_n#n_#no_nou_ou#	am_un_nou
+#un_un#_n#n_#no_nou_ou#_u#s_#sc_sco_cor_or#	un_nou_scor
+#no_nou_ou#_u#s_#sc_sco_cor_or#_r#m_#ma_mar_are_re#	nou_scor_mare
+#sc_sco_cor_or#_r#m_#ma_mar_are_re#_e#b_#ba_ba#	scor_mare_ba
+#ma_mar_are_re#_e#b_#ba_ba#_a#n_#nu_nu#	mare_ba_nu
+#ba_ba#_a#n_#nu_nu#_u#b_#ba_ba#	ba_nu_ba
+#nu_nu#_u#b_#ba_ba#_a#d_#da_da#	nu_ba_da
+#ba_ba#_a#d_#da_da#_a#b_#ba_ba#	ba_da_ba
+#da_da#_a#b_#ba_ba#_a#n_#nu_nu#	da_ba_nu
+#ba_ba#_a#n_#nu_nu#_u#t_#tr_tre_reb_ebu_bui_uie_ie#	ba_nu_trebuie
+#nu_nu#_u#t_#tr_tre_reb_ebu_bui_uie_ie#_e#s_#să_să#	nu_trebuie_să
+#tr_tre_reb_ebu_bui_uie_ie#_e#s_#să_să#_ă#i_#in_inv_nve_veţ_eţi_ţi#	trebuie_să_inveţi
+#să_să#_ă#i_#in_inv_nve_veţ_eţi_ţi#_i#ş_#şt_şti_tii_ii#	să_inveţi_ştii
+#in_inv_nve_veţ_eţi_ţi#_i#ş_#şt_şti_tii_ii#_i#s_#so_sor_ora_ra#	inveţi_ştii_sora
+#şt_şti_tii_ii#_i#s_#so_sor_ora_ra#_a#t_#ta_ta#	ştii_sora_ta
+#so_sor_ora_ra#_a#t_#ta_ta#_a#t_#to_toc_ocm_cma_mai_ai#	sora_ta_tocmai
+#ta_ta#_a#t_#to_toc_ocm_cma_mai_ai#_i#a_#a#	ta_tocmai_a
+#to_toc_ocm_cma_mai_ai#_i#a_#a#_a#l_#lu_lua_uat_at#	tocmai_a_luat
+#a#_a#l_#lu_lua_uat_at#_t#l_#la_la#	a_luat_la
+#lu_lua_uat_at#_t#l_#la_la#_a#e_#ex_exa_xam_ame_men_en#	luat_la_examen
+#la_la#_a#e_#ex_exa_xam_ame_men_en#_n#d_#da_da#	la_examen_da
+#ex_exa_xam_ame_men_en#_n#d_#da_da#_a#e_#e#	examen_da_e
+#da_da#_a#e_#e#_e#i_#im_imp_mpr_pre_res_esi_sio_ion_ona_nan_ant_nt#	da_e_impresionant
+#e#_e#i_#im_imp_mpr_pre_res_esi_sio_ion_ona_nan_ant_nt#_t#a_#ap_apr_pro_roa_oap_ape_pe#	e_impresionant_aproape
+#im_imp_mpr_pre_res_esi_sio_ion_ona_nan_ant_nt#_t#a_#ap_apr_pro_roa_oap_ape_pe#_e#c_#că_că#	impresionant_aproape_că
+#ap_apr_pro_roa_oap_ape_pe#_e#c_#că_că#_ă#t_#te_te#	aproape_că_te
+#că_că#_ă#t_#te_te#_e#f_#fa_fac_ace_ce#	că_te_face
+#te_te#_e#f_#fa_fac_ace_ce#_e#s_#să_să#	te_face_să
+#fa_fac_ace_ce#_e#s_#să_să#_ă#t_#te_te#	face_să_te
+#să_să#_ă#t_#te_te#_e#i_#in_int_ntr_tre_reb_ebi_bi#	să_te_intrebi
+#te_te#_e#i_#in_int_ntr_tre_reb_ebi_bi#_i#c_#cu_cum_um#	te_intrebi_cum
+#in_int_ntr_tre_reb_ebi_bi#_i#c_#cu_cum_um#_m#a_#a#	intrebi_cum_a
+#cu_cum_um#_m#a_#a#_a#r_#re_reu_euş_uşi_şit_it#	cum_a_reuşit
+#a#_a#r_#re_reu_euş_uşi_şit_it#_t#m_#mi_mik_ike_ke#	a_reuşit_mike
+#re_reu_euş_uşi_şit_it#_t#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	reuşit_mike_mike
+#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	mike_mike_mike
+#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	mike_mike_mike
+#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	mike_mike_mike
+#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#	mike_mike_mike
+#mi_mik_ike_ke#_e#m_#mi_mik_ike_ke#_e#v_#ve_ver_erd_rde_del_ele_le#	mike_mike_verdele
+#mi_mik_ike_ke#_e#v_#ve_ver_erd_rde_del_ele_le#_e#n_#nu_nu#	mike_verdele_nu
+#ve_ver_erd_rde_del_ele_le#_e#n_#nu_nu#_u#i_#iţ_iţi_ţi#	verdele_nu_iţi
+#nu_nu#_u#i_#iţ_iţi_ţi#_i#s_#st_stă_tă#	nu_iţi_stă
+#iţ_iţi_ţi#_i#s_#st_stă_tă#_ă#b_#bi_bin_ine_ne#	iţi_stă_bine
+#st_stă_tă#_ă#b_#bi_bin_ine_ne#_e#h_#ha_hai_aid_ide_de#	stă_bine_haide
+#bi_bin_ine_ne#_e#h_#ha_hai_aid_ide_de#_e#t_#ta_tat_ată_tă#	bine_haide_tată
+#ha_hai_aid_ide_de#_e#t_#ta_tat_ată_tă#_ă#a_#ar_are_re#	haide_tată_are
+#ta_tat_ată_tă#_ă#a_#ar_are_re#_e#n_#no_not_ote_te#	tată_are_note
+#ar_are_re#_e#n_#no_not_ote_te#_e#p_#pr_pro_roa_oas_ast_ste_te#	are_note_proaste
+#no_not_ote_te#_e#p_#pr_pro_roa_oas_ast_ste_te#_e#n_#nu_nu#	note_proaste_nu
+#pr_pro_roa_oas_ast_ste_te#_e#n_#nu_nu#_u#i_#in_inv_nva_vaţ_aţă_ţă#	proaste_nu_invaţă
+#nu_nu#_u#i_#in_inv_nva_vaţ_aţă_ţă#_ă#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#	nu_invaţă_niciodată
+#in_inv_nva_vaţ_aţă_ţă#_ă#n_#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#ş_#şi_şi#	invaţă_niciodată_şi
+#ni_nic_ici_cio_iod_oda_dat_ată_tă#_ă#ş_#şi_şi#_i#a_#ap_apo_poi_oi#	niciodată_şi_apoi
+#şi_şi#_i#a_#ap_apo_poi_oi#_i#c_#ca_ca#	şi_apoi_ca
+#ap_apo_poi_oi#_i#c_#ca_ca#_a#p_#pr_pri_rin_in#	apoi_ca_prin
+#ca_ca#_a#p_#pr_pri_rin_in#_n#m_#mi_min_inu_nun_une_ne#	ca_prin_minune
+#pr_pri_rin_in#_n#m_#mi_min_inu_nun_une_ne#_e#i_#ia_ia#	prin_minune_ia
+#mi_min_inu_nun_une_ne#_e#i_#ia_ia#_a#n_#no_not_otă_tă#	minune_ia_notă
+#ia_ia#_a#n_#no_not_otă_tă#_ă#m_#ma_mar_are_re#	ia_notă_mare
+#no_not_otă_tă#_ă#m_#ma_mar_are_re#_e#l_#la_la#	notă_mare_la
+#ma_mar_are_re#_e#l_#la_la#_a#e_#ex_exa_xam_ame_men_ent_nt#	mare_la_exament
+#la_la#_a#e_#ex_exa_xam_ame_men_ent_nt#_t#ş_#şt_şti_tii_ii#	la_exament_ştii
+#ex_exa_xam_ame_men_ent_nt#_t#ş_#şt_şti_tii_ii#_i#e_#eş_eşt_şti_ti#	exament_ştii_eşti
+#şt_şti_tii_ii#_i#e_#eş_eşt_şti_ti#_i#f_#fo_foa_oar_art_rte_te#	ştii_eşti_foarte
+#eş_eşt_şti_ti#_i#f_#fo_foa_oar_art_rte_te#_e#c_#ci_cin_ini_nic_ic#	eşti_foarte_cinic
+#fo_foa_oar_art_rte_te#_e#c_#ci_cin_ini_nic_ic#_c#ş_#şt_şti_tia_iai_ai#	foarte_cinic_ştiai
+#ci_cin_ini_nic_ic#_c#ş_#şt_şti_tia_iai_ai#_i#a_#as_ast_sta_ta#	cinic_ştiai_asta
+#şt_şti_tia_iai_ai#_i#a_#as_ast_sta_ta#_a#d_#da_da#	ştiai_asta_da
+#as_ast_sta_ta#_a#d_#da_da#_a#m_#mă_mă#	asta_da_mă
+#da_da#_a#m_#mă_mă#_ă#i_#in_int_ntr_tre_reb_eb#	da_mă_intreb
+#mă_mă#_ă#i_#in_int_ntr_tre_reb_eb#_b#d_#de_de#	mă_intreb_de
+#in_int_ntr_tre_reb_eb#_b#d_#de_de#_e#u_#un_und_nde_de#	intreb_de_unde
+#de_de#_e#u_#un_und_nde_de#_e#a_#am_am#	de_unde_am
+#un_und_nde_de#_e#a_#am_am#_m#o_#o#	unde_am_o
+#am_am#_m#o_#o#_o#î_#în_în#	am_o_în
+#o#_o#î_#în_în#_n#r_#re_reg_egu_gul_ulă_lă#	o_în_regulă
+#în_în#_n#r_#re_reg_egu_gul_ulă_lă#_ă#s_#su_sun_unt_nte_tem_em#	în_regulă_suntem
+#re_reg_egu_gul_ulă_lă#_ă#s_#su_sun_unt_nte_tem_em#_m#p_#pr_pre_reg_egă_găt_ăti_tiţ_iţi_ţi#	regulă_suntem_pregătiţi
+#su_sun_unt_nte_tem_em#_m#p_#pr_pre_reg_egă_găt_ăti_tiţ_iţi_ţi#_i#p_#pe_pen_ent_ntr_tru_ru#	suntem_pregătiţi_pentru
+#pr_pre_reg_egă_găt_ăti_tiţ_iţi_ţi#_i#p_#pe_pen_ent_ntr_tru_ru#_u#c_#ci_cin_ina_na#	pregătiţi_pentru_cina
+#pe_pen_ent_ntr_tru_ru#_u#c_#ci_cin_ina_na#_a#c_#cu_cu#	pentru_cina_cu
+#ci_cin_ina_na#_a#c_#cu_cu#_u#h_#hi_hil_ill_lla_lar_ary_ry#	cina_cu_hillary
+#cu_cu#_u#h_#hi_hil_ill_lla_lar_ary_ry#_y#d_#de_de#	cu_hillary_de
+#hi_hil_ill_lla_lar_ary_ry#_y#d_#de_de#_e#m_#mâ_mâi_âin_ine_ne#	hillary_de_mâine
+#de_de#_e#m_#mâ_mâi_âin_ine_ne#_e#s_#se_sea_ear_ară_ră#	de_mâine_seară
+#mâ_mâi_âin_ine_ne#_e#s_#se_sea_ear_ară_ră#_ă#ş_#şt_şti_tii_ii#	mâine_seară_ştii
+#se_sea_ear_ară_ră#_ă#ş_#şt_şti_tii_ii#_i#s_#su_sun_unt_nt#	seară_ştii_sunt
+#şt_şti_tii_ii#_i#s_#su_sun_unt_nt#_t#f_#fo_foa_oar_art_rte_te#	ştii_sunt_foarte
+#su_sun_unt_nt#_t#f_#fo_foa_oar_art_rte_te#_e#m_#mâ_mân_ând_ndr_dră_ră#	sunt_foarte_mândră
+#fo_foa_oar_art_rte_te#_e#m_#mâ_mân_ând_ndr_dră_ră#_ă#d_#de_de#	foarte_mândră_de
+#mâ_mân_ând_ndr_dră_ră#_ă#d_#de_de#_e#e_#ea_ea#	mândră_de_ea
+#de_de#_e#e_#ea_ea#_a#d_#da_da#	de_ea_da
+#ea_ea#_a#d_#da_da#_a#p_#pr_pre_res_esu_sup_upu_pun_un#	ea_da_presupun
+#da_da#_a#p_#pr_pre_res_esu_sup_upu_pun_un#_n#c_#ce_ce#	da_presupun_ce
+#pr_pre_res_esu_sup_upu_pun_un#_n#c_#ce_ce#_e#i_#in_ins_nse_sea_eam_amn_mnă_nă#	presupun_ce_inseamnă
+#ce_ce#_e#i_#in_ins_nse_sea_eam_amn_mnă_nă#_ă#a_#as_ast_sta_ta#	ce_inseamnă_asta
+#in_ins_nse_sea_eam_amn_mnă_nă#_ă#a_#as_ast_sta_ta#_a#n_#ni_nim_imi_mic_ic#	inseamnă_asta_nimic
+#as_ast_sta_ta#_a#n_#ni_nim_imi_mic_ic#_c#n_#ni_nim_imi_mic_ic#	asta_nimic_nimic
+#ni_nim_imi_mic_ic#_c#n_#ni_nim_imi_mic_ic#_c#m_#mă_mă#	nimic_nimic_mă
+#ni_nim_imi_mic_ic#_c#m_#mă_mă#_ă#i_#in_int_ntr_tre_reb_eba_bam_am#	nimic_mă_intrebam
+#mă_mă#_ă#i_#in_int_ntr_tre_reb_eba_bam_am#_m#c_#cu_cum_um#	mă_intrebam_cum
+#in_int_ntr_tre_reb_eba_bam_am#_m#c_#cu_cum_um#_m#a_#a#	intrebam_cum_a
+#cu_cum_um#_m#a_#a#_a#r_#re_reu_euş_uşi_şit_it#	cum_a_reuşit
+#a#_a#r_#re_reu_euş_uşi_şit_it#_t#a_#a#	a_reuşit_a
+#re_reu_euş_uşi_şit_it#_t#a_#a#_a#c_#co_con_onc_nce_cen_ent_ntr_tra_rat_at#	reuşit_a_concentrat
+#a#_a#c_#co_con_onc_nce_cen_ent_ntr_tra_rat_at#_t#a_#a#	a_concentrat_a
+#co_con_onc_nce_cen_ent_ntr_tra_rat_at#_t#a_#a#_a#i_#in_inv_nvă_văţ_ăţa_ţat_at#	concentrat_a_invăţat
+#a#_a#i_#in_inv_nvă_văţ_ăţa_ţat_at#_t#d_#da_da#	a_invăţat_da
+#in_inv_nvă_văţ_ăţa_ţat_at#_t#d_#da_da#_a#a_#a#	invăţat_da_a
+#da_da#_a#a_#a#_a#c_#co_con_onc_nce_cen_ent_ntr_tra_rat_at#	da_a_concentrat
+#a#_a#c_#co_con_onc_nce_cen_ent_ntr_tra_rat_at#_t#a_#a#	a_concentrat_a
+#co_con_onc_nce_cen_ent_ntr_tra_rat_at#_t#a_#a#_a#i_#in_inv_nvă_văţ_ăţa_ţat_at#	concentrat_a_invăţat
+#a#_a#i_#in_inv_nvă_văţ_ăţa_ţat_at#_t#a_#a#	a_invăţat_a
+#in_inv_nvă_văţ_ăţa_ţat_at#_t#a_#a#_a#c_#co_cop_opi_pia_iat_at#	invăţat_a_copiat
+#a#_a#c_#co_cop_opi_pia_iat_at#_t#c_#ce_ce#	a_copiat_ce
+#co_cop_opi_pia_iat_at#_t#c_#ce_ce#_e#d_#de_des_esp_spr_pre_re#	copiat_ce_despre
+#ce_ce#_e#d_#de_des_esp_spr_pre_re#_e#c_#ce_ce#	ce_despre_ce
+#de_des_esp_spr_pre_re#_e#c_#ce_ce#_e#v_#vo_vor_orb_rbe_beş_eşt_şti_ti#	despre_ce_vorbeşti
+#ce_ce#_e#v_#vo_vor_orb_rbe_beş_eşt_şti_ti#_i#v_#vo_vor_orb_rbe_bes_esc_sc#	ce_vorbeşti_vorbesc
+#vo_vor_orb_rbe_beş_eşt_şti_ti#_i#v_#vo_vor_orb_rbe_bes_esc_sc#_c#d_#de_des_esp_spr_pre_re#	vorbeşti_vorbesc_despre
+#vo_vor_orb_rbe_bes_esc_sc#_c#d_#de_des_esp_spr_pre_re#_e#e_#es_est_ste_te#	vorbesc_despre_este
+#de_des_esp_spr_pre_re#_e#e_#es_est_ste_te#_e#o_#o#	despre_este_o
+#es_est_ste_te#_e#o_#o#_o#n_#no_not_ota_ta#	este_o_nota
+#o#_o#n_#no_not_ota_ta#_a#m_#ma_mar_are_re#	o_nota_mare
+#no_not_ota_ta#_a#m_#ma_mar_are_re#_e#p_#pe_pen_ent_ntr_tru_ru#	nota_mare_pentru
+#ma_mar_are_re#_e#p_#pe_pen_ent_ntr_tru_ru#_u#o_#or_ori_ric_ici_cin_ine_ne#	mare_pentru_oricine
+#pe_pen_ent_ntr_tru_ru#_u#o_#or_ori_ric_ici_cin_ine_ne#_e#m_#ma_mai_ai#	pentru_oricine_mai
+#or_ori_ric_ici_cin_ine_ne#_e#m_#ma_mai_ai#_i#a_#al_ale_les_es#	oricine_mai_ales
+#ma_mai_ai#_i#a_#al_ale_les_es#_s#h_#hi_hil_ill_lla_lar_ary_ry#	mai_ales_hillary
+#al_ale_les_es#_s#h_#hi_hil_ill_lla_lar_ary_ry#_y#c_#ca_car_are_re#	ales_hillary_care
+#hi_hil_ill_lla_lar_ary_ry#_y#c_#ca_car_are_re#_e#ş_#şt_şti_tim_im#	hillary_care_ştim
+#ca_car_are_re#_e#ş_#şt_şti_tim_im#_m#c_#cu_cu#	care_ştim_cu
+#şt_şti_tim_im#_m#c_#cu_cu#_u#t_#to_toţ_oţi_ţii_ii#	ştim_cu_toţii
+#cu_cu#_u#t_#to_toţ_oţi_ţii_ii#_i#c_#că_că#	cu_toţii_că
+#to_toţ_oţi_ţii_ii#_i#c_#că_că#_ă#t_#tr_tri_ric_ico_cot_ote_tea_eaz_ază_ză#	toţii_că_tricotează
+#că_că#_ă#t_#tr_tri_ric_ico_cot_ote_tea_eaz_ază_ză#_ă#c_#cu_cu#	că_tricotează_cu
+#tr_tri_ric_ico_cot_ote_tea_eaz_ază_ză#_ă#c_#cu_cu#_u#o_#o#	tricotează_cu_o
+#cu_cu#_u#o_#o#_o#a_#an_and_ndr_dre_rea_ea#	cu_o_andrea
+#o#_o#a_#an_and_ndr_dre_rea_ea#_a#a_#ai_ai#	o_andrea_ai
+#an_and_ndr_dre_rea_ea#_a#a_#ai_ai#_i#i_#ie_ieş_eşi_şit_it#	andrea_ai_ieşit
+#ai_ai#_i#i_#ie_ieş_eşi_şit_it#_t#d_#di_din_in#	ai_ieşit_din
+#ie_ieş_eşi_şit_it#_t#d_#di_din_in#_n#m_#mi_min_inţ_nţi_ţi#	ieşit_din_minţi
+#di_din_in#_n#m_#mi_min_inţ_nţi_ţi#_i#d_#da_da#	din_minţi_da
+#mi_min_inţ_nţi_ţi#_i#d_#da_da#_a#a_#ar_ar#	minţi_da_ar
+#da_da#_a#a_#ar_ar#_r#p_#pu_put_ute_tea_ea#	da_ar_putea
+#ar_ar#_r#p_#pu_put_ute_tea_ea#_a#s_#să_să#	ar_putea_să
+#pu_put_ute_tea_ea#_a#s_#să_să#_ă#i_#im_imi_mi#	putea_să_imi
+#să_să#_ă#i_#im_imi_mi#_i#f_#fi_fi#	să_imi_fi
+#im_imi_mi#_i#f_#fi_fi#_i#i_#ie_ieş_eşi_şit_it#	imi_fi_ieşit
+#fi_fi#_i#i_#ie_ieş_eşi_şit_it#_t#d_#di_din_in#	fi_ieşit_din
+#ie_ieş_eşi_şit_it#_t#d_#di_din_in#_n#m_#mi_min_inţ_nţi_ţi#	ieşit_din_minţi
+#di_din_in#_n#m_#mi_min_inţ_nţi_ţi#_i#d_#da_dar_ar#	din_minţi_dar
+#mi_min_inţ_nţi_ţi#_i#d_#da_dar_ar#_r#a_#am_am#	minţi_dar_am
+#da_dar_ar#_r#a_#am_am#_m#s_#se_sen_ent_nti_tim_ime_men_ent_ntu_tul_ul#	dar_am_sentimentul
+#am_am#_m#s_#se_sen_ent_nti_tim_ime_men_ent_ntu_tul_ul#_l#c_#că_că#	am_sentimentul_că
+#se_sen_ent_nti_tim_ime_men_ent_ntu_tul_ul#_l#c_#că_că#_ă#a_#a#	sentimentul_că_a
+#că_că#_ă#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	că_a_făcut
+#a#_a#f_#fă_făc_ăcu_cut_ut#_t#c_#ce_cev_eva_va#	a_făcut_ceva
+#fă_făc_ăcu_cut_ut#_t#c_#ce_cev_eva_va#_a#n_#nu_nu#	făcut_ceva_nu
+#ce_cev_eva_va#_a#n_#nu_nu#_u#ş_#şt_şti_tiu_iu#	ceva_nu_ştiu
+#nu_nu#_u#ş_#şt_şti_tiu_iu#_u#c_#ce_ce#	nu_ştiu_ce
+#şt_şti_tiu_iu#_u#c_#ce_ce#_e#d_#da_dar_ar#	ştiu_ce_dar
+#ce_ce#_e#d_#da_dar_ar#_r#a_#a#	ce_dar_a
+#da_dar_ar#_r#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	dar_a_făcut
+#a#_a#f_#fă_făc_ăcu_cut_ut#_t#c_#ce_cev_eva_va#	a_făcut_ceva
+#fă_făc_ăcu_cut_ut#_t#c_#ce_cev_eva_va#_a#c_#ce_ce#	făcut_ceva_ce
+#ce_cev_eva_va#_a#c_#ce_ce#_e#a_#a#	ceva_ce_a
+#ce_ce#_e#a_#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#	ce_a_intâmplat
+#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#c_#cu_cu#	a_intâmplat_cu
+#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#c_#cu_cu#_u#t_#ti_tin_ine_ne#	intâmplat_cu_tine
+#cu_cu#_u#t_#ti_tin_ine_ne#_e#c_#ce_cev_eva_va#	cu_tine_ceva
+#ti_tin_ine_ne#_e#c_#ce_cev_eva_va#_a#b_#bu_bun_un#	tine_ceva_bun
+#ce_cev_eva_va#_a#b_#bu_bun_un#_n#a_#a#	ceva_bun_a
+#bu_bun_un#_n#a_#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#	bun_a_intâmplat
+#a#_a#i_#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#ş_#şi_şi#	a_intâmplat_şi
+#in_int_ntâ_tâm_âmp_mpl_pla_lat_at#_t#ş_#şi_şi#_i#n_#nu_nu#	intâmplat_şi_nu
+#şi_şi#_i#n_#nu_nu#_u#p_#po_poţ_oţi_ţi#	şi_nu_poţi
+#nu_nu#_u#p_#po_poţ_oţi_ţi#_i#s_#să_să#	nu_poţi_să
+#po_poţ_oţi_ţi#_i#s_#să_să#_ă#t_#te_te#	poţi_să_te
+#să_să#_ă#t_#te_te#_e#b_#bu_buc_ucu_cur_uri_ri#	să_te_bucuri
+#te_te#_e#b_#bu_buc_ucu_cur_uri_ri#_i#d_#de_de#	te_bucuri_de
+#bu_buc_ucu_cur_uri_ri#_i#d_#de_de#_e#a_#as_ast_sta_ta#	bucuri_de_asta
+#de_de#_e#a_#as_ast_sta_ta#_a#t_#tr_tre_reb_ebu_bui_uie_ie#	de_asta_trebuie
+#as_ast_sta_ta#_a#t_#tr_tre_reb_ebu_bui_uie_ie#_e#s_#să_să#	asta_trebuie_să
+#tr_tre_reb_ebu_bui_uie_ie#_e#s_#să_să#_ă#s_#st_str_tri_ric_ici_ci#	trebuie_să_strici
+#să_să#_ă#s_#st_str_tri_ric_ici_ci#_i#t_#to_tot_otu_tul_ul#	să_strici_totul
+#st_str_tri_ric_ici_ci#_i#t_#to_tot_otu_tul_ul#_l#h_#ha_hai_aid_ide_de#	strici_totul_haide
+#to_tot_otu_tul_ul#_l#h_#ha_hai_aid_ide_de#_e#n_#nu_nu#	totul_haide_nu
+#ha_hai_aid_ide_de#_e#n_#nu_nu#_u#p_#po_poţ_oţi_ţi#	haide_nu_poţi
+#nu_nu#_u#p_#po_poţ_oţi_ţi#_i#s_#să_să#	nu_poţi_să
+#po_poţ_oţi_ţi#_i#s_#să_să#_ă#u_#ui_uiţ_iţi_ţi#	poţi_să_uiţi
+#să_să#_ă#u_#ui_uiţ_iţi_ţi#_i#t_#to_tot_otu_tul_ul#	să_uiţi_totul
+#ui_uiţ_iţi_ţi#_i#t_#to_tot_otu_tul_ul#_l#ş_#şi_şi#	uiţi_totul_şi
+#to_tot_otu_tul_ul#_l#ş_#şi_şi#_i#s_#să_să#	totul_şi_să
+#şi_şi#_i#s_#să_să#_ă#t_#te_te#	şi_să_te
+#să_să#_ă#t_#te_te#_e#b_#bu_buc_ucu_cur_uri_ri#	să_te_bucuri
+#te_te#_e#b_#bu_buc_ucu_cur_uri_ri#_i#c_#cu_cum_umv_mva_va#	te_bucuri_cumva
+#bu_buc_ucu_cur_uri_ri#_i#c_#cu_cum_umv_mva_va#_a#a_#ab_abi_bia_ia#	bucuri_cumva_abia
+#cu_cum_umv_mva_va#_a#a_#ab_abi_bia_ia#_a#a_#ai_ai#	cumva_abia_ai
+#ab_abi_bia_ia#_a#a_#ai_ai#_i#c_#cu_cun_uno_nos_osc_scu_cut_ut#	abia_ai_cunoscut
+#ai_ai#_i#c_#cu_cun_uno_nos_osc_scu_cut_ut#_t#n_#nu_nu#	ai_cunoscut_nu
+#cu_cun_uno_nos_osc_scu_cut_ut#_t#n_#nu_nu#_u#u_#ui_uit_it#	cunoscut_nu_uit
+#nu_nu#_u#u_#ui_uit_it#_t#n_#nu_nu#	nu_uit_nu
+#ui_uit_it#_t#n_#nu_nu#_u#a_#am_am#	uit_nu_am
+#nu_nu#_u#a_#am_am#_m#o_#o#	nu_am_o
+#am_am#_m#o_#o#_o#c_#co_col_ole_lec_ecţ_cţi_ţie_ie#	am_o_colecţie
+#o#_o#c_#co_col_ole_lec_ecţ_cţi_ţie_ie#_e#d_#de_de#	o_colecţie_de
+#co_col_ole_lec_ecţ_cţi_ţie_ie#_e#d_#de_de#_e#t_#tr_tri_rim_imb_mbe_be#	colecţie_de_trimbe
+#de_de#_e#t_#tr_tri_rim_imb_mbe_be#_e#n_#nu_nu#	de_trimbe_nu
+#tr_tri_rim_imb_mbe_be#_e#n_#nu_nu#_u#s_#sc_scu_cul_ulp_lpt_pte_tez_ez#	trimbe_nu_sculptez
+#nu_nu#_u#s_#sc_scu_cul_ulp_lpt_pte_tez_ez#_z#n_#nu_nu#	nu_sculptez_nu
+#sc_scu_cul_ulp_lpt_pte_tez_ez#_z#n_#nu_nu#_u#a_#am_am#	sculptez_nu_am
+#nu_nu#_u#a_#am_am#_m#u_#un_un#	nu_am_un
+#am_am#_m#u_#un_un#_n#r_#ra_rad_adi_dio_io#	am_un_radio
+#un_un#_n#r_#ra_rad_adi_dio_io#_o#a_#a#	un_radio_a
+#ra_rad_adi_dio_io#_o#a_#a#_a#s_#st_str_tri_ric_ica_ca#	radio_a_strica
+#a#_a#s_#st_str_tri_ric_ica_ca#_a#l_#lu_luc_ucr_cru_rur_uri_ril_ile_le#	a_strica_lucrurile
+#st_str_tri_ric_ica_ca#_a#l_#lu_luc_ucr_cru_rur_uri_ril_ile_le#_e#e_#e#	strica_lucrurile_e
+#lu_luc_ucr_cru_rur_uri_ril_ile_le#_e#e_#e#_e#u_#ul_ul#	lucrurile_e_ul
+#e#_e#u_#ul_ul#_l#m_#me_meu_eu#	e_ul_meu
+#ul_ul#_l#m_#me_meu_eu#_u#c_#cr_cre_red_ed#	ul_meu_cred
+#me_meu_eu#_u#c_#cr_cre_red_ed#_d#c_#că_că#	meu_cred_că
+#cr_cre_red_ed#_d#c_#că_că#_ă#o_#o#	cred_că_o
+#că_că#_ă#o_#o#_o#m_#ma_maş_aşi_şin_ină_nă#	că_o_maşină
+#o#_o#m_#ma_maş_aşi_şin_ină_nă#_ă#t_#to_toc_ocm_cma_mai_ai#	o_maşină_tocmai
+#ma_maş_aşi_şin_ină_nă#_ă#t_#to_toc_ocm_cma_mai_ai#_i#a_#a#	maşină_tocmai_a
+#to_toc_ocm_cma_mai_ai#_i#a_#a#_a#p_#pa_par_arc_rca_cat_at#	tocmai_a_parcat
+#a#_a#p_#pa_par_arc_rca_cat_at#_t#c_#cu_cum_um#	a_parcat_cum
+#pa_par_arc_rca_cat_at#_t#c_#cu_cum_um#_m#e_#e#	parcat_cum_e
+#cu_cum_um#_m#e_#e#_e#r_#re_res_esp_spi_pir_ira_raţ_aţi_ţia_ia#	cum_e_respiraţia
+#e#_e#r_#re_res_esp_spi_pir_ira_raţ_aţi_ţia_ia#_a#m_#me_mea_ea#	e_respiraţia_mea
+#re_res_esp_spi_pir_ira_raţ_aţi_ţia_ia#_a#m_#me_mea_ea#_a#n_#nu_nu#	respiraţia_mea_nu
+#me_mea_ea#_a#n_#nu_nu#_u#d_#de_des_est_stu_tul_ul#	mea_nu_destul
+#nu_nu#_u#d_#de_des_est_stu_tul_ul#_l#d_#de_de#	nu_destul_de
+#de_des_est_stu_tul_ul#_l#d_#de_de#_e#b_#bu_bun_ună_nă#	destul_de_bună
+#de_de#_e#b_#bu_bun_ună_nă#_ă#c_#ca_ca#	de_bună_ca
+#bu_bun_ună_nă#_ă#c_#ca_ca#_a#s_#să_să#	bună_ca_să
+#ca_ca#_a#s_#să_să#_ă#m_#ma_mai_ai#	ca_să_mai
+#să_să#_ă#m_#ma_mai_ai#_i#f_#fa_fac_aci_ci#	să_mai_faci
+#ma_mai_ai#_i#f_#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#	mai_faci_asta
+#fa_fac_aci_ci#_i#a_#as_ast_sta_ta#_a#v_#vr_vre_reo_eod_oda_dat_ată_tă#	faci_asta_vreodată
+#as_ast_sta_ta#_a#v_#vr_vre_reo_eod_oda_dat_ată_tă#_ă#n_#nu_nu#	asta_vreodată_nu
+#vr_vre_reo_eod_oda_dat_ată_tă#_ă#n_#nu_nu#_u#i_#im_imi_mi#	vreodată_nu_imi
+#nu_nu#_u#i_#im_imi_mi#_i#v_#vi_vin_ine_ne#	nu_imi_vine
+#im_imi_mi#_i#v_#vi_vin_ine_ne#_e#s_#să_să#	imi_vine_să
+#vi_vin_ine_ne#_e#s_#să_să#_ă#c_#cr_cre_red_ed#	vine_să_cred
+#să_să#_ă#c_#cr_cre_red_ed#_d#c_#că_că#	să_cred_că
+#cr_cre_red_ed#_d#c_#că_că#_ă#i_#il_il#	cred_că_il
+#că_că#_ă#i_#il_il#_l#c_#co_cod_odo_doş_oşe_şeş_eşt_şti_ti#	că_il_codoşeşti
+#il_il#_l#c_#co_cod_odo_doş_oşe_şeş_eşt_şti_ti#_i#p_#pe_pe#	il_codoşeşti_pe
+#co_cod_odo_doş_oşe_şeş_eşt_şti_ti#_i#p_#pe_pe#_e#f_#fi_fiu_iul_ul#	codoşeşti_pe_fiul
+#pe_pe#_e#f_#fi_fiu_iul_ul#_l#t_#tă_tău_ău#	pe_fiul_tău
+#fi_fiu_iul_ul#_l#t_#tă_tău_ău#_u#m_#mi_mi#	fiul_tău_mi
+#tă_tău_ău#_u#m_#mi_mi#_i#v_#vi_vin_ine_ne#	tău_mi_vine
+#mi_mi#_i#v_#vi_vin_ine_ne#_e#s_#să_să#	mi_vine_să
+#vi_vin_ine_ne#_e#s_#să_să#_ă#c_#cr_cre_red_ed#	vine_să_cred
+#să_să#_ă#c_#cr_cre_red_ed#_d#c_#că_că#	să_cred_că
+#cr_cre_red_ed#_d#c_#că_că#_ă#a_#am_am#	cred_că_am
+#că_că#_ă#a_#am_am#_m#g_#gă_găs_ăsi_sit_it#	că_am_găsit
+#am_am#_m#g_#gă_găs_ăsi_sit_it#_t#u_#un_un#	am_găsit_un
+#gă_găs_ăsi_sit_it#_t#u_#un_un#_n#c_#cl_cli_lie_ien_ent_nt#	găsit_un_client
+#un_un#_n#c_#cl_cli_lie_ien_ent_nt#_t#s_#sa_sal_alu_lut_ut#	un_client_salut
+#cl_cli_lie_ien_ent_nt#_t#s_#sa_sal_alu_lut_ut#_t#b_#bo_bob_ob#	client_salut_bob
+#sa_sal_alu_lut_ut#_t#b_#bo_bob_ob#_b#c_#ce_ce#	salut_bob_ce
+#bo_bob_ob#_b#c_#ce_ce#_e#m_#ma_mai_ai#	bob_ce_mai
+#ce_ce#_e#m_#ma_mai_ai#_i#f_#fa_fac_aci_ci#	ce_mai_faci
+#ma_mai_ai#_i#f_#fa_fac_aci_ci#_i#s_#sa_sal_alu_lut_ut#	mai_faci_salut
+#fa_fac_aci_ci#_i#s_#sa_sal_alu_lut_ut#_t#d_#da_dav_ave_ve#	faci_salut_dave
+#sa_sal_alu_lut_ut#_t#d_#da_dav_ave_ve#_e#c_#cu_cum_um#	salut_dave_cum
+#da_dav_ave_ve#_e#c_#cu_cum_um#_m#i_#iţ_iţi_ţi#	dave_cum_iţi
+#cu_cum_um#_m#i_#iţ_iţi_ţi#_i#m_#ma_mai_ai#	cum_iţi_mai
+#iţ_iţi_ţi#_i#m_#ma_mai_ai#_i#m_#me_mer_erg_rge_ge#	iţi_mai_merge
+#ma_mai_ai#_i#m_#me_mer_erg_rge_ge#_e#a_#ac_ace_cea_eas_ast_sta_ta#	mai_merge_aceasta
+#me_mer_erg_rge_ge#_e#a_#ac_ace_cea_eas_ast_sta_ta#_a#e_#es_est_ste_te#	merge_aceasta_este
+#ac_ace_cea_eas_ast_sta_ta#_a#e_#es_est_ste_te#_e#f_#fi_fii_iic_ica_ca#	aceasta_este_fiica
+#es_est_ste_te#_e#f_#fi_fii_iic_ica_ca#_a#m_#me_mea_ea#	este_fiica_mea
+#fi_fii_iic_ica_ca#_a#m_#me_mea_ea#_a#t_#ti_tif_iff_ffa_fan_any_ny#	fiica_mea_tiffany
+#me_mea_ea#_a#t_#ti_tif_iff_ffa_fan_any_ny#_y#b_#bu_bun_ună_nă#	mea_tiffany_bună
+#ti_tif_iff_ffa_fan_any_ny#_y#b_#bu_bun_ună_nă#_ă#t_#ti_tif_iff_ffa_fan_any_ny#	tiffany_bună_tiffany
+#bu_bun_ună_nă#_ă#t_#ti_tif_iff_ffa_fan_any_ny#_y#i_#in_int_ntr_tră_ră#	bună_tiffany_intră
+#ti_tif_iff_ffa_fan_any_ny#_y#i_#in_int_ntr_tră_ră#_ă#f_#fr_fru_rum_umo_moa_oas_asă_să#	tiffany_intră_frumoasă
+#in_int_ntr_tră_ră#_ă#f_#fr_fru_rum_umo_moa_oas_asă_să#_ă#g_#ge_gea_eac_acă_că#	intră_frumoasă_geacă
+#fr_fru_rum_umo_moa_oas_asă_să#_ă#g_#ge_gea_eac_acă_că#_ă#b_#bu_bun_uni_nic_ica_ca#	frumoasă_geacă_bunica
+#ge_gea_eac_acă_că#_ă#b_#bu_bun_uni_nic_ica_ca#_a#m_#me_mea_ea#	geacă_bunica_mea
+#bu_bun_uni_nic_ica_ca#_a#m_#me_mea_ea#_a#a_#a#	bunica_mea_a
+#me_mea_ea#_a#a_#a#_a#m_#mu_mur_uri_rit_it#	mea_a_murit
+#a#_a#m_#mu_mur_uri_rit_it#_t#i_#in_in#	a_murit_in
+#mu_mur_uri_rit_it#_t#i_#in_in#_n#e_#ea_ea#	murit_in_ea
+#in_in#_n#e_#ea_ea#_a#î_#îm_îmi_mi#	in_ea_îmi
+#ea_ea#_a#î_#îm_îmi_mi#_i#p_#pa_par_are_re#	ea_îmi_pare
+#îm_îmi_mi#_i#p_#pa_par_are_re#_e#r_#ră_rău_ău#	îmi_pare_rău
+#pa_par_are_re#_e#r_#ră_rău_ău#_u#b_#bu_bun_ună_nă#	pare_rău_bună
+#ră_rău_ău#_u#b_#bu_bun_ună_nă#_ă#e_#eu_eu#	rău_bună_eu
+#bu_bun_ună_nă#_ă#e_#eu_eu#_u#s_#su_sun_unt_nt#	bună_eu_sunt
+#eu_eu#_u#s_#su_sun_unt_nt#_t#l_#la_lar_arr_rry_ry#	eu_sunt_larry
+#su_sun_unt_nt#_t#l_#la_lar_arr_rry_ry#_y#î_#îm_îmi_mi#	sunt_larry_îmi
+#la_lar_arr_rry_ry#_y#î_#îm_îmi_mi#_i#p_#pa_par_are_re#	larry_îmi_pare
+#îm_îmi_mi#_i#p_#pa_par_are_re#_e#b_#bi_bin_ine_ne#	îmi_pare_bine
+#pa_par_are_re#_e#b_#bi_bin_ine_ne#_e#s_#să_să#	pare_bine_să
+#bi_bin_ine_ne#_e#s_#să_să#_ă#t_#te_te#	bine_să_te
+#să_să#_ă#t_#te_te#_e#c_#cu_cun_uno_nos_osc_sc#	să_te_cunosc
+#te_te#_e#c_#cu_cun_uno_nos_osc_sc#_c#î_#în_îna_nai_ain_int_nte_te#	te_cunosc_înainte
+#cu_cun_uno_nos_osc_sc#_c#î_#în_îna_nai_ain_int_nte_te#_e#s_#să_să#	cunosc_înainte_să
+#în_îna_nai_ain_int_nte_te#_e#s_#să_să#_ă#p_#pl_ple_lec_ecă_căm_ăm#	înainte_să_plecăm
+#să_să#_ă#p_#pl_ple_lec_ecă_căm_ăm#_m#m_#mă_mă#	să_plecăm_mă
+#pl_ple_lec_ecă_căm_ăm#_m#m_#mă_mă#_ă#d_#du_duc_uc#	plecăm_mă_duc
+#mă_mă#_ă#d_#du_duc_uc#_c#s_#să_să#	mă_duc_să
+#du_duc_uc#_c#s_#să_să#_ă#m_#mă_mă#	duc_să_mă
+#să_să#_ă#m_#mă_mă#_ă#i_#im_imp_mpr_pro_ros_osp_spă_păt_ăte_tez_ez#	să_mă_improspătez
+#mă_mă#_ă#i_#im_imp_mpr_pro_ros_osp_spă_păt_ăte_tez_ez#_z#ş_#şi_şi#	mă_improspătez_şi
+#im_imp_mpr_pro_ros_osp_spă_păt_ăte_tez_ez#_z#ş_#şi_şi#_i#c_#câ_cât_ât#	improspătez_şi_cât
+#şi_şi#_i#c_#câ_cât_ât#_t#t_#ti_tim_imp_mp#	şi_cât_timp
+#câ_cât_ât#_t#t_#ti_tim_imp_mp#_p#a_#aş_aşt_şte_tep_epţ_pţi_ţi#	cât_timp_aştepţi
+#ti_tim_imp_mp#_p#a_#aş_aşt_şte_tep_epţ_pţi_ţi#_i#v_#vr_vre_rei_ei#	timp_aştepţi_vrei
+#aş_aşt_şte_tep_epţ_pţi_ţi#_i#v_#vr_vre_rei_ei#_i#s_#să_să#	aştepţi_vrei_să
+#vr_vre_rei_ei#_i#s_#să_să#_ă#i_#iţ_iţi_ţi#	vrei_să_iţi
+#să_să#_ă#i_#iţ_iţi_ţi#_i#a_#ad_adu_duc_uc#	să_iţi_aduc
+#iţ_iţi_ţi#_i#a_#ad_adu_duc_uc#_c#c_#ce_cev_eva_va#	iţi_aduc_ceva
+#ad_adu_duc_uc#_c#c_#ce_cev_eva_va#_a#u_#un_un#	aduc_ceva_un
+#ce_cev_eva_va#_a#u_#un_un#_n#s_#su_suc_uc#	ceva_un_suc
+#un_un#_n#s_#su_suc_uc#_c#n_#ni_niş_işt_şte_te#	un_suc_nişte
+#su_suc_uc#_c#n_#ni_niş_işt_şte_te#_e#c_#co_cov_ovr_vri_rig_ige_gei_ei#	suc_nişte_covrigei
+#ni_niş_işt_şte_te#_e#c_#co_cov_ovr_vri_rig_ige_gei_ei#_i#u_#un_un#	nişte_covrigei_un
+#co_cov_ovr_vri_rig_ige_gei_ei#_i#u_#un_un#_n#e_#ex_exo_xor_orc_rci_cis_ist_st#	covrigei_un_exorcist
+#un_un#_n#e_#ex_exo_xor_orc_rci_cis_ist_st#_t#p_#pr_pre_res_esu_sup_upu_pun_un#	un_exorcist_presupun
+#ex_exo_xor_orc_rci_cis_ist_st#_t#p_#pr_pre_res_esu_sup_upu_pun_un#_n#c_#că_că#	exorcist_presupun_că
+#pr_pre_res_esu_sup_upu_pun_un#_n#c_#că_că#_ă#a_#aş_aş#	presupun_că_aş
+#că_că#_ă#a_#aş_aş#_ş#p_#pu_put_ute_tea_ea#	că_aş_putea
+#aş_aş#_ş#p_#pu_put_ute_tea_ea#_a#b_#be_bea_ea#	aş_putea_bea
+#pu_put_ute_tea_ea#_a#b_#be_bea_ea#_a#c_#ce_cev_eva_va#	putea_bea_ceva
+#be_bea_ea#_a#c_#ce_cev_eva_va#_a#d_#de_de#	bea_ceva_de
+#ce_cev_eva_va#_a#d_#de_de#_e#c_#ce_ce#	ceva_de_ce
+#de_de#_e#c_#ce_ce#_e#s_#să_să#	de_ce_să
+#ce_ce#_e#s_#să_să#_ă#n_#nu_nu#	ce_să_nu
+#să_să#_ă#n_#nu_nu#_u#i_#iţ_iţi_ţi#	să_nu_iţi
+#nu_nu#_u#i_#iţ_iţi_ţi#_i#a_#ar_ară_răt_ăt#	nu_iţi_arăt
+#iţ_iţi_ţi#_i#a_#ar_ară_răt_ăt#_t#c_#ce_ce#	iţi_arăt_ce
+#ar_ară_răt_ăt#_t#c_#ce_ce#_e#a_#av_ave_vem_em#	arăt_ce_avem
+#ce_ce#_e#a_#av_ave_vem_em#_m#p_#pă_păi_ăi#	ce_avem_păi
+#av_ave_vem_em#_m#p_#pă_păi_ăi#_i#t_#ti_tif_iff_ffa_fan_any_ny#	avem_păi_tiffany
+#pă_păi_ăi#_i#t_#ti_tif_iff_ffa_fan_any_ny#_y#e_#e#	păi_tiffany_e
+#ti_tif_iff_ffa_fan_any_ny#_y#e_#e#_e#f_#fr_fru_rum_umu_muş_uşi_şic_ică_că#	tiffany_e_frumuşică
+#e#_e#f_#fr_fru_rum_umu_muş_uşi_şic_ică_că#_ă#t_#te_te#	e_frumuşică_te
+#fr_fru_rum_umu_muş_uşi_şic_ică_că#_ă#t_#te_te#_e#r_#ro_rog_og#	frumuşică_te_rog
+#te_te#_e#r_#ro_rog_og#_g#e_#e#	te_rog_e
+#ro_rog_og#_g#e_#e#_e#u_#un_un#	rog_e_un
+#e#_e#u_#un_un#_n#c_#co_coş_oşm_şma_mar_ar#	e_un_coşmar
+#un_un#_n#c_#co_coş_oşm_şma_mar_ar#_r#v_#vr_vre_rea_eau_au#	un_coşmar_vreau
+#co_coş_oşm_şma_mar_ar#_r#v_#vr_vre_rea_eau_au#_u#s_#să_să#	coşmar_vreau_să
+#vr_vre_rea_eau_au#_u#s_#să_să#_ă#o_#o#	vreau_să_o
+#să_să#_ă#o_#o#_o#l_#la_las_as#	să_o_las
+#o#_o#l_#la_las_as#_s#u_#un_un#	o_las_un
+#la_las_as#_s#u_#un_un#_n#c_#câ_câm_âmp_mp#	las_un_câmp
+#un_un#_n#c_#câ_câm_âmp_mp#_p#a_#ai_aia_ia#	un_câmp_aia
+#câ_câm_âmp_mp#_p#a_#ai_aia_ia#_a#s_#să_să#	câmp_aia_să
+#ai_aia_ia#_a#s_#să_să#_ă#m_#mă_mă#	aia_să_mă
+#să_să#_ă#m_#mă_mă#_ă#m_#mu_mut_ut#	să_mă_mut
+#mă_mă#_ă#m_#mu_mut_ut#_t#ş_#şi_şi#	mă_mut_şi
+#mu_mut_ut#_t#ş_#şi_şi#_i#a_#ap_apo_poi_oi#	mut_şi_apoi
+#şi_şi#_i#a_#ap_apo_poi_oi#_i#s_#să_să#	şi_apoi_să
+#ap_apo_poi_oi#_i#s_#să_să#_ă#m_#mă_mă#	apoi_să_mă
+#să_să#_ă#m_#mă_mă#_ă#s_#si_sin_inu_nuc_uci_cid_id#	să_mă_sinucid
+#mă_mă#_ă#s_#si_sin_inu_nuc_uci_cid_id#_d#c_#ca_ca#	mă_sinucid_ca
+#si_sin_inu_nuc_uci_cid_id#_d#c_#ca_ca#_a#s_#să_să#	sinucid_ca_să
+#ca_ca#_a#s_#să_să#_ă#m_#mă_mă#	ca_să_mă
+#să_să#_ă#m_#mă_mă#_ă#a_#as_asi_sig_igu_gur_ur#	să_mă_asigur
+#mă_mă#_ă#a_#as_asi_sig_igu_gur_ur#_r#c_#că_că#	mă_asigur_că
+#as_asi_sig_igu_gur_ur#_r#c_#că_că#_ă#n_#nu_nu#	asigur_că_nu
+#că_că#_ă#n_#nu_nu#_u#m_#mă_mă#	că_nu_mă
+#nu_nu#_u#m_#mă_mă#_ă#g_#gă_găs_ăse_seş_eşt_şte_te#	nu_mă_găseşte
+#mă_mă#_ă#g_#gă_găs_ăse_seş_eşt_şte_te#_e#ş_#şt_şti_tiu_iu#	mă_găseşte_ştiu
+#gă_găs_ăse_seş_eşt_şte_te#_e#ş_#şt_şti_tiu_iu#_u#c_#ce_ce#	găseşte_ştiu_ce
+#şt_şti_tiu_iu#_u#c_#ce_ce#_e#v_#vr_vre_rei_ei#	ştiu_ce_vrei
+#ce_ce#_e#v_#vr_vre_rei_ei#_i#s_#să_să#	ce_vrei_să
+#vr_vre_rei_ei#_i#s_#să_să#_ă#s_#sp_spu_pui_ui#	vrei_să_spui
+#să_să#_ă#s_#sp_spu_pui_ui#_i#a_#an_anu_nul_ul#	să_spui_anul
+#sp_spu_pui_ui#_i#a_#an_anu_nul_ul#_l#t_#tr_tre_rec_eci_cit_it#	spui_anul_trecit
+#an_anu_nul_ul#_l#t_#tr_tre_rec_eci_cit_it#_t#l_#la_lar_arr_rry_ry#	anul_trecit_larry
+#tr_tre_rec_eci_cit_it#_t#l_#la_lar_arr_rry_ry#_y#a_#a#	trecit_larry_a
+#la_lar_arr_rry_ry#_y#a_#a#_a#f_#fă_făc_ăcu_cut_ut#	larry_a_făcut
+#a#_a#f_#fă_făc_ăcu_cut_ut#_t#u_#un_un#	a_făcut_un
+#fă_făc_ăcu_cut_ut#_t#u_#un_un#_n#m_#mu_muz_uzi_zic_ica_cal_al#	făcut_un_muzical
+#un_un#_n#m_#mu_muz_uzi_zic_ica_cal_al#_l#ş_#şi_şi#	un_muzical_şi
+#mu_muz_uzi_zic_ica_cal_al#_l#ş_#şi_şi#_i#t_#ti_tif_iff_ffa_fan_any_ny#	muzical_şi_tiffany
+#şi_şi#_i#t_#ti_tif_iff_ffa_fan_any_ny#_y#c_#cu_cum_um#	şi_tiffany_cum
+#ti_tif_iff_ffa_fan_any_ny#_y#c_#cu_cum_um#_m#i_#iţ_iţi_ţi#	tiffany_cum_iţi
+#cu_cum_um#_m#i_#iţ_iţi_ţi#_i#p_#pl_pla_lac_ace_ce#	cum_iţi_place
+#iţ_iţi_ţi#_i#p_#pl_pla_lac_ace_ce#_e#l_#la_la#	iţi_place_la
+#pl_pla_lac_ace_ce#_e#l_#la_la#_a#l_#li_lic_ice_ceu_eu#	place_la_liceu
+#la_la#_a#l_#li_lic_ice_ceu_eu#_u#î_#îl_îl#	la_liceu_îl
+#li_lic_ice_ceu_eu#_u#î_#îl_îl#_l#d_#de_det_ete_tes_est_st#	liceu_îl_detest
+#îl_îl#_l#d_#de_det_ete_tes_est_st#_t#d_#di_dis_isp_spr_pre_reţ_eţu_ţui_uie_ies_esc_sc#	îl_detest_dispreţuiesc
+#de_det_ete_tes_est_st#_t#d_#di_dis_isp_spr_pre_reţ_eţu_ţui_uie_ies_esc_sc#_c#f_#fi_fie_iec_eca_car_are_re#	detest_dispreţuiesc_fiecare
+#di_dis_isp_spr_pre_reţ_eţu_ţui_uie_ies_esc_sc#_c#f_#fi_fie_iec_eca_car_are_re#_e#p_#pe_per_ers_rso_soa_oan_ană_nă#	dispreţuiesc_fiecare_persoană
+#fi_fie_iec_eca_car_are_re#_e#p_#pe_per_ers_rso_soa_oan_ană_nă#_ă#a_#ac_aco_col_olo_lo#	fiecare_persoană_acolo
+#pe_per_ers_rso_soa_oan_ană_nă#_ă#a_#ac_aco_col_olo_lo#_o#m_#ma_mai_ai#	persoană_acolo_mai
+#ac_aco_col_olo_lo#_o#m_#ma_mai_ai#_i#b_#bi_bin_ine_ne#	acolo_mai_bine
+#ma_mai_ai#_i#b_#bi_bin_ine_ne#_e#a_#aş_aş#	mai_bine_aş
+#bi_bin_ine_ne#_e#a_#aş_aş#_ş#s_#sm_smu_mul_ulg_lge_ge#	bine_aş_smulge
+#aş_aş#_ş#s_#sm_smu_mul_ulg_lge_ge#_e#o_#oc_och_chi_hii_ii#	aş_smulge_ochii
+#sm_smu_mul_ulg_lge_ge#_e#o_#oc_och_chi_hii_ii#_i#d_#de_dec_ecâ_cât_ât#	smulge_ochii_decât
+#oc_och_chi_hii_ii#_i#d_#de_dec_ecâ_cât_ât#_t#s_#să_să#	ochii_decât_să
