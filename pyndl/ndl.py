@@ -6,6 +6,8 @@ import threading
 from queue import Queue
 
 import numpy as np
+import pandas as pd
+import xarray as xr
 
 from . import count
 from . import preprocess
@@ -39,8 +41,9 @@ def events(event_path):
             yield (cues, outcomes)
 
 
-def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
-                      number_of_threads=2, sequence=10, remove_duplicates=None):
+def ndl(event_path, alpha, betas, lambda_=1.0, *,
+        method='openmp', weights=None,
+        number_of_threads=8, sequence=10, remove_duplicates=None):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -58,6 +61,9 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
         one value for successful prediction (reward) one for punishment
     lambda_ : float
 
+    method : {'openmp', 'threading'}
+    weights : None or xarray.DataArray
+        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
     number_of_threads : int
         a integer giving the number of threads in which the job should
         executed
@@ -71,124 +77,83 @@ def thread_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
 
     Returns
     =======
-    weights : numpy.array of shape len(outcomes), len(cues)
-        weights[outcome_index][cue_index] gives the weight between outcome and cue.
+    weights : xarray.DataArray
+        with dimensions 'cues' and 'outcomes'. You can lookup the weights
+        between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
+        'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
 
     """
-
     # preprocessing
     cue_map, outcome_map, all_outcome_indices = generate_mapping(
                                                     event_path,
-                                                    number_of_processes=2,
+                                                    number_of_processes=number_of_threads,
                                                     binary=True)
-
     preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
                                          outcome_map, overwrite=True,
-                                         number_of_processes=2,
+                                         number_of_processes=number_of_threads,
                                          remove_duplicates=remove_duplicates)
-
     shape = (len(outcome_map), len(cue_map))
-    weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
+
+    index_outcome_map = dict((value, key) for key, value in outcome_map.items())
+    index_cue_map = dict((value, key) for key, value in cue_map.items())
+    outcomes = [index_outcome_map[index] for index in range(shape[0])]
+    cues = [index_cue_map[index] for index in range(shape[1])]
+
     beta1, beta2 = betas
     binary_files = [os.path.join(BINARY_PATH, binary_file)
                     for binary_file in os.listdir(BINARY_PATH)
                     if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
 
-    part_lists = slice_list(all_outcome_indices, sequence)
+    # initialize weights
+    if weights is None:
+        weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
+    elif isinstance(weights, xr.DataArray):
+        raise NotImplementedError('TODO')
+    else:
+        raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
 
-    working_queue = Queue(len(part_lists))
-    threads = []
-    queue_lock = threading.Lock()
+    # learning
+    if method == 'openmp':
+        ndl_parallel.learn_inplace(binary_files, weights, alpha,
+                                   beta1, beta2, lambda_,
+                                   np.array(all_outcome_indices, dtype=np.uint32),
+                                   sequence, number_of_threads)
+    elif method == 'threading':
+        part_lists = slice_list(all_outcome_indices, sequence)
 
-    def worker():
-        while True:
-            with queue_lock:
-                if working_queue.empty():
-                    break
-                data = working_queue.get()
-            ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
-                                         beta1, beta2, lambda_, data)
+        working_queue = Queue(len(part_lists))
+        threads = []
+        queue_lock = threading.Lock()
 
-    with queue_lock:
-        for partlist in part_lists:
-            working_queue.put(np.array(partlist, dtype=np.uint32))
+        def worker():
+            while True:
+                with queue_lock:
+                    if working_queue.empty():
+                        break
+                    data = working_queue.get()
+                ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
+                                             beta1, beta2, lambda_, data)
 
-    for thread_id in range(number_of_threads):
-        thread = threading.Thread(target=worker)
-        thread.start()
-        threads.append(thread)
+        with queue_lock:
+            for partlist in part_lists:
+                working_queue.put(np.array(partlist, dtype=np.uint32))
 
-    for thread in threads:
-        thread.join()
+        for thread_id in range(number_of_threads):
+            thread = threading.Thread(target=worker)
+            thread.start()
+            threads.append(thread)
 
+        for thread in threads:
+            thread.join()
+    else:
+        ValueError('method needs to be either "threading" or "openmp"')
+
+    # post-processing
+    weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)])
     return weights
 
 
-def openmp_ndl_simple(event_path, alpha, betas, lambda_=1.0, *,
-                      number_of_threads=8, sequence=10, remove_duplicates=None):
-    """
-    Calculate the weights for all_outcomes over all events in event_file
-    given by the files path.
-
-    This is a parallel python implementation using numpy, multithreading and
-    the binary format defined in preprocess.py.
-
-    Parameters
-    ==========
-    event_path : str
-        path to the event file
-    alpha : float
-        saliency of all cues
-    betas : (float, float)
-        one value for successful prediction (reward) one for punishment
-    lambda_ : float
-
-    number_of_threads : int
-        a integer giving the number of threads in which the job should
-        executed
-    sequence : int
-        a integer giving the length of sublists generated from all outcomes
-    remove_duplicates : {None, True, False}
-        if None though a ValueError when the same cue is present multiple times
-        in the same event; True make cues and outcomes unique per event; False
-        keep multiple instances of the same cue or outcome (this is usually not
-        preferred!)
-
-    Returns
-    =======
-    weights : numpy.array of shape len(outcomes), len(cues)
-        weights[outcome_index][cue_index] gives the weight between outcome and cue.
-
-    """
-
-    # preprocessing
-    cue_map, outcome_map, all_outcome_indices = generate_mapping(
-                                                    event_path,
-                                                    number_of_processes=2,
-                                                    binary=True)
-
-    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
-                                         outcome_map, overwrite=True,
-                                         number_of_processes=2,
-                                         remove_duplicates=remove_duplicates)
-
-    shape = (len(outcome_map), len(cue_map))
-    weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
-    beta1, beta2 = betas
-    binary_files = [os.path.join(BINARY_PATH, binary_file)
-                    for binary_file in os.listdir(BINARY_PATH)
-                    if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
-
-    ndl_parallel.learn_inplace(binary_files, weights, alpha,
-                               beta1, beta2, lambda_,
-                               np.array(all_outcome_indices, dtype=np.uint32),
-                               sequence,
-                               number_of_threads)
-
-    return weights
-
-
-def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_duplicates=None):
+def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_duplicates=None, make_data_array=False):
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
@@ -217,6 +182,8 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
         preferred!)
+    make_data_array : {False, True}
+        if True makes a xarray.DataArray out of the dict of dicts.
 
     Returns
     =======
@@ -224,6 +191,13 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
         the first dict has outcomes as keys and dicts as values
         the second dict has cues as keys and weights as values
         weights[outcome][cue] gives the weight between outcome and cue.
+
+    or
+
+    weights : xarray.DataArray
+        with dimensions 'cues' and 'outcomes'. You can lookup the weights
+        between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
+        'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
 
     """
     # weights can be seen as an infinite outcome by cue matrix
@@ -264,6 +238,11 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
             for cue in cues:
                 weights[outcome][cue] += alphas[cue] * update
 
+    if make_data_array:
+        weights = pd.DataFrame(weights)
+        weights.fillna(0.0, inplace=True)
+        weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'))
+
     return weights
 
 
@@ -281,29 +260,6 @@ def activations(cues, weights, *, remove_duplicates=None):
             for cue in cues:
                 activations_[outcome] += cue_dict[cue]
         return activations_
-
-# NOTE: In the original code some stuff was differently handled for multiple
-# cues and multiple outcomes.
-
-
-def generate_all_outcomes(event_path):
-    """
-    Generates a list of all outcomes of the event_file.
-
-    Parameters
-    ==========
-    event_path : str
-        path to the event_file for which the mapping should be generated
-
-    Returns
-    =======
-    all_outcomes : list
-        a list of all outcomes in the event file
-    """
-    cues, outcomes = count.cues_outcomes(event_path, number_of_processes=2)
-    all_outcomes = list(outcomes.keys())
-
-    return all_outcomes
 
 
 def generate_mapping(event_path, number_of_processes=2, binary=False):  # TODO find better name
@@ -326,6 +282,7 @@ def generate_mapping(event_path, number_of_processes=2, binary=False):  # TODO f
         a OrderedDict mapping all outcomes to indizes
     all_outcomes : list
         a list of all outcomes in the event file
+
     """
     cues, outcomes = count.cues_outcomes(event_path, number_of_processes=number_of_processes)
     all_cues = list(cues.keys())
@@ -365,15 +322,3 @@ def slice_list(li, sequence):
         ii = ii+sequence
 
     return seq_list
-
-
-if __name__ == '__main__':
-    with open('tests/resources/event_file.tab', 'rt') as event_file:
-        events_ = events(event_file)
-        all_outcomes = ('była', 'tak', 'skupiona', 'brzucha', 'botoksem',
-                        'kolagenem')
-        weights = dict_ndl(events_, defaultdict(lambda: 0.01), defaultdict(lambda: 0.01), all_outcomes)
-        for outcome, cues in weights.items():
-            print('Outcome: %s' % str(outcome))
-            for cue, value in cues.items():
-                print('  %s = %f' % (str(cue), value))
