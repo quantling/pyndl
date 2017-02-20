@@ -35,11 +35,32 @@ else:
 
 setup(
     name='pyndl',
-    version='0.1',
+    version='0.1dev',
     license='MIT',
+    description=('Naive discriminative learning implements learning and '
+                 'classification models based on the Rescorla-Wagner equations.'),
+    long_description=open('README.rst').read(),
+    author=('David-Elias Künstle, Lennard Schneider, '
+            'Konstantin Sering, Marc Weitz'),
+    author_email='konstantin.sering@uni-tuebingen.de',
+    url='http://www.sfs.uni-tuebingen.de/en/ql.html',
     classifiers=[
-        'License :: OSI Approved :: MIT License'
+        'Development Status :: 3 - Alpha',
+        'Environment :: Console',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3.3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3 :: Only',
+        'Topic :: Scientific/Engineering',
+        'Topic :: Scientific/Engineering :: Artificial Intelligence',
+        'Topic :: Scientific/Engineering :: Information Analysis',
     ],
+    platforms='Linux',
     packages=['pyndl'],
     install_requires=load_requirements('requirements.txt'),
     ext_modules=ext_modules,
