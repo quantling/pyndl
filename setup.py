@@ -36,6 +36,7 @@ else:
 setup(
     name='pyndl',
     version='0.1dev',
+    license='MIT',
     description=('Naive discriminative learning implements learning and '
                  'classification models based on the Rescorla-Wagner equations.'),
     long_description=open('README.rst').read(),
@@ -47,6 +48,7 @@ setup(
         'Development Status :: 3 - Alpha',
         'Environment :: Console',
         'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.3',
