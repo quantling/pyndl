@@ -54,7 +54,7 @@ master_doc = 'index'
 # General information about the project.
 project = 'pyndl'
 copyright = '2017, Sering, Weitz, Schneider, Künstle'
-author = 'Sering, Weitz, Schneider, Künstle'
+author = 'David-Elias Künstle, Lennard Schneider, Konstantin Sering, Marc Weitz'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
