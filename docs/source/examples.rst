@@ -225,11 +225,22 @@ As we do not want to include the outcomes 'foot' and 'feet' in this example aswe
 pyndl.preprocess module
 -----------------------
 
-again, filtering our event file:
+again, filtering our event file and update the id maps for cues and outcomes:
 
 .. code-block:: python
 
     >>> preprocess.filter_event_file(input_event_file = 'examples/levent.tab', output_event_file = 'examples/levent.tab.filtered', remove_cues = ['#f', 'fo', 'oo', 'ot', 't#', 'fe', 'ee', 'et'], remove_outcomes = ['foot', 'feet'])
+    >>> cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name = 'examples/levent.tab.filtered')
+    >>> cue_freq_map
+    >>> outcome_freq_map
+    >>> cues = list(cue_freq_map.keys())
+    >>> cues.sort()
+    >>> cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
+    >>> cue_id_map
+    >>> outcomes = list(outcome_freq_map.keys())
+    >>> outcomes.sort()
+    >>> outcome_id_map = {outcome: nn for nn, outcome in enumerate(outcomes)}
+    >>> outcome_id_map
 
 Alternatively, using ``preprocess.filter_event_file`` you can also specify which cues and outcomes to keep (``keep_cues`` and ``keep_outcomes``) or remap cues and outcomes (``cue_map`` and ``outcomes_map``). Besides, there are also some technical arguments you can specify, which will not discuss here.
 
@@ -254,7 +265,7 @@ like in the lexical learning example:
 Save and load a weight matrix
 =============================
 
-is straight forward using the HDF5 format [@HDF5]:
+is straight forward using the HDF5 format [@HDF5], allowing you to even save the cue and id maps:
 
 .. code-block:: python
 
