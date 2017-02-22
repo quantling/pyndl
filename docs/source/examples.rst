@@ -10,8 +10,8 @@ Premises
 ========
 
     1. Cues are associated with outcomes and both can be present or absent
-    2. Cues are segment (letter) unigrams and bigrams
-    3. Outcomes are meanings (word meanings, inflectional meanings, affixal meanings)
+    2. Cues are segment (letter) unigrams, bigrams, ...
+    3. Outcomes are meanings (word meanings, inflectional meanings, affixal meanings), ...
     4. :math:`\textrm{PRESENT}(X, t)` denotes the presence of cue or outcome :math:`X` at time :math:`t`
     5. :math:`\textrm{ABSENT}(X, t)` denotes the absence of cue or outcome :math:`X` at time :math:`t`
     6. The association strength :math:`V_{i}^{t+1}` of cue :math:`C_{i}` with outcome :math:`O` at time :math:`t+1` is defined as :math:`V_{i}^{t+1} = V_{i}^{t} + \Delta V_{i}^{t}`
@@ -23,7 +23,7 @@ Premises
     8. Default settings for the parameters are: :math:`\alpha_{i} = \alpha_{j} \: \forall i, j`, :math:`\beta_{1} = \beta_{2}` and :math:`\lambda = 1`
 
 .. math::
-    \displaystyle
+    \scriptscriptstyle
     \Delta V_{i}^{t} =
     \begin{array}{ll}
     \begin{cases}
@@ -83,16 +83,16 @@ Cues        Outcomes
 pyndl.ndl module
 ================
 
-We can now compute the strength of associations (weights or weight matrix) after the  presentation of the 419 tokens of the 10 words using **pyndl**. **pyndl** provides the three functions ``ndl.thread_ndl_simple``, ``ndl.openmp_ndl_simple`` and ``ndl.dict_ndl`` to calculate the weights for all outcomes over all events. We have to specify the path of our event file ``lexample.tab`` and for this example set :math:`\alpha = 0.1`, :math:`\beta_{1} = 0.1`, :math:`\beta_{2} = 0.1` with leaving :math:`\lambda = 1.0` at its default value. You can use **pyndl** directly in a Python3 Shell or you can write an executable script, this is up to you. For educational purposes we use a Python3 Shell in this example.
+We can now compute the strength of associations (weights or weight matrix) after the  presentation of the 419 tokens of the 10 words using **pyndl**. **pyndl** provides the two functions ``ndl.ndl`` and ``ndl.dict_ndl`` to calculate the weights for all outcomes over all events. ``ndl.ndl`` itself provides to methods regarding estimation, ``openmp`` and ``threading``. We have to specify the path of our event file ``lexample.tab`` and for this example set :math:`\alpha = 0.1`, :math:`\beta_{1} = 0.1`, :math:`\beta_{2} = 0.1` with leaving :math:`\lambda = 1.0` at its default value. You can use **pyndl** directly in a Python3 Shell or you can write an executable script, this is up to you. For educational purposes we use a Python3 Shell in this example.
 
-ndl.thread_ndl_simple
----------------------
+ndl.ndl
+-------
 
-``ndl.thread_ndl_simple`` is a parallel Python implementation using numpy, multithreading and a binary format. It allows you to set three technical arguments which we will not change here:
+``ndl.ndl`` is a parallel Python implementation using numpy, multithreading and a binary format which is created automatically. It allows you to choose between the two methods ``openmp`` and ``threading``, with the former one using openMP and therefore being expected to be much faster when analyzing larger data. Besides, you can set three technical arguments which we will not change here:
 
     1. ``number_of_threads`` (int) giving the number of threads in which the job should be executed (default = 2)
     2. ``sequence`` (int) giving the length of sublists generated from all outcomes (default = 10)
-    3. ``remove_duplicates`` (logical) to make cues and outcomes unique (default = True)
+    3. ``remove_duplicates`` (logical) to make cues and outcomes unique (default = None; which will raise an error if the same cue is present multiple times in the same event)
 
 Let's start:
 
@@ -100,33 +100,26 @@ Let's start:
 
     >>> import pyndl
     >>> from pyndl import ndl
-    >>> weights = ndl.thread_ndl_simple(event_path = 'examples/lexample.tab', alpha = 0.1 , betas = (0.1, 0.1))
+    >>> weights = ndl.ndl(event_path = 'examples/lexample.tab', alpha = 0.1 , betas = (0.1, 0.1), method = 'openmp')
     >>> weights
 
-weights is a ``numpy.array`` of ``shape`` ``len(outcomes)``, ``len(cues)``. Our unique, chronologically ordered outcomes are 'hand', 'plural', 'lass', 'lad', 'land', 'as', 'sad', 'and'. Our unique, chronologically ordered cues are '#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'. Therefore
+weights is an ``xarray.DataArray`` of dimension ``len(outcomes)``, ``len(cues)``. Our unique, chronologically ordered outcomes are 'hand', 'plural', 'lass', 'lad', 'land', 'as', 'sad', 'and'. Our unique, chronologically ordered cues are '#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'. Therefore all three indexing methods
 
 .. code-block:: python
 
     >>> weights[1, 5]
+    >>> weights.loc[{'outcomes': 'plural', 'cues': 's#'}]
+    >>> weights.loc['plural'].loc['s#']
 
-returns the weight of the cue 's#' (the unigram 's' being the word-final) for the outcome 'plural' (remember counting in Python does start at 0) as ca. 0.077 and hence indicates 's#' being a marker for plurality.
-
-ndl.openmp_ndl_simple
----------------------
-
-Analogously you can use ``ndl.openmp_ndl_simple`` which is a parallel Python implementation using numpy, multithreading and a binary format aswell as openMP, having the same technical arguments as before, but ``number_of_threads`` being set to 8 per default. Therefore it is expected to be much faster when analyzing larger data.
-
-.. code-block:: python
-
-    >>> weights = ndl.openmp_ndl_simple(event_path = 'examples/lexample.tab', alpha = 0.1 , betas = (0.1, 0.1))
+return the weight of the cue 's#' (the unigram 's' being the word-final) for the outcome 'plural' (remember counting in Python does start at 0) as ca. 0.077 and hence indicate 's#' being a marker for plurality.
 
 ndl.dict_ndl
 ------------
 
-Last but not least ``ndl.dict_ndl`` can be used, being a pure Python implementation, however, it differs from the two functions above regarding the following:
+``ndl.dict_ndl`` is a pure Python implementation, however, it differs from ``ndl.ndl`` regarding the following:
 
     1. there is only one technical argument: ``remove_duplicates``
-    2. no longer a ``numpy.array`` is returned but a ``dict`` of dicts
+    2. no longer an ``xarray.DataArray`` is returned but a ``dict`` of dicts
     3. you can set initial weights by specifying the ``weights`` argument
     4. the case :math:`\alpha_{i} \neq \alpha_{j} \:` can be handled by specifying a ``dict`` consisting of the cues as keys and corresponding :math:`\alpha`'s
 
@@ -155,8 +148,8 @@ As you should have a basic understanding of ``pyndl.ndl`` by now, the following 
     2. count cues and outcomes
     3. filter the events
     4. learn the weights as already shown in the lexical learning example
-    5. save and load a weight matrix (HDF5 format)
-    6. load a weight matrix (HDF5 format) into R for further analyses
+    5. save and load a weight matrix (netCDF format)
+    6. load a weight matrix (netCDF format) into R for further analyses
 
 Generate an event file based on a raw corpus file
 =================================================
@@ -249,7 +242,7 @@ Last but not least ``pyndl.preprocess`` does provide some other very useful func
 Learn the weights
 =================
 
-Computing the strength of associations for the data is now easy, using for example ``ndl.thread_ndl_simple`` from the
+Computing the strength of associations for the data is now easy, using for example ``ndl.ndl`` from the
 
 pyndl.ndl module
 ----------------
@@ -259,23 +252,20 @@ like in the lexical learning example:
 .. code-block:: python
 
    >>> from pyndl import ndl
-   >>> weights_1 = ndl.thread_ndl_simple(event_path = 'examples/levent.tab.filtered', alpha = 0.1, betas = (0.1, 0.1))
+   >>> weights_1 = ndl.ndl(event_path = 'examples/levent.tab.filtered', alpha = 0.1, betas = (0.1, 0.1), method = "threading")
 
 
 Save and load a weight matrix
 =============================
 
-is straight forward using the HDF5 format [@HDF5], allowing you to even save the cue and id maps:
+is straight forward using the netCDF format [@netCDF]
 
 .. code-block:: python
 
-   >>> import h5py
-   >>> f = h5py.File(name = 'examples/weights_1.hdf5', mode = 'w')
-   >>> dset = f.create_dataset(name = 'weights_1', data = weights_1)
-   >>> f.close()
-   >>> g = h5py.File(name = 'examples/weights_1.hdf5', mode = 'r')
-   >>> weights_1_read = g['weights_1'][:]
-   >>> g.close()
+   >>> import xarray
+   >>> weights_1.to_netcdf('examples/weights_1.nc')
+   >>> weights_1_read = xarray.open_dataarray('examples/weights_1.nc')
+   >>> close('examples/weights_1.nc')
 
 the same applies to
 
@@ -284,9 +274,11 @@ Load a weight matrix to R[@R2016]
 
 .. code-block:: R
 
-   > #source("https://bioconductor.org/biocLite.R")
-   > #biocLite("rhdf5") # uncomment these lines to install
-   > library(rhdf5)
-   > weights_1 <- h5read(file = "examples/weights_1.hdf5", name = "weights_1")
-   > H5close()
-
+   > #install.packages("ncdf4") # uncomment to install
+   > library(ncdf4)
+   > weights_1_nc <- nc_open(filename = "examples/weights_1.nc")
+   > weights_1_read <- t(as.matrix(ncvar_get(nc = weights_1_nc, varid = "__xarray_dataarray_variable__")))
+   > rownames(weights_1_read) <- ncvar_get(nc = weights_1_nc, varid = "outcomes")
+   > colnames(weights_1_read) <- ncvar_get(nc = weights_1_nc, varid = "cues")
+   > nc_close(nc = weights_1_nc)
+   > rm(weights_1_nc)
