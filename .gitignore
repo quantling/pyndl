@@ -23,4 +23,4 @@ pyndl.egg-info/
 .tox/
 examples/levent.tab
 examples/levent.tab.filtered
-examples/weights_1.hdf5
+examples/weights_1.nc
