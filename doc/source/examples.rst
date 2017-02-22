@@ -100,7 +100,7 @@ Let's start:
 
     >>> import pyndl
     >>> from pyndl import ndl
-    >>> weights = ndl.ndl(event_path = 'examples/lexample.tab', alpha = 0.1 , betas = (0.1, 0.1), method = 'openmp')
+    >>> weights = ndl.ndl(event_path = 'doc/data/lexample.tab', alpha = 0.1 , betas = (0.1, 0.1), method = 'openmp')
     >>> weights
 
 weights is an ``xarray.DataArray`` of dimension ``len(outcomes)``, ``len(cues)``. Our unique, chronologically ordered outcomes are 'hand', 'plural', 'lass', 'lad', 'land', 'as', 'sad', 'and'. Our unique, chronologically ordered cues are '#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'. Therefore all three indexing methods
@@ -127,7 +127,7 @@ Therefore
 
 .. code-block:: python
 
-    >>> weights = ndl.dict_ndl(event_list = 'examples/lexample.tab', alphas = 0.1 , betas = (0.1, 0.1))
+    >>> weights = ndl.dict_ndl(event_list = 'doc/data/lexample.tab', alphas = 0.1 , betas = (0.1, 0.1))
     >>> weights['plural']['s#']
 
 yields approximately the same results as before, however, you now can specify initial weights or different :math:`\alpha`'s per cue or do both:
@@ -135,8 +135,8 @@ yields approximately the same results as before, however, you now can specify in
 .. code-block:: python
 
     >>> alphas_cues = dict(zip(['#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'], [0.1, 0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0.1, 0.2, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2]))
-    >>> weights_ini = ndl.dict_ndl(event_list = 'examples/lexample.tab', alphas = alphas_cues, betas = (0.1, 0.1))
-    >>> weights = ndl.dict_ndl(event_list = 'examples/lexample.tab', alphas = alphas_cues, betas = (0.1, 0.1), weights = weights_ini)
+    >>> weights_ini = ndl.dict_ndl(event_list = 'doc/data/lexample.tab', alphas = alphas_cues, betas = (0.1, 0.1))
+    >>> weights = ndl.dict_ndl(event_list = 'doc/data/lexample.tab', alphas = alphas_cues, betas = (0.1, 0.1), weights = weights_ini)
 
 --------------------------
 A minimal workflow example
@@ -173,7 +173,7 @@ This module (besides other things) allows you to generate an event file based on
 
     >>> import pyndl
     >>> from pyndl import preprocess
-    >>> preprocess.create_event_file(corpus_file = 'examples/lcorpus.txt', event_file = 'examples/levent.tab', context_structure = 'document', event_structure = 'consecutive_words', event_options = (1, ), cue_structure = 'bigrams_to_word')
+    >>> preprocess.create_event_file(corpus_file = 'doc/data/lcorpus.txt', event_file = 'doc/data/levent.tab', context_structure = 'document', event_structure = 'consecutive_words', event_options = (1, ), cue_structure = 'bigrams_to_word')
 
 The function ``preprocess.create_event_file`` has several arguments which you might have to change to suit them your data, so you are strongly recommened to read its documentation. We set ``context_structure = 'document'`` as in this case the context is the whole document, ``event_structure = 'consecutive_words'`` as these are our events, ``event_options = (1, )`` as we define an event to be one word and ``cue_structure = 'bigrams_to_word'`` to set cues being bigrams. There are also several technical arguments you can specifiy, which we will not change here. Our generated event file ``levent.tab`` now looks like this:
 
@@ -198,7 +198,7 @@ and also generate id maps for cues and outcomes:
 .. code-block:: python
 
     >>> from pyndl import count
-    >>> cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name = 'examples/levent.tab')
+    >>> cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name = 'doc/data/levent.tab')
     >>> cue_freq_map
     >>> outcome_freq_map
     >>> cues = list(cue_freq_map.keys())
@@ -222,8 +222,8 @@ again, filtering our event file and update the id maps for cues and outcomes:
 
 .. code-block:: python
 
-    >>> preprocess.filter_event_file(input_event_file = 'examples/levent.tab', output_event_file = 'examples/levent.tab.filtered', remove_cues = ['#f', 'fo', 'oo', 'ot', 't#', 'fe', 'ee', 'et'], remove_outcomes = ['foot', 'feet'])
-    >>> cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name = 'examples/levent.tab.filtered')
+    >>> preprocess.filter_event_file(input_event_file = 'doc/data/levent.tab', output_event_file = 'doc/data/levent.tab.filtered', remove_cues = ['#f', 'fo', 'oo', 'ot', 't#', 'fe', 'ee', 'et'], remove_outcomes = ['foot', 'feet'])
+    >>> cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name = 'doc/data/levent.tab.filtered')
     >>> cue_freq_map
     >>> outcome_freq_map
     >>> cues = list(cue_freq_map.keys())
@@ -252,7 +252,7 @@ like in the lexical learning example:
 .. code-block:: python
 
    >>> from pyndl import ndl
-   >>> weights_1 = ndl.ndl(event_path = 'examples/levent.tab.filtered', alpha = 0.1, betas = (0.1, 0.1), method = "threading")
+   >>> weights_1 = ndl.ndl(event_path = 'doc/data/levent.tab.filtered', alpha = 0.1, betas = (0.1, 0.1), method = "threading")
 
 
 Save and load a weight matrix
@@ -263,9 +263,9 @@ is straight forward using the netCDF format [@netCDF]
 .. code-block:: python
 
    >>> import xarray
-   >>> weights_1.to_netcdf('examples/weights_1.nc')
-   >>> weights_1_read = xarray.open_dataarray('examples/weights_1.nc')
-   >>> close('examples/weights_1.nc')
+   >>> weights_1.to_netcdf('doc/data/weights_1.nc')
+   >>> weights_1_read = xarray.open_dataarray('doc/data/weights_1.nc')
+   >>> close('doc/data/weights_1.nc')
 
 the same applies to
 
@@ -276,7 +276,7 @@ Load a weight matrix to R[@R2016]
 
    > #install.packages("ncdf4") # uncomment to install
    > library(ncdf4)
-   > weights_1_nc <- nc_open(filename = "examples/weights_1.nc")
+   > weights_1_nc <- nc_open(filename = "doc/data/weights_1.nc")
    > weights_1_read <- t(as.matrix(ncvar_get(nc = weights_1_nc, varid = "__xarray_dataarray_variable__")))
    > rownames(weights_1_read) <- ncvar_get(nc = weights_1_nc, varid = "outcomes")
    > colnames(weights_1_read) <- ncvar_get(nc = weights_1_nc, varid = "cues")
