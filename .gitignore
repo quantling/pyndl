@@ -21,6 +21,6 @@ dist/
 pyndl.egg-info/
 *.c
 .tox/
-examples/levent.tab
-examples/levent.tab.filtered
-examples/weights_1.nc
+doc/data/levent.tab
+doc/data/levent.tab.filtered
+doc/data/weights_1.nc
