@@ -23,7 +23,7 @@ Premises
     8. Default settings for the parameters are: :math:`\alpha_{i} = \alpha_{j} \: \forall i, j`, :math:`\beta_{1} = \beta_{2}` and :math:`\lambda = 1`
 
 .. math::
-    \scriptscriptstyle
+    \scriptstyle
     \Delta V_{i}^{t} =
     \begin{array}{ll}
     \begin{cases}
