@@ -108,7 +108,36 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     if weights is None:
         weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
     elif isinstance(weights, xr.DataArray):
-        raise NotImplementedError('TODO')
+        old_cues = weights.coords["cues"].values.tolist()
+        new_cues = list(set(cues) - set(old_cues))
+        old_outcomes = weights.coords["outcomes"].values.tolist()
+        new_outcomes = list(set(outcomes) - set(old_outcomes))
+
+        cues = old_cues + new_cues
+        outcomes = old_outcomes + new_outcomes
+
+        cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
+        outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
+
+        all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
+
+        preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
+                                             outcome_map, overwrite=True,
+                                             number_of_processes=number_of_threads,
+                                             remove_duplicates=remove_duplicates)
+
+        weights_tmp = np.concatenate((weights.values,
+                                      np.zeros((len(new_outcomes), len(old_cues)),
+                                               dtype=np.float64, order='C')),
+                                     axis=0)
+        weights_tmp = np.concatenate((weights_tmp,
+                                      np.zeros((len(outcomes), len(new_cues)),
+                                               dtype=np.float64, order='C')),
+                                     axis=1)
+
+        weights = np.ascontiguousarray(weights_tmp)
+
+        del weights_tmp, old_cues, new_cues, old_outcomes, new_outcomes
     else:
         raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
 
