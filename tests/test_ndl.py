@@ -43,6 +43,7 @@ def result_ndl_openmp():
 def result_dict_ndl():
     return ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS)
 
+
 @pytest.fixture(scope='module')
 def result_continue_learning():
     part_path_1 = os.path.join(TEST_ROOT, "resources/event_file_simple_1.tab")
