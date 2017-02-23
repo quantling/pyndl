@@ -88,21 +88,12 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
                                                     event_path,
                                                     number_of_processes=number_of_threads,
                                                     binary=True)
-    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
-                                         outcome_map, overwrite=True,
-                                         number_of_processes=number_of_threads,
-                                         remove_duplicates=remove_duplicates)
     shape = (len(outcome_map), len(cue_map))
 
     index_outcome_map = dict((value, key) for key, value in outcome_map.items())
     index_cue_map = dict((value, key) for key, value in cue_map.items())
     outcomes = [index_outcome_map[index] for index in range(shape[0])]
     cues = [index_cue_map[index] for index in range(shape[1])]
-
-    beta1, beta2 = betas
-    binary_files = [os.path.join(BINARY_PATH, binary_file)
-                    for binary_file in os.listdir(BINARY_PATH)
-                    if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
 
     # initialize weights
     if weights is None:
@@ -121,11 +112,6 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
 
         all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
 
-        preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
-                                             outcome_map, overwrite=True,
-                                             number_of_processes=number_of_threads,
-                                             remove_duplicates=remove_duplicates)
-
         weights_tmp = np.concatenate((weights.values,
                                       np.zeros((len(new_outcomes), len(old_cues)),
                                                dtype=np.float64, order='C')),
@@ -141,6 +127,15 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     else:
         raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
 
+    beta1, beta2 = betas
+
+    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
+                                         outcome_map, overwrite=True,
+                                         number_of_processes=number_of_threads,
+                                         remove_duplicates=remove_duplicates)
+    binary_files = [os.path.join(BINARY_PATH, binary_file)
+                    for binary_file in os.listdir(BINARY_PATH)
+                    if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
     # learning
     if method == 'openmp':
         ndl_parallel.learn_inplace(binary_files, weights, alpha,
