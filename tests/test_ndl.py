@@ -43,6 +43,32 @@ def result_ndl_openmp():
 def result_dict_ndl():
     return ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS)
 
+@pytest.fixture(scope='module')
+def result_continue_learning():
+    part_path_1 = os.path.join(TEST_ROOT, "resources/event_file_simple_1.tab")
+    part_path_2 = os.path.join(TEST_ROOT, "resources/event_file_simple_2.tab")
+    result_part = ndl.ndl(part_path_1,
+                          ALPHA, BETAS)
+
+    result_part = ndl.ndl(part_path_2,
+                          ALPHA, BETAS, weights=result_part)
+
+    return result_part
+
+
+def test_continue_learning(result_continue_learning, result_ndl_openmp):
+    assert result_continue_learning.shape == result_ndl_openmp.shape
+
+    assert set(result_continue_learning.coords["outcomes"].values) == set(result_ndl_openmp.coords["outcomes"].values)
+
+    assert set(result_continue_learning.coords["cues"].values) == set(result_ndl_openmp.coords["cues"].values)
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE,
+                                            result_continue_learning,
+                                            result_ndl_openmp)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0
+
 
 def test_return_values(result_dict_ndl, result_ndl_threading, result_ndl_openmp):
     # dict_ndl
