@@ -1,6 +1,9 @@
 from collections import defaultdict, OrderedDict
 import os
 import tempfile
+import time
+import getpass
+import socket
 
 import threading
 from queue import Queue
@@ -8,6 +11,7 @@ from queue import Queue
 import numpy as np
 import pandas as pd
 import xarray as xr
+import cython as cy
 
 from . import count
 from . import preprocess
@@ -83,6 +87,10 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
         'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
 
     """
+
+    wall_time_start = time.perf_counter()
+    cpu_time_start = time.process_time()
+
     # preprocessing
     cue_map, outcome_map, all_outcome_indices = generate_mapping(
                                                     event_path,
@@ -148,8 +156,21 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     else:
         ValueError('method needs to be either "threading" or "openmp"')
 
+    cpu_time_stop = time.process_time()
+    wall_time_stop = time.perf_counter()
+    cpu_time = cpu_time_stop-cpu_time_start
+    wall_time = wall_time_stop-wall_time_start
+
     # post-processing
-    weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)])
+    weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)],
+                           attrs={'event_path': event_path, 'alpha': alpha,
+                                  'betas': betas, 'lambda': lambda_,
+                                  'cpu_time': cpu_time, 'wall_time': wall_time,
+                                  'date': time.strftime("%d/%m/%Y"), 'hostname':
+                                  socket.gethostname(), 'username':
+                                  getpass.getuser(), 'numpy': np.__version__,
+                                  'pandas': pd.__version__, 'xarray':
+                                  xr.__version__, 'cython': cy.__version__})
     return weights
 
 
