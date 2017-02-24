@@ -32,7 +32,6 @@ Premises
 
 .. math::
 
-    \scriptstyle
     \Delta V_{i}^{t} =
     \begin{array}{ll}
     \begin{cases}
@@ -165,7 +164,8 @@ ndl.dict_ndl
 ``ndl.dict_ndl`` is a pure Python implementation, however, it differs from
 ``ndl.ndl`` regarding the following:
 
-1. there is only one technical argument: ``remove_duplicates``
+1. there are only two technical arguments: ``remove_duplicates`` and
+   ``make_data_array`` (logical)
 2. no longer an ``xarray.DataArray`` is returned but a ``dict`` of dicts
 3. you can set initial weights by specifying the ``weights`` argument
 4. the case :math:`\alpha_{i} \neq \alpha_{j} \:` can be handled by specifying
@@ -175,7 +175,7 @@ Therefore
 
 .. code-block:: python
 
-    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=0.1 , betas=(0.1, 0.1))
+    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=0.1, betas=(0.1, 0.1))
     >>> weights['plural']['s#']
 
 yields approximately the same results as before, however, you now can specify
@@ -186,6 +186,13 @@ initial weights or different :math:`\alpha`'s per cue or do both:
     >>> alphas_cues = dict(zip(['#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'], [0.1, 0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0.1, 0.2, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2]))
     >>> weights_ini = ndl.dict_ndl(event_list = 'doc/data/lexample.tab', alphas = alphas_cues, betas = (0.1, 0.1))
     >>> weights = ndl.dict_ndl(event_list = 'doc/data/lexample.tab', alphas = alphas_cues, betas = (0.1, 0.1), weights = weights_ini)
+
+Instead of a ``dict`` of dicts, it is also possible to get an
+``xarray.DataArray`` returned:
+
+.. code-block:: python
+
+   >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=0.1, betas=(0.1, 0.1), make_data_array=True)
 
 --------------------------
 A minimal workflow example
@@ -239,7 +246,7 @@ specifiy, which we will not change here. Our generated event file
 ``levent.tab`` now looks like this:
 
 =================  ========
-cues               outcomes
+Cues               Outcomes
 =================  ========
 an_#h_ha_d#_nd     hand
 ot_fo_oo_#f_t#     foot
