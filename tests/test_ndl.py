@@ -4,6 +4,8 @@
 from collections import defaultdict
 import os
 import time
+import tempfile
+
 
 import pytest
 import numpy as np
@@ -24,9 +26,13 @@ REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple.cs
 REFERENCE_PATH_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple_ndl2.csv')
 REFERENCE_PATH_MULTIPLE_CUES_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_multiple_cues_ndl2.csv')
 
+TMP_PATH = tempfile.mkdtemp()
+
 LAMBDA_ = 1.0
 ALPHA = 0.1
 BETAS = (0.1, 0.1)
+
+CONTINUE_SPLIT_POINT = 3
 
 
 @pytest.fixture(scope='module')
@@ -46,8 +52,20 @@ def result_dict_ndl():
 
 @pytest.fixture(scope='module')
 def result_continue_learning():
-    part_path_1 = os.path.join(TEST_ROOT, "resources/event_file_simple_1.tab")
-    part_path_2 = os.path.join(TEST_ROOT, "resources/event_file_simple_2.tab")
+    events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
+    part_1 = events_simple.head(CONTINUE_SPLIT_POINT)
+    part_2 = events_simple.tail(len(events_simple) - CONTINUE_SPLIT_POINT)
+
+    part_path_1 = os.path.join(TMP_PATH, "event_file_simple_1.tab")
+    part_path_2 = os.path.join(TMP_PATH, "event_file_simple_2.tab")
+
+    part_1.to_csv(part_path_1, header=True, index=None,
+                  sep='\t', columns=["cues", "outcomes"])
+    part_2.to_csv(part_path_2, header=True, index=None,
+                  sep='\t', columns=["cues", "outcomes"])
+
+    del events_simple, part_1, part_2
+
     result_part = ndl.ndl(part_path_1,
                           ALPHA, BETAS)
 
