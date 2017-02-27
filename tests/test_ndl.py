@@ -56,6 +56,9 @@ def result_continue_learning():
     part_1 = events_simple.head(CONTINUE_SPLIT_POINT)
     part_2 = events_simple.tail(len(events_simple) - CONTINUE_SPLIT_POINT)
 
+    assert len(part_1) > 0
+    assert len(part_2) > 0
+
     part_path_1 = os.path.join(TMP_PATH, "event_file_simple_1.tab")
     part_path_2 = os.path.join(TMP_PATH, "event_file_simple_2.tab")
 
