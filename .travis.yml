@@ -9,6 +9,7 @@ script:
   - tox -e checkstyle
   - tox -e testcov
   - tox -e lint
+  - tox -e checktypes
   - tox -e docs
 env:
   OMP_NUM_THREADS: 4
