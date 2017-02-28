@@ -23,3 +23,7 @@ reference folder
 event_file_*.tab
 ----------------
 Automatically created from corpus.txt according to tests.
+
+bandsampled_outcomes.tab
+------------------------
+Outcome frequencies. Automatically generated from resource/event_file_trigrams_to_word.tab with preprocess.bandsample.

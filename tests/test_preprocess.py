@@ -10,7 +10,7 @@ from pyndl.preprocess import (create_event_file, filter_event_file,
                               event_generator, write_events,
                               _job_binary_event_file, JobFilter, to_bytes, to_integer, read_binary_file)
 
-from pyndl.count import (cues_outcomes, load_counter)
+from pyndl.count import (cues_outcomes, load_counter, save_counter)
 from pyndl import ndl
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
@@ -18,13 +18,20 @@ EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
 RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 
 def test_bandsample():
-    cue_freq_map, outcome_freq_map = cues_outcomes(os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab"),
+    resource_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab")
+    cue_freq_map, outcome_freq_map = cues_outcomes(resource_file,
                                                    number_of_processes=2)
     outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=1234, verbose=False)
     assert len(outcome_freq_map_filtered) == 50
 
-    outcome_freq_map_filtered_reference = load_counter(os.path.join(TEST_ROOT, 'reference/bandsampled_outcomes.tab'))
-    # assert outcome_freq_map_filtered == outcome_freq_map_filtered_reference
+    reference_file = os.path.join(TEST_ROOT, 'reference/bandsampled_outcomes.tab')
+    try:
+        outcome_freq_map_filtered_reference = load_counter(reference_file)
+    except (FileNotFoundError):
+        temp_file = os.path.join(TEST_ROOT, 'temp/bandsampled_outcomes.tab')
+        save_counter(outcome_freq_map_filtered, temp_file)
+        raise
+    assert outcome_freq_map_filtered == outcome_freq_map_filtered_reference
 
     bandsample(outcome_freq_map, 50, cutoff=1, verbose=True)
 
@@ -217,7 +224,7 @@ def test_byte_conversion():
 
 
 def test_read_binary_file():
-    file_path = "resources/event_file_tiny.tab"
+    file_path = "resources/event_file_trigrams_to_word.tab"
     binary_path = "binary_resources/"
 
     abs_file_path = os.path.join(TEST_ROOT, file_path)
@@ -236,9 +243,9 @@ def test_read_binary_file():
         cues, outcomes = event
         bin_cues, bin_outcomes = bin_event
         if len(cues) != len(bin_cues):
-            raise ValueError('Cues have diffrent length')
+            raise ValueError('Cues have different length')
         if len(outcomes) != len(bin_outcomes):
-            raise ValueError('Cues have diffrent length')
+            raise ValueError('Cues have different length')
 
         for cue, bin_cue in zip(cues, bin_cues):
             assert cue_id_map[cue] == bin_cue
