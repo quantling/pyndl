@@ -16,8 +16,6 @@ from pyndl import ndl
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
 RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
-TINY_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus_tiny.txt")
-
 
 def test_bandsample():
     cue_freq_map, outcome_freq_map = cues_outcomes(os.path.join(TEST_ROOT, "resources/event_file.tab"),
@@ -68,7 +66,7 @@ def test_create_event_file_upper_case():
 def test_create_event_file_trigrams_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word.tab")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab")
-    create_event_file(TINY_RESOURCE_FILE, event_file,
+    create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -80,7 +78,7 @@ def test_create_event_file_trigrams_to_word():
 def test_create_event_file_trigrams_to_word_line_based():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word_line_based.tab")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word_line_based.tab")
-    create_event_file(TINY_RESOURCE_FILE, event_file,
+    create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="line", event_options=(3, ),
                       cue_structure="trigrams_to_word")
@@ -91,7 +89,7 @@ def test_create_event_file_trigrams_to_word_line_based():
 def test_create_event_file_bigrams_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word.tab")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_bigrams_to_word.tab")
-    create_event_file(TINY_RESOURCE_FILE, event_file,
+    create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -104,7 +102,7 @@ def test_create_event_file_bigrams_to_word():
 def test_create_event_file_word_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_word_to_word.tab")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_word_to_word.tab")
-    create_event_file(TINY_RESOURCE_FILE, event_file,
+    create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="word_to_word", event_options=(2, 1),
                       cue_structure="word_to_word")
