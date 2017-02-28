@@ -37,7 +37,7 @@ def test_words_symbols():
 
 def test_save_load():
     file_name = os.path.join(TEST_ROOT, "temp/cues.tab")
-    cues, outcomes = count.cues_outcomes(os.path.join(TEST_ROOT, "resources/event_file.tab"))
+    cues, outcomes = count.cues_outcomes(os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab"))
     count.save_counter(cues, file_name)
     cues_loaded = count.load_counter(file_name)
     assert cues == cues_loaded

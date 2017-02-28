@@ -18,7 +18,7 @@ EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
 RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 
 def test_bandsample():
-    cue_freq_map, outcome_freq_map = cues_outcomes(os.path.join(TEST_ROOT, "resources/event_file.tab"),
+    cue_freq_map, outcome_freq_map = cues_outcomes(os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab"),
                                                    number_of_processes=2)
     outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=1234, verbose=False)
     assert len(outcome_freq_map_filtered) == 50
@@ -112,7 +112,7 @@ def test_create_event_file_word_to_word():
 
 
 def test_filter_event_file_bad_event_file():
-    input_event_file = os.path.join(TEST_ROOT, "resources/event_file_BAD.tab")
+    input_event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word_BAD.tab")
     output_event_file = os.path.join(TEST_ROOT, "temp/event_file_BAD_output.tab")
     with pytest.raises(ValueError):
         filter_event_file(input_event_file, output_event_file)
@@ -144,7 +144,7 @@ def test_job_filter():
 
 
 def test_filter_event_file():
-    input_event_file = os.path.join(TEST_ROOT, "resources/event_file.tab")
+    input_event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab")
     output_event_file = os.path.join(TEST_ROOT, "temp/event_file_filtered.tab")
     cues = ["#of", "of#"]
     cues.sort()
@@ -166,7 +166,7 @@ def test_filter_event_file():
 
 
 def test_write_events():
-    event_file = os.path.join(TEST_ROOT, "resources/event_file.tab")
+    event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab")
     cue_freq_map, outcome_freq_map = cues_outcomes(event_file)
     outcomes = list(outcome_freq_map.keys())
     outcomes.sort()
@@ -203,7 +203,7 @@ def test_write_events():
 
     # bad event file
     with pytest.raises(ValueError):
-        event_bad_file = os.path.join(TEST_ROOT, "resources/event_file_BAD.tab")
+        event_bad_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word_BAD.tab")
         events = event_generator(event_bad_file, cue_id_map,
                                  outcome_id_map)
         # traverse generator

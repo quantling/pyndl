@@ -9,6 +9,14 @@ The corpus file is based on the print version of the wikipedia article about the
 HTML tags were removed mostly automatically with `pandoc --from=html --to=plain corpus.html`, in addition by hand.
 The remaining words were separated at whitespace to lines by `tr -s '[[:space:]]' '\n'`.
 
+event_file_trigrams_to_word.tab
+-------------------------------
+Automatically created from corpus.txt according to tests (see test_preprocess.test_create_event_file_trigrams_to_word).
+
+event_file_trigrams_to_word_BAD.tab
+-----------------------------------
+Copy of event_file_trigrams_to_word.tab were one line is corrupted because cues and outcomes are not tab separated.
+
 reference folder
 ================
 
