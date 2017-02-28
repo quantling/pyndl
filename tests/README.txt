@@ -25,6 +25,13 @@ event_file_multiple_cues.tab
 ---------------------
 Short list of artificial tab separated events with multiple cues per outcome.
 
+event_file_many_cues.tab
+---------------------
+1000 events from a real world application with a lot of cues per event.
+
+xml_gz_corpus
+-------------
+Folder hierarchy containing gzip files with artificial xml subtitles.
 
 reference folder
 ================
@@ -40,3 +47,7 @@ Outcome frequencies. Automatically generated from resource/event_file_trigrams_t
 weights_event_file_{simple,multiple_cues}{,_ndl2}.csv
 -----------------------------------------------------
 Automatically generated weights from event_file_{simple,multiple_cues}.tab
+
+xml_gz_corpus.txt
+-------------
+Subtitle text in phrases per line from resource/xml_gz_corpus.
