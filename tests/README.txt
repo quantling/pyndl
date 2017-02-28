@@ -17,6 +17,15 @@ event_file_trigrams_to_word_BAD.tab
 -----------------------------------
 Copy of event_file_trigrams_to_word.tab were one line is corrupted because cues and outcomes are not tab separated.
 
+event_file_simple.tab
+---------------------
+Short list of simple artificial tab separated events.
+
+event_file_multiple_cues.tab
+---------------------
+Short list of artificial tab separated events with multiple cues per outcome.
+
+
 reference folder
 ================
 
@@ -27,3 +36,7 @@ Automatically created from corpus.txt according to tests.
 bandsampled_outcomes.tab
 ------------------------
 Outcome frequencies. Automatically generated from resource/event_file_trigrams_to_word.tab with preprocess.bandsample.
+
+weights_event_file_{simple,multiple_cues}{,_ndl2}.csv
+-----------------------------------------------------
+Automatically generated weights from event_file_{simple,multiple_cues}.tab
