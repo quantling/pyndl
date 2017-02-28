@@ -202,7 +202,7 @@ def test_compare_weights_rescorla_vs_ndl2():
 
 @slow
 def test_compare_time_dict_inplace_parallel_thread():
-    file_path = os.path.join(TEST_ROOT, 'resources/minigeco_wordcues_mini.tab')
+    file_path = os.path.join(TEST_ROOT, 'resources/event_file_many_cues.tab')
     cue_map, outcome_map, all_outcomes = ndl.generate_mapping(file_path, number_of_processes=2)
 
     result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl, (file_path, ALPHA, BETAS, LAMBDA_))
