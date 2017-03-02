@@ -9,6 +9,7 @@ TEST_ROOT = os.path.dirname(__file__)
 EVENT_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab")
 CORPUS_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 
+
 def test_cues_outcomes():
     cues, outcomes = count.cues_outcomes(EVENT_RESOURCE_FILE)
     cues3, outcomes3 = count.cues_outcomes(EVENT_RESOURCE_FILE,

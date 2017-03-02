@@ -9,6 +9,7 @@ from pyndl.activation import activation_matrix
 slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
                           reason="need --runslow option to run")
 
+
 def test_activation_matrix():
     weights = np.array([[0, 1], [1, 0], [0, 0]])
     cues = ['c1', 'c2', 'c3']
@@ -23,6 +24,7 @@ def test_activation_matrix():
     assert np.allclose(reference_activations, activations_mp)
     assert reference_new_cues == new_cues
     assert reference_new_cues == new_cues_mp
+
 
 @slow
 def test_activation_matrix_large():

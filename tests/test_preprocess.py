@@ -17,6 +17,7 @@ TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
 RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 
+
 def test_bandsample():
     resource_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab")
     cue_freq_map, outcome_freq_map = cues_outcomes(resource_file,
