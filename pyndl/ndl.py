@@ -11,7 +11,7 @@ from queue import Queue
 import numpy as np
 import pandas as pd
 import xarray as xr
-import cython as cy
+import cython
 
 from . import __version__
 from . import count
@@ -193,7 +193,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
              'hostname': [socket.gethostname()], 'username':
              [getpass.getuser()], 'pyndl': [__version__], 'numpy':
              [np.__version__], 'pandas': [pd.__version__], 'xarray':
-             [xr.__version__], 'cython': [cy.__version__]}
+             [xr.__version__], 'cython': [cython.__version__]}
     if weights_ini is not None:
         attrs_to_be_updated = weights_ini.attrs
         for k in attrs_to_be_updated.keys():
