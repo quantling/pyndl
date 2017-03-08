@@ -180,7 +180,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
         for thread in threads:
             thread.join()
     else:
-        ValueErro('method needs to be either "threading" or "openmp"')
+        raise ValueError('method needs to be either "threading" or "openmp"')
 
     cpu_time_stop = time.process_time()
     wall_time_stop = time.perf_counter()
