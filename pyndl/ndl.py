@@ -84,16 +84,15 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
 
     """
     # preprocessing
-    cue_map, outcome_map, all_outcome_indices = generate_mapping(
-                                                    event_path,
-                                                    number_of_processes=number_of_threads,
-                                                    binary=True)
-    shape = (len(outcome_map), len(cue_map))
+    cues, outcomes = count.cues_outcomes(event_path, number_of_processes=number_of_threads)
+    cues = list(cues.keys())
+    outcomes = list(outcomes.keys())
+    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
+    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
 
-    index_outcome_map = dict((value, key) for key, value in outcome_map.items())
-    index_cue_map = dict((value, key) for key, value in cue_map.items())
-    outcomes = [index_outcome_map[index] for index in range(shape[0])]
-    cues = [index_cue_map[index] for index in range(shape[1])]
+    all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
+
+    shape = (len(outcome_map), len(cue_map))
 
     # initialize weights
     if weights is None:
@@ -284,41 +283,6 @@ def activations(cues, weights, *, remove_duplicates=None):
             for cue in cues:
                 activations_[outcome] += cue_dict[cue]
         return activations_
-
-
-def generate_mapping(event_path, number_of_processes=2, binary=False):  # TODO find better name
-    """
-    Generates OrderedDicts of all cues and outcomes to use indizes in the numpy
-    implementation.
-
-    Parameters
-    ----------
-    event_path : str
-        path to the event_file for which the mapping should be generated
-    number_of_processes : int
-         integer of how many processes should be used
-
-    Returns
-    -------
-    cue_map: OrderedDict
-        a OrderedDict mapping all cues to indizes
-    outcome_map: OrderedDict
-        a OrderedDict mapping all outcomes to indizes
-    all_outcomes : list
-        a list of all outcomes in the event file
-
-    """
-    cues, outcomes = count.cues_outcomes(event_path, number_of_processes=number_of_processes)
-    all_cues = list(cues.keys())
-    all_outcomes = list(outcomes.keys())
-    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(all_cues)))
-    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(all_outcomes)))
-
-    if binary:
-        all_outcome_indices = [outcome_map[outcome] for outcome in all_outcomes]
-        return (cue_map, outcome_map, all_outcome_indices)
-    else:
-        return (cue_map, outcome_map, all_outcomes)
 
 
 def slice_list(li, sequence):
