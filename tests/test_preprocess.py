@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # run py.test-3 from the above folder
-
+from collections import OrderedDict
 import os
 
 import pytest
@@ -231,7 +231,9 @@ def test_read_binary_file():
     abs_binary_path = os.path.join(TEST_ROOT, binary_path)
     abs_binary_file_path = os.path.join(abs_binary_path, "events_0_0.dat")
 
-    cue_id_map, outcome_id_map, all_outcomes = ndl.generate_mapping(abs_file_path)
+    cues, outcomes = cues_outcomes(abs_file_path)
+    cue_id_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues.keys())))
+    outcome_id_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes.keys())))
 
     create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map,
                               outcome_id_map, overwrite=True, remove_duplicates=False)

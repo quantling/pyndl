@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # run py.test-3 from the above folder
 
-from collections import defaultdict
+from collections import defaultdict, OrderedDict
 import os
 import time
 import tempfile
@@ -251,7 +251,7 @@ def test_compare_weights_rescorla_vs_ndl2():
 @slow
 def test_compare_time_dict_inplace_parallel_thread():
     file_path = os.path.join(TEST_ROOT, 'resources/event_file_many_cues.tab')
-    cue_map, outcome_map, all_outcomes = ndl.generate_mapping(file_path, number_of_processes=2)
+    cue_map, outcome_map, all_outcomes = generate_mapping(file_path)
 
     result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl, (file_path, ALPHA, BETAS, LAMBDA_))
 
@@ -291,7 +291,7 @@ def clock(f, args, **kwargs):
 
 def compare_arrays(file_path, arr1, arr2):
     cues, outcomes = count.cues_outcomes(file_path)
-    cue_map, outcome_map, all_outcomes = ndl.generate_mapping(file_path, number_of_processes=2)
+    cue_map, outcome_map, all_outcomes = generate_mapping(file_path)
 
     cue_indices = [cue_map[cue] for cue in cues]
     outcome_indices = [outcome_map[outcome] for outcome in outcomes]
@@ -341,3 +341,13 @@ def write_weights_to_file(file_path, weights, cues, outcomes):
                     value = weights[outcome][cue]
                 o_file.write(',%s' % value)
             o_file.write("\n")
+
+
+def generate_mapping(event_path):
+    cues, outcomes = count.cues_outcomes(event_path)
+    all_cues = list(cues.keys())
+    all_outcomes = list(outcomes.keys())
+    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(all_cues)))
+    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(all_outcomes)))
+
+    return (cue_map, outcome_map, all_outcomes)
