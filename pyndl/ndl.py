@@ -166,8 +166,8 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
                            attrs={'event_path': event_path, 'alpha': alpha,
                                   'betas': betas, 'lambda': lambda_,
                                   'cpu_time': cpu_time, 'wall_time': wall_time,
-                                  'date': time.strftime("%d/%m/%Y"), 'hostname':
-                                  socket.gethostname(), 'username':
+                                  'date': time.strftime("%d/%m/%Y"),
+                                  'hostname': socket.gethostname(), 'username':
                                   getpass.getuser(), 'numpy': np.__version__,
                                   'pandas': pd.__version__, 'xarray':
                                   xr.__version__, 'cython': cy.__version__})
@@ -189,7 +189,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
 
     Parameters
     ==========
-    events : generator or str
+    event_list : generator or str
         generates cues, outcomes pairs or the path to the event file
     alphas : dict or float
         a (default)dict having cues as keys and a value below 1 as value
@@ -221,8 +221,13 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
         'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
 
     """
+
+    wall_time_start = time.perf_counter()
+    cpu_time_start = time.process_time()
+
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
+    weights_initial = weights
     if weights is None:
         weights = defaultdict(lambda: defaultdict(float))
 
@@ -259,10 +264,26 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
             for cue in cues:
                 weights[outcome][cue] += alphas[cue] * update
 
+    cpu_time_stop = time.process_time()
+    wall_time_stop = time.perf_counter()
+    cpu_time = cpu_time_stop-cpu_time_start
+    wall_time = wall_time_stop-wall_time_start
+
     if make_data_array:
         weights = pd.DataFrame(weights)
         weights.fillna(0.0, inplace=True)
-        weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'))
+        weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'),
+                               attrs={'event_list': event_list, 'alphas':
+                                      alphas, 'betas': betas, 'lambda':
+                                      lambda_, 'weights_initial':
+                                      weights_initial, 'cpu_time': cpu_time,
+                                      'wall_time': wall_time, 'date':
+                                      time.strftime("%d/%m/%Y"), 'hostname':
+                                      socket.gethostname(), 'username':
+                                      getpass.getuser(), 'numpy':
+                                      np.__version__, 'pandas': pd.__version__,
+                                      'xarray': xr.__version__, 'cython':
+                                      cy.__version__})
 
     return weights
 
