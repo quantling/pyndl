@@ -21,8 +21,12 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
     # filter all words with freq < cutoff
     population = [(word, freq) for word, freq in population.items() if freq >=
                   cutoff]
+
+    if seed is not None:
+        raise NotImplementedError("Reproducable bandsamples by seeding are not properly implemented yet.")
+
     # shuffle words with same frequency
-    rand = random.Random(seed)  # TODO not working properly :(
+    rand = random.Random(seed)
     rand.shuffle(population)
     population.sort(key=lambda x: x[1])  # lowest -> highest freq
 
