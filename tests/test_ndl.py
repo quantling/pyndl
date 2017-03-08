@@ -18,10 +18,8 @@ slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
                           reason="need --runslow option to run")
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
-# FILE_PATH = os.path.join(TEST_ROOT, "resources/event_file_tiny.tab")
 FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab")
 FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab")
-# REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_tiny.csv')
 REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple.csv')
 REFERENCE_PATH_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple_ndl2.csv')
 REFERENCE_PATH_MULTIPLE_CUES_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_multiple_cues_ndl2.csv')
@@ -252,7 +250,7 @@ def test_compare_weights_rescorla_vs_ndl2():
 
 @slow
 def test_compare_time_dict_inplace_parallel_thread():
-    file_path = os.path.join(TEST_ROOT, 'resources/minigeco_wordcues_mini.tab')
+    file_path = os.path.join(TEST_ROOT, 'resources/event_file_many_cues.tab')
     cue_map, outcome_map, all_outcomes = generate_mapping(file_path)
 
     result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl, (file_path, ALPHA, BETAS, LAMBDA_))
