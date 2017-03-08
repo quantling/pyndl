@@ -144,10 +144,12 @@ def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
 def test_meta_data(result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
     attributes = {'cython', 'cpu_time', 'hostname', 'xarray', 'wall_time',
                   'event_path', 'username', 'time', 'method', 'date', 'numpy',
-                  'betas', 'lambda', 'pyndl', 'alpha', 'pandas'}
+                  'betas', 'lambda', 'pyndl', 'alpha', 'pandas', 'method',
+                  'function'}
+
     assert set(result_ndl_openmp.attrs.keys()) == attributes
     assert set(result_ndl_threading.attrs.keys()) == attributes
-    # assert set(result_dict_ndl_data_array.attrs.keys()) == attributes
+    assert set(result_dict_ndl_data_array.attrs.keys()) == attributes
 
 
 # Test against external ndl2 results
