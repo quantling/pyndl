@@ -146,7 +146,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
         for thread in threads:
             thread.join()
     else:
-        ValueError('method needs to be either "threading" or "openmp"')
+        raise ValueError('method needs to be either "threading" or "openmp"')
 
     # post-processing
     weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)])
