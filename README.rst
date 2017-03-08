@@ -33,6 +33,10 @@ or development install with::
 
     python setup.py develop
 
+in order to build a source package run::
+
+    python setup.py sdist
+
 
 Documentation
 -------------
