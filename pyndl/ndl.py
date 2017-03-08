@@ -263,7 +263,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
 
     if make_data_array:
         weights = pd.DataFrame(weights)
-        #weights.fillna(0.0, inplace=True)  # TODO make sure to not remove real NaNs
+        # weights.fillna(0.0, inplace=True)  # TODO make sure to not remove real NaNs
         weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'))
 
     return weights
