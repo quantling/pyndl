@@ -13,6 +13,7 @@ import pandas as pd
 import xarray as xr
 import cython as cy
 
+from . import __version__
 from . import count
 from . import preprocess
 from . import ndl_parallel
@@ -185,11 +186,12 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     wall_time_stop = time.perf_counter()
     cpu_time = cpu_time_stop-cpu_time_start
     wall_time = wall_time_stop-wall_time_start
-    attrs = {'event_path': [event_path], 'alpha': [alpha], 'betas': [betas],
-             'lambda': [lambda_], 'method': [method], 'cpu_time': [cpu_time],
-             'wall_time': [wall_time], 'date': [time.strftime("%d/%m/%Y")],
-             'time': [time.strftime("%H:%M:%S")], 'hostname':
-             [socket.gethostname()], 'username': [getpass.getuser()], 'numpy':
+    attrs = {'date': [time.strftime("%d/%m/%Y")], 'time':
+             [time.strftime("%H:%M:%S")], 'event_path': [event_path], 'alpha':
+             [alpha], 'betas': [betas], 'lambda': [lambda_], 'method':
+             [method], 'cpu_time': [cpu_time], 'wall_time': [wall_time],
+             'hostname': [socket.gethostname()], 'username':
+             [getpass.getuser()], 'pyndl': [__version__], 'numpy':
              [np.__version__], 'pandas': [pd.__version__], 'xarray':
              [xr.__version__], 'cython': [cy.__version__]}
     if weights_ini is not None:
