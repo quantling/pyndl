@@ -253,7 +253,7 @@ def test_compare_weights_rescorla_vs_ndl2():
 @slow
 def test_compare_time_dict_inplace_parallel_thread():
     file_path = os.path.join(TEST_ROOT, 'resources/minigeco_wordcues_mini.tab')
-    cue_map, outcome_map, all_outcomes = generate_mapping(file_path, number_of_processes=2)
+    cue_map, outcome_map, all_outcomes = generate_mapping(file_path)
 
     result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl, (file_path, ALPHA, BETAS, LAMBDA_))
 
@@ -293,7 +293,7 @@ def clock(f, args, **kwargs):
 
 def compare_arrays(file_path, arr1, arr2):
     cues, outcomes = count.cues_outcomes(file_path)
-    cue_map, outcome_map, all_outcomes = generate_mapping(file_path, number_of_processes=2)
+    cue_map, outcome_map, all_outcomes = generate_mapping(file_path)
 
     cue_indices = [cue_map[cue] for cue in cues]
     outcome_indices = [outcome_map[outcome] for outcome in outcomes]
@@ -345,36 +345,11 @@ def write_weights_to_file(file_path, weights, cues, outcomes):
             o_file.write("\n")
 
 
-def generate_mapping(event_path, number_of_processes=2, binary=False):
-    """
-    Generates OrderedDicts of all cues and outcomes to use indizes in the numpy
-    implementation.
-
-    Parameters
-    ==========
-    event_path : str
-        path to the event_file for which the mapping should be generated
-    number_of_processes : int
-         integer of how many processes should be used
-
-    Returns
-    =======
-    cue_map: OrderedDict
-        a OrderedDict mapping all cues to indizes
-    outcome_map: OrderedDict
-        a OrderedDict mapping all outcomes to indizes
-    all_outcomes : list
-        a list of all outcomes in the event file
-
-    """
-    cues, outcomes = count.cues_outcomes(event_path, number_of_processes=number_of_processes)
+def generate_mapping(event_path):
+    cues, outcomes = count.cues_outcomes(event_path)
     all_cues = list(cues.keys())
     all_outcomes = list(outcomes.keys())
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(all_cues)))
     outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(all_outcomes)))
 
-    if binary:
-        all_outcome_indices = [outcome_map[outcome] for outcome in all_outcomes]
-        return (cue_map, outcome_map, all_outcome_indices)
-    else:
-        return (cue_map, outcome_map, all_outcomes)
+    return (cue_map, outcome_map, all_outcomes)
