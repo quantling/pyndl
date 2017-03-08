@@ -147,7 +147,7 @@ def test_meta_data(result_dict_ndl_data_array, result_ndl_openmp, result_ndl_thr
                   'betas', 'lambda', 'pyndl', 'alpha', 'pandas'}
     assert set(result_ndl_openmp.attrs.keys()) == attributes
     assert set(result_ndl_threading.attrs.keys()) == attributes
-    #assert set(result_dict_ndl_data_array.attrs.keys()) == attributes
+    # assert set(result_dict_ndl_data_array.attrs.keys()) == attributes
 
 
 # Test against external ndl2 results
