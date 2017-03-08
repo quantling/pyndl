@@ -1,14 +1,14 @@
-AA BB:
-
-MM.
-NN OO.
-
----END.OF.DOCUMENT---
-
 A B:
 
 M.
 N O.
+
+---END.OF.DOCUMENT---
+
+AA BB:
+
+MM.
+NN OO.
 
 ---END.OF.DOCUMENT---
 

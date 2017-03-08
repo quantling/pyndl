@@ -169,7 +169,7 @@ def main(directory, outfile, *, n_threads=1, verbose=False):
                 for root, dirs, files in os.walk(directory, followlinks=True)
                 for name in files
                 if name.endswith((".gz",))]
-
+    gz_files.sort()
     if verbose:
         print("Start processing %i files." % len(gz_files))
         start_time = time.time()
@@ -179,7 +179,7 @@ def main(directory, outfile, *, n_threads=1, verbose=False):
             progress_counter = 0
             n_files = len(gz_files)
             job = JobParseGz(break_duration=5.0)
-            for lines, not_found in pool.imap_unordered(job.run, gz_files):
+            for lines, not_found in pool.imap(job.run, gz_files):
                 progress_counter += 1
                 if verbose and progress_counter % 1000 == 0:
                     print("%i%% " % (progress_counter / n_files * 100), end="")
