@@ -1,29 +1,37 @@
-import numpy as np
 import time
 import gc
 
+import numpy as np
+import xarray as xr
+
 import pytest
 
-from pyndl.activation import activation_matrix
+from pyndl.activation import activation
 
 slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
                           reason="need --runslow option to run")
 
 
 def test_activation_matrix():
-    weights = np.array([[0, 1], [1, 0], [0, 0]])
-    cues = ['c1', 'c2', 'c3']
-    events_cues = [['c1', 'c2', 'c3po'], ['c1', 'c3'], ['c2'], ['c1', 'c1']]
+    weights = xr.DataArray(np.array([[0, 1], [1, 0], [0, 0]]),
+                           coords={
+                               'cues': ['c1', 'c2', 'c3']
+                           },
+                           dims=('cues', 'outcomes'))
+    events = [(['c1', 'c2', 'c3'], []),
+              (['c1', 'c3'], []),
+              (['c2'], []),
+              (['c1', 'c1'], [])]
     reference_activations = np.array([[1, 1], [0, 1], [1, 0], [0, 1]])
-    reference_new_cues = {'c3po'}
 
-    activations, new_cues = activation_matrix(events_cues, weights, cues, numThreads=1)
-    activations_mp, new_cues_mp = activation_matrix(events_cues, weights, cues, numThreads=3)
+    with pytest.raises(ValueError):
+        activations = activation(events, weights, number_of_threads=1)
+
+    activations = activation(events, weights, number_of_threads=1, remove_duplicates=True)
+    activations_mp = activation(events, weights, number_of_threads=3, remove_duplicates=True)
 
     assert np.allclose(reference_activations, activations)
     assert np.allclose(reference_activations, activations_mp)
-    assert reference_new_cues == new_cues
-    assert reference_new_cues == new_cues_mp
 
 
 @slow
