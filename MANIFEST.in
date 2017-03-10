@@ -5,6 +5,7 @@ include requirements.txt
 graft pyndl
 graft doc
 graft tests
+graft stubs
 global-exclude __pycache__
 global-exclude *.py[co]
 prune doc/build
