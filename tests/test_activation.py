@@ -92,16 +92,16 @@ def test_activation_matrix_large():
                            coords={'cues': cues},
                            dims=('cues', 'outcomes'))
     events = [(np.random.choice(cues, n_cues_per_event), [])
-              for i in range(n_events)] # no generator, we use it twice
+              for i in range(n_events)]  # no generator, we use it twice
 
     print("Start test...")
     print("")
     gc.collect()
-    asp = time_test(activation,
-                          of="single threaded")(events, weights, number_of_threads=1, remove_duplicates=True)
+    asp = (time_test(activation, of="single threaded")
+           (events, weights, number_of_threads=1, remove_duplicates=True))
     gc.collect()
-    amp = time_test(activation,
-                          of="multi threaded (up to 8 threads)")(events, weights, number_of_threads=8, remove_duplicates=True)
+    amp = (time_test(activation, of="multi threaded (up to 8 threads)")
+           (events, weights, number_of_threads=8, remove_duplicates=True))
     del weights
     del events
     gc.collect()
