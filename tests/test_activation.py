@@ -62,41 +62,49 @@ def test_activation_dict():
 
 @slow
 def test_activation_matrix_large():
-    """Test with a lot of data. Better run only with at least 12GB free RAM.
     """
+    Test with a lot of data. Better run only with at least 12GB free RAM.
+    To get time prints for single and multiprocessing run with pytest ... --capture=no --runslow
+    """
+    print("")
     print("Start setup...")
 
     def time_test(func, of=""):
         def dec_func(*args, **kwargs):
-            print("Start {}".format(of))
+            print("start test '{}'".format(of))
             st = time.clock()
             res = func(*args, **kwargs)
             et = time.clock()
-            print("Finished {}".format(of))
-            print("Timediff: {}s".format(et-st))
+            print("finished test '{}'".format(of))
+            print("  duration: {:.3f}s".format(et-st))
+            print("")
             return res
         return dec_func
 
-    n_cues = 50000
-    n_outcomes = 5000
-    n_events = 50000
-    huge_weights = np.random.rand(n_cues, n_outcomes)
-    huge_cues = ['c'+str(i) for i in range(n_cues)]
-    huge_event_cues = ['c'+str(i) for i in range(n_cues-30, n_cues)]
-    huge_events_cues = [huge_event_cues for i in range(n_events)]
-
-    print("Estimated best case memory consumption: {} bytes".format(n_cues * n_outcomes * 8 +
-                                                                    n_events * n_outcomes * 8 * 2))
+    n = 2000
+    n_cues = 10*n
+    n_outcomes = n
+    n_events = 10*n
+    n_cues_per_event = 30
+    weight_mat = np.random.rand(n_cues, n_outcomes)
+    cues = ['c'+str(i) for i in range(n_cues)]
+    weights = xr.DataArray(weight_mat,
+                           coords={'cues': cues},
+                           dims=('cues', 'outcomes'))
+    events = [(np.random.choice(cues, n_cues_per_event), [])
+              for i in range(n_events)] # no generator, we use it twice
 
     print("Start test...")
+    print("")
     gc.collect()
-    asp, ncsp = time_test(activation,
-                          of="single threaded")(huge_events_cues, huge_weights, huge_cues, numThreads=1)
+    asp = time_test(activation,
+                          of="single threaded")(events, weights, number_of_threads=1, remove_duplicates=True)
     gc.collect()
-    amp, ncmp = time_test(activation_matrix,
-                          of="multi threaded (8 threads)")(huge_events_cues, huge_weights, huge_cues, numThreads=8)
-    del huge_weights
-    del huge_events_cues
+    amp = time_test(activation,
+                          of="multi threaded (up to 8 threads)")(events, weights, number_of_threads=8, remove_duplicates=True)
+    del weights
+    del events
     gc.collect()
     print("Compare results...")
     assert np.allclose(asp, amp), "single and multi threaded had different results"
+    print("Equal.")
