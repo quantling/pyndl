@@ -299,22 +299,6 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
     return weights
 
 
-def activations(cues, weights, *, remove_duplicates=None):
-    if remove_duplicates is None:
-        if len(cues) != len(set(cues)):
-            raise ValueError("cues need to be unique or remove_duplicates needs "
-                             "to be set either to True or False.")
-    elif remove_duplicates:
-        cues = set(cues)
-
-    if isinstance(weights, dict):
-        activations_ = defaultdict(float)
-        for outcome, cue_dict in weights.items():
-            for cue in cues:
-                activations_[outcome] += cue_dict[cue]
-        return activations_
-
-
 def slice_list(li, sequence):
     """
     Slices a list in sublists with the length sequence.

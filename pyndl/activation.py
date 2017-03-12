@@ -2,7 +2,7 @@
 
 import multiprocessing as mp
 import ctypes
-from collections import OrderedDict
+from collections import defaultdict, OrderedDict
 
 import numpy as np
 import xarray as xr
@@ -21,8 +21,9 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None)
     ----------
     event_list : generator or str
         generates cues, outcomes pairs or the path to the event file
-    weights : xarray.DataArray
+    weights : xarray.DataArray or dict[dict[float]]
         the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+        the dictionaries hold weight[outcome][cue].
     number_of_threads : int
         a integer giving the number of threads in which the job should
         executed
@@ -34,19 +35,19 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None)
 
     Returns
     -------
-    (activation, new_cues) : np.ndarray, list
-        activations for the events and all outcomes in the weights and
-cues not
-        present in weight matrix and ignored
+    activations : xarray.DataArray
+        with dimensions 'events' and 'outcomes'. Contains coords for the outcomes.
+        returned if weights is instance of xarray.DataArray
+
+    or
+
+    activations : dict of numpy.arrays
+        the first dict has outcomes as keys and dicts as values
+        the list has a activation value per event
+        returned if weights is instance of dict
     """
     if isinstance(event_list, str):
         event_list = ndl.events(event_list)
-    if isinstance(weights, xr.DataArray):
-        cues = weights.coords["cues"].values.tolist()
-        outcomes = weights.coords["outcomes"].values.tolist()
-        cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
-    else:
-        raise NotImplementedError("Weights other than xarray.DataArray are not supported.")
 
     event_cues_list = (cues for cues, outcomes in event_list)
     if remove_duplicates is None:
@@ -61,14 +62,30 @@ cues not
     elif remove_duplicates is True:
         event_cues_list = (set(cues) for cues in event_cues_list)
 
-    event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues)
-                              for event_cues in event_cues_list)
-    activations = _activation_matrix(list(event_cue_indices_list), weights.values, number_of_threads)
-    return xr.DataArray(activations,
-                        coords={
-                           'outcomes': outcomes
-                        },
-                        dims=('events', 'outcomes'))
+    if isinstance(weights, xr.DataArray):
+        cues = weights.coords["cues"].values.tolist()
+        outcomes = weights.coords["outcomes"].values.tolist()
+        cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
+        event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues)
+                                  for event_cues in event_cues_list)
+        activations = _activation_matrix(list(event_cue_indices_list), weights.values, number_of_threads)
+        return xr.DataArray(activations,
+                            coords={
+                                'outcomes': outcomes
+                            },
+                            dims=('events', 'outcomes'))
+    elif isinstance(weights, dict):
+        assert number_of_threads == 1, "Estimating activations with multiprocessing is not implemented for dicts."
+        activations = defaultdict(lambda: np.zeros(len(event_cues_list)))
+        event_cues_list = list(event_cues_list)
+        for outcome, cue_dict in weights.items():
+            _activations = activations[outcome]
+            for row, cues in enumerate(event_cues_list):
+                for cue in cues:
+                    _activations[row] += cue_dict[cue]
+        return activations
+    else:
+        raise NotImplementedError("Weights other than xarray.DataArray or dicts are not supported.")
 
 
 def _init_mp_activation_matrix(weights_, weights_shape_, activations_, activations_shape_):
