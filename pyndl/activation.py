@@ -45,6 +45,7 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None)
         the first dict has outcomes as keys and dicts as values
         the list has a activation value per event
         returned if weights is instance of dict
+
     """
     if isinstance(event_list, str):
         event_list = ndl.events(event_list)
@@ -92,6 +93,7 @@ def _init_mp_activation_matrix(weights_, weights_shape_, activations_, activatio
     """
     Private helper function for multiprocessing in _activation_matrix.
     Initializes shared variables weights and activations.
+
     """
     global weights, activations
     weights = np.ctypeslib.as_array(weights_)
@@ -104,6 +106,7 @@ def _run_mp_activation_matrix(event_index, cue_indices):
     """
     Private helper function for multiprocessing in _activation_matrix.
     Calculate activation for all outcomes while a event.
+
     """
     activations[event_index, :] = weights[cue_indices, :].sum(axis=0)
 
@@ -127,6 +130,7 @@ def _activation_matrix(indices_list, weights, number_of_threads):
     -------
     activation_matrix : 2d numpy.array
         activations for the events and all outcomes in the weights and
+
     """
     assert number_of_threads >= 1, "Can't run with less than 1 thread"
 

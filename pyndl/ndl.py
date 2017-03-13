@@ -11,7 +11,7 @@ from queue import Queue
 import numpy as np
 import pandas as pd
 import xarray as xr
-import cython as cy
+import cython
 
 from . import __version__
 from . import count
@@ -181,10 +181,37 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     else:
         raise ValueError('method needs to be either "threading" or "openmp"')
 
+    cpu_time_stop = time.process_time()
+    wall_time_stop = time.perf_counter()
+    cpu_time = cpu_time_stop - cpu_time_start
+    wall_time = wall_time_stop - wall_time_start
+
+    attrs = _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time,
+                        __name__ + "." + ndl.__name__, method=method)
+
+    if weights_ini is not None:
+        attrs_to_be_updated = weights_ini.attrs
+        for key in attrs_to_be_updated.keys():
+            attrs_to_be_updated[key].append(attrs[key].pop())
+        attrs = attrs_to_be_updated
+
     # post-processing
     weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)],
                            attrs=attrs)
     return weights
+
+
+def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function, method=None):
+    attrs = {'date': [time.strftime("%d/%m/%Y")], 'time':
+             [time.strftime("%H:%M:%S")], 'event_path': [event_path], 'alpha':
+             [alpha], 'betas': [betas], 'lambda': [lambda_], 'function': [function],
+             'method': [method], 'cpu_time': [cpu_time], 'wall_time': [wall_time],
+             'hostname': [socket.gethostname()], 'username':
+             [getpass.getuser()], 'pyndl': [__version__], 'numpy':
+             [np.__version__], 'pandas': [pd.__version__], 'xarray':
+             [xr.__version__], 'cython': [cython.__version__]}
+
+    return attrs
 
 
 def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_duplicates=None, make_data_array=False):
@@ -195,14 +222,13 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
 
     Notes
     -----
-    Outcomes will only be considered to be part of all_outcomes after they
-    have been seen the first time within the events. If you want to learn some
-    events from the beginning you need to give them as keys in the initial
-    weights.
+    The metadata will only be stored when `make_data_array` is True and then
+    `dict_ndl` cannot be used to continue learning. At the moment there is no
+    proper way to automatically store the meta data into the default dict.
 
     Parameters
     ----------
-    events : generator or str
+    event_list : generator or str
         generates cues, outcomes pairs or the path to the event file
     alphas : dict or float
         a (default)dict having cues as keys and a value below 1 as value
@@ -235,10 +261,20 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
 
     """
 
+    if make_data_array:
+        wall_time_start = time.perf_counter()
+        cpu_time_start = time.process_time()
+        if isinstance(event_list, str):
+            event_path = event_list
+        else:
+            event_path = None
+
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
     if weights is None:
         weights = defaultdict(lambda: defaultdict(float))
+    elif not isinstance(weights, defaultdict):
+        raise ValueError('weights needs to be either defaultdict or None')
 
     beta1, beta2 = betas
     all_outcomes = set(weights.keys())
@@ -274,9 +310,18 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
                 weights[outcome][cue] += alphas[cue] * update
 
     if make_data_array:
+        cpu_time_stop = time.process_time()
+        wall_time_stop = time.perf_counter()
+        cpu_time = cpu_time_stop - cpu_time_start
+        wall_time = wall_time_stop - wall_time_start
+
+        attrs = _attributes(event_path, alphas, betas, lambda_, cpu_time, wall_time,
+                            __name__ + "." + dict_ndl.__name__)
+
+        # post-processing
         weights = pd.DataFrame(weights)
         # weights.fillna(0.0, inplace=True)  # TODO make sure to not remove real NaNs
-        weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'))
+        weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'), attrs=attrs)
 
     return weights
 
