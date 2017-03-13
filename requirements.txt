@@ -3,3 +3,4 @@ matplotlib
 cython
 pandas
 xarray
+netCDF4

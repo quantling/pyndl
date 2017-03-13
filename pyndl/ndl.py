@@ -26,12 +26,12 @@ def events(event_path):
     Yields events for all events in event_file.
 
     Parameters
-    ==========
+    ----------
     event_path : str
         path to event file
 
     Yields
-    ======
+    ------
     cues, outcomes : list, list
         a tuple of two lists containing cues and outcomes
 
@@ -57,7 +57,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     the binary format defined in preprocess.py.
 
     Parameters
-    ==========
+    ----------
     event_path : str
         path to the event file
     alpha : float
@@ -81,7 +81,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
         preferred!)
 
     Returns
-    =======
+    -------
     weights : xarray.DataArray
         with dimensions 'cues' and 'outcomes'. You can lookup the weights
         between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
@@ -221,13 +221,13 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
     This is a pure python implementation using dicts.
 
     Notes
-    =====
+    -----
     The metadata will only be stored when `make_data_array` is True and then
     `dict_ndl` cannot be used to continue learning. At the moment there is no
     proper way to automatically store the meta data into the default dict.
 
     Parameters
-    ==========
+    ----------
     event_list : generator or str
         generates cues, outcomes pairs or the path to the event file
     alphas : dict or float
@@ -246,7 +246,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
         if True makes a xarray.DataArray out of the dict of dicts.
 
     Returns
-    =======
+    -------
     weights : dict of dicts of floats
         the first dict has outcomes as keys and dicts as values
         the second dict has cues as keys and weights as values
@@ -320,7 +320,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
 
         # post-processing
         weights = pd.DataFrame(weights)
-        weights.fillna(0.0, inplace=True)
+        # weights.fillna(0.0, inplace=True)  # TODO make sure to not remove real NaNs
         weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'), attrs=attrs)
 
     return weights
@@ -347,14 +347,14 @@ def slice_list(li, sequence):
     Slices a list in sublists with the length sequence.
 
     Parameters
-    ==========
+    ----------
     li : list
          list which should be sliced in sublists
     sequence : int
          integer which determines the length of the sublists
 
     Returns
-    =======
+    -------
     seq_list : list of lists
         a list of sublists with the length sequence
 

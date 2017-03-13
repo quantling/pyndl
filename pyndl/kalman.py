@@ -3,7 +3,7 @@
 
 """
 Kalman filter
-=============
+-------------
 
 To implement Kalman filter [@kalman1960], we need two updating functions: for
 the expectation (mean), and for the uncertainty (variance). Again, algorithm is
@@ -24,7 +24,7 @@ def update_covariance_matrix(covmat, cues_present_vec, *, noise_parameter=1):
     Update the covariance matrix ``covmat`` in place (!!).
 
     Parameters
-    ==========
+    ----------
 
     covmat : covariance matrix of the cues (square matrix)
     cues_present_vec : a sparse column vector with ones where the cues are
@@ -48,7 +48,7 @@ def update_covariance_loop(covmat, cues_present, cue_index_map, *, noise_paramet
     Update the covariance matrix ``covmat`` in place (!!).
 
     Parameters
-    ==========
+    ----------
 
     covmat : covariance matrix of the cues (square matrix)
     cues_present : list of cues that are present
@@ -72,7 +72,7 @@ def update_mu_matrix(mumat, covmat, cues_present_vec, outcomes_present_vec, *,
     Update the mean matrix ``mumat`` in place (!!).
 
     Parameters
-    ==========
+    ----------
 
     mumat : mean matrix connecting cues with outcomes
     covmat : covariance matrix of the cues (square matrix)

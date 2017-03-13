@@ -1,3 +1,4 @@
+# pylint: skip-file
 """Pythonic command-line interface parser that will make you smile.
 
  * http://docopt.org
@@ -522,8 +523,8 @@ def docopt(doc, argv=None, help=True, version=None, options_first=False):
         such as e.g. "--verbose" and "<path>", and values are the
         parsed values of those elements.
 
-    Example
-    -------
+    Examples
+    --------
     >>> from docopt import docopt
     >>> doc = '''
     Usage:
