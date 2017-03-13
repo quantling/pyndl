@@ -54,17 +54,17 @@ def read_clean_gzfile(gz_file_path, *, break_duration=2.0):
     xml tags and timestamps are removed.
 
     Parameters
-    ==========
+    ----------
     break_duration : float
         defines the amount of time in seconds that need to pass between two
         subtitles in order to start a new paragraph in the resulting corpus.
 
     Yields
-    ======
+    ------
     line : non empty, cleaned line out of the xml subtitle file
 
     Raises
-    ======
+    ------
     FileNotFoundError : if file is not there.
 
     """
@@ -146,7 +146,7 @@ def main(directory, outfile, *, n_threads=1, verbose=False):
     the results.
 
     Parameters
-    ==========
+    ----------
     directory : str
         use all gz-files in this directory and all subdirectories as input.
     outfile : str
