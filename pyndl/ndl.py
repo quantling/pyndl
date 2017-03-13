@@ -26,12 +26,12 @@ def events(event_path):
     Yields events for all events in event_file.
 
     Parameters
-    ==========
+    ----------
     event_path : str
         path to event file
 
     Yields
-    ======
+    ------
     cues, outcomes : list, list
         a tuple of two lists containing cues and outcomes
 
@@ -57,7 +57,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     the binary format defined in preprocess.py.
 
     Parameters
-    ==========
+    ----------
     event_path : str
         path to the event file
     alpha : float
@@ -81,7 +81,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
         preferred!)
 
     Returns
-    =======
+    -------
     weights : xarray.DataArray
         with dimensions 'cues' and 'outcomes'. You can lookup the weights
         between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
@@ -179,25 +179,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
         for thread in threads:
             thread.join()
     else:
-        ValueErro('method needs to be either "threading" or "openmp"')
-
-    cpu_time_stop = time.process_time()
-    wall_time_stop = time.perf_counter()
-    cpu_time = cpu_time_stop-cpu_time_start
-    wall_time = wall_time_stop-wall_time_start
-    attrs = {'date': [time.strftime("%d/%m/%Y")], 'time':
-             [time.strftime("%H:%M:%S")], 'event_path': [event_path], 'alpha':
-             [alpha], 'betas': [betas], 'lambda': [lambda_], 'method':
-             [method], 'cpu_time': [cpu_time], 'wall_time': [wall_time],
-             'hostname': [socket.gethostname()], 'username':
-             [getpass.getuser()], 'pyndl': [__version__], 'numpy':
-             [np.__version__], 'pandas': [pd.__version__], 'xarray':
-             [xr.__version__], 'cython': [cy.__version__]}
-    if weights_ini is not None:
-        attrs_to_be_updated = weights_ini.attrs
-        for k in attrs_to_be_updated.keys():
-            attrs_to_be_updated[k].append(attrs[k].pop())
-        attrs = attrs_to_be_updated
+        raise ValueError('method needs to be either "threading" or "openmp"')
 
     # post-processing
     weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)],
@@ -212,15 +194,15 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
     This is a pure python implementation using dicts.
 
     Notes
-    =====
+    -----
     Outcomes will only be considered to be part of all_outcomes after they
     have been seen the first time within the events. If you want to learn some
     events from the beginning you need to give them as keys in the initial
     weights.
 
     Parameters
-    ==========
-    event_list : generator or str
+    ----------
+    events : generator or str
         generates cues, outcomes pairs or the path to the event file
     alphas : dict or float
         a (default)dict having cues as keys and a value below 1 as value
@@ -238,7 +220,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
         if True makes a xarray.DataArray out of the dict of dicts.
 
     Returns
-    =======
+    -------
     weights : dict of dicts of floats
         the first dict has outcomes as keys and dicts as values
         the second dict has cues as keys and weights as values
@@ -293,7 +275,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
 
     if make_data_array:
         weights = pd.DataFrame(weights)
-        weights.fillna(0.0, inplace=True)
+        # weights.fillna(0.0, inplace=True)  # TODO make sure to not remove real NaNs
         weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'))
 
     return weights
@@ -304,14 +286,14 @@ def slice_list(li, sequence):
     Slices a list in sublists with the length sequence.
 
     Parameters
-    ==========
+    ----------
     li : list
          list which should be sliced in sublists
     sequence : int
          integer which determines the length of the sublists
 
     Returns
-    =======
+    -------
     seq_list : list of lists
         a list of sublists with the length sequence
 
