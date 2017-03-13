@@ -73,7 +73,7 @@ def process_occurrences(occurrences, outfile, *,
     Process the occurrences and write them to outfile.
 
     Parameters
-    ==========
+    ----------
     occurrences : sequence of (cues, outcomes) tuples
         cues and outcomes are both strings where underscores and # are
         special symbols.
@@ -140,7 +140,7 @@ def create_event_file(corpus_file,
     Create an text based event file from a corpus file.
 
     Parameters
-    ==========
+    ----------
     corpus_file : str
         path where the corpus file is
     event_file : str
@@ -161,7 +161,7 @@ def create_event_file(corpus_file,
     verbose : bool
 
     Breaks / Separators
-    ===================
+    -------------------
     What marks parts, where we do not want to continue learning?
 
     * ---end.of.document--- string?
@@ -180,14 +180,14 @@ def create_event_file(corpus_file,
     No.
 
     Context
-    =======
+    -------
     A context is a whole document or a paragraph within which we will take
     (three) consecutive words as occurrences or events. The last words of a
     context will not form an occurrence with the first words of the next
     context.
 
     Occurrence
-    ==========
+    ----------
     An occurrence or event is will result in one event in the end. This can be
     (three) consecutive words, a sentence, or a line in the corpus file.
 
@@ -435,7 +435,7 @@ def filter_event_file(input_event_file, output_event_file, *,
     Filter an event file by a list or a map of cues and outcomes.
 
     Parameters
-    ==========
+    ----------
     You can either use keep_*, remove_*, or map_*.
 
     input_event_file : str
@@ -464,7 +464,7 @@ def filter_event_file(input_event_file, output_event_file, *,
         number of chunks per submitted job, should be around 100000
 
     Notes
-    =====
+    -----
     It will keep all cues that are within the event and that (for a human
     reader) might clearly belong to a removed outcome. This is on purpose and
     is the expected behaviour as these cues are in the context of this outcome.
@@ -537,7 +537,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
     ndl2/src/common/serialization.cpp.
 
     Parameters
-    ==========
+    ----------
     events : iterator of (cue_ids, outcome_ids) tuples called event
     filename : string
     start : first event to write (zero based index)
@@ -549,7 +549,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
         preferred!)
 
     Binary Format
-    =============
+    -------------
 
         8 byte header
         nr of events
@@ -561,7 +561,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
         ...
 
     Raises
-    ======
+    ------
     StopIteration : events generator is exhausted before stop is reached
 
     """
@@ -673,7 +673,7 @@ def create_binary_event_files(event_file,
     Creates the binary event files for a tabular cue outcome corpus.
 
     Parameters
-    ==========
+    ----------
     event_file : str
         path to tab separated text file that contains all events in a cue
         outcome table.
