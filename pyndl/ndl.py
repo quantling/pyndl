@@ -222,10 +222,9 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
 
     Notes
     =====
-    Outcomes will only be considered to be part of all_outcomes after they
-    have been seen the first time within the events. If you want to learn some
-    events from the beginning you need to give them as keys in the initial
-    weights.
+    The metadata will only be stored when `make_data_array` is True and then
+    `dict_ndl` cannot be used to continue learning. At the moment there is no
+    proper way to automatically store the meta data into the default dict.
 
     Parameters
     ==========
@@ -263,7 +262,6 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
     """
 
     if make_data_array:
-        weights_ini = weights
         wall_time_start = time.perf_counter()
         cpu_time_start = time.process_time()
         if isinstance(event_list, str):
@@ -275,6 +273,8 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
     # weights[outcome][cue]
     if weights is None:
         weights = defaultdict(lambda: defaultdict(float))
+    elif not isinstance(weights, defaultdict):
+        raise ValueError('weights needs to be either defaultdict or None')
 
     beta1, beta2 = betas
     all_outcomes = set(weights.keys())
@@ -317,12 +317,6 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
 
         attrs = _attributes(event_path, alphas, betas, lambda_, cpu_time, wall_time,
                             __name__ + "." + dict_ndl.__name__)
-
-        if weights_ini is not None:
-            attrs_to_be_updated = weights_ini.attrs
-            for key in attrs_to_be_updated.keys():
-                attrs_to_be_updated[key].append(attrs[key].pop())
-            attrs = attrs_to_be_updated
 
         # post-processing
         weights = pd.DataFrame(weights)
