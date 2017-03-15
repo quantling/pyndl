@@ -49,6 +49,11 @@ def result_dict_ndl():
 
 
 @pytest.fixture(scope='module')
+def result_dict_ndl_data_array():
+    return ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array=True)
+
+
+@pytest.fixture(scope='module')
 def result_continue_learning():
     events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
     part_1 = events_simple.head(CONTINUE_SPLIT_POINT)
@@ -90,11 +95,10 @@ def test_continue_learning(result_continue_learning, result_ndl_openmp):
     assert len(unequal) == 0
 
 
-def test_return_values(result_dict_ndl, result_ndl_threading, result_ndl_openmp):
+def test_return_values(result_dict_ndl, result_dict_ndl_data_array, result_ndl_threading, result_ndl_openmp):
     # dict_ndl
     assert isinstance(result_dict_ndl, defaultdict)
-    result = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array=True)
-    assert isinstance(result, xr.DataArray)
+    assert isinstance(result_dict_ndl_data_array, xr.DataArray)
     # openmp
     assert isinstance(result_ndl_openmp, xr.DataArray)
     # threading
@@ -135,6 +139,17 @@ def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
                                             result_ndl_openmp)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
+
+
+def test_meta_data(result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
+    attributes = {'cython', 'cpu_time', 'hostname', 'xarray', 'wall_time',
+                  'event_path', 'username', 'time', 'method', 'date', 'numpy',
+                  'betas', 'lambda', 'pyndl', 'alpha', 'pandas', 'method',
+                  'function'}
+
+    assert set(result_ndl_openmp.attrs.keys()) == attributes
+    assert set(result_ndl_threading.attrs.keys()) == attributes
+    assert set(result_dict_ndl_data_array.attrs.keys()) == attributes
 
 
 # Test against external ndl2 results
