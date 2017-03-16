@@ -23,4 +23,4 @@ pyndl.egg-info/
 .tox/
 doc/data/levent.tab
 doc/data/levent.tab.filtered
-doc/data/weights_1.nc
+doc/data/weights.nc
