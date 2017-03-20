@@ -2,12 +2,16 @@
 Examples
 ========
 
---------------------------------------------------------------------------------------------------
-Lexical example data illustrating the Rescorla-Wagner[@rescorlawagner1972] equations [@baayen2011]
---------------------------------------------------------------------------------------------------
+---------------
+Lexical example
+---------------
+
+The lexical example illustrates the Rescorla-Wagner[@rescorlawagner1972]
+equations. This example is taken from [@baayen2011].
 
 Premises
 ========
+
 1. Cues are associated with outcomes and both can be present or absent
 2. Cues are segment (letter) unigrams, bigrams, ...
 3. Outcomes are meanings (word meanings, inflectional meanings, affixal
@@ -30,7 +34,8 @@ Premises
 8. Default settings for the parameters are: :math:`\alpha_{i} = \alpha_{j} \:
    \forall i, j`, :math:`\beta_{1} = \beta_{2}` and :math:`\lambda = 1`
 
-.. math:: :label: RW
+.. math::
+    :label: RW
    
     \Delta V_{i}^{t} =
     \begin{array}{ll}
@@ -166,9 +171,9 @@ by specifying the ``weight`` argument:
    >>> weights2 = ndl.ndl(event_path='doc/data/lexample.tab', alpha=0.1, betas=(0.1, 0.1), method='openmp', weights=weights)
    >>> weights2
 
-As you may have noticed already, ``ndl.ndl`` provides you with metadata
+As you may have noticed already, ``ndl.ndl`` provides you with meta data
 organized in a ``dict`` which was collected during your calculations. Each
-entry of each ``list`` of this metadata therefore references one specific
+entry of each ``list`` of this meta data therefore references one specific
 moment of your calculations:
 
 .. code-block:: python
@@ -206,9 +211,11 @@ do both:
     >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=alphas_cues, betas=(0.1, 0.1))
     >>> weights2 = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=alphas_cues, betas=(0.1, 0.1), weights=weights)
 
-Note that at the moment, continuing learning is only possible via a previous
-``dict`` and metadata as in ``ndl.ndl`` is only returned if you set
-``make_data_array=True``:
+.. note::
+
+    Note that at the moment, continuing learning is only possible via a
+    previous ``dict`` and meta data as in ``ndl.ndl`` is only returned if you
+    set ``make_data_array=True``:
 
 .. code-block:: python
 
@@ -304,7 +311,8 @@ and also generate id maps for cues and outcomes:
 Filter the events
 =================
 As we do not want to include the outcomes 'foot' and 'feet' in this example
-aswell as their cues '#f', 'fo' 'oo', 'ot', 't#', 'fe', 'ee' 'et', we use the
+as well as their cues '#f', 'fo' 'oo', 'ot', 't#', 'fe', 'ee' 'et', we use the
+
 
 pyndl.preprocess module
 -----------------------
@@ -365,7 +373,6 @@ is straight forward using the netCDF format [@netCDF]
    >>> with xarray.open_dataarray('doc/data/weights.nc') as weights_read:
    >>>     weights_read[0, 0]
 
-
 the same applies to
 
 
@@ -382,3 +389,4 @@ Load a weight matrix to R[@R2016]
    > colnames(weights_read) <- ncvar_get(nc = weights_nc, varid = "cues")
    > nc_close(nc = weights_nc)
    > rm(weights_nc)
+

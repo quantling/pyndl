@@ -10,8 +10,8 @@ Welcome to pyndl's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   pyndl
    examples
+   pyndl
 
 
 
