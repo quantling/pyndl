@@ -28,22 +28,6 @@ pyndl.count module
     :undoc-members:
     :show-inheritance:
 
-pyndl.docopt module
--------------------
-
-.. automodule:: pyndl.docopt
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-pyndl.kalman module
--------------------
-
-.. automodule:: pyndl.kalman
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 pyndl.ndl module
 ----------------
 

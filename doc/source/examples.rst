@@ -2,12 +2,16 @@
 Examples
 ========
 
---------------------------------------------------------------------------------------------------
-Lexical example data illustrating the Rescorla-Wagner[@rescorlawagner1972] equations [@baayen2011]
---------------------------------------------------------------------------------------------------
+---------------
+Lexical example
+---------------
+
+The lexical example illustrates the Rescorla-Wagner[@rescorlawagner1972]
+equations. This example is taken from [@baayen2011].
 
 Premises
 ========
+
 1. Cues are associated with outcomes and both can be present or absent
 2. Cues are segment (letter) unigrams, bigrams, ...
 3. Outcomes are meanings (word meanings, inflectional meanings, affixal
@@ -19,8 +23,8 @@ Premises
 6. The association strength :math:`V_{i}^{t+1}` of cue :math:`C_{i}` with
    outcome :math:`O` at time :math:`t+1` is defined as :math:`V_{i}^{t+1} =
    V_{i}^{t} + \Delta V_{i}^{t}`
-7. The change in association strength :math:`\Delta V_{i}^{t}` is defined as in
-   :eq:`rw` with
+7. The change in association strength :math:`\Delta V_{i}^{t}` is defined as
+   in :eq:`RW` with
 
    * :math:`\alpha_{i}` being the salience of the cue :math:`i`
    * :math:`\beta_{1}` being the salience of the situation in which the outcome occurs
@@ -31,14 +35,15 @@ Premises
    \forall i, j`, :math:`\beta_{1} = \beta_{2}` and :math:`\lambda = 1`
 
 .. math::
-
+    :label: RW
+   
     \Delta V_{i}^{t} =
     \begin{array}{ll}
     \begin{cases}
     \displaystyle 0 & \: \textrm{if ABSENT}(C_{i}, t)\\ \alpha_{i}\beta_{1} \: (\lambda - \sum_{\textrm{PRESENT}(C_{j}, t)} \: V_{j}) & \: \textrm{if PRESENT}(C_{j}, t) \: \& \: \textrm{PRESENT}(O, t)\\ \alpha_{i}\beta_{2} \: (0 - \sum_{\textrm{PRESENT}(C_{j}, t)} \: V_{j}) & \: \textrm{if PRESENT}(C_{j}, t) \: \& \: \textrm{ABSENT}(O, t)
     \end{cases}
     \end{array}
-    :label: rw
+
 
 Data
 ====
@@ -86,10 +91,10 @@ columns:
 
 As the data in table 1 are artifical we can generate such a file for this
 example by expanding table 1 randomly regarding the frequency of occurence of
-each event. The resulting event file ``lexample.tab`` consists of 420 lines
-(419 = sum of frequencies + 1 header) and looks like the following
-(nevertheless you are encouraged to take a closer look at this file using any
-text editor of your choice):
+each event. The resulting event file ``lexample.tab`` (which you can find in
+the subdirectory ``data``) consists of 420 lines (419 = sum of frequencies + 1
+header) and looks like the following (nevertheless you are encouraged to take a
+closer look at this file using any text editor of your choice):
 
 =================  =============
 Cues               Outcomes
@@ -125,12 +130,12 @@ larger data.  Besides, you can set three technical arguments which we will not
 change here:
 
 1. ``number_of_threads`` (int) giving the number of threads in which the job
-   should be executed (default = 2)
+   should be executed (default=2)
 2. ``sequence`` (int) giving the length of sublists generated from all outcomes
-   (default = 10)
-3. ``remove_duplicates`` (logical) to make cues and outcomes unique (default =
-   None; which will raise an error if the same cue is present multiple times in
-   the same event)
+   (default=10)
+3. ``remove_duplicates`` (logical) to make cues and outcomes unique
+   (default=None; which will raise an error if the same cue is present multiple
+   times in the same event)
 
 Let's start:
 
@@ -158,16 +163,34 @@ return the weight of the cue 's#' (the unigram 's' being the word-final) for
 the outcome 'plural' (remember counting in Python does start at 0) as ca. 0.077
 and hence indicate 's#' being a marker for plurality.
 
+``ndl.ndl`` also allows you to continue learning from a previous weight matrix
+by specifying the ``weight`` argument:
+
+.. code-block:: python
+
+   >>> weights2 = ndl.ndl(event_path='doc/data/lexample.tab', alpha=0.1, betas=(0.1, 0.1), method='openmp', weights=weights)
+   >>> weights2
+
+As you may have noticed already, ``ndl.ndl`` provides you with meta data
+organized in a ``dict`` which was collected during your calculations. Each
+entry of each ``list`` of this meta data therefore references one specific
+moment of your calculations:
+
+.. code-block:: python
+
+   >>> weights2.attrs
+
 
 ndl.dict_ndl
 ------------
 ``ndl.dict_ndl`` is a pure Python implementation, however, it differs from
 ``ndl.ndl`` regarding the following:
 
-1. there are only two technical arguments: ``remove_duplicates`` and
+1. there are only two technical arguments: ``remove_duplicates`` (logical) and
    ``make_data_array`` (logical)
-2. no longer an ``xarray.DataArray`` is returned but a ``dict`` of dicts
-3. you can set initial weights by specifying the ``weights`` argument
+2. by default, no longer an ``xarray.DataArray`` is returned but a ``dict`` of dicts
+3. however, you are still able to get an ``xarray.DataArray`` by setting
+   ``make_data_array=True``
 4. the case :math:`\alpha_{i} \neq \alpha_{j} \:` can be handled by specifying
    a ``dict`` consisting of the cues as keys and corresponding :math:`\alpha`'s
 
@@ -179,20 +202,26 @@ Therefore
     >>> weights['plural']['s#']
 
 yields approximately the same results as before, however, you now can specify
-initial weights or different :math:`\alpha`'s per cue or do both:
+different :math:`\alpha`'s per cue and as in ``ndl.ndl`` continue learning or
+do both:
 
 .. code-block:: python
 
     >>> alphas_cues = dict(zip(['#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'], [0.1, 0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0.1, 0.2, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2]))
-    >>> weights_ini = ndl.dict_ndl(event_list = 'doc/data/lexample.tab', alphas = alphas_cues, betas = (0.1, 0.1))
-    >>> weights = ndl.dict_ndl(event_list = 'doc/data/lexample.tab', alphas = alphas_cues, betas = (0.1, 0.1), weights = weights_ini)
+    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=alphas_cues, betas=(0.1, 0.1))
+    >>> weights2 = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=alphas_cues, betas=(0.1, 0.1), weights=weights)
 
-Instead of a ``dict`` of dicts, it is also possible to get an
-``xarray.DataArray`` returned:
+.. note::
+
+    Note that at the moment, continuing learning is only possible via a
+    previous ``dict`` and meta data as in ``ndl.ndl`` is only returned if you
+    set ``make_data_array=True``:
 
 .. code-block:: python
 
-   >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=0.1, betas=(0.1, 0.1), make_data_array=True)
+   >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=alphas_cues, betas=(0.1, 0.1), make_data_array=True)
+   >>> weights
+
 
 --------------------------
 A minimal workflow example
@@ -213,7 +242,8 @@ Generate an event file based on a raw corpus file
 Suppose you have a raw utf-8 encoded corpus file (by the way, ``pyndl.corpus``
 allows you to generate such a corpus file from a bunch of gunzipped xml
 subtitle files filled with words, which we will not cover here). For example
-take a look at ``lcorpus.txt``.
+take a look at ``lcorpus.txt`` (which you also can find in the subdirectory
+``data``)
 
 To analyse the data, you need to convert the file into an event file similar to
 ``lexample.tab`` in our lexical learning example, as currently there is only
@@ -233,17 +263,16 @@ on a raw corpus file and filter it:
 
     >>> import pyndl
     >>> from pyndl import preprocess
-    >>> preprocess.create_event_file(corpus_file = 'doc/data/lcorpus.txt', event_file = 'doc/data/levent.tab', context_structure = 'document', event_structure = 'consecutive_words', event_options = (1, ), cue_structure = 'bigrams_to_word')
+    >>> preprocess.create_event_file(corpus_file='doc/data/lcorpus.txt', event_file='doc/data/levent.tab', context_structure='document', event_structure='consecutive_words', event_options=(1, ), cue_structure='bigrams_to_word')
 
 The function ``preprocess.create_event_file`` has several arguments which you
 might have to change to suit them your data, so you are strongly recommened to
-read its documentation. We set ``context_structure = 'document'`` as in this
-case the context is the whole document, ``event_structure =
-'consecutive_words'`` as these are our events, ``event_options = (1, )`` as we
-define an event to be one word and ``cue_structure = 'bigrams_to_word'`` to set
-cues being bigrams. There are also several technical arguments you can
-specifiy, which we will not change here. Our generated event file
-``levent.tab`` now looks like this:
+read its documentation. We set ``context_structure='document'`` as in this case
+the context is the whole document, ``event_structure='consecutive_words'`` as
+these are our events, ``event_options=(1, )`` as we define an event to be one
+word and ``cue_structure='bigrams_to_word'`` to set cues being bigrams.
+There are also several technical arguments you can specifiy, which we will not
+change here. Our generated event file ``levent.tab`` now looks like this:
 
 =================  ========
 Cues               Outcomes
@@ -282,7 +311,8 @@ and also generate id maps for cues and outcomes:
 Filter the events
 =================
 As we do not want to include the outcomes 'foot' and 'feet' in this example
-aswell as their cues '#f', 'fo' 'oo', 'ot', 't#', 'fe', 'ee' 'et', we use the
+as well as their cues '#f', 'fo' 'oo', 'ot', 't#', 'fe', 'ee' 'et', we use the
+
 
 pyndl.preprocess module
 -----------------------
@@ -329,7 +359,7 @@ like in the lexical learning example:
 .. code-block:: python
 
    >>> from pyndl import ndl
-   >>> weights_1 = ndl.ndl(event_path='doc/data/levent.tab.filtered', alpha=0.1, betas=(0.1, 0.1), method="threading")
+   >>> weights = ndl.ndl(event_path='doc/data/levent.tab.filtered', alpha=0.1, betas=(0.1, 0.1), method="threading")
 
 
 Save and load a weight matrix
@@ -339,9 +369,9 @@ is straight forward using the netCDF format [@netCDF]
 .. code-block:: python
 
    >>> import xarray
-   >>> weights_1.to_netcdf('doc/data/weights_1.nc')
-   >>> with xarray.open_dataarray('doc/data/weights_1.nc') as weights_1_read:
-   >>>     weights_1_read[0, 0]
+   >>> weights.to_netcdf('doc/data/weights.nc')
+   >>> with xarray.open_dataarray('doc/data/weights.nc') as weights_read:
+   >>>     weights_read[0, 0]
 
 the same applies to
 
@@ -353,9 +383,10 @@ Load a weight matrix to R[@R2016]
 
    > #install.packages("ncdf4") # uncomment to install
    > library(ncdf4)
-   > weights_1_nc <- nc_open(filename = "doc/data/weights_1.nc")
-   > weights_1_read <- t(as.matrix(ncvar_get(nc = weights_1_nc, varid = "__xarray_dataarray_variable__")))
-   > rownames(weights_1_read) <- ncvar_get(nc = weights_1_nc, varid = "outcomes")
-   > colnames(weights_1_read) <- ncvar_get(nc = weights_1_nc, varid = "cues")
-   > nc_close(nc = weights_1_nc)
-   > rm(weights_1_nc)
+   > weights_nc <- nc_open(filename = "doc/data/weights.nc")
+   > weights_read <- t(as.matrix(ncvar_get(nc = weights_nc, varid = "__xarray_dataarray_variable__")))
+   > rownames(weights_read) <- ncvar_get(nc = weights_nc, varid = "outcomes")
+   > colnames(weights_read) <- ncvar_get(nc = weights_nc, varid = "cues")
+   > nc_close(nc = weights_nc)
+   > rm(weights_nc)
+

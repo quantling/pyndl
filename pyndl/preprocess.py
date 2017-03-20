@@ -78,7 +78,9 @@ def process_occurrences(occurrences, outfile, *,
         cues and outcomes are both strings where underscores and # are
         special symbols.
     outfile : file handle
+
     cue_structure : {'bigrams_to_word', 'trigrams_to_word', 'word_to_word'}
+
     remove_duplicates : bool
         if True make cues and outcomes per event unique
 
@@ -148,48 +150,53 @@ def create_event_file(corpus_file,
     symbols : str
         string of all valid symbols
     context_structure : {"document", "paragraph", "line"}
+
     event_structure : {"line", "consecutive_words", "word_to_word", "sentence"}
+
     event_options : None or (number_of_words,) or (before, after) or None
         in "consecutive words" the number of words of the sliding window as
         an integer; in "word_to_word" the number of words before and after the
         word of interst each as an integer.
     cue_structure: {"trigrams_to_word", "word_to_word", "bigrams_to_word"}
+
     lower_case : bool
         should the cues and outcomes be lower cased
     remove_duplicates : bool
         create unique cues and outcomes per event
     verbose : bool
 
-    Breaks / Separators
-    -------------------
-    What marks parts, where we do not want to continue learning?
+    Notes
+    -----
+    Breaks / Separators :
 
-    * ---end.of.document--- string?
-    * line breaks?
-    * empty lines?
+        What marks parts, where we do not want to continue learning?
 
-    What do we consider one event?
+        * ``---end.of.document---`` string?
+        * line breaks?
+        * empty lines?
 
-    * three consecutive words?
-    * one line of the corpus?
-    * everything between two empty lines?
-    * everything within one document?
+        What do we consider one event?
 
-    Should the events be connected to the events before and after?
+        * three consecutive words?
+        * one line of the corpus?
+        * everything between two empty lines?
+        * everything within one document?
 
-    No.
+        Should the events be connected to the events before and after?
 
-    Context
-    -------
-    A context is a whole document or a paragraph within which we will take
-    (three) consecutive words as occurrences or events. The last words of a
-    context will not form an occurrence with the first words of the next
-    context.
+        No.
 
-    Occurrence
-    ----------
-    An occurrence or event is will result in one event in the end. This can be
-    (three) consecutive words, a sentence, or a line in the corpus file.
+    Context :
+
+        A context is a whole document or a paragraph within which we will take
+        (three) consecutive words as occurrences or events. The last words of a
+        context will not form an occurrence with the first words of the next
+        context.
+
+    Occurrence :
+
+        An occurrence or event is will result in one event in the end. This can
+        be (three) consecutive words, a sentence, or a line in the corpus file.
 
     """
     if '_' in symbols or '#' in symbols or '\t' in symbols:
@@ -533,23 +540,27 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
     """
     Write out a list of events to a disk file in binary format.
 
-    This resembles the function ``writeEvents`` in
-    ndl2/src/common/serialization.cpp.
-
     Parameters
     ----------
     events : iterator of (cue_ids, outcome_ids) tuples called event
+
     filename : string
+
     start : first event to write (zero based index)
+
     stop : last event to write (zero based index; excluded)
+
     remove_duplicates : {None, True, False}
         if None though a ValueError when the same cue is present multiple times
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
         preferred!)
 
+
     Binary Format
     -------------
+
+    ::
 
         8 byte header
         nr of events
@@ -688,6 +699,7 @@ def create_binary_event_files(event_file,
     number_of_processes : int
         number of threads to use
     events_per_file : int
+
     overwrite : bool
         overwrite files if they exist
     remove_duplicates : {None, True, False}
