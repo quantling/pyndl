@@ -156,7 +156,6 @@ def main(directory, outfile, *, n_threads=1, verbose=False):
     verbose : bool
 
     """
-
     if not os.path.isdir(directory):
         raise OSError("%s does not exist.")
     if os.path.isfile(outfile):

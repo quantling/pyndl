@@ -64,7 +64,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
         saliency of all cues
     betas : (float, float)
         one value for successful prediction (reward) one for punishment
-    lambda_ : float
+    lambda\\_ : float
 
     method : {'openmp', 'threading'}
     weights : None or xarray.DataArray
@@ -234,7 +234,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
         a (default)dict having cues as keys and a value below 1 as value
     betas : (float, float)
         one value for successful prediction (reward) one for punishment
-    lambda_ : float
+    lambda\\_ : float
     weights : dict of dicts or None
         initial weights
     remove_duplicates : {None, True, False}
