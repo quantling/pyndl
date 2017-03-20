@@ -1,30 +1,27 @@
-======
-Readme
-======
+============
+Readme pyndl
+============
 
 .. image:: https://travis-ci.com/dekuenstle/pyndl.svg?token=nAo9MxVBWCT7YyFRxEP4&branch=master
     :target: https://travis-ci.com/dekuenstle/pyndl
 
 This python3 package is a collection of useful script in order to run tasks on
-huge amounts of text file corpora.
+huge amounts of text file corpora. Especially, it allows to efficiently apply
+the Rescorla-Wagner learning rule to these corpora.
 
 .. warning::
 
-    This package is under heavy development and anything might change at any
-    point in time.
+    This package is still in alpha and there might be some API changes in the
+    near future. If you want to suggest us some contact us under konstantin
+    (dot) sering (ät) uni-tuebingen.de.
 
 .. note::
 
     This package is not intended to be used under python2.
 
 
-pyndl
-=====
-This package mimics some of the functionality of the ndl2 R package.
-
-
 Installation
-------------
+============
 Install with::
 
     python setup.py install [--user]
@@ -38,6 +35,17 @@ in order to build a source package run::
     python setup.py sdist
 
 
+Usage
+=====
+This package is intended to be used as a python package in (small) python
+script or via the ipython REPL. For example code and explanations look into
+``doc/source/examples.rst``.
+
+
+Development
+===========
+
+
 Documentation
 -------------
 The documentation and the doc-strings within the source code should follow the
@@ -46,6 +54,29 @@ numpy doc-string conventions (which are used by pandas as well).
 https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt
 
 http://pandas.pydata.org/pandas-docs/stable/contributing.html#contributing-to-the-documentation
+
+
+Install
+-------
+You can install this package with pip from a folder, git repository, or sdist
+bundle::
+
+    pip install ~/pyndl/|git+ssh://git@github.com/<user>/pyndl.git|pyndl-<version>.tar.gz
+
+
+Testing
+=======
+Check if the package does what it is supposed to do by running the test with
+``py.test``::
+
+    py.test-3 --cov-report html --cov=pyndl
+
+The more general way of testing - including unit tests, documentation checks
+and style checking - can be done via tox. Tox does testing in a virtual
+environment and installs all dependencies. ::
+
+    (pip install tox)
+    tox
 
 
 Important terminology
@@ -58,13 +89,18 @@ cue :
     is called outcome. Examples for cues in a text corpus are trigraphs or
     preceeding words for the word or meaning of the word.
 
-outcomes :
+outcome :
     A something that happens or is the result of an event. Examples are words,
     the meaning of the word, or lexomes.
 
 event :
     An event connects cues with outcomes. In any event one or more unordered
     cues are present and one or more outcomes are present.
+
+weights :
+    The weights represent the learned experience / association between all cues
+    and outcomes of interest. Usually, some meta data is stored alongside the
+    learned weights.
 
 cue file :
     A cue file contains a list of all cues that are interesting for a specific
@@ -103,23 +139,10 @@ corpus file :
     text. A ``---end.of.document---`` or ``---END.OF.DOCUMENT---`` string marks
     where an old document finished and a new document starts.
 
-settings file :
-    A settings file contains all the settings for a resulting weight matrix.
+weights file :
+    A weights file contains the learned weights between cues and outcomes. The
+    netCDF format is used to store these information along side with meta data,
+    which contains the learning parameters, the time needed to calculate the
+    weights, the version of the software used and other information.
 
-Install
-=======
 
-You can install this package with pip from a folder, git repository, or sdist bundle ::
-
-    pip install ~/pyndl/|git+ssh://git@github.com/<user>/pyndl.git|pyndl-<version>.tar.gz
-
-Testing
-=======
-Check if the package does what it is supposed to do by running the test with ``py.test``::
-
-    py.test-3 --cov-report html --cov=pyndl
-
-The more general way of testing - including unit tests, documentation checks and style checking - can be done via tox. Tox does testing in a virtual environment and installs all dependecies. ::
-
-    (pip install tox)
-    tox
