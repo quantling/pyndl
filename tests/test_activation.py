@@ -1,5 +1,6 @@
 import time
 import gc
+import os
 from collections import defaultdict
 
 import numpy as np
@@ -7,10 +8,30 @@ import xarray as xr
 
 import pytest
 
+from pyndl import ndl
 from pyndl.activation import activation
 
 slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
                           reason="need --runslow option to run")
+
+TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
+FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab")
+FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab")
+
+LAMBDA_ = 1.0
+ALPHA = 0.1
+BETAS = (0.1, 0.1)
+
+
+def test_exceptions():
+    with pytest.raises(ValueError) as e_info:
+        wm = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, remove_duplicates=None)
+        activation(FILE_PATH_MULTIPLE_CUES, wm)
+        assert e_info == 'cues or outcomes needs to be unique: cues "a a"; outcomes "A"; use remove_duplicates=True'
+
+    with pytest.raises(ValueError) as e_info:
+        activation(FILE_PATH_MULTIPLE_CUES, "magic")
+        assert e_info == "Weights other than xarray.DataArray or dicts are not supported."
 
 
 def test_activation_matrix():
