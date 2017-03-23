@@ -82,6 +82,39 @@ def result_continue_learning():
     return result
 
 
+def test_exceptions():
+    with pytest.raises(ValueError) as e_info:
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', weights=1)
+        assert e_info == 'weights need to be None or xarray.DataArray with method=threading'
+
+    with pytest.raises(ValueError) as e_info:
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='magic')
+        assert e_info == 'method needs to be either "threading" or "openmp"'
+
+    with pytest.raises(ValueError) as e_info:
+        ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, weights=1)
+        assert e_info == 'weights needs to be either defaultdict or None'
+
+    with pytest.raises(ValueError) as e_info:
+        ndl.dict_ndl(FILE_PATH_MULTIPLE_CUES, ALPHA, BETAS, remove_duplicates=None)
+        assert e_info == 'cues or outcomes needs to be unique: cues "a a"; outcomes "A"; use remove_duplicates=True'
+
+    with pytest.raises(ValueError) as e_info:
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', sequence=-1)
+        assert e_info == "sequence must be larger then one"
+
+    with pytest.raises(ValueError) as e_info:
+        ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array="magic")
+        assert e_info == "make_data_array must be True or False"
+
+    with pytest.raises(ValueError) as e_info:
+        ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, remove_duplicates="magic")
+        assert e_info == "remove_duplicates must be None, True or False"
+
+    with pytest.raises(ValueError) as e_info:
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, remove_duplicates="magic")
+        assert e_info == "remove_duplicates must be None, True or False"
+
 def test_continue_learning_dict():
     events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
     part_1 = events_simple.head(CONTINUE_SPLIT_POINT)

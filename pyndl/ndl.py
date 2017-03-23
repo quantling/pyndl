@@ -90,6 +90,9 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
 
     """
 
+    if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
+        raise ValueError("remove_duplicates must be None, True or False")
+
     weights_ini = weights
     wall_time_start = time.perf_counter()
     cpu_time_start = time.process_time()
@@ -266,6 +269,12 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
 
     """
 
+    if not isinstance(make_data_array, bool):
+        raise ValueError("make_data_array must be True or False")
+
+    if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
+        raise ValueError("remove_duplicates must be None, True or False")
+
     if make_data_array:
         wall_time_start = time.perf_counter()
         cpu_time_start = time.process_time()
@@ -351,6 +360,8 @@ def slice_list(li, sequence):
         a list of sublists with the length sequence
 
     """
+    if sequence < 1:
+        raise ValueError("sequence must be larger then one")
     assert len(li) == len(set(li))
     ii = 0
     seq_list = list()
