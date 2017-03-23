@@ -115,6 +115,7 @@ def test_exceptions():
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, remove_duplicates="magic")
         assert e_info == "remove_duplicates must be None, True or False"
 
+
 def test_continue_learning_dict():
     events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
     part_1 = events_simple.head(CONTINUE_SPLIT_POINT)
