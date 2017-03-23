@@ -86,7 +86,7 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None)
                     _activations[row] += cue_dict[cue]
         return activations
     else:
-        raise NotImplementedError("Weights other than xarray.DataArray or dicts are not supported.")
+        raise ValueError("Weights other than xarray.DataArray or dicts are not supported.")
 
 
 def _init_mp_activation_matrix(weights_, weights_shape_, activations_, activations_shape_):

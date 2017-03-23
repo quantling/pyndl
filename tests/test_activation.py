@@ -29,7 +29,7 @@ def test_exceptions():
         activation(FILE_PATH_MULTIPLE_CUES, wm)
         assert e_info == 'cues or outcomes needs to be unique: cues "a a"; outcomes "A"; use remove_duplicates=True'
 
-    with pytest.raises(NotImplementedError) as e_info:
+    with pytest.raises(ValueError) as e_info:
         activation(FILE_PATH_MULTIPLE_CUES, "magic")
         assert e_info == "Weights other than xarray.DataArray or dicts are not supported."
 
