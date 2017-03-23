@@ -4,6 +4,7 @@ import tempfile
 import time
 import getpass
 import socket
+import copy
 
 import threading
 from queue import Queue
@@ -214,7 +215,8 @@ def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function
     return attrs
 
 
-def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_duplicates=None, make_data_array=False):
+def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
+             weights=None, inplace=False, remove_duplicates=None, make_data_array=False):
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
@@ -237,6 +239,9 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
     lambda\\_ : float
     weights : dict of dicts or None
         initial weights
+    inplace: {True, False}
+        if True calculates the weightmatrix inplace
+        if False creates a new weightmatrix to learn on
     remove_duplicates : {None, True, False}
         if None though a ValueError when the same cue is present multiple times
         in the same event; True make cues and outcomes unique per event; False
@@ -275,6 +280,9 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *, weights=None, remove_dup
         weights = defaultdict(lambda: defaultdict(float))
     elif not isinstance(weights, defaultdict):
         raise ValueError('weights needs to be either defaultdict or None')
+
+    if not inplace:
+        weights = copy.deepcopy(weights)
 
     beta1, beta2 = betas
     all_outcomes = set(weights.keys())

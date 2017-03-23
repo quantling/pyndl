@@ -5,6 +5,7 @@ from collections import defaultdict, OrderedDict
 import os
 import time
 import tempfile
+import copy
 
 
 import pytest
@@ -75,10 +76,47 @@ def result_continue_learning():
     result_part = ndl.ndl(part_path_1,
                           ALPHA, BETAS)
 
-    result_part = ndl.ndl(part_path_2,
+    result = ndl.ndl(part_path_2, ALPHA, BETAS,
+                     weights=result_part)
+
+    return result
+
+
+def test_continue_learning_dict():
+    events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
+    part_1 = events_simple.head(CONTINUE_SPLIT_POINT)
+    part_2 = events_simple.tail(len(events_simple) - CONTINUE_SPLIT_POINT)
+
+    assert len(part_1) > 0
+    assert len(part_2) > 0
+
+    part_path_1 = os.path.join(TMP_PATH, "event_file_simple_1.tab")
+    part_path_2 = os.path.join(TMP_PATH, "event_file_simple_2.tab")
+
+    part_1.to_csv(part_path_1, header=True, index=None,
+                  sep='\t', columns=["cues", "outcomes"])
+    part_2.to_csv(part_path_2, header=True, index=None,
+                  sep='\t', columns=["cues", "outcomes"])
+
+    del events_simple, part_1, part_2
+
+    result_part = ndl.dict_ndl(part_path_1,
+                               ALPHA, BETAS)
+    result_part_copy = copy.deepcopy(result_part)
+
+    result_inplace = ndl.dict_ndl(part_path_2, ALPHA, BETAS,
+                                  weights=result_part, inplace=True)
+
+    assert result_part is result_inplace
+    assert result_part != result_part_copy
+
+    result_part = ndl.dict_ndl(part_path_1,
+                               ALPHA, BETAS)
+
+    result = ndl.dict_ndl(part_path_2,
                           ALPHA, BETAS, weights=result_part)
 
-    return result_part
+    assert result_part != result
 
 
 def test_continue_learning(result_continue_learning, result_ndl_openmp):
