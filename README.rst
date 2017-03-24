@@ -12,6 +12,12 @@ Readme pyndl
 .. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
 
+.. image:: https://img.shields.io/pypi/pyversions/pyndl.svg
+    :target: https://pypi.python.org/pypi/pyndl/
+
+.. image:: https://img.shields.io/github/license/quantling/pyndl.svg
+    :target: https://github.com/quantling/pyndl/blob/master/LICENSE.txt
+
 .. image:: https://zenodo.org/badge/80022085.svg
     :target: https://zenodo.org/badge/latestdoi/80022085
 
