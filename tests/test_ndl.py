@@ -167,6 +167,22 @@ def test_continue_learning(result_continue_learning, result_ndl_openmp):
     assert len(unequal) == 0
 
 
+def test_save_to_netcdf4(result_ndl_openmp):
+    weights = result_ndl_openmp
+    path = os.path.join(TMP_PATH, "weights.nc")
+    weights.to_netcdf(path)
+    weights_read = xr.open_dataarray(path)
+    # does not preserves the order of the OrderedDict
+    for key, value in weights.attrs.items():
+        assert value == weights_read.attrs[key]
+    weights_continued = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp', weights=weights)
+    path_continued = os.path.join(TMP_PATH, "weights_continued.nc")
+    weights_continued.to_netcdf(path_continued)
+    weights_continued_read = xr.open_dataarray(path_continued)
+    for key, value in weights_continued.attrs.items():
+        assert value == weights_continued_read.attrs[key]
+
+
 def test_return_values(result_dict_ndl, result_dict_ndl_data_array, result_ndl_threading, result_ndl_openmp):
     # dict_ndl
     assert isinstance(result_dict_ndl, defaultdict)
@@ -215,7 +231,7 @@ def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
 
 def test_meta_data(result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
     attributes = {'cython', 'cpu_time', 'hostname', 'xarray', 'wall_time',
-                  'event_path', 'username', 'time', 'method', 'date', 'numpy',
+                  'event_path', 'username', 'method', 'date', 'numpy',
                   'betas', 'lambda', 'pyndl', 'alpha', 'pandas', 'method',
                   'function'}
 
