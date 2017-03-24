@@ -5,6 +5,10 @@ Readme pyndl
 .. image:: https://api.travis-ci.org/quantling/pyndl.svg
     :target: https://travis-ci.com/quantling/pyndl
 
+.. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
+    :target: https://coveralls.io/github/quantling/pyndl?branch=master
+
+
 This python3 package is a collection of useful script in order to run tasks on
 huge amounts of text file corpora. Especially, it allows to efficiently apply
 the Rescorla-Wagner learning rule to these corpora.
