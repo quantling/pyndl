@@ -5,6 +5,10 @@ Readme pyndl
 .. image:: https://api.travis-ci.org/quantling/pyndl.svg
     :target: https://travis-ci.com/quantling/pyndl
 
+.. image:: https://landscape.io/github/quantling/pyndl/master/landscape.svg?style=flat
+    :target: https://landscape.io/github/quantling/pyndl/master
+    :alt: Code Health
+
 .. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
 
