@@ -8,6 +8,9 @@ Readme pyndl
 .. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
 
+.. image:: https://zenodo.org/badge/80022085.svg
+    :target: https://zenodo.org/badge/latestdoi/80022085
+
 
 This python3 package is a collection of useful script in order to run tasks on
 huge amounts of text file corpora. Especially, it allows to efficiently apply
