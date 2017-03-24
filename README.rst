@@ -2,8 +2,25 @@
 Readme pyndl
 ============
 
-.. image:: https://travis-ci.com/dekuenstle/pyndl.svg?token=nAo9MxVBWCT7YyFRxEP4&branch=master
-    :target: https://travis-ci.com/dekuenstle/pyndl
+.. image:: https://api.travis-ci.org/quantling/pyndl.svg
+    :target: https://travis-ci.com/quantling/pyndl
+
+.. image:: https://landscape.io/github/quantling/pyndl/master/landscape.svg?style=flat
+    :target: https://landscape.io/github/quantling/pyndl/master
+    :alt: Code Health
+
+.. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
+    :target: https://coveralls.io/github/quantling/pyndl?branch=master
+
+.. image:: https://img.shields.io/pypi/pyversions/pyndl.svg
+    :target: https://pypi.python.org/pypi/pyndl/
+
+.. image:: https://img.shields.io/github/license/quantling/pyndl.svg
+    :target: https://github.com/quantling/pyndl/blob/master/LICENSE.txt
+
+.. image:: https://zenodo.org/badge/80022085.svg
+    :target: https://zenodo.org/badge/latestdoi/80022085
+
 
 This python3 package is a collection of useful script in order to run tasks on
 huge amounts of text file corpora. Especially, it allows to efficiently apply
@@ -144,5 +161,3 @@ weights file :
     netCDF format is used to store these information along side with meta data,
     which contains the learning parameters, the time needed to calculate the
     weights, the version of the software used and other information.
-
-
