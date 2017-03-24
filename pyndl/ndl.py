@@ -211,7 +211,7 @@ def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function
                                     str(betas),
                                     str(lambda_),
                                     function,
-                                    method,
+                                    str(method),
                                     socket.gethostname(),
                                     getpass.getuser())])
     width = max(19, width)
@@ -225,7 +225,7 @@ def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function
              'betas': format_(str(betas)),
              'lambda': format_(str(lambda_)),
              'function': format_(function),
-             'method': format_(method),
+             'method': format_(str(method)),
              'cpu_time': format_(str(cpu_time)),
              'wall_time': format_(str(wall_time)),
              'hostname': format_(socket.gethostname()),
