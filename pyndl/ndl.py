@@ -215,8 +215,10 @@ def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function
                                     socket.gethostname(),
                                     getpass.getuser())])
     width = max(19, width)
+
     def format_(ss):
         return '{0: <{width}}'.format(ss, width=width)
+
     attrs = {'date': format_(time.strftime("%Y-%m-%d %H:%M:%S")),
              'event_path': format_(event_path),
              'alpha': format_(str(alpha)),
