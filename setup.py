@@ -50,7 +50,7 @@ setup(
     long_description=open('README.rst').read(),
     author=author,
     author_email=email,
-    url='http://www.sfs.uni-tuebingen.de/en/ql.html',
+    url='https://github.com/quantling/pyndl',
     classifiers=classifiers,
     platforms='Linux',
     packages=['pyndl'],
