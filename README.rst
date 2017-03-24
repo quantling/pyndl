@@ -2,8 +2,8 @@
 Readme pyndl
 ============
 
-.. image:: https://travis-ci.com/dekuenstle/pyndl.svg?token=nAo9MxVBWCT7YyFRxEP4&branch=master
-    :target: https://travis-ci.com/dekuenstle/pyndl
+.. image:: https://api.travis-ci.org/quantling/pyndl.svg
+    :target: https://travis-ci.com/quantling/pyndl
 
 This python3 package is a collection of useful script in order to run tasks on
 huge amounts of text file corpora. Especially, it allows to efficiently apply
@@ -144,5 +144,3 @@ weights file :
     netCDF format is used to store these information along side with meta data,
     which contains the learning parameters, the time needed to calculate the
     weights, the version of the software used and other information.
-
-
