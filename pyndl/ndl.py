@@ -196,7 +196,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     if weights_ini is not None:
         attrs_to_be_updated = weights_ini.attrs
         for key in attrs_to_be_updated.keys():
-            attrs_to_be_updated[key].append(attrs[key].pop())
+            attrs_to_be_updated[key] += ', ' + attrs[key]
         attrs = attrs_to_be_updated
 
     # post-processing
@@ -206,15 +206,22 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
 
 
 def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function, method=None):
-    attrs = {'date': [time.strftime("%d/%m/%Y")], 'time':
-             [time.strftime("%H:%M:%S")], 'event_path': [event_path], 'alpha':
-             [alpha], 'betas': [betas], 'lambda': [lambda_], 'function': [function],
-             'method': [method], 'cpu_time': [cpu_time], 'wall_time': [wall_time],
-             'hostname': [socket.gethostname()], 'username':
-             [getpass.getuser()], 'pyndl': [__version__], 'numpy':
-             [np.__version__], 'pandas': [pd.__version__], 'xarray':
-             [xr.__version__], 'cython': [cython.__version__]}
-
+    attrs = {'date': time.strftime("%Y-%m-%d %H:%M:%S"),
+             'event_path': event_path,
+             'alpha': str(alpha),
+             'betas': str(betas),
+             'lambda': str(lambda_),
+             'function': function,
+             'method': method,
+             'cpu_time': str(cpu_time),
+             'wall_time': str(wall_time),
+             'hostname': socket.gethostname(),
+             'username': getpass.getuser(),
+             'pyndl': __version__,
+             'numpy': np.__version__,
+             'pandas': pd.__version__,
+             'xarray': xr.__version__,
+             'cython': cython.__version__}
     return attrs
 
 
