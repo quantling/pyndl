@@ -1,0 +1,4 @@
+ignore-paths:
+  - doc
+python-targets:
+  - 3
