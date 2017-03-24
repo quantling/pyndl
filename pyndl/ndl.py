@@ -196,7 +196,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     if weights_ini is not None:
         attrs_to_be_updated = weights_ini.attrs
         for key in attrs_to_be_updated.keys():
-            attrs_to_be_updated[key] += ', ' + attrs[key]
+            attrs_to_be_updated[key] += ' | ' + attrs[key]
         attrs = attrs_to_be_updated
 
     # post-processing
@@ -206,22 +206,33 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
 
 
 def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function, method=None):
-    attrs = {'date': time.strftime("%Y-%m-%d %H:%M:%S"),
-             'event_path': event_path,
-             'alpha': str(alpha),
-             'betas': str(betas),
-             'lambda': str(lambda_),
-             'function': function,
-             'method': method,
-             'cpu_time': str(cpu_time),
-             'wall_time': str(wall_time),
-             'hostname': socket.gethostname(),
-             'username': getpass.getuser(),
-             'pyndl': __version__,
-             'numpy': np.__version__,
-             'pandas': pd.__version__,
-             'xarray': xr.__version__,
-             'cython': cython.__version__}
+    width = max([len(ss) for ss in (event_path,
+                                    str(alpha),
+                                    str(betas),
+                                    str(lambda_),
+                                    function,
+                                    method,
+                                    socket.gethostname(),
+                                    getpass.getuser())])
+    width = max(19, width)
+    def format_(ss):
+        return '{0: <{width}}'.format(ss, width=width)
+    attrs = {'date': format_(time.strftime("%Y-%m-%d %H:%M:%S")),
+             'event_path': format_(event_path),
+             'alpha': format_(str(alpha)),
+             'betas': format_(str(betas)),
+             'lambda': format_(str(lambda_)),
+             'function': format_(function),
+             'method': format_(method),
+             'cpu_time': format_(str(cpu_time)),
+             'wall_time': format_(str(wall_time)),
+             'hostname': format_(socket.gethostname()),
+             'username': format_(getpass.getuser()),
+             'pyndl': format_(__version__),
+             'numpy': format_(np.__version__),
+             'pandas': format_(pd.__version__),
+             'xarray': format_(xr.__version__),
+             'cython': format_(cython.__version__)}
     return attrs
 
 
