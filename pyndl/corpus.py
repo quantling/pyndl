@@ -202,8 +202,8 @@ def main(directory, outfile, *, n_threads=1, verbose=False):
         file_name = outfile + ".not_found"
         nn = 1
         while not os.path.isfile(file_name):
-                nn += 1
-                file_name = outfile + ".not_found-" + str(nn)
+            nn += 1
+            file_name = outfile + ".not_found-" + str(nn)
 
         with open(file_name, "wt") as not_found_file:
             not_found_file.writelines(not_founds)

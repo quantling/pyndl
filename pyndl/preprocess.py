@@ -1,5 +1,4 @@
 # !/usr/bin/env/python3
-# coding: utf-8
 
 import collections
 import multiprocessing
@@ -211,7 +210,7 @@ def create_event_file(corpus_file,
     if os.path.isfile(event_file):
         raise OSError('%s file exits. Remove file and start again.' % event_file)
 
-    in_symbols = re.compile("^[%s]*$" % symbols)
+    # in_symbols = re.compile("^[%s]*$" % symbols)
     not_in_symbols = re.compile("[^%s]" % symbols)
     context_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
 
@@ -221,10 +220,14 @@ def create_event_file(corpus_file,
         before, after = event_options
 
     def gen_occurrences(words):
-        # take all number_of_words number of consecutive words and make an
-        # occurrence out of it.
-        # for words = (A, B, C, D); number_of_words = 3
-        # make: (A, ), (A_B, ), (A_B_C, ), (B_C_D, ), (C_D, ), (D, )
+        """
+        Take all number_of_words number of consecutive words and make an
+        occurrence out of it.
+
+        For words = (A, B, C, D); number_of_words = 3 make: (A, ), (A_B, ),
+        (A_B_C, ), (B_C_D, ), (C_D, ), (D, )
+
+        """
         if event_structure == 'consecutive_words':
             occurrences = list()
             cur_words = list()
@@ -249,8 +252,7 @@ def create_event_file(corpus_file,
                 # words before the word to a maximum of before
                 cues = words[max(0, ii - before):ii]
                 # words after the word to a maximum of before
-                cues.extend(
-                        words[(ii + 1):min(len(words), ii + 1 + after)])
+                cues.extend(words[(ii + 1):min(len(words), ii + 1 + after)])
                 # append (cues, outcomes)
                 occurrences.append(("_".join(cues), word))
             return occurrences
@@ -259,6 +261,7 @@ def create_event_file(corpus_file,
             return [('_'.join(words), ''), ]
 
     def process_line(line):
+        '''processes one line of text.'''
         if lower_case:
             line = line.lower()
         # replace all weird characters with space
@@ -266,9 +269,11 @@ def create_event_file(corpus_file,
         return line
 
     def gen_words(line):
+        '''generates words out of a line of text.'''
         return [word.strip() for word in line.split(" ") if word.strip()]
 
     def process_words(words):
+        '''processes one word and makes an occurrence out of it.'''
         occurrences = gen_occurrences(words)
         process_occurrences(occurrences, outfile,
                             cue_structure=cue_structure,
@@ -326,8 +331,9 @@ def create_event_file(corpus_file,
                         line = process_line(line)
                         words.extend(gen_words(line))
 
-            # write the last context (the rest)!
-            if not context_structure == 'line':
+            # write the last context (the rest) when context_structure is not
+            # 'line'
+            if context_structure != 'line':
                 process_words(words)
 
 
@@ -341,6 +347,7 @@ class JobFilter():
         Using a closure is not possible as it is not pickable / serializable.
 
     """
+    # pylint: disable=E0202,C0111
 
     @staticmethod
     def return_empty_string():
@@ -710,6 +717,7 @@ def create_binary_event_files(event_file,
     verbose : bool
 
     """
+    # pylint: disable=C0111
 
     if not os.path.isdir(path_name):
         if verbose:

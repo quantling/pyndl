@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# run py.test-3 from the above folder
+
+# pylint: disable=C0111
 
 from collections import defaultdict, OrderedDict
 import os
@@ -421,29 +422,6 @@ def compare_arrays(file_path, arr1, arr2):
 
     unequal_ratio = len(unequal) / (len(outcomes) * len(cues))
     return (unequal, unequal_ratio)
-
-
-def write_weights_to_file(file_path, weights, cues, outcomes):
-    if type(weights) == np.ndarray:
-        is_np_array = True
-    else:
-        is_np_array = False
-    with open(file_path, 'w') as o_file:
-        o_file.write('""')
-        for outcome in sorted(outcomes):
-            o_file.write(',"%s"' % outcome)
-        o_file.write("\n")
-        for cue in sorted(cues):
-            o_file.write('"%s"' % cue)
-            for outcome in sorted(outcomes):
-                if is_np_array:
-                    outcome_index = outcome_map[outcome]
-                    cue_index = cue_map[cue]
-                    value = weights[outcome_index][cue_index]
-                else:
-                    value = weights[outcome][cue]
-                o_file.write(',%s' % value)
-            o_file.write("\n")
 
 
 def generate_mapping(event_path):
