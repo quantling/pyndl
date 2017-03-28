@@ -2,8 +2,8 @@
 Readme pyndl
 ============
 
-.. image:: https://api.travis-ci.org/quantling/pyndl.svg
-    :target: https://travis-ci.com/quantling/pyndl
+.. image:: https://travis-ci.org/quantling/pyndl.svg?branch=master
+    :target: https://travis-ci.org/quantling/pyndl.svg?branch=master
 
 .. image:: https://landscape.io/github/quantling/pyndl/master/landscape.svg?style=flat
     :target: https://landscape.io/github/quantling/pyndl/master
