@@ -365,12 +365,12 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
 
 
 def slice_list(list_, sequence):
-    """
+    r"""
     Slices a list in sublists with the length sequence.
 
     Parameters
     ----------
-    list\\_ : list
+    list\_ : list
          list which should be sliced in sublists
     sequence : int
          integer which determines the length of the sublists

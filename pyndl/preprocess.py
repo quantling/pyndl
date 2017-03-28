@@ -221,6 +221,8 @@ def create_event_file(corpus_file,
 
     def gen_occurrences(words):
         """
+        Make an occurrence out of consecutive words.
+
         Take all number_of_words number of consecutive words and make an
         occurrence out of it.
 
@@ -261,7 +263,7 @@ def create_event_file(corpus_file,
             return [('_'.join(words), ''), ]
 
     def process_line(line):
-        '''processes one line of text.'''
+        """processes one line of text."""
         if lower_case:
             line = line.lower()
         # replace all weird characters with space
@@ -269,18 +271,18 @@ def create_event_file(corpus_file,
         return line
 
     def gen_words(line):
-        '''generates words out of a line of text.'''
+        """generates words out of a line of text."""
         return [word.strip() for word in line.split(" ") if word.strip()]
 
     def process_words(words):
-        '''processes one word and makes an occurrence out of it.'''
+        """processes one word and makes an occurrence out of it."""
         occurrences = gen_occurrences(words)
         process_occurrences(occurrences, outfile,
                             cue_structure=cue_structure,
                             remove_duplicates=remove_duplicates)
 
     def process_context(line):
-        '''called when a context boundary is found.'''
+        """called when a context boundary is found."""
         if context_structure == 'document':
             # remove document marker
             line = context_pattern.sub("", line)
@@ -347,6 +349,7 @@ class JobFilter():
         Using a closure is not possible as it is not pickable / serializable.
 
     """
+
     # pylint: disable=E0202,C0111
 
     @staticmethod
