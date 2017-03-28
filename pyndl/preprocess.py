@@ -525,7 +525,7 @@ def read_binary_file(binary_file_path):
             raise ValueError('Version is incorrectly specified')
 
         nr_of_events = to_integer(binary_file.read(4))
-        for event in range(nr_of_events):
+        for _ in range(nr_of_events):
             # Cues
             number_of_cues = to_integer(binary_file.read(4))
             cue_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_cues)]
@@ -642,7 +642,7 @@ def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event
     with open(event_file, "rt") as in_file:
         # skip header
         in_file.readline()
-        for nn, line in enumerate(in_file):
+        for _, line in enumerate(in_file):
             try:
                 cues, outcomes = line.strip('\n').split("\t")
             except ValueError:
@@ -734,13 +734,13 @@ def create_binary_event_files(event_file,
 
     with multiprocessing.Pool(number_of_processes) as pool:
 
-        def error_callback(error):
+        def _error_callback(error):
             if isinstance(error, StopIteration):
                 pool.close()
             else:
                 raise error
 
-        def callback(result):
+        def _callback(_):
             if verbose:
                 print("finished job")
                 sys.stdout.flush()
@@ -760,8 +760,8 @@ def create_binary_event_files(event_file,
             try:
                 result = pool.apply_async(_job_binary_event_file,
                                           kwds=kwargs,
-                                          callback=callback,
-                                          error_callback=error_callback)
+                                          callback=_callback,
+                                          error_callback=_error_callback)
                 if verbose:
                     print("submitted job %i" % ii)
             except ValueError as error:

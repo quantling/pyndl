@@ -8,6 +8,8 @@ This module provides functions in order to count
 
 """
 
+# pylint: disable=redefined-outer-name, invalid-name
+
 from collections import Counter
 import itertools
 import multiprocessing

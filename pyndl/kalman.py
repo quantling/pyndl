@@ -25,7 +25,6 @@ def update_covariance_matrix(covmat, cues_present_vec, *, noise_parameter=1):
 
     Parameters
     ----------
-
     covmat : covariance matrix of the cues (square matrix)
     cues_present_vec : a sparse column vector with ones where the cues are
             present, otherwise zero.
@@ -38,7 +37,7 @@ def update_covariance_matrix(covmat, cues_present_vec, *, noise_parameter=1):
     #    raise ValueError("cues_present_vec need to be a np.matrix.")
 
     denominator = float(noise_parameter + cues_present_vec.T * (covmat *
-                        cues_present_vec))
+                                                                cues_present_vec))
     # inplace manipulation (bad behaviour, but memory efficient)
     covmat -= (covmat * cues_present_vec * cues_present_vec.T * covmat) / denominator
 
@@ -49,7 +48,6 @@ def update_covariance_loop(covmat, cues_present, cue_index_map, *, noise_paramet
 
     Parameters
     ----------
-
     covmat : covariance matrix of the cues (square matrix)
     cues_present : list of cues that are present
     cue_index_map : dict which maps the index to the cues
@@ -73,7 +71,6 @@ def update_mu_matrix(mumat, covmat, cues_present_vec, outcomes_present_vec, *,
 
     Parameters
     ----------
-
     mumat : mean matrix connecting cues with outcomes
     covmat : covariance matrix of the cues (square matrix)
     cues_present_vec : a sparse column vector with ones where the cues are
@@ -155,7 +152,7 @@ def main():
 
             # update mumat and covmat inplace
             # first update mumat as it depends on covmat
-            for ii in range(freq):
+            for _ in range(freq):
                 # apply dynamic change
                 # mumat = D * mumat  # D is identity
                 # covmat = D * covmat * D.T + U  # D is identity

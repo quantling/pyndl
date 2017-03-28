@@ -162,7 +162,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
         threads = []
         queue_lock = threading.Lock()
 
-        def worker():
+        def _worker():
             while True:
                 with queue_lock:
                     if working_queue.empty():
@@ -175,8 +175,8 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
             for partlist in part_lists:
                 working_queue.put(np.array(partlist, dtype=np.uint32))
 
-        for thread_id in range(number_of_threads):
-            thread = threading.Thread(target=worker)
+        for _ in range(number_of_threads):
+            thread = threading.Thread(target=_worker)
             thread.start()
             threads.append(thread)
 
@@ -205,19 +205,20 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     return weights
 
 
-def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function, method=None):
-    width = max([len(ss) for ss in (event_path,
-                                    str(alpha),
-                                    str(betas),
-                                    str(lambda_),
-                                    function,
-                                    str(method),
-                                    socket.gethostname(),
-                                    getpass.getuser())])
+def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time,
+                function, method=None):
+    width = max([len(value) for value in (event_path,
+                                          str(alpha),
+                                          str(betas),
+                                          str(lambda_),
+                                          function,
+                                          str(method),
+                                          socket.gethostname(),
+                                          getpass.getuser())])
     width = max(19, width)
 
-    def _format(ss):
-        return '{0: <{width}}'.format(ss, width=width)
+    def _format(value):
+        return '{0: <{width}}'.format(value, width=width)
 
     attrs = {'date': _format(time.strftime("%Y-%m-%d %H:%M:%S")),
              'event_path': _format(event_path),
@@ -385,7 +386,7 @@ def slice_list(list_, sequence):
     assert len(list_) == len(set(list_))
     ii = 0
     seq_list = list()
-    while ii < len(li):
+    while ii < len(list_):
         seq_list.append(list_[ii:ii+sequence])
         ii = ii+sequence
 
