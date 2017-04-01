@@ -142,10 +142,10 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
 
     beta1, beta2 = betas
 
-    preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
-                                         outcome_map, overwrite=True,
-                                         number_of_processes=number_of_threads,
-                                         remove_duplicates=remove_duplicates)
+    number_events = preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
+                                                         outcome_map, overwrite=True,
+                                                         number_of_processes=number_of_threads,
+                                                         remove_duplicates=remove_duplicates)
     binary_files = [os.path.join(BINARY_PATH, binary_file)
                     for binary_file in os.listdir(BINARY_PATH)
                     if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
@@ -190,7 +190,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     cpu_time = cpu_time_stop - cpu_time_start
     wall_time = wall_time_stop - wall_time_start
 
-    attrs = _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time,
+    attrs = _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time, wall_time,
                         __name__ + "." + ndl.__name__, method=method)
 
     if weights_ini is not None:
@@ -205,8 +205,9 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     return weights
 
 
-def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function, method=None):
+def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time, wall_time, function, method=None):
     width = max([len(ss) for ss in (event_path,
+                                    str(number_events),
                                     str(alpha),
                                     str(betas),
                                     str(lambda_),
@@ -221,6 +222,7 @@ def _attributes(event_path, alpha, betas, lambda_, cpu_time, wall_time, function
 
     attrs = {'date': format_(time.strftime("%Y-%m-%d %H:%M:%S")),
              'event_path': format_(event_path),
+             'number_events': format_(number_events),
              'alpha': format_(str(alpha)),
              'betas': format_(str(betas)),
              'lambda': format_(str(lambda_)),
@@ -321,8 +323,10 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     if isinstance(alphas, float):
         alpha = alphas
         alphas = defaultdict(lambda: alpha)
+    number_events = 0
 
     for cues, outcomes in event_list:
+        number_events += 1
         if remove_duplicates is None:
             if (len(cues) != len(set(cues)) or
                     len(outcomes) != len(set(outcomes))):
@@ -352,7 +356,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
         cpu_time = cpu_time_stop - cpu_time_start
         wall_time = wall_time_stop - wall_time_start
 
-        attrs = _attributes(event_path, alphas, betas, lambda_, cpu_time, wall_time,
+        attrs = _attributes(event_path, number_events, alphas, betas, lambda_, cpu_time, wall_time,
                             __name__ + "." + dict_ndl.__name__)
 
         # post-processing

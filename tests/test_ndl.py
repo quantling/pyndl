@@ -168,7 +168,7 @@ def test_continue_learning(result_continue_learning, result_ndl_openmp):
 
 
 def test_save_to_netcdf4(result_ndl_openmp):
-    weights = result_ndl_openmp
+    weights = result_ndl_openmp.copy()  # avoid don't change shared test data
     path = os.path.join(TMP_PATH, "weights.nc")
     weights.to_netcdf(path)
     weights_read = xr.open_dataarray(path)
@@ -231,13 +231,19 @@ def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
 
 def test_meta_data(result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
     attributes = {'cython', 'cpu_time', 'hostname', 'xarray', 'wall_time',
-                  'event_path', 'username', 'method', 'date', 'numpy',
+                  'event_path', 'number_events', 'username', 'method', 'date', 'numpy',
                   'betas', 'lambda', 'pyndl', 'alpha', 'pandas', 'method',
                   'function'}
 
     assert set(result_ndl_openmp.attrs.keys()) == attributes
     assert set(result_ndl_threading.attrs.keys()) == attributes
     assert set(result_dict_ndl_data_array.attrs.keys()) == attributes
+
+    assert int(result_dict_ndl_data_array.attrs['number_events']) > 0
+    assert len(set(
+        [result.attrs['number_events'].strip()
+         for result in [result_dict_ndl_data_array, result_ndl_threading, result_ndl_openmp]]
+    )) == 1
 
 
 # Test against external ndl2 results
