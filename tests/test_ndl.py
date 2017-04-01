@@ -229,20 +229,19 @@ def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
     assert len(unequal) == 0
 
 
-def test_meta_data(result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
+def test_meta_data(result_dict_ndl, result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
     attributes = {'cython', 'cpu_time', 'hostname', 'xarray', 'wall_time',
                   'event_path', 'number_events', 'username', 'method', 'date', 'numpy',
                   'betas', 'lambda', 'pyndl', 'alpha', 'pandas', 'method',
                   'function'}
-
-    assert set(result_ndl_openmp.attrs.keys()) == attributes
-    assert set(result_ndl_threading.attrs.keys()) == attributes
-    assert set(result_dict_ndl_data_array.attrs.keys()) == attributes
+    results = [result_dict_ndl, result_dict_ndl_data_array, result_ndl_threading, result_ndl_openmp]
+    for i, result in enumerate(results):
+        assert set(result.attrs.keys()) == attributes
 
     assert int(result_dict_ndl_data_array.attrs['number_events']) > 0
     assert len(set(
         [result.attrs['number_events'].strip()
-         for result in [result_dict_ndl_data_array, result_ndl_threading, result_ndl_openmp]]
+         for result in results]
     )) == 1
 
 

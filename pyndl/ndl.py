@@ -190,14 +190,13 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     cpu_time = cpu_time_stop - cpu_time_start
     wall_time = wall_time_stop - wall_time_start
 
-    attrs = _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time, wall_time,
-                        __name__ + "." + ndl.__name__, method=method)
-
     if weights_ini is not None:
         attrs_to_be_updated = weights_ini.attrs
-        for key in attrs_to_be_updated.keys():
-            attrs_to_be_updated[key] += ' | ' + attrs[key]
-        attrs = attrs_to_be_updated
+    else:
+        attrs_to_be_updated = None
+
+    attrs = _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time, wall_time,
+                        __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
     weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)],
@@ -205,7 +204,8 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     return weights
 
 
-def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time, wall_time, function, method=None):
+def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
+                wall_time, function, method=None, attrs=None):
     width = max([len(ss) for ss in (event_path,
                                     str(number_events),
                                     str(alpha),
@@ -220,24 +220,61 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time, wall
     def format_(ss):
         return '{0: <{width}}'.format(ss, width=width)
 
-    attrs = {'date': format_(time.strftime("%Y-%m-%d %H:%M:%S")),
-             'event_path': format_(event_path),
-             'number_events': format_(number_events),
-             'alpha': format_(str(alpha)),
-             'betas': format_(str(betas)),
-             'lambda': format_(str(lambda_)),
-             'function': format_(function),
-             'method': format_(str(method)),
-             'cpu_time': format_(str(cpu_time)),
-             'wall_time': format_(str(wall_time)),
-             'hostname': format_(socket.gethostname()),
-             'username': format_(getpass.getuser()),
-             'pyndl': format_(__version__),
-             'numpy': format_(np.__version__),
-             'pandas': format_(pd.__version__),
-             'xarray': format_(xr.__version__),
-             'cython': format_(cython.__version__)}
-    return attrs
+    new_attrs = {'date': format_(time.strftime("%Y-%m-%d %H:%M:%S")),
+                 'event_path': format_(event_path),
+                 'number_events': format_(number_events),
+                 'alpha': format_(str(alpha)),
+                 'betas': format_(str(betas)),
+                 'lambda': format_(str(lambda_)),
+                 'function': format_(function),
+                 'method': format_(str(method)),
+                 'cpu_time': format_(str(cpu_time)),
+                 'wall_time': format_(str(wall_time)),
+                 'hostname': format_(socket.gethostname()),
+                 'username': format_(getpass.getuser()),
+                 'pyndl': format_(__version__),
+                 'numpy': format_(np.__version__),
+                 'pandas': format_(pd.__version__),
+                 'xarray': format_(xr.__version__),
+                 'cython': format_(cython.__version__)}
+
+    if attrs is not None:
+        for key in set(attrs.keys()) | set(new_attrs.keys()):
+            if key in attrs:
+                old_val = attrs[key]
+            else:
+                old_val = ''
+            if key in new_attrs:
+                new_val = new_attrs[key]
+            else:
+                new_val = format_('')
+            new_attrs[key] = old_val + ' | ' + new_val
+    return new_attrs
+
+
+class NDLDict(defaultdict):
+    """
+    Subclass of defaultdict to represent outcome-cue weights.
+
+    Notes
+    -----
+    Weight for each outcome-cue combination is 0 per default.
+    """
+    def __init__(self, *args, **kwargs):
+        super().__init__(lambda: defaultdict(float))
+
+        if 'attrs' in kwargs:
+            self.attrs = kwargs['attrs']
+        else:
+            self.attrs = {}
+
+    @property
+    def attrs(self):
+        return self._attrs
+
+    @attrs.setter
+    def attrs(self, attrs):
+        self._attrs = OrderedDict(attrs)
 
 
 def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
@@ -297,18 +334,20 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
         raise ValueError("remove_duplicates must be None, True or False")
 
-    if make_data_array:
-        wall_time_start = time.perf_counter()
-        cpu_time_start = time.process_time()
-        if isinstance(event_list, str):
-            event_path = event_list
-        else:
-            event_path = None
+    wall_time_start = time.perf_counter()
+    cpu_time_start = time.process_time()
+    if isinstance(event_list, str):
+        event_path = event_list
+    else:
+        event_path = None
+    attrs_to_update = None
 
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
     if weights is None:
-        weights = defaultdict(lambda: defaultdict(float))
+        weights = NDLDict()
+    elif isinstance(weights, NDLDict):
+        attrs_to_update = weights.attrs
     elif not isinstance(weights, defaultdict):
         raise ValueError('weights needs to be either defaultdict or None')
 
@@ -350,19 +389,20 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
             for cue in cues:
                 weights[outcome][cue] += alphas[cue] * update
 
+    cpu_time_stop = time.process_time()
+    wall_time_stop = time.perf_counter()
+    cpu_time = cpu_time_stop - cpu_time_start
+    wall_time = wall_time_stop - wall_time_start
+    attrs = _attributes(event_path, number_events, alphas, betas, lambda_, cpu_time, wall_time,
+                        __name__ + "." + dict_ndl.__name__, attrs=attrs_to_update)
+
     if make_data_array:
-        cpu_time_stop = time.process_time()
-        wall_time_stop = time.perf_counter()
-        cpu_time = cpu_time_stop - cpu_time_start
-        wall_time = wall_time_stop - wall_time_start
-
-        attrs = _attributes(event_path, number_events, alphas, betas, lambda_, cpu_time, wall_time,
-                            __name__ + "." + dict_ndl.__name__)
-
         # post-processing
         weights = pd.DataFrame(weights)
         # weights.fillna(0.0, inplace=True)  # TODO make sure to not remove real NaNs
         weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'), attrs=attrs)
+    else:
+        weights.attrs = attrs
 
     return weights
 
