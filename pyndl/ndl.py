@@ -252,7 +252,7 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
     return new_attrs
 
 
-class NDLDict(defaultdict):
+class WeightDict(defaultdict):
     """
     Subclass of defaultdict to represent outcome-cue weights.
 
@@ -345,8 +345,8 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
     if weights is None:
-        weights = NDLDict()
-    elif isinstance(weights, NDLDict):
+        weights = WeightDict()
+    elif isinstance(weights, WeightDict):
         attrs_to_update = weights.attrs
     elif not isinstance(weights, defaultdict):
         raise ValueError('weights needs to be either defaultdict or None')
