@@ -299,7 +299,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     betas : (float, float)
         one value for successful prediction (reward) one for punishment
     lambda\\_ : float
-    weights : dict of dicts or None
+    weights : dict of dicts or xarray.DataArray or None
         initial weights
     inplace: {True, False}
         if True calculates the weightmatrix inplace
