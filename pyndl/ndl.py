@@ -339,7 +339,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     if isinstance(event_list, str):
         event_path = event_list
     else:
-        event_path = None
+        event_path = ""
     attrs_to_update = None
 
     # weights can be seen as an infinite outcome by cue matrix

@@ -50,6 +50,11 @@ def result_dict_ndl():
 
 
 @pytest.fixture(scope='module')
+def result_dict_ndl_generator():
+    return ndl.dict_ndl(ndl.events(FILE_PATH_SIMPLE), ALPHA, BETAS)
+
+
+@pytest.fixture(scope='module')
 def result_dict_ndl_data_array():
     return ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array=True)
 
@@ -198,6 +203,13 @@ def test_return_values(result_dict_ndl, result_dict_ndl_data_array, result_ndl_t
 def test_dict_ndl_vs_ndl_threading(result_dict_ndl, result_ndl_threading):
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
                                             result_ndl_threading)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0
+
+
+def test_dict_ndl_vs_dict_ndl_generator(result_dict_ndl, result_dict_ndl_generator):
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
+                                            result_dict_ndl_generator)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
