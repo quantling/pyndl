@@ -185,7 +185,7 @@ def test_continue_learning(result_continue_learning, result_ndl_openmp):
 
 
 def test_save_to_netcdf4(result_ndl_openmp):
-    weights = result_ndl_openmp.copy()  # avoid don't change shared test data
+    weights = result_ndl_openmp.copy()  # avoids changing shared test data
     path = os.path.join(TMP_PATH, "weights.nc")
     weights.to_netcdf(path)
     weights_read = xr.open_dataarray(path)

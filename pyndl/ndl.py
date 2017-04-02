@@ -259,6 +259,7 @@ class WeightDict(defaultdict):
     Notes
     -----
     Weight for each outcome-cue combination is 0 per default.
+
     """
     def __init__(self, *args, **kwargs):
         super().__init__(lambda: defaultdict(float))
@@ -278,7 +279,8 @@ class WeightDict(defaultdict):
 
 
 def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
-             weights=None, inplace=False, remove_duplicates=None, make_data_array=False):
+             weights=None, inplace=False, remove_duplicates=None,
+             make_data_array=False):
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
