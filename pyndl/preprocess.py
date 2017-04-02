@@ -340,6 +340,8 @@ def create_event_file(corpus_file,
 
 
 class JobFilter():
+    # pylint: disable=E0202,missing-docstring
+
     """
     Stores the persistent information over several jobs and exposes a job
     method that only takes the varying parts as one argument.
@@ -349,8 +351,6 @@ class JobFilter():
         Using a closure is not possible as it is not pickable / serializable.
 
     """
-
-    # pylint: disable=E0202,C0111
 
     @staticmethod
     def return_empty_string():
@@ -566,6 +566,10 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
         keep multiple instances of the same cue or outcome (this is usually not
         preferred!)
 
+    Returns
+    -------
+    number_events : int
+        actual number of events written to file
 
     Binary Format
     -------------
@@ -586,7 +590,6 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
     StopIteration : events generator is exhausted before stop is reached
 
     """
-
     with open(filename, "wb") as out_file:
         # 8 bytes header
         out_file.write(to_bytes(MAGIC_NUMBER))
@@ -599,6 +602,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
         out_file.write(to_bytes(n_events_estimate))
 
         n_events = 0
+
         for ii, event in enumerate(events):
             if ii < start:
                 continue
@@ -635,10 +639,11 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
             # the generator was exhausted earlier
             out_file.seek(8)
             out_file.write(to_bytes(n_events))
-            raise StopIteration("event generator was exhausted before stop")
+            raise StopIteration(("event generator was exhausted before stop", n_events))
 
     if n_events == 0:
         os.remove(filename)
+    return n_events
 
 
 def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event=False):
@@ -676,7 +681,8 @@ def _job_binary_event_file(*,
                            remove_duplicates):
     # create generator which is not pickable
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=sort_within_event)
-    write_events(events, file_name, start=start, stop=stop, remove_duplicates=remove_duplicates)
+    n_events = write_events(events, file_name, start=start, stop=stop, remove_duplicates=remove_duplicates)
+    return n_events
 
 
 def create_binary_event_files(event_file,
@@ -719,8 +725,12 @@ def create_binary_event_files(event_file,
         preferred!)
     verbose : bool
 
+    Returns
+    -------
+    number_events : int
+        sum of number of events written to binary files
     """
-    # pylint: disable=C0111
+    # pylint: disable=missing-docstring
 
     if not os.path.isdir(path_name):
         if verbose:
@@ -735,15 +745,23 @@ def create_binary_event_files(event_file,
             if "events_0_" in file_name:
                 os.remove(os.path.join(path_name, file_name))
 
+    number_events = 0
+
     with multiprocessing.Pool(number_of_processes) as pool:
 
         def _error_callback(error):
             if isinstance(error, StopIteration):
+                print(error.value)
+                msg, result = error.value
+                nonlocal number_events
+                number_events += result
                 pool.close()
             else:
                 raise error
 
-        def _callback(_):
+        def _callback(result):
+            nonlocal number_events
+            number_events += result
             if verbose:
                 print("finished job")
                 sys.stdout.flush()
@@ -789,7 +807,7 @@ def create_binary_event_files(event_file,
         pool.close()
         pool.join()
         print("finished all jobs.\n")
-
+    return number_events
 
 # for example code see function test_preprocess in file
 # ./tests/test_preprocess.py.

@@ -191,12 +191,14 @@ def test_write_events():
 
     # start stop
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
-    write_events(events, file_name, start=10, stop=20, remove_duplicates=True)
+    n_events = write_events(events, file_name, start=10, stop=20, remove_duplicates=True)
+    assert n_events == 10
     os.remove(file_name)
 
     # no events
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=True)
-    write_events(events, file_name, start=100000, stop=100010, remove_duplicates=True)
+    n_events = write_events(events, file_name, start=100000, stop=100010, remove_duplicates=True)
+    assert n_events == 0
 
     _job_binary_event_file(file_name=file_name, event_file=event_file,
                            cue_id_map=cue_id_map,
@@ -237,11 +239,14 @@ def test_read_binary_file():
     cue_id_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues.keys())))
     outcome_id_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes.keys())))
 
-    create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map,
-                              outcome_id_map, overwrite=True, remove_duplicates=False)
+    number_events = create_binary_event_files(abs_file_path, abs_binary_path, cue_id_map,
+                                              outcome_id_map, overwrite=True, remove_duplicates=False)
 
     bin_events = read_binary_file(abs_binary_file_path)
     events = ndl.events(abs_file_path)
+    events_dup = ndl.events(abs_file_path)
+
+    assert number_events == len(list(events_dup))
 
     for event, bin_event in zip(events, bin_events):
         cues, outcomes = event

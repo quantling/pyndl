@@ -51,6 +51,11 @@ def result_dict_ndl():
 
 
 @pytest.fixture(scope='module')
+def result_dict_ndl_generator():
+    return ndl.dict_ndl(ndl.events(FILE_PATH_SIMPLE), ALPHA, BETAS)
+
+
+@pytest.fixture(scope='module')
 def result_dict_ndl_data_array():
     return ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array=True)
 
@@ -154,6 +159,18 @@ def test_continue_learning_dict():
     assert result_part != result
 
 
+def test_continue_learning_dict_ndl_data_array(result_dict_ndl, result_dict_ndl_data_array):
+    continue_from_dict = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS,
+                                      weights=result_dict_ndl)
+    continue_from_data_array = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS,
+                                            weights=result_dict_ndl_data_array)
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE,
+                                            continue_from_dict,
+                                            continue_from_data_array)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0
+
+
 def test_continue_learning(result_continue_learning, result_ndl_openmp):
     assert result_continue_learning.shape == result_ndl_openmp.shape
 
@@ -169,7 +186,7 @@ def test_continue_learning(result_continue_learning, result_ndl_openmp):
 
 
 def test_save_to_netcdf4(result_ndl_openmp):
-    weights = result_ndl_openmp
+    weights = result_ndl_openmp.copy()  # avoids changing shared test data
     path = os.path.join(TMP_PATH, "weights.nc")
     weights.to_netcdf(path)
     weights_read = xr.open_dataarray(path)
@@ -203,6 +220,13 @@ def test_dict_ndl_vs_ndl_threading(result_dict_ndl, result_ndl_threading):
     assert len(unequal) == 0
 
 
+def test_dict_ndl_vs_dict_ndl_generator(result_dict_ndl, result_dict_ndl_generator):
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
+                                            result_dict_ndl_generator)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0
+
+
 def test_dict_ndl_data_array_vs_ndl_threading(result_ndl_threading):
     result_dict_ndl = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array=True)
 
@@ -230,15 +254,20 @@ def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
     assert len(unequal) == 0
 
 
-def test_meta_data(result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
+def test_meta_data(result_dict_ndl, result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
     attributes = {'cython', 'cpu_time', 'hostname', 'xarray', 'wall_time',
-                  'event_path', 'username', 'method', 'date', 'numpy',
+                  'event_path', 'number_events', 'username', 'method', 'date', 'numpy',
                   'betas', 'lambda', 'pyndl', 'alpha', 'pandas', 'method',
                   'function'}
+    results = [result_dict_ndl, result_dict_ndl_data_array, result_ndl_threading, result_ndl_openmp]
+    for result in results:
+        assert set(result.attrs.keys()) == attributes
 
-    assert set(result_ndl_openmp.attrs.keys()) == attributes
-    assert set(result_ndl_threading.attrs.keys()) == attributes
-    assert set(result_dict_ndl_data_array.attrs.keys()) == attributes
+    assert int(result_dict_ndl_data_array.attrs['number_events']) > 0
+    assert len(set(
+        [result.attrs['number_events'].strip()
+         for result in results]
+    )) == 1
 
 
 # Test against external ndl2 results
