@@ -259,7 +259,7 @@ def test_meta_data(result_dict_ndl, result_dict_ndl_data_array, result_ndl_openm
                   'betas', 'lambda', 'pyndl', 'alpha', 'pandas', 'method',
                   'function'}
     results = [result_dict_ndl, result_dict_ndl_data_array, result_ndl_threading, result_ndl_openmp]
-    for i, result in enumerate(results):
+    for result in results:
         assert set(result.attrs.keys()) == attributes
 
     assert int(result_dict_ndl_data_array.attrs['number_events']) > 0

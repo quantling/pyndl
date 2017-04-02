@@ -253,6 +253,8 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
 
 
 class WeightDict(defaultdict):
+    # pylint: disable=missing-docstring
+
     """
     Subclass of defaultdict to represent outcome-cue weights.
 
@@ -261,6 +263,7 @@ class WeightDict(defaultdict):
     Weight for each outcome-cue combination is 0 per default.
 
     """
+
     def __init__(self, *args, **kwargs):
         super().__init__(lambda: defaultdict(float))
 
