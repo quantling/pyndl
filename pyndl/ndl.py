@@ -348,6 +348,14 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
         weights = WeightDict()
     elif isinstance(weights, WeightDict):
         attrs_to_update = weights.attrs
+    elif isinstance(weights, xr.DataArray):
+        weights_ini = weights
+        attrs_to_update = weights_ini.attrs
+        coords = weights_ini.coords
+        weights = WeightDict()
+        for oi, outcome in enumerate(coords['outcomes'].values):
+            for ci, cue in enumerate(coords['cues'].values):
+                weights[outcome][cue] = weights_ini.item((oi, ci))
     elif not isinstance(weights, defaultdict):
         raise ValueError('weights needs to be either defaultdict or None')
 

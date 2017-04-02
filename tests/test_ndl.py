@@ -158,6 +158,18 @@ def test_continue_learning_dict():
     assert result_part != result
 
 
+def test_continue_learning_dict_ndl_data_array(result_dict_ndl, result_dict_ndl_data_array):
+    continue_from_dict = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS,
+                                      weights=result_dict_ndl)
+    continue_from_data_array = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS,
+                                            weights=result_dict_ndl_data_array)
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE,
+                                            continue_from_dict,
+                                            continue_from_data_array)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0
+
+
 def test_continue_learning(result_continue_learning, result_ndl_openmp):
     assert result_continue_learning.shape == result_ndl_openmp.shape
 
