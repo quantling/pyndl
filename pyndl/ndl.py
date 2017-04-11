@@ -1,18 +1,18 @@
 from collections import defaultdict, OrderedDict
-import os
-import tempfile
-import time
-import getpass
-import socket
 import copy
-
-import threading
+import getpass
+import gzip
+import os
 from queue import Queue
+import socket
+import tempfile
+import threading
+import time
 
-import numpy as np
-import pandas as pd
-import xarray as xr
 import cython
+import pandas as pd
+import numpy as np
+import xarray as xr
 
 from . import __version__
 from . import count
@@ -24,12 +24,12 @@ BINARY_PATH = tempfile.mkdtemp()
 
 def events(event_path):
     """
-    Yields events for all events in event_file.
+    Yields events for all events in a gzipped event_file.
 
     Parameters
     ----------
     event_path : str
-        path to event file
+        path to gzipped event file
 
     Yields
     ------
@@ -37,7 +37,7 @@ def events(event_path):
         a tuple of two lists containing cues and outcomes
 
     """
-    with open(event_path, 'rt') as event_file:
+    with gzip.open(event_path, 'rt') as event_file:
         # skip header
         event_file.readline()
         for line in event_file:

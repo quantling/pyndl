@@ -19,8 +19,8 @@ slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
                           reason="need --runslow option to run")
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
-FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab")
-FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab")
+FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab.gz")
+FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab.gz")
 REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple.csv')
 REFERENCE_PATH_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple_ndl2.csv')
 REFERENCE_PATH_MULTIPLE_CUES_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_multiple_cues_ndl2.csv')
@@ -63,13 +63,15 @@ def result_continue_learning():
     assert len(part_1) > 0
     assert len(part_2) > 0
 
-    part_path_1 = os.path.join(TMP_PATH, "event_file_simple_1.tab")
-    part_path_2 = os.path.join(TMP_PATH, "event_file_simple_2.tab")
+    part_path_1 = os.path.join(TMP_PATH, "event_file_simple_1.tab.gz")
+    part_path_2 = os.path.join(TMP_PATH, "event_file_simple_2.tab.gz")
 
     part_1.to_csv(part_path_1, header=True, index=None,
-                  sep='\t', columns=["cues", "outcomes"])
+                  sep='\t', columns=["cues", "outcomes"],
+                  compression='gzip')
     part_2.to_csv(part_path_2, header=True, index=None,
-                  sep='\t', columns=["cues", "outcomes"])
+                  sep='\t', columns=["cues", "outcomes"],
+                  compression='gzip')
 
     del events_simple, part_1, part_2
 
@@ -124,13 +126,15 @@ def test_continue_learning_dict():
     assert len(part_1) > 0
     assert len(part_2) > 0
 
-    part_path_1 = os.path.join(TMP_PATH, "event_file_simple_1.tab")
-    part_path_2 = os.path.join(TMP_PATH, "event_file_simple_2.tab")
+    part_path_1 = os.path.join(TMP_PATH, "event_file_simple_1.tab.gz")
+    part_path_2 = os.path.join(TMP_PATH, "event_file_simple_2.tab.gz")
 
     part_1.to_csv(part_path_1, header=True, index=None,
-                  sep='\t', columns=["cues", "outcomes"])
+                  sep='\t', columns=["cues", "outcomes"],
+                  compression='gzip')
     part_2.to_csv(part_path_2, header=True, index=None,
-                  sep='\t', columns=["cues", "outcomes"])
+                  sep='\t', columns=["cues", "outcomes"],
+                  compression='gzip')
 
     del events_simple, part_1, part_2
 
@@ -249,7 +253,7 @@ def test_compare_weights_ndl2(result_dict_ndl):
     R code to generate the results::
 
         library(ndl2)
-        learner <- learnWeightsTabular('event_file_simple.tab', alpha=0.1, beta=0.1, lambda=1.0)
+        learner <- learnWeightsTabular('event_file_simple.tab.gz', alpha=0.1, beta=0.1, lambda=1.0)
         wm <- learner$getWeights()
         wm <- wm[order(rownames(wm)), order(colnames(wm))]
         write.csv(wm, 'weights_event_file_simple_ndl2.csv')
@@ -281,7 +285,7 @@ def test_multiple_cues_dict_ndl_vs_ndl2():
     R code to generate the results::
 
         library(ndl2)
-        learner <- learnWeightsTabular('tests/resources/event_file_multiple_cues.tab',
+        learner <- learnWeightsTabular('tests/resources/event_file_multiple_cues.tab.gz',
                                        alpha=0.1, beta=0.1, lambda=1.0, removeDuplicates=FALSE)
         wm <- learner$getWeights()
         wm <- wm[order(rownames(wm)), order(colnames(wm))]
@@ -316,7 +320,7 @@ def test_compare_weights_rescorla_vs_ndl2():
     R code to generate the results::
 
         library(ndl2)
-        learner <- learnWeightsTabular('tests/resources/event_file_simple.tab', alpha=0.1, beta=0.1, lambda=1.0)
+        learner <- learnWeightsTabular('tests/resources/event_file_simple.tab.gz', alpha=0.1, beta=0.1, lambda=1.0)
         wm <- learner$getWeights()
         wm <- wm[order(rownames(wm)), order(colnames(wm))]
         write.csv(wm, 'tests/reference/weights_event_file_simple_ndl2.csv')
@@ -353,7 +357,7 @@ def test_compare_weights_rescorla_vs_ndl2():
 
 @slow
 def test_compare_time_dict_inplace_parallel_thread():
-    file_path = os.path.join(TEST_ROOT, 'resources/event_file_many_cues.tab')
+    file_path = os.path.join(TEST_ROOT, 'resources/event_file_many_cues.tab.gz')
     cue_map, outcome_map, all_outcomes = generate_mapping(file_path)
 
     result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl, (file_path, ALPHA, BETAS, LAMBDA_))
@@ -428,7 +432,7 @@ def write_weights_to_file(file_path, weights, cues, outcomes):
         is_np_array = True
     else:
         is_np_array = False
-    with open(file_path, 'w') as o_file:
+    with open(file_path, 'wt') as o_file:
         o_file.write('""')
         for outcome in sorted(outcomes):
             o_file.write(',"%s"' % outcome)

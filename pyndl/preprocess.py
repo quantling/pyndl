@@ -2,6 +2,7 @@
 # coding: utf-8
 
 import collections
+import gzip
 import multiprocessing
 import os
 import random
@@ -282,7 +283,7 @@ def create_event_file(corpus_file,
         return line
 
     with open(corpus_file, "rt") as corpus:
-        with open(event_file, "wt") as outfile:
+        with gzip.open(event_file, "wt") as outfile:
             outfile.write("cues\toutcomes\n")
 
             words = []
@@ -484,8 +485,8 @@ def filter_event_file(input_event_file, output_event_file, *,
                     cue_map, outcome_map)
 
     with multiprocessing.Pool(number_of_processes) as pool:
-        with open(input_event_file, "rt") as infile:
-            with open(output_event_file, "wt") as outfile:
+        with gzip.open(input_event_file, "rt") as infile:
+            with gzip.open(output_event_file, "wt") as outfile:
                 # copy header
                 outfile.write(infile.readline())
                 for ii, processed_line, in enumerate(pool.imap(job.job, infile,
@@ -632,7 +633,7 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
 
 
 def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event=False):
-    with open(event_file, "rt") as in_file:
+    with gzip.open(event_file, "rt") as in_file:
         # skip header
         in_file.readline()
         for nn, line in enumerate(in_file):

@@ -6,7 +6,7 @@ import os
 from pyndl import count
 
 TEST_ROOT = os.path.dirname(__file__)
-EVENT_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab")
+EVENT_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab.gz")
 CORPUS_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 
 
@@ -14,7 +14,7 @@ def test_cues_outcomes():
     cues, outcomes = count.cues_outcomes(EVENT_RESOURCE_FILE)
     cues3, outcomes3 = count.cues_outcomes(EVENT_RESOURCE_FILE,
                                            number_of_processes=3,
-                                           verbose=False)
+                                           verbose=True)
     assert cues == cues3
     assert outcomes == outcomes3
 
@@ -23,7 +23,7 @@ def test_cues_outcomes_multiprocess():
     cues, outcomes = count.cues_outcomes(EVENT_RESOURCE_FILE)
     cues3, outcomes3 = count.cues_outcomes(EVENT_RESOURCE_FILE,
                                            number_of_processes=6,
-                                           verbose=False)
+                                           verbose=True)
     assert cues == cues3
     assert outcomes == outcomes3
 
@@ -32,7 +32,7 @@ def test_words_symbols():
     words, symbols = count.words_symbols(CORPUS_RESOURCE_FILE)
     words3, symbols3 = count.words_symbols(CORPUS_RESOURCE_FILE,
                                            number_of_processes=3,
-                                           verbose=False)
+                                           verbose=True)
     assert words == words3
     assert symbols == symbols3
 

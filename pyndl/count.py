@@ -9,6 +9,7 @@ This module provides functions in order to count
 """
 
 from collections import Counter
+import gzip
 import itertools
 import multiprocessing
 import os
@@ -27,7 +28,7 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=True):
     """
     cues = Counter()
     outcomes = Counter()
-    with open(event_file_name, 'r') as dfile:
+    with gzip.open(event_file_name, 'rt') as dfile:
         # skip header
         dfile.readline()
         for nn, line in enumerate(itertools.islice(dfile, start, None, step)):
@@ -175,7 +176,7 @@ if __name__ == '__main__':
 
     if len(sys.argv) < 2:
         print('Usage: python3 %s corpus=corpus_file.txt [num_of_processes]' % sys.argv[0])
-        print('Or:    python3 %s event=event_file.tab [num_of_processes]' % sys.argv[0])
+        print('Or:    python3 %s event=event_file.tab.gz [num_of_processes]' % sys.argv[0])
         sys.exit('Wrong command line option.')
     modus, filename = sys.argv[1].strip().split("=")
     path, filename = os.path.split(filename)
