@@ -56,6 +56,31 @@ def test_activation_matrix():
     assert np.allclose(reference_activations, activations_mp)
 
 
+def test_ignore_missing_cues():
+    weights = xr.DataArray(np.array([[0, 1], [1, 0], [0, 0]]),
+                           coords={
+                               'cues': ['c1', 'c2', 'c3']
+                           },
+                           dims=('cues', 'outcomes'))
+    events = [(['c1', 'c2', 'c3'], []),
+              (['c1', 'c3'], []),
+              (['c2', 'c4'], []),
+              (['c1', 'c1'], [])]
+    reference_activations = np.array([[1, 1], [0, 1], [1, 0], [0, 1]])
+
+    with pytest.raises(KeyError):
+        activations = activation(events, weights, number_of_threads=1,
+                                 remove_duplicates=True)
+
+    activations = activation(events, weights, number_of_threads=1,
+                             remove_duplicates=True, ignore_missing_cues=True)
+    activations_mp = activation(events, weights, number_of_threads=3,
+                                remove_duplicates=True, ignore_missing_cues=True)
+
+    assert np.allclose(reference_activations, activations)
+    assert np.allclose(reference_activations, activations_mp)
+
+
 def test_activation_dict():
     weights = defaultdict(lambda: defaultdict(float))
     weights['o1']['c1'] = 0
@@ -77,6 +102,32 @@ def test_activation_dict():
         activations = activation(events, weights, number_of_threads=1)
 
     activations = activation(events, weights, number_of_threads=1, remove_duplicates=True)
+    for outcome, activation_list in activations.items():
+        assert np.allclose(reference_activations[outcome], activation_list)
+
+
+def test_ignore_missing_cues_dict():
+    weights = defaultdict(lambda: defaultdict(float))
+    weights['o1']['c1'] = 0
+    weights['o1']['c2'] = 1
+    weights['o1']['c3'] = 0
+    weights['o2']['c1'] = 1
+    weights['o2']['c2'] = 0
+    weights['o2']['c3'] = 0
+    events = [(['c1', 'c2', 'c3'], []),
+              (['c1', 'c3'], []),
+              (['c2', 'c4'], []),
+              (['c1', 'c1'], [])]
+    reference_activations = {
+        'o1': [1, 0, 1, 0],
+        'o2': [1, 1, 0, 1]
+    }
+
+    with pytest.raises(ValueError):
+        activations = activation(events, weights, number_of_threads=1)
+
+    activations = activation(events, weights, number_of_threads=1,
+                             remove_duplicates=True, ignore_missing_cues=True)
     for outcome, activation_list in activations.items():
         assert np.allclose(reference_activations[outcome], activation_list)
 
