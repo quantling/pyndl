@@ -34,7 +34,8 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
         preferred!)
     ignore_missing_cues : {True, False}
         if True function ignores cues which are in the test dataset but not in
-        the weightmatrix
+        the weight matrix
+        if False raises a KeyError for cues which are not in the weight matrix
 
     Returns
     -------
