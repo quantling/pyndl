@@ -10,7 +10,7 @@ import xarray as xr
 from . import ndl
 
 
-def activation(event_list, weights, number_of_threads=1, remove_duplicates=None):
+def activation(event_list, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=True):
     """
     Estimate activations for given events in event file and cue-outcome weights.
 
@@ -32,6 +32,9 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None)
         in the same event; True make cues unique per event; False
         keep multiple instances of the same cue (this is usually not
         preferred!)
+    ignore_missing_cues : {True, False}
+        if True function ignores cues which are in the test dataset but not in
+        the weightmatrix
 
     Returns
     -------
@@ -67,7 +70,7 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None)
         cues = weights.coords["cues"].values.tolist()
         outcomes = weights.coords["outcomes"].values.tolist()
         cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
-        event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues)
+        event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues if cue in cues)
                                   for event_cues in event_cues_list)
         activations = _activation_matrix(list(event_cue_indices_list), weights.values, number_of_threads)
         return xr.DataArray(activations,

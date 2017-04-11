@@ -56,6 +56,30 @@ def test_activation_matrix():
     assert np.allclose(reference_activations, activations_mp)
 
 
+def test_ignore_missing_cues():
+    weights = xr.DataArray(np.array([[0, 1], [1, 0], [0, 0]]),
+                           coords={
+                               'cues': ['c1', 'c2', 'c3']
+                           },
+                           dims=('cues', 'outcomes'))
+    events = [(['c1', 'c2', 'c3'], []),
+              (['c1', 'c3'], []),
+              (['c2', 'c4'], []),
+              (['c1', 'c1'], [])]
+    reference_activations = np.array([[1, 1], [0, 1], [1, 0], [0, 1]])
+
+    with pytest.raises(ValueError):
+        activations = activation(events, weights, number_of_threads=1)
+
+    activations = activation(events, weights, number_of_threads=1,
+                             remove_duplicates=True, ignore_missing_cues=True)
+    activations_mp = activation(events, weights, number_of_threads=3,
+                                remove_duplicates=True, ignore_missing_cues=True)
+
+    assert np.allclose(reference_activations, activations)
+    assert np.allclose(reference_activations, activations_mp)
+
+
 def test_activation_dict():
     weights = defaultdict(lambda: defaultdict(float))
     weights['o1']['c1'] = 0
