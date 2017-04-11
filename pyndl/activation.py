@@ -10,7 +10,7 @@ import xarray as xr
 from . import ndl
 
 
-def activation(event_list, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=True):
+def activation(event_list, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
     """
     Estimate activations for given events in event file and cue-outcome weights.
 
