@@ -1,7 +1,7 @@
 __author__ = ('David-Elias Künstle, Lennard Schneider, '
               'Konstantin Sering, Marc Weitz')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.2.5'
+__version__ = '0.2.6'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '
@@ -28,6 +28,6 @@ __doc__ = """
 :version: %s
 :author: %s
 :contact: %s
-:date: 2017-04-02
+:date: 2017-04-11
 :copyright: %s
 """ % (__description__, __version__, __author__, __author_email__, __license__)
