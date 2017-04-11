@@ -54,22 +54,23 @@ in order to build a source package run::
 
 Mac OSX Installation
 --------------------
-
 gcc/g++ might be outdated (4.X is what xcode provides, while 6.3 is needed). If
 you follow these few steps pip install pyndl will work:
 
-    for safe-guarding redo the xcode:
-        `xcode-select —install`
+1. for safe-guarding redo the xcode install in the Terminal::
 
-    download gcc from Mac OSX High Performance Computing:
-        <http://prdownloads.sourceforge.net/hpc/gcc-6.3-bin.tar.gz>
+        xcode-select --install
 
-    then run these commands in Terminal:
-        `gunzip gcc-6.X-bin.tar.gz`
-        `sudo tar -xvf gcc-6.X-bin.tar -C /`
+2. download gcc from Mac OSX High Performance Computing
+    http://prdownloads.sourceforge.net/hpc/gcc-6.3-bin.tar.gz
+    then run these commands in Terminal::
+    
+        gunzip gcc-6.X-bin.tar.gz
+        sudo tar -xvf gcc-6.X-bin.tar -C /
 
-    finally, install pyndl:
-        `pip install pyndl`
+3. finally, install pyndl::
+
+        pip install pyndl
 
 
 Usage
