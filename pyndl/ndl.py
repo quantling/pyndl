@@ -19,8 +19,6 @@ from . import count
 from . import preprocess
 from . import ndl_parallel
 
-BINARY_PATH = tempfile.mkdtemp()
-
 
 def events(event_path):
     """
@@ -142,48 +140,49 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
 
     beta1, beta2 = betas
 
-    number_events = preprocess.create_binary_event_files(event_path, BINARY_PATH, cue_map,
-                                                         outcome_map, overwrite=True,
-                                                         number_of_processes=number_of_threads,
-                                                         remove_duplicates=remove_duplicates)
-    binary_files = [os.path.join(BINARY_PATH, binary_file)
-                    for binary_file in os.listdir(BINARY_PATH)
-                    if os.path.isfile(os.path.join(BINARY_PATH, binary_file))]
-    # learning
-    if method == 'openmp':
-        ndl_parallel.learn_inplace(binary_files, weights, alpha,
-                                   beta1, beta2, lambda_,
-                                   np.array(all_outcome_indices, dtype=np.uint32),
-                                   sequence, number_of_threads)
-    elif method == 'threading':
-        part_lists = slice_list(all_outcome_indices, sequence)
+    with tempfile.TemporaryDirectory(prefix="pyndl") as binary_path:
+        number_events = preprocess.create_binary_event_files(event_path, binary_path, cue_map,
+                                                             outcome_map, overwrite=True,
+                                                             number_of_processes=number_of_threads,
+                                                             remove_duplicates=remove_duplicates)
+        binary_files = [os.path.join(binary_path, binary_file)
+                        for binary_file in os.listdir(binary_path)
+                        if os.path.isfile(os.path.join(binary_path, binary_file))]
+        # learning
+        if method == 'openmp':
+            ndl_parallel.learn_inplace(binary_files, weights, alpha,
+                                       beta1, beta2, lambda_,
+                                       np.array(all_outcome_indices, dtype=np.uint32),
+                                       sequence, number_of_threads)
+        elif method == 'threading':
+            part_lists = slice_list(all_outcome_indices, sequence)
 
-        working_queue = Queue(len(part_lists))
-        threads = []
-        queue_lock = threading.Lock()
+            working_queue = Queue(len(part_lists))
+            threads = []
+            queue_lock = threading.Lock()
 
-        def worker():
-            while True:
-                with queue_lock:
-                    if working_queue.empty():
-                        break
-                    data = working_queue.get()
-                ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
-                                             beta1, beta2, lambda_, data)
+            def worker():
+                while True:
+                    with queue_lock:
+                        if working_queue.empty():
+                            break
+                        data = working_queue.get()
+                    ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
+                                                 beta1, beta2, lambda_, data)
 
-        with queue_lock:
-            for partlist in part_lists:
-                working_queue.put(np.array(partlist, dtype=np.uint32))
+            with queue_lock:
+                for partlist in part_lists:
+                    working_queue.put(np.array(partlist, dtype=np.uint32))
 
-        for thread_id in range(number_of_threads):
-            thread = threading.Thread(target=worker)
-            thread.start()
-            threads.append(thread)
+            for thread_id in range(number_of_threads):
+                thread = threading.Thread(target=worker)
+                thread.start()
+                threads.append(thread)
 
-        for thread in threads:
-            thread.join()
-    else:
-        raise ValueError('method needs to be either "threading" or "openmp"')
+            for thread in threads:
+                thread.join()
+        else:
+            raise ValueError('method needs to be either "threading" or "openmp"')
 
     cpu_time_stop = time.process_time()
     wall_time_stop = time.perf_counter()
