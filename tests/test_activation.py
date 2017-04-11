@@ -71,6 +71,10 @@ def test_ignore_missing_cues():
     with pytest.raises(ValueError):
         activations = activation(events, weights, number_of_threads=1)
 
+    with pytest.raises(KeyError):
+        activations = activation(events, weights, number_of_threads=1,
+                                 remove_duplicates=True, ignore_missing_cues=False)
+
     activations = activation(events, weights, number_of_threads=1,
                              remove_duplicates=True, ignore_missing_cues=True)
     activations_mp = activation(events, weights, number_of_threads=3,

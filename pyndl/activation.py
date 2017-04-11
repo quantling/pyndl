@@ -70,8 +70,12 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
         cues = weights.coords["cues"].values.tolist()
         outcomes = weights.coords["outcomes"].values.tolist()
         cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
-        event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues if cue in cues)
-                                  for event_cues in event_cues_list)
+        if ignore_missing_cues:
+            event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues if cue in cues)
+                                      for event_cues in event_cues_list)
+        else:
+            event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues)
+                                      for event_cues in event_cues_list)
         activations = _activation_matrix(list(event_cue_indices_list), weights.values, number_of_threads)
         return xr.DataArray(activations,
                             coords={
