@@ -96,7 +96,8 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     cpu_time_start = time.process_time()
 
     # preprocessing
-    cues, outcomes = count.cues_outcomes(event_path, number_of_processes=number_of_threads)
+    n_events, cues, outcomes = count.cues_outcomes(event_path,
+                                                   number_of_processes=number_of_threads)
     cues = list(cues.keys())
     outcomes = list(outcomes.keys())
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
@@ -145,6 +146,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
                                                              outcome_map, overwrite=True,
                                                              number_of_processes=number_of_threads,
                                                              remove_duplicates=remove_duplicates)
+        assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
         binary_files = [os.path.join(binary_path, binary_file)
                         for binary_file in os.listdir(binary_path)
                         if os.path.isfile(os.path.join(binary_path, binary_file))]

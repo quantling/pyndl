@@ -21,8 +21,8 @@ RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 
 def test_bandsample():
     resource_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab.gz")
-    cue_freq_map, outcome_freq_map = cues_outcomes(resource_file,
-                                                   number_of_processes=2)
+    n_events, cue_freq_map, outcome_freq_map = cues_outcomes(resource_file,
+                                                             number_of_processes=2)
     outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=None, verbose=False)
     assert len(outcome_freq_map_filtered) == 50
 
@@ -163,7 +163,7 @@ def test_filter_event_file():
                       keep_outcomes=outcomes,
                       number_of_processes=2,
                       verbose=True)
-    cue_freq_map, outcome_freq_map = cues_outcomes(output_event_file)
+    n_events, cue_freq_map, outcome_freq_map = cues_outcomes(output_event_file)
     cues_new = list(cue_freq_map)
     cues_new.sort()
     outcomes_new = list(outcome_freq_map)
@@ -175,7 +175,7 @@ def test_filter_event_file():
 
 def test_write_events():
     event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab.gz")
-    cue_freq_map, outcome_freq_map = cues_outcomes(event_file)
+    n_events, cue_freq_map, outcome_freq_map = cues_outcomes(event_file)
     outcomes = list(outcome_freq_map.keys())
     outcomes.sort()
     cues = list(cue_freq_map.keys())
@@ -234,7 +234,7 @@ def test_read_binary_file():
     abs_binary_path = os.path.join(TEST_ROOT, binary_path)
     abs_binary_file_path = os.path.join(abs_binary_path, "events_0_0.dat")
 
-    cues, outcomes = cues_outcomes(abs_file_path)
+    n_events, cues, outcomes = cues_outcomes(abs_file_path)
     cue_id_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues.keys())))
     outcome_id_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes.keys())))
 
@@ -278,8 +278,8 @@ def test_preprocessing():
                       lower_case=True, verbose=True)
 
     # read in cues and outcomes
-    cue_freq_map, outcome_freq_map = cues_outcomes(event_file,
-                                                   number_of_processes=2)
+    n_events, cue_freq_map, outcome_freq_map = cues_outcomes(event_file,
+                                                             number_of_processes=2)
     cues = list(cue_freq_map.keys())
     cues.sort()
     cue_id_map = {cue: ii for ii, cue in enumerate(cues)}

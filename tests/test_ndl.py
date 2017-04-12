@@ -426,7 +426,7 @@ def clock(f, args, **kwargs):
 
 
 def compare_arrays(file_path, arr1, arr2):
-    cues, outcomes = count.cues_outcomes(file_path)
+    n_events, cues, outcomes = count.cues_outcomes(file_path)
     cue_map, outcome_map, all_outcomes = generate_mapping(file_path)
 
     cue_indices = [cue_map[cue] for cue in cues]
@@ -480,7 +480,7 @@ def write_weights_to_file(file_path, weights, cues, outcomes):
 
 
 def generate_mapping(event_path):
-    cues, outcomes = count.cues_outcomes(event_path)
+    n_events, cues, outcomes = count.cues_outcomes(event_path)
     all_cues = list(cues.keys())
     all_outcomes = list(outcomes.keys())
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(all_cues)))

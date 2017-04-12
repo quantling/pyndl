@@ -23,11 +23,7 @@ import sys
 import gzip
 import multiprocessing
 import xml.etree.ElementTree
-
-if __name__ == '__main__':
-    from docopt import docopt
-else:
-    from .docopt import docopt
+from docopt import docopt
 
 __version__ = '0.2.0'
 

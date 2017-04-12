@@ -112,7 +112,7 @@ def main():
 
     """
     events_file = "tests/events_tiny.tab"
-    cues, outcomes = cues_outcomes(events_file)
+    n_events, cues, outcomes = cues_outcomes(events_file)
 
     # building a cue->index map
     tmp = list(cues.keys())

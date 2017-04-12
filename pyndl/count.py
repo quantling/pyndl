@@ -23,11 +23,12 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=True):
 
     Returns
     -------
-    (cues, outcomes) : (collections.Counter, collections.Counter)
+    (nn, cues, outcomes) : (int, collections.Counter, collections.Counter)
 
     """
     cues = Counter()
     outcomes = Counter()
+    nn = -1  # in case the for loop never gets called and 1 gets added in the end
     with gzip.open(event_file_name, 'rt') as dfile:
         # skip header
         dfile.readline()
@@ -40,7 +41,7 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=True):
             if verbose and nn % 100000 == 0:
                 print('.', end='')
                 sys.stdout.flush()
-    return (cues, outcomes)
+    return (nn + 1, cues, outcomes)
 
 
 def cues_outcomes(event_file_name,
@@ -51,7 +52,7 @@ def cues_outcomes(event_file_name,
 
     Returns
     -------
-    (cues, outcomes) : (collections.Counter, collections.Counter)
+    (n_events, cues, outcomes) : (int, collections.Counter, collections.Counter)
 
     """
     with multiprocessing.Pool(number_of_processes) as pool:
@@ -62,16 +63,18 @@ def cues_outcomes(event_file_name,
                                  step,
                                  verbose)
                                 for start in range(number_of_processes)))
+        n_events = 0
         cues = Counter()
         outcomes = Counter()
-        for cues_process, outcomes_process in results:
+        for nn, cues_process, outcomes_process in results:
+            n_events += nn
             cues += cues_process
             outcomes += outcomes_process
 
     if verbose:
         print('\n...counting done.')
 
-    return cues, outcomes
+    return n_events, cues, outcomes
 
 
 def _job_words_symbols(corpus_file_name, start, step, lower_case=True,
@@ -188,9 +191,9 @@ if __name__ == '__main__':
         step = 1
 
     if modus == 'event':
-        cues, outcomes = cues_outcomes(os.path.join(path, filename),
-                                       number_of_processes=step,
-                                       verbose=True)
+        n_events, cues, outcomes = cues_outcomes(os.path.join(path, filename),
+                                                 number_of_processes=step,
+                                                 verbose=True)
         save_counter(cues, filename + ".cues", header="cues\tfreq\n")
         save_counter(outcomes, filename + ".outcomes", header="outcomes\tfreq\n")
 

@@ -11,19 +11,12 @@ CORPUS_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 
 
 def test_cues_outcomes():
-    cues, outcomes = count.cues_outcomes(EVENT_RESOURCE_FILE)
-    cues3, outcomes3 = count.cues_outcomes(EVENT_RESOURCE_FILE,
-                                           number_of_processes=3,
-                                           verbose=True)
-    assert cues == cues3
-    assert outcomes == outcomes3
-
-
-def test_cues_outcomes_multiprocess():
-    cues, outcomes = count.cues_outcomes(EVENT_RESOURCE_FILE)
-    cues3, outcomes3 = count.cues_outcomes(EVENT_RESOURCE_FILE,
-                                           number_of_processes=6,
-                                           verbose=True)
+    n_events, cues, outcomes = count.cues_outcomes(EVENT_RESOURCE_FILE)
+    n_events3, cues3, outcomes3 = count.cues_outcomes(EVENT_RESOURCE_FILE,
+                                                      number_of_processes=6,
+                                                      verbose=True)
+    assert n_events == 2772
+    assert n_events == n_events3
     assert cues == cues3
     assert outcomes == outcomes3
 
@@ -39,7 +32,7 @@ def test_words_symbols():
 
 def test_save_load():
     file_name = os.path.join(TEST_ROOT, "temp/cues.tab")
-    cues, outcomes = count.cues_outcomes(EVENT_RESOURCE_FILE)
+    n_events, cues, outcomes = count.cues_outcomes(EVENT_RESOURCE_FILE)
     count.save_counter(cues, file_name)
     cues_loaded = count.load_counter(file_name)
     assert cues == cues_loaded
