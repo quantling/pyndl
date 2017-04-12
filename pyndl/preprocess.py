@@ -741,8 +741,6 @@ def create_binary_event_files(event_file,
 
         def error_callback(error):
             if isinstance(error, StopIteration):
-
-                print(error.value)
                 msg, result = error.value
                 nonlocal number_events
                 number_events += result
@@ -797,7 +795,8 @@ def create_binary_event_files(event_file,
         # wait until all jobs are done
         pool.close()
         pool.join()
-        print("finished all jobs.\n")
+        if verbose:
+            print("finished all jobs.\n")
     return number_events
 
 # for example code see function test_preprocess in file

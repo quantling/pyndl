@@ -16,7 +16,7 @@ import os
 import sys
 
 
-def _job_cues_outcomes(event_file_name, start, step, verbose=True):
+def _job_cues_outcomes(event_file_name, start, step, verbose=False):
     """
     Counts cues and outcomes for every ``step`` event starting from
     ``start`` event.
@@ -45,7 +45,7 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=True):
 
 
 def cues_outcomes(event_file_name,
-                  *, number_of_processes=2, verbose=True):
+                  *, number_of_processes=2, verbose=False):
     """
     Counts cues and outcomes in event_file_name using number_of_processes
     processes.
@@ -77,8 +77,8 @@ def cues_outcomes(event_file_name,
     return n_events, cues, outcomes
 
 
-def _job_words_symbols(corpus_file_name, start, step, lower_case=True,
-                       verbose=True):
+def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
+                       verbose=False):
     """
     Counts the words and symbols for every ``step`` line starting from
     ``start`` line.
@@ -116,7 +116,7 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=True,
 
 
 def words_symbols(corpus_file_name,
-                  *, number_of_processes=2, lower_case=True, verbose=True):
+                  *, number_of_processes=2, lower_case=False, verbose=False):
     """
     Counts words and symbols in corpus_file_name using number_of_processes
     processes.
