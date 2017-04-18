@@ -82,7 +82,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     Returns
     -------
     weights : xarray.DataArray
-        with dimensions 'cues' and 'outcomes'. You can lookup the weights
+        with dimensions 'outcomes' and 'cues'. You can lookup the weights
         between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
         'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
 
@@ -326,7 +326,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     or
 
     weights : xarray.DataArray
-        with dimensions 'cues' and 'outcomes'. You can lookup the weights
+        with dimensions 'outcomes' and 'cues'. You can lookup the weights
         between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
         'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
 
