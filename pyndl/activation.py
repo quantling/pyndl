@@ -12,7 +12,7 @@ from . import ndl
 
 def activation(event_list, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
     """
-    Estimate activations for given events in event file and cue-outcome weights.
+    Estimate activations for given events in event file and outcome-cue weights.
 
     Memory overhead for multiprocessing is one copy of weights
     plus a copy of cues for each thread.
@@ -131,7 +131,7 @@ def _activation_matrix(indices_list, weights, number_of_threads):
     Parameters
     ----------
     indices_list : list with iteratables containing the indices of the cues in weight matrix.
-    weights : Weight matrix as 2d numpy.array with shape (cues, weights)
+    weights : Weight matrix as 2d numpy.array with shape (outcomes, weights)
     number_of_threads : int
         a integer giving the number of threads in which the job should
         executed
