@@ -39,7 +39,8 @@ def test_activation_matrix():
                            coords={
                                'outcomes': ['o1', 'o2'],
                                'cues': ['c1', 'c2', 'c3']
-                           })
+                           },
+                           dims=('outcomes', 'cues'))
 
     events = [(['c1', 'c2', 'c3'], []),
               (['c1', 'c3'], []),
@@ -62,7 +63,8 @@ def test_ignore_missing_cues():
                            coords={
                                'outcomes': ['o1', 'o2'],
                                'cues': ['c1', 'c2', 'c3']
-                           })
+                           },
+                           dims=('outcomes', 'cues'))
 
     events = [(['c1', 'c2', 'c3'], []),
               (['c1', 'c3'], []),

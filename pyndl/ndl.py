@@ -419,7 +419,8 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
         weights_dict = weights
         shape = (len(outcomes), len(cues))
         weights = xr.DataArray(np.zeros(shape), attrs=attrs,
-                               coords={'outcomes': outcomes, 'cues': cues})
+                               coords={'outcomes': outcomes, 'cues': cues},
+                               dims=('outcomes', 'cues'))
 
         for outcome in outcomes:
             for cue in cues:
