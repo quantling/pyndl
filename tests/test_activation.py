@@ -35,11 +35,12 @@ def test_exceptions():
 
 
 def test_activation_matrix():
-    weights = xr.DataArray(np.array([[0, 1], [1, 0], [0, 0]]),
+    weights = xr.DataArray(np.array([[0, 1, 0], [1, 0, 0]]),
                            coords={
+                               'outcomes': ['o1', 'o2'],
                                'cues': ['c1', 'c2', 'c3']
-                           },
-                           dims=('cues', 'outcomes'))
+                           })
+
     events = [(['c1', 'c2', 'c3'], []),
               (['c1', 'c3'], []),
               (['c2'], []),
@@ -57,11 +58,12 @@ def test_activation_matrix():
 
 
 def test_ignore_missing_cues():
-    weights = xr.DataArray(np.array([[0, 1], [1, 0], [0, 0]]),
+    weights = xr.DataArray(np.array([[0, 1, 0], [1, 0, 0]]),
                            coords={
+                               'outcomes': ['o1', 'o2'],
                                'cues': ['c1', 'c2', 'c3']
-                           },
-                           dims=('cues', 'outcomes'))
+                           })
+
     events = [(['c1', 'c2', 'c3'], []),
               (['c1', 'c3'], []),
               (['c2', 'c4'], []),

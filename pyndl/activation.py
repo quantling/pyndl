@@ -22,7 +22,7 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
     event_list : generator or str
         generates cues, outcomes pairs or the path to the event file
     weights : xarray.DataArray or dict[dict[float]]
-        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+        the xarray.DataArray needs to have the dimensions 'outcomes' and 'cues'
         the dictionaries hold weight[outcome][cue].
     number_of_threads : int
         a integer giving the number of threads in which the job should
@@ -70,6 +70,8 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
     if isinstance(weights, xr.DataArray):
         cues = weights.coords["cues"].values.tolist()
         outcomes = weights.coords["outcomes"].values.tolist()
+        if not weights.values.shape == (len(outcomes), len(cues)):
+            raise ValueError('dimensions of weights are wrong. Probably you need to transpose the matrix')
         cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
         if ignore_missing_cues:
             event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues if cue in cues)
@@ -116,7 +118,7 @@ def _run_mp_activation_matrix(event_index, cue_indices):
     Calculate activation for all outcomes while a event.
 
     """
-    activations[event_index, :] = weights[cue_indices, :].sum(axis=0)
+    activations[event_index, :] = weights[:, cue_indices].sum(axis=1)
 
 
 def _activation_matrix(indices_list, weights, number_of_threads):
@@ -142,11 +144,11 @@ def _activation_matrix(indices_list, weights, number_of_threads):
     """
     assert number_of_threads >= 1, "Can't run with less than 1 thread"
 
-    activations_dim = (len(indices_list), weights.shape[1])
+    activations_dim = (len(indices_list), weights.shape[0])
     if number_of_threads == 1:
         activations = np.empty(activations_dim, dtype=np.float64)
         for row, event_cues in enumerate(indices_list):
-            activations[row, :] = weights[event_cues, :].sum(axis=0)
+            activations[row, :] = weights[:, event_cues].sum(axis=1)
         return activations
     else:
         shared_activations = mp.RawArray(ctypes.c_double, int(np.prod(activations_dim)))
