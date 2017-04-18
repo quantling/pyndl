@@ -130,16 +130,16 @@ def _activation_matrix(indices_list, weights, number_of_threads):
 
     Parameters
     ----------
-    indices_list : list with iteratables containing the indices of the cues in weight matrix.
-    weights : Weight matrix as 2d numpy.array with shape (outcomes, weights)
+    indices_list : list[int]
+        events as cue indices in weights
+    weights : numpy.array
+        weight matrix with shape (outcomes, cues)
     number_of_threads : int
-        a integer giving the number of threads in which the job should
-        executed
 
     Returns
     -------
-    activation_matrix : 2d numpy.array
-        activations for the events and all outcomes in the weights and
+    activation_matrix : numpy.array
+        estimated activations as matrix with shape (events, outcomes)
 
     """
     assert number_of_threads >= 1, "Can't run with less than 1 thread"
