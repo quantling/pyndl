@@ -12,7 +12,7 @@ from . import ndl
 
 def activation(event_list, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
     """
-    Estimate activations for given events in event file and cue-outcome weights.
+    Estimate activations for given events in event file and outcome-cue weights.
 
     Memory overhead for multiprocessing is one copy of weights
     plus a copy of cues for each thread.
@@ -22,7 +22,7 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
     event_list : generator or str
         generates cues, outcomes pairs or the path to the event file
     weights : xarray.DataArray or dict[dict[float]]
-        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+        the xarray.DataArray needs to have the dimensions 'outcomes' and 'cues'
         the dictionaries hold weight[outcome][cue].
     number_of_threads : int
         a integer giving the number of threads in which the job should
@@ -40,7 +40,7 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
     Returns
     -------
     activations : xarray.DataArray
-        with dimensions 'events' and 'outcomes'. Contains coords for the outcomes.
+        with dimensions 'outcomes' and 'events'. Contains coords for the outcomes.
         returned if weights is instance of xarray.DataArray
 
     or
@@ -70,6 +70,8 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
     if isinstance(weights, xr.DataArray):
         cues = weights.coords["cues"].values.tolist()
         outcomes = weights.coords["outcomes"].values.tolist()
+        if not weights.values.shape == (len(outcomes), len(cues)):
+            raise ValueError('dimensions of weights are wrong. Probably you need to transpose the matrix')
         cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
         if ignore_missing_cues:
             event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues if cue in cues)
@@ -82,7 +84,7 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
                             coords={
                                 'outcomes': outcomes
                             },
-                            dims=('events', 'outcomes'))
+                            dims=('outcomes', 'events'))
     elif isinstance(weights, dict):
         assert number_of_threads == 1, "Estimating activations with multiprocessing is not implemented for dicts."
         activations = defaultdict(lambda: np.zeros(len(event_cues_list)))
@@ -116,7 +118,7 @@ def _run_mp_activation_matrix(event_index, cue_indices):
     Calculate activation for all outcomes while a event.
 
     """
-    activations[event_index, :] = weights[cue_indices, :].sum(axis=0)
+    activations[:, event_index] = weights[:, cue_indices].sum(axis=1)
 
 
 def _activation_matrix(indices_list, weights, number_of_threads):
@@ -128,25 +130,25 @@ def _activation_matrix(indices_list, weights, number_of_threads):
 
     Parameters
     ----------
-    indices_list : list with iteratables containing the indices of the cues in weight matrix.
-    weights : Weight matrix as 2d numpy.array with shape (cues, weights)
+    indices_list : list[int]
+        events as cue indices in weights
+    weights : numpy.array
+        weight matrix with shape (outcomes, cues)
     number_of_threads : int
-        a integer giving the number of threads in which the job should
-        executed
 
     Returns
     -------
-    activation_matrix : 2d numpy.array
-        activations for the events and all outcomes in the weights and
+    activation_matrix : numpy.array
+        estimated activations as matrix with shape (outcomes, events)
 
     """
     assert number_of_threads >= 1, "Can't run with less than 1 thread"
 
-    activations_dim = (len(indices_list), weights.shape[1])
+    activations_dim = (weights.shape[0], len(indices_list))
     if number_of_threads == 1:
         activations = np.empty(activations_dim, dtype=np.float64)
         for row, event_cues in enumerate(indices_list):
-            activations[row, :] = weights[event_cues, :].sum(axis=0)
+            activations[:, row] = weights[:, event_cues].sum(axis=1)
         return activations
     else:
         shared_activations = mp.RawArray(ctypes.c_double, int(np.prod(activations_dim)))
