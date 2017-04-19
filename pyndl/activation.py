@@ -10,6 +10,19 @@ import xarray as xr
 from . import ndl
 
 
+class Job_event_cues():
+    def __init__(self, cue_map, cues, ignore_missing_cues):
+        self.cue_map = cue_map
+        self.cues = cues
+        self.ignore_missing_cues = ignore_missing_cues
+
+    def run(self, event_cues):
+        if self.ignore_missing_cues:
+            return tuple(self.cue_map[cue] for cue in event_cues if cue in self.cues)
+        else:
+            return tuple(self.cue_map[cue] for cue in event_cues)
+
+
 def activation(event_list, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
     """
     Estimate activations for given events in event file and outcome-cue weights.
@@ -73,12 +86,9 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
         if not weights.values.shape == (len(outcomes), len(cues)):
             raise ValueError('dimensions of weights are wrong. Probably you need to transpose the matrix')
         cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
-        if ignore_missing_cues:
-            event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues if cue in cues)
-                                      for event_cues in event_cues_list)
-        else:
-            event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues)
-                                      for event_cues in event_cues_list)
+        job = Job_event_cues(cue_map, cues, ignore_missing_cues)
+        with mp.Pool(processes=number_of_threads) as pool:
+            event_cue_indices_list = pool.map(job.run, event_cues_list)
         activations = _activation_matrix(list(event_cue_indices_list), weights.values, number_of_threads)
         return xr.DataArray(activations,
                             coords={
