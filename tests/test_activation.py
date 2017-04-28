@@ -162,11 +162,11 @@ def test_activation_matrix_large():
     n_outcomes = n
     n_events = 10*n
     n_cues_per_event = 30
-    weight_mat = np.random.rand(n_cues, n_outcomes)
+    weight_mat = np.random.rand(n_outcomes, n_cues)
     cues = ['c'+str(i) for i in range(n_cues)]
     weights = xr.DataArray(weight_mat,
                            coords={'cues': cues},
-                           dims=('cues', 'outcomes'))
+                           dims=('outcomes', 'cues'))
     events = [(np.random.choice(cues, n_cues_per_event), [])
               for i in range(n_events)]  # no generator, we use it twice
 
