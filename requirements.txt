@@ -5,3 +5,4 @@ pandas
 xarray
 netCDF4
 numpydoc
+docopt==0.6.2
