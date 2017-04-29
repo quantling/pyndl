@@ -82,7 +82,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     Returns
     -------
     weights : xarray.DataArray
-        with dimensions 'cues' and 'outcomes'. You can lookup the weights
+        with dimensions 'outcomes' and 'cues'. You can lookup the weights
         between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
         'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
 
@@ -328,7 +328,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     or
 
     weights : xarray.DataArray
-        with dimensions 'cues' and 'outcomes'. You can lookup the weights
+        with dimensions 'outcomes' and 'cues'. You can lookup the weights
         between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
         'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
 
@@ -411,10 +411,22 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
                         __name__ + "." + dict_ndl.__name__, attrs=attrs_to_update)
 
     if make_data_array:
-        # post-processing
-        weights = pd.DataFrame(weights)
-        # weights.fillna(0.0, inplace=True)  # TODO make sure to not remove real NaNs
-        weights = xr.DataArray(weights.T, dims=('outcomes', 'cues'), attrs=attrs)
+        outcomes = list(weights.keys())
+        cues = set()
+        for outcome in outcomes:
+            cues.update(set(weights[outcome].keys()))
+
+        cues = list(cues)
+
+        weights_dict = weights
+        shape = (len(outcomes), len(cues))
+        weights = xr.DataArray(np.zeros(shape), attrs=attrs,
+                               coords={'outcomes': outcomes, 'cues': cues},
+                               dims=('outcomes', 'cues'))
+
+        for outcome in outcomes:
+            for cue in cues:
+                weights.loc[{"outcomes": outcome, "cues": cue}] = weights_dict[outcome][cue]
     else:
         weights.attrs = attrs
 

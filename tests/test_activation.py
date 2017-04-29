@@ -35,16 +35,18 @@ def test_exceptions():
 
 
 def test_activation_matrix():
-    weights = xr.DataArray(np.array([[0, 1], [1, 0], [0, 0]]),
+    weights = xr.DataArray(np.array([[0, 1, 0], [1, 0, 0]]),
                            coords={
+                               'outcomes': ['o1', 'o2'],
                                'cues': ['c1', 'c2', 'c3']
                            },
-                           dims=('cues', 'outcomes'))
+                           dims=('outcomes', 'cues'))
+
     events = [(['c1', 'c2', 'c3'], []),
               (['c1', 'c3'], []),
               (['c2'], []),
               (['c1', 'c1'], [])]
-    reference_activations = np.array([[1, 1], [0, 1], [1, 0], [0, 1]])
+    reference_activations = np.array([[1, 0, 1, 0], [1, 1, 0, 1]])
 
     with pytest.raises(ValueError):
         activations = activation(events, weights, number_of_threads=1)
@@ -57,16 +59,18 @@ def test_activation_matrix():
 
 
 def test_ignore_missing_cues():
-    weights = xr.DataArray(np.array([[0, 1], [1, 0], [0, 0]]),
+    weights = xr.DataArray(np.array([[0, 1, 0], [1, 0, 0]]),
                            coords={
+                               'outcomes': ['o1', 'o2'],
                                'cues': ['c1', 'c2', 'c3']
                            },
-                           dims=('cues', 'outcomes'))
+                           dims=('outcomes', 'cues'))
+
     events = [(['c1', 'c2', 'c3'], []),
               (['c1', 'c3'], []),
               (['c2', 'c4'], []),
               (['c1', 'c1'], [])]
-    reference_activations = np.array([[1, 1], [0, 1], [1, 0], [0, 1]])
+    reference_activations = np.array([[1, 0, 1, 0], [1, 1, 0, 1]])
 
     with pytest.raises(KeyError):
         activations = activation(events, weights, number_of_threads=1,

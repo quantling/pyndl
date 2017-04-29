@@ -28,6 +28,6 @@ __doc__ = """
 :version: %s
 :author: %s
 :contact: %s
-:date: 2017-04-11
+:date: 2017-04-18
 :copyright: %s
 """ % (__description__, __version__, __author__, __author_email__, __license__)

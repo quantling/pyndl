@@ -170,6 +170,7 @@ def test_continue_learning_dict_ndl_data_array(result_dict_ndl, result_dict_ndl_
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE,
                                             continue_from_dict,
                                             continue_from_data_array)
+    print(continue_from_data_array)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
@@ -442,7 +443,7 @@ def compare_arrays(file_path, arr1, arr2):
                     cue_index = cue_map[cue]
                     values.append(array[outcome_index][cue_index])
                 elif isinstance(array, xr.DataArray):
-                    values.append(array.loc[{'outcomes': outcome, 'cues': cue}])
+                    values.append(array.loc[{'outcomes': outcome, 'cues': cue}].values)
                 elif isinstance(array, pd.DataFrame):
                     values.append(array.loc[outcome][cue])
                 else:
