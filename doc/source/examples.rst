@@ -416,13 +416,10 @@ is straight forward using the netCDF format [@netCDF]
 
 .. code-block:: python
 
-    >>> import xarray
-    >>> weights.to_netcdf('doc/data/weights.nc')
-    syncing
-    >>> with xarray.open_dataarray('doc/data/weights.nc') as weights_read:
-    ...     weights_read  # doctest: +ELLIPSIS
-    <xarray.DataArray (outcomes: 10, cues: 15)>
-    ...
+    >>> import xarray  # doctest: +SKIP
+    >>> weights.to_netcdf('doc/data/weights.nc')  # doctest: +SKIP
+    >>> with xarray.open_dataarray('doc/data/weights.nc') as weights_read:  # doctest: +SKIP
+    ...     weights_read
 
 In order to keep everything clean we might want to remove all the files we
 created in this tutorial:
@@ -432,7 +429,6 @@ created in this tutorial:
    >>> import os
    >>> os.remove('doc/data/levent.tab.gz')
    >>> os.remove('doc/data/levent.tab.gz.filtered')
-   >>> os.remove('doc/data/weights.nc')
 
 
 Load a weight matrix to R[@R2016]
