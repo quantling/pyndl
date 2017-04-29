@@ -80,18 +80,18 @@ an artificial lexicon in the wide format. In the following, the letters
 the outcomes.
 
 Analyzing any data using **pyndl** requires them to be in the long format as an
-utf-8 encoded tab delimitered text file with a header in the first line and two
-columns:
+utf-8 encoded tab delimited gzipped text file with a header in the first line
+and two columns:
 
-1. the first column contains an underscore delimitered list of all cues
-2. the second column contains an underscore delimitered list of all outcomes
+1. the first column contains an underscore delimited list of all cues
+2. the second column contains an underscore delimited list of all outcomes
 3. each line therefore represents an event with a pair of a cue and an outcome
    (occuring one time)
 4. the events (lines) are ordered chronologically
 
-As the data in table 1 are artifical we can generate such a file for this
-example by expanding table 1 randomly regarding the frequency of occurence of
-each event. The resulting event file ``lexample.tab`` (which you can find in
+As the data in table 1 are artificial we can generate such a file for this
+example by expanding table 1 randomly regarding the frequency of occurrence of
+each event. The resulting event file ``lexample.tab.gz`` (which you can find in
 the subdirectory ``data``) consists of 420 lines (419 = sum of frequencies + 1
 header) and looks like the following (nevertheless you are encouraged to take a
 closer look at this file using any text editor of your choice):
@@ -112,7 +112,7 @@ after the  presentation of the 419 tokens of the 10 words using **pyndl**.
 **pyndl** provides the two functions ``ndl.ndl`` and ``ndl.dict_ndl`` to
 calculate the weights for all outcomes over all events. ``ndl.ndl`` itself
 provides to methods regarding estimation, ``openmp`` and ``threading``. We
-have to specify the path of our event file ``lexample.tab`` and for this
+have to specify the path of our event file ``lexample.tab.gz`` and for this
 example set :math:`\alpha = 0.1`, :math:`\beta_{1} = 0.1`, :math:`\beta_{2} =
 0.1` with leaving :math:`\lambda = 1.0` at its default value. You can use
 **pyndl** directly in a Python3 Shell or you can write an executable script,
@@ -143,8 +143,11 @@ Let's start:
 
     >>> import pyndl
     >>> from pyndl import ndl
-    >>> weights = ndl.ndl(event_path='doc/data/lexample.tab', alpha=0.1, betas=(0.1, 0.1), method='openmp')
-    >>> weights
+    >>> weights = ndl.ndl(event_path='doc/data/lexample.tab.gz', alpha=0.1,
+    ...                   betas=(0.1, 0.1), method='openmp')
+    >>> weights  # doctest: +ELLIPSIS
+    <xarray.DataArray (outcomes: 8, cues: 15)>
+    ...
 
 ``weights`` is an ``xarray.DataArray`` of dimension ``len(outcomes)``,
 ``len(cues)``. Our unique, chronologically ordered outcomes are 'hand',
@@ -155,9 +158,23 @@ methods
 
 .. code-block:: python
 
-    >>> weights[1, 5]
-    >>> weights.loc[{'outcomes': 'plural', 'cues': 's#'}]
-    >>> weights.loc['plural'].loc['s#']
+    >>> weights[1, 5]  # doctest: +ELLIPSIS
+    <xarray.DataArray ()>
+    ...
+    >>> weights.loc[{'outcomes': 'plural', 'cues': 's#'}]  # doctest: +ELLIPSIS
+    <xarray.DataArray ()>
+    array(0.07698822703296752)
+    Coordinates:
+        outcomes  <U6 'plural'
+        cues      <U2 's#'
+    ...
+    >>> weights.loc['plural'].loc['s#']  # doctest: +ELLIPSIS
+    <xarray.DataArray ()>
+    array(0.07698822703296752)
+    Coordinates:
+        outcomes  <U6 'plural'
+        cues      <U2 's#'
+    ...
 
 return the weight of the cue 's#' (the unigram 's' being the word-final) for
 the outcome 'plural' (remember counting in Python does start at 0) as ca. 0.077
@@ -168,8 +185,17 @@ by specifying the ``weight`` argument:
 
 .. code-block:: python
 
-   >>> weights2 = ndl.ndl(event_path='doc/data/lexample.tab', alpha=0.1, betas=(0.1, 0.1), method='openmp', weights=weights)
-   >>> weights2
+    >>> weights2 = ndl.ndl(event_path='doc/data/lexample.tab.gz', alpha=0.1, betas=(0.1, 0.1), method='openmp', weights=weights)
+    >>> weights2  # doctest: +ELLIPSIS
+    <xarray.DataArray (outcomes: 8, cues: 15)>
+    array(...
+    ...
+    ...)
+    Coordinates:
+      * outcomes  (outcomes) <U6 ...
+      * cues      (cues) <U2 ...
+    Attributes:
+    ...
 
 As you may have noticed already, ``ndl.ndl`` provides you with meta data
 organized in a ``dict`` which was collected during your calculations. Each
@@ -178,7 +204,8 @@ moment of your calculations:
 
 .. code-block:: python
 
-   >>> weights2.attrs
+   >>> weights2.attrs  # doctest: +ELLIPSIS
+   OrderedDict(...)
 
 
 ndl.dict_ndl
@@ -198,8 +225,10 @@ Therefore
 
 .. code-block:: python
 
-    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=0.1, betas=(0.1, 0.1))
-    >>> weights['plural']['s#']
+    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab.gz',
+    ...                        alphas=0.1, betas=(0.1, 0.1))
+    >>> weights['plural']['s#'] # doctes: +ELLIPSIS
+    0.076988227...
 
 yields approximately the same results as before, however, you now can specify
 different :math:`\alpha`'s per cue and as in ``ndl.ndl`` continue learning or
@@ -207,9 +236,13 @@ do both:
 
 .. code-block:: python
 
-    >>> alphas_cues = dict(zip(['#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'], [0.1, 0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0.1, 0.2, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2]))
-    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=alphas_cues, betas=(0.1, 0.1))
-    >>> weights2 = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=alphas_cues, betas=(0.1, 0.1), weights=weights)
+    >>> alphas_cues = dict(zip(['#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'],
+    ...                        [0.1, 0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0.1, 0.2, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2]))
+    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab.gz',
+    ...                        alphas=alphas_cues, betas=(0.1, 0.1))
+    >>> weights2 = ndl.dict_ndl(event_list='doc/data/lexample.tab.gz',
+    ...                         alphas=alphas_cues, betas=(0.1, 0.1),
+    ...                         weights=weights)
 
 .. note::
 
@@ -219,8 +252,10 @@ do both:
 
 .. code-block:: python
 
-   >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab', alphas=alphas_cues, betas=(0.1, 0.1), make_data_array=True)
-   >>> weights
+    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab.gz', alphas=alphas_cues, betas=(0.1, 0.1), make_data_array=True)
+    >>> weights  # doctest: +ELLIPSIS
+    <xarray.DataArray (outcomes: 8, cues: 15)>
+    ...
 
 
 --------------------------
@@ -246,7 +281,7 @@ take a look at ``lcorpus.txt`` (which you also can find in the subdirectory
 ``data``)
 
 To analyse the data, you need to convert the file into an event file similar to
-``lexample.tab`` in our lexical learning example, as currently there is only
+``lexample.tab.gz`` in our lexical learning example, as currently there is only
 one word per line and neither is there the column for cues nor for outcomes::
 
    hand
@@ -263,16 +298,22 @@ on a raw corpus file and filter it:
 
     >>> import pyndl
     >>> from pyndl import preprocess
-    >>> preprocess.create_event_file(corpus_file='doc/data/lcorpus.txt', event_file='doc/data/levent.tab', context_structure='document', event_structure='consecutive_words', event_options=(1, ), cue_structure='bigrams_to_word')
+    >>> preprocess.create_event_file(corpus_file='doc/data/lcorpus.txt',
+    ...                              event_file='doc/data/levent.tab.gz',
+    ...                              context_structure='document',
+    ...                              event_structure='consecutive_words',
+    ...                              event_options=(1, ),
+    ...                              cue_structure='bigrams_to_word')
 
 The function ``preprocess.create_event_file`` has several arguments which you
-might have to change to suit them your data, so you are strongly recommened to
+might have to change to suit them your data, so you are strongly recommended to
 read its documentation. We set ``context_structure='document'`` as in this case
 the context is the whole document, ``event_structure='consecutive_words'`` as
 these are our events, ``event_options=(1, )`` as we define an event to be one
 word and ``cue_structure='bigrams_to_word'`` to set cues being bigrams.
 There are also several technical arguments you can specifiy, which we will not
-change here. Our generated event file ``levent.tab`` now looks like this:
+change here. Our generated event file ``levent.tab.gz`` now looks
+(uncompressed) like this:
 
 =================  ========
 Cues               Outcomes
@@ -295,17 +336,23 @@ and also generate id maps for cues and outcomes:
 .. code-block:: python
 
     >>> from pyndl import count
-    >>> cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name='doc/data/levent.tab')
-    >>> cue_freq_map
-    >>> outcome_freq_map
+    >>> freq, cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name='doc/data/levent.tab.gz')
+    >>> freq
+    12
+    >>> cue_freq_map  # doctest: +ELLIPSIS
+    Counter({...})
+    >>> outcome_freq_map  # doctest: +ELLIPSIS
+    Counter({...})
     >>> cues = list(cue_freq_map.keys())
     >>> cues.sort()
     >>> cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
-    >>> cue_id_map
+    >>> cue_id_map  # doctest: +ELLIPSIS
+    {...}
     >>> outcomes = list(outcome_freq_map.keys())
     >>> outcomes.sort()
     >>> outcome_id_map = {outcome: nn for nn, outcome in enumerate(outcomes)}
-    >>> outcome_id_map
+    >>> outcome_id_map  # doctest: +ELLIPSIS
+    {...}
 
 
 Filter the events
@@ -320,21 +367,21 @@ again, filtering our event file and update the id maps for cues and outcomes:
 
 .. code-block:: python
 
-    >>> preprocess.filter_event_file(input_event_file='doc/data/levent.tab',
-    ...                              output_event_file='doc/data/levent.tab.filtered',
+    >>> preprocess.filter_event_file(input_event_file='doc/data/levent.tab.gz',
+    ...                              output_event_file='doc/data/levent.tab.gz.filtered',
     ...                              remove_cues=('#f', 'fo', 'oo', 'ot', 't#', 'fe', 'ee', 'et'),
     ...                              remove_outcomes=('foot', 'feet'))
-    >>> cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name='doc/data/levent.tab.filtered')
-    >>> cue_freq_map
-    >>> outcome_freq_map
+    >>> freq, cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name='doc/data/levent.tab.gz.filtered')
     >>> cues = list(cue_freq_map.keys())
     >>> cues.sort()
     >>> cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
-    >>> cue_id_map
+    >>> cue_id_map  # doctest: +ELLIPSIS
+    {...}
     >>> outcomes = list(outcome_freq_map.keys())
     >>> outcomes.sort()
     >>> outcome_id_map = {outcome: nn for nn, outcome in enumerate(outcomes)}
-    >>> outcome_id_map
+    >>> outcome_id_map  # doctest: +ELLIPSIS
+    {...}
 
 Alternatively, using ``preprocess.filter_event_file`` you can also specify
 which cues and outcomes to keep (``keep_cues`` and ``keep_outcomes``) or remap
@@ -359,7 +406,8 @@ like in the lexical learning example:
 .. code-block:: python
 
    >>> from pyndl import ndl
-   >>> weights = ndl.ndl(event_path='doc/data/levent.tab.filtered', alpha=0.1, betas=(0.1, 0.1), method="threading")
+   >>> weights = ndl.ndl(event_path='doc/data/levent.tab.gz.filtered',
+   ...                   alpha=0.1, betas=(0.1, 0.1), method="threading")
 
 
 Save and load a weight matrix
@@ -368,16 +416,28 @@ is straight forward using the netCDF format [@netCDF]
 
 .. code-block:: python
 
-   >>> import xarray
-   >>> weights.to_netcdf('doc/data/weights.nc')
-   >>> with xarray.open_dataarray('doc/data/weights.nc') as weights_read:
-   >>>     weights_read[0, 0]
+    >>> import xarray
+    >>> weights.to_netcdf('doc/data/weights.nc')
+    syncing
+    >>> with xarray.open_dataarray('doc/data/weights.nc') as weights_read:
+    ...     weights_read  # doctest: +ELLIPSIS
+    <xarray.DataArray (outcomes: 10, cues: 15)>
+    ...
 
-the same applies to
+In order to keep everything clean we might want to remove all the files we
+created in this tutorial:
+
+.. code-block:: python
+
+   >>> import os
+   >>> os.remove('doc/data/levent.tab.gz')
+   >>> os.remove('doc/data/levent.tab.gz.filtered')
+   >>> os.remove('doc/data/weights.nc')
 
 
 Load a weight matrix to R[@R2016]
 =================================
+We can load a in netCDF format saved matrix into R:
 
 .. code-block:: R
 
