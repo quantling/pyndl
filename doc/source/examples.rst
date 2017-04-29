@@ -2,15 +2,14 @@
 Examples
 ========
 
----------------
 Lexical example
----------------
+===============
 
 The lexical example illustrates the Rescorla-Wagner[@rescorlawagner1972]
 equations. This example is taken from [@baayen2011].
 
 Premises
-========
+--------
 
 1. Cues are associated with outcomes and both can be present or absent
 2. Cues are segment (letter) unigrams, bigrams, ...
@@ -45,8 +44,12 @@ Premises
     \end{array}
 
 
+See :ref:`comparison_of_algorithms` for alternative formulations of the
+Rescorla Wagner learning rule.
+
+
 Data
-====
+----
 
 +-----------------+-----------------+-----------------+-----------------+
 | Table 1                                                               |
@@ -106,7 +109,7 @@ Cues               Outcomes
 
 
 pyndl.ndl module
-================
+----------------
 We can now compute the strength of associations (weights or weight matrix)
 after the  presentation of the 419 tokens of the 10 words using **pyndl**.
 **pyndl** provides the two functions ``ndl.ndl`` and ``ndl.dict_ndl`` to
@@ -121,7 +124,7 @@ example.
 
 
 ndl.ndl
--------
+^^^^^^^
 ``ndl.ndl`` is a parallel Python implementation using numpy, multithreading
 and a binary format which is created automatically. It allows you to choose
 between the two methods ``openmp`` and ``threading``, with the former one
@@ -143,7 +146,7 @@ Let's start:
 
     >>> import pyndl
     >>> from pyndl import ndl
-    >>> weights = ndl.ndl(event_path='doc/data/lexample.tab.gz', alpha=0.1,
+    >>> weights = ndl.ndl(events='doc/data/lexample.tab.gz', alpha=0.1,
     ...                   betas=(0.1, 0.1), method='openmp')
     >>> weights  # doctest: +ELLIPSIS
     <xarray.DataArray (outcomes: 8, cues: 15)>
@@ -185,7 +188,8 @@ by specifying the ``weight`` argument:
 
 .. code-block:: python
 
-    >>> weights2 = ndl.ndl(event_path='doc/data/lexample.tab.gz', alpha=0.1, betas=(0.1, 0.1), method='openmp', weights=weights)
+    >>> weights2 = ndl.ndl(events='doc/data/lexample.tab.gz', alpha=0.1,
+    ...                    betas=(0.1, 0.1), method='openmp', weights=weights)
     >>> weights2  # doctest: +ELLIPSIS
     <xarray.DataArray (outcomes: 8, cues: 15)>
     array(...
@@ -225,7 +229,7 @@ Therefore
 
 .. code-block:: python
 
-    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab.gz',
+    >>> weights = ndl.dict_ndl(events='doc/data/lexample.tab.gz',
     ...                        alphas=0.1, betas=(0.1, 0.1))
     >>> weights['plural']['s#'] # doctes: +ELLIPSIS
     0.076988227...
@@ -238,9 +242,9 @@ do both:
 
     >>> alphas_cues = dict(zip(['#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'],
     ...                        [0.1, 0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0.1, 0.2, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2]))
-    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab.gz',
+    >>> weights = ndl.dict_ndl(events='doc/data/lexample.tab.gz',
     ...                        alphas=alphas_cues, betas=(0.1, 0.1))
-    >>> weights2 = ndl.dict_ndl(event_list='doc/data/lexample.tab.gz',
+    >>> weights2 = ndl.dict_ndl(events='doc/data/lexample.tab.gz',
     ...                         alphas=alphas_cues, betas=(0.1, 0.1),
     ...                         weights=weights)
 
@@ -252,15 +256,16 @@ do both:
 
 .. code-block:: python
 
-    >>> weights = ndl.dict_ndl(event_list='doc/data/lexample.tab.gz', alphas=alphas_cues, betas=(0.1, 0.1), make_data_array=True)
+    >>> weights = ndl.dict_ndl(events='doc/data/lexample.tab.gz',
+    ...                        alphas=alphas_cues, betas=(0.1, 0.1),
+    ...                        make_data_array=True)
     >>> weights  # doctest: +ELLIPSIS
     <xarray.DataArray (outcomes: 8, cues: 15)>
     ...
 
 
---------------------------
 A minimal workflow example
---------------------------
+==========================
 As you should have a basic understanding of ``pyndl.ndl`` by now, the following
 example will show you how to:
 
@@ -273,7 +278,7 @@ example will show you how to:
 
 
 Generate an event file based on a raw corpus file
-=================================================
+-------------------------------------------------
 Suppose you have a raw utf-8 encoded corpus file (by the way, ``pyndl.corpus``
 allows you to generate such a corpus file from a bunch of gunzipped xml
 subtitle files filled with words, which we will not cover here). For example
@@ -290,7 +295,7 @@ one word per line and neither is there the column for cues nor for outcomes::
 
 
 pyndl.preprocess module
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 This module (besides other things) allows you to generate an event file based
 on a raw corpus file and filter it:
 
@@ -325,12 +330,12 @@ ds_s#_an_#h_ha_nd  hands
 
 
 Count cues and outcomes
-=======================
+-----------------------
 We can now count the cues and outcomes in our event file using the
 
 
 pyndl.count module
-------------------
+^^^^^^^^^^^^^^^^^^
 and also generate id maps for cues and outcomes:
 
 .. code-block:: python
@@ -356,13 +361,13 @@ and also generate id maps for cues and outcomes:
 
 
 Filter the events
-=================
+-----------------
 As we do not want to include the outcomes 'foot' and 'feet' in this example
 as well as their cues '#f', 'fo' 'oo', 'ot', 't#', 'fe', 'ee' 'et', we use the
 
 
 pyndl.preprocess module
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 again, filtering our event file and update the id maps for cues and outcomes:
 
 .. code-block:: python
@@ -394,24 +399,24 @@ make sure to go through its documentation.
 
 
 Learn the weights
-=================
+-----------------
 Computing the strength of associations for the data is now easy, using for
 example ``ndl.ndl`` from the
 
 
 pyndl.ndl module
-----------------
+^^^^^^^^^^^^^^^^
 like in the lexical learning example:
 
 .. code-block:: python
 
    >>> from pyndl import ndl
-   >>> weights = ndl.ndl(event_path='doc/data/levent.tab.gz.filtered',
+   >>> weights = ndl.ndl(events='doc/data/levent.tab.gz.filtered',
    ...                   alpha=0.1, betas=(0.1, 0.1), method="threading")
 
 
 Save and load a weight matrix
-=============================
+-----------------------------
 is straight forward using the netCDF format [@netCDF]
 
 .. code-block:: python
@@ -432,7 +437,7 @@ created in this tutorial:
 
 
 Load a weight matrix to R[@R2016]
-=================================
+---------------------------------
 We can load a in netCDF format saved matrix into R:
 
 .. code-block:: R

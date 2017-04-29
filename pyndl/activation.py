@@ -10,7 +10,7 @@ import xarray as xr
 from . import ndl
 
 
-def activation(event_list, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
+def activation(events, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
     """
     Estimate activations for given events in event file and outcome-cue weights.
 
@@ -19,7 +19,7 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
 
     Parameters
     ----------
-    event_list : generator or str
+    events : generator or str
         generates cues, outcomes pairs or the path to the event file
     weights : xarray.DataArray or dict[dict[float]]
         the xarray.DataArray needs to have the dimensions 'outcomes' and 'cues'
@@ -51,10 +51,10 @@ def activation(event_list, weights, number_of_threads=1, remove_duplicates=None,
         returned if weights is instance of dict
 
     """
-    if isinstance(event_list, str):
-        event_list = ndl.events(event_list)
+    if isinstance(events, str):
+        events = ndl.events_from_file(events)
 
-    event_cues_list = (cues for cues, outcomes in event_list)
+    event_cues_list = (cues for cues, outcomes in events)
     if remove_duplicates is None:
         def enforce_no_duplicates(cues):
             if len(cues) != len(set(cues)):

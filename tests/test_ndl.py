@@ -52,7 +52,7 @@ def result_dict_ndl():
 
 @pytest.fixture(scope='module')
 def result_dict_ndl_generator():
-    return ndl.dict_ndl(ndl.events(FILE_PATH_SIMPLE), ALPHA, BETAS)
+    return ndl.dict_ndl(ndl.events_from_file(FILE_PATH_SIMPLE), ALPHA, BETAS)
 
 
 @pytest.fixture(scope='module')
@@ -108,8 +108,9 @@ def test_exceptions():
         assert e_info == 'cues or outcomes needs to be unique: cues "a a"; outcomes "A"; use remove_duplicates=True'
 
     with pytest.raises(ValueError) as e_info:
-        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', sequence=-1)
-        assert e_info == "sequence must be larger then one"
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading',
+                len_sublists=-1)
+        assert e_info == "'len_sublists' must be larger then one"
 
     with pytest.raises(ValueError) as e_info:
         ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array="magic")

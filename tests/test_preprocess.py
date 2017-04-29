@@ -244,8 +244,8 @@ def test_read_binary_file():
                                               outcome_id_map, overwrite=True, remove_duplicates=False)
 
     bin_events = read_binary_file(abs_binary_file_path)
-    events = ndl.events(abs_file_path)
-    events_dup = ndl.events(abs_file_path)
+    events = ndl.events_from_file(abs_file_path)
+    events_dup = ndl.events_from_file(abs_file_path)
 
     assert number_events == len(list(events_dup))
 
