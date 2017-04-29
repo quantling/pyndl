@@ -126,7 +126,7 @@ on our code of conduct, and the process for submitting pull requests to us.
 Versioning
 ==========
 At the moment we are still in alpha and therefore no API garatuees are given,
-but soon we will change to use `SemVer <http://semver.org/>` for versioning. For
+but soon we will change to use `SemVer <http://semver.org/>`_ for versioning. For
 the versions available,
 see the `tags on this repository <https://github.com/quantling/pyndl/tags>`_.
 
