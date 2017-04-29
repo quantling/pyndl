@@ -1,5 +1,4 @@
 # !/usr/bin/env/python3
-# coding: utf-8
 
 import collections
 import gzip
@@ -212,7 +211,7 @@ def create_event_file(corpus_file,
     if os.path.isfile(event_file):
         raise OSError('%s file exits. Remove file and start again.' % event_file)
 
-    in_symbols = re.compile("^[%s]*$" % symbols)
+    # in_symbols = re.compile("^[%s]*$" % symbols)
     not_in_symbols = re.compile("[^%s]" % symbols)
     context_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
 
@@ -222,10 +221,16 @@ def create_event_file(corpus_file,
         before, after = event_options
 
     def gen_occurrences(words):
-        # take all number_of_words number of consecutive words and make an
-        # occurrence out of it.
-        # for words = (A, B, C, D); number_of_words = 3
-        # make: (A, ), (A_B, ), (A_B_C, ), (B_C_D, ), (C_D, ), (D, )
+        """
+        Make an occurrence out of consecutive words.
+
+        Take all number_of_words number of consecutive words and make an
+        occurrence out of it.
+
+        For words = (A, B, C, D); number_of_words = 3 make: (A, ), (A_B, ),
+        (A_B_C, ), (B_C_D, ), (C_D, ), (D, )
+
+        """
         if event_structure == 'consecutive_words':
             occurrences = list()
             cur_words = list()
@@ -250,8 +255,7 @@ def create_event_file(corpus_file,
                 # words before the word to a maximum of before
                 cues = words[max(0, ii - before):ii]
                 # words after the word to a maximum of before
-                cues.extend(
-                        words[(ii + 1):min(len(words), ii + 1 + after)])
+                cues.extend(words[(ii + 1):min(len(words), ii + 1 + after)])
                 # append (cues, outcomes)
                 occurrences.append(("_".join(cues), word))
             return occurrences
@@ -260,6 +264,7 @@ def create_event_file(corpus_file,
             return [('_'.join(words), ''), ]
 
     def process_line(line):
+        """processes one line of text."""
         if lower_case:
             line = line.lower()
         # replace all weird characters with space
@@ -267,16 +272,18 @@ def create_event_file(corpus_file,
         return line
 
     def gen_words(line):
+        """generates words out of a line of text."""
         return [word.strip() for word in line.split(" ") if word.strip()]
 
     def process_words(words):
+        """processes one word and makes an occurrence out of it."""
         occurrences = gen_occurrences(words)
         process_occurrences(occurrences, outfile,
                             cue_structure=cue_structure,
                             remove_duplicates=remove_duplicates)
 
     def process_context(line):
-        '''called when a context boundary is found.'''
+        """called when a context boundary is found."""
         if context_structure == 'document':
             # remove document marker
             line = context_pattern.sub("", line)
@@ -327,12 +334,15 @@ def create_event_file(corpus_file,
                         line = process_line(line)
                         words.extend(gen_words(line))
 
-            # write the last context (the rest)!
-            if not context_structure == 'line':
+            # write the last context (the rest) when context_structure is not
+            # 'line'
+            if context_structure != 'line':
                 process_words(words)
 
 
 class JobFilter():
+    # pylint: disable=E0202,missing-docstring
+
     """
     Stores the persistent information over several jobs and exposes a job
     method that only takes the varying parts as one argument.
@@ -519,7 +529,7 @@ def read_binary_file(binary_file_path):
             raise ValueError('Version is incorrectly specified')
 
         nr_of_events = to_integer(binary_file.read(4))
-        for event in range(nr_of_events):
+        for _ in range(nr_of_events):
             # Cues
             number_of_cues = to_integer(binary_file.read(4))
             cue_ids = [to_integer(binary_file.read(4)) for ii in range(number_of_cues)]
@@ -641,7 +651,7 @@ def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event
     with gzip.open(event_file, "rt") as in_file:
         # skip header
         in_file.readline()
-        for nn, line in enumerate(in_file):
+        for _, line in enumerate(in_file):
             try:
                 cues, outcomes = line.strip('\n').split("\t")
             except ValueError:
@@ -721,6 +731,7 @@ def create_binary_event_files(event_file,
     number_events : int
         sum of number of events written to binary files
     """
+    # pylint: disable=missing-docstring
 
     if not os.path.isdir(path_name):
         if verbose:
@@ -739,7 +750,7 @@ def create_binary_event_files(event_file,
 
     with multiprocessing.Pool(number_of_processes) as pool:
 
-        def error_callback(error):
+        def _error_callback(error):
             if isinstance(error, StopIteration):
                 msg, result = error.value
                 nonlocal number_events
@@ -748,7 +759,7 @@ def create_binary_event_files(event_file,
             else:
                 raise error
 
-        def callback(result):
+        def _callback(result):
             nonlocal number_events
             number_events += result
             if verbose:
@@ -770,8 +781,8 @@ def create_binary_event_files(event_file,
             try:
                 result = pool.apply_async(_job_binary_event_file,
                                           kwds=kwargs,
-                                          callback=callback,
-                                          error_callback=error_callback)
+                                          callback=_callback,
+                                          error_callback=_error_callback)
                 if verbose:
                     print("submitted job %i" % ii)
             except ValueError as error:

@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-# run py.test-3 from the above folder
+
+# pylint: disable=C0111
+
 from collections import OrderedDict
 import gzip
 import os

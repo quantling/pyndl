@@ -218,26 +218,26 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
                                     getpass.getuser())])
     width = max(19, width)
 
-    def format_(ss):
-        return '{0: <{width}}'.format(ss, width=width)
+    def _format(value):
+        return '{0: <{width}}'.format(value, width=width)
 
-    new_attrs = {'date': format_(time.strftime("%Y-%m-%d %H:%M:%S")),
-                 'event_path': format_(event_path),
-                 'number_events': format_(number_events),
-                 'alpha': format_(str(alpha)),
-                 'betas': format_(str(betas)),
-                 'lambda': format_(str(lambda_)),
-                 'function': format_(function),
-                 'method': format_(str(method)),
-                 'cpu_time': format_(str(cpu_time)),
-                 'wall_time': format_(str(wall_time)),
-                 'hostname': format_(socket.gethostname()),
-                 'username': format_(getpass.getuser()),
-                 'pyndl': format_(__version__),
-                 'numpy': format_(np.__version__),
-                 'pandas': format_(pd.__version__),
-                 'xarray': format_(xr.__version__),
-                 'cython': format_(cython.__version__)}
+    new_attrs = {'date': _format(time.strftime("%Y-%m-%d %H:%M:%S")),
+                 'event_path': _format(event_path),
+                 'number_events': _format(number_events),
+                 'alpha': _format(str(alpha)),
+                 'betas': _format(str(betas)),
+                 'lambda': _format(str(lambda_)),
+                 'function': _format(function),
+                 'method': _format(str(method)),
+                 'cpu_time': _format(str(cpu_time)),
+                 'wall_time': _format(str(wall_time)),
+                 'hostname': _format(socket.gethostname()),
+                 'username': _format(getpass.getuser()),
+                 'pyndl': _format(__version__),
+                 'numpy': _format(np.__version__),
+                 'pandas': _format(pd.__version__),
+                 'xarray': _format(xr.__version__),
+                 'cython': _format(cython.__version__)}
 
     if attrs is not None:
         for key in set(attrs.keys()) | set(new_attrs.keys()):
@@ -433,13 +433,13 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     return weights
 
 
-def slice_list(li, sequence):
-    """
+def slice_list(list_, sequence):
+    r"""
     Slices a list in sublists with the length sequence.
 
     Parameters
     ----------
-    li : list
+    list\_ : list
          list which should be sliced in sublists
     sequence : int
          integer which determines the length of the sublists
@@ -452,11 +452,11 @@ def slice_list(li, sequence):
     """
     if sequence < 1:
         raise ValueError("sequence must be larger then one")
-    assert len(li) == len(set(li))
+    assert len(list_) == len(set(list_))
     ii = 0
     seq_list = list()
-    while ii < len(li):
-        seq_list.append(li[ii:ii+sequence])
+    while ii < len(list_):
+        seq_list.append(list_[ii:ii+sequence])
         ii = ii+sequence
 
     return seq_list
