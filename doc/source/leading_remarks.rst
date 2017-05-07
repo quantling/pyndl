@@ -12,8 +12,8 @@ cue :
     preceding words for the word or meaning of the word.
 
 outcome :
-    A something that happens or is the result of an event. Examples are words,
-    the meaning of the word, or lexomes.
+    The outcome is the result of an event. Examples are words, the meaning of
+    the word, or lexomes.
 
 event :
     An event connects cues with outcomes. In any event one or more unordered
@@ -26,10 +26,10 @@ weights :
 
 cue file :
     A cue file contains a list of all cues that are interesting for a specific
-    question. It is a utf-8 encoded tab delimitered text file with a header in
-    the first line. It has two columns. The first column contains the cue and
-    the second column contains the frequency of the cue. There is one cue per
-    line. The ordering does not matter.
+    question. It is a utf-8 encoded tab delimitered text file with a
+    header in the first line. It has two columns. The first column contains the
+    cue and the second column contains the frequency of the cue. There is one
+    cue per line. The ordering does not matter.
 
 outcome file :
     An outcome file contains a list of all outcomes that are interesting for a
@@ -48,13 +48,14 @@ symbol file :
 event file :
     An event file contains a list of all events that should be learned. The
     learning will start at the first event and continue to the last event in
-    order of the lines. The event file is a utf-8 encoded tab delimitered text
-    file with a header in the first line. It has three columns. The first
-    column contains an underscore delimitered list of all cues. The second
-    column contains an underscore delimitered list of all outcomes. The third
-    column contains the frequency of the event. The ordering of the cues and
-    outcomes does not matter. There is one event per line. The ordering of the
-    lines in the file *does* matter.
+    order of the lines. The event file is a utf-8 encoded tab delimitered
+    gzipped text file with a header in the first line. It has three columns.
+    The first column contains an underscore delimitered list of all cues. The
+    second column contains an underscore delimitered list of all outcomes. The
+    third column contains the frequency of the event. The ordering of the cues
+    and outcomes does not matter. There is one event per line. The ordering of
+    the lines in the file *does* matter. In ``pyndl`` the event file will be
+    temporally stored into a binary format to speed up computations.
 
 corpus file :
     A corpus file is a utf-8 encoded text file that contains huge amounts of

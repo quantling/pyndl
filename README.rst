@@ -50,6 +50,14 @@ You need python 3.4 or newer and git installed on your machine. We recommend to
 install Minicoda (https://conda.io/miniconda.html) before installing ``pyndl``
 or to create a virtualenv within your personal folder.
 
+Development
+^^^^^^^^^^^
+If you want to develop ``pyndl`` you should additionally install:
+
+.. code:: bash
+
+   pip3 install --user tox pylint pytest pep8 sphinx
+
 
 Installing
 ----------
@@ -57,7 +65,7 @@ If you only want to use the package run you can install ``pyndl`` from pypi with
 
 .. code:: bash
 
-    pip install --user pyndl
+    pip3 install --user pyndl
 
 If you want to inspect and change the source code as well as running tests and
 having the documentation at hand clone the repository and install the package
@@ -67,7 +75,7 @@ in 'development' mode by running
 
     git clone https://github.com/quantling/pyndl.git
     cd pyndl
-    python setup.py develop
+    python3 setup.py --user develop
 
 
 Documentation and Examples
@@ -76,11 +84,19 @@ Documentation and examples can be found under
 http://pyndl.readthedocs.io/en/latest/ or in the ``doc/`` folder after cloning
 the repository.
 
+If you have installed ``sphinx`` you should be able to build the documentation with:
+
+.. code:: bash
+
+   cd doc/
+   make html
+
+The entry point for the html documentation is ``doc/build/html/index.html``.
+
 
 Running the tests
 =================
-If you have installed ``pyndl`` by cloning the repository change directory to
-the repository and run (for fast tests):
+If you have cloned ``pyndl`` run the following to run some testing:
 
 .. code:: bash
 
@@ -93,7 +109,7 @@ For full tests you can run:
 
 .. code:: bash
 
-    tox
+    tox -e test
 
 For manually checking coding guidelines run:
 
@@ -112,7 +128,7 @@ In order to create a source dist package run:
 
 .. code:: bash
 
-    python setup.py sdist
+    python3 setup.py sdist
 
 
 Contributing
@@ -149,5 +165,6 @@ Acknowledgments
 This package is build as a python replacement for the R ndl2 package. Some
 ideas on how to build the API and how to efficiently run the Rescorla Wagner
 iterative learning on large text corpora are inspired by the way the ndl2
-package solves this problems.
+package solves this problems. The ndl2 package will be published to github in
+August 2017 and a reference will be placed here.
 

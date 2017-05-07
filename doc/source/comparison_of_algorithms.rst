@@ -238,7 +238,7 @@ distribution of the association vector :math:`\Pr(\vec{w}_t | r_1, \cdot, r_{t
 .. math::
 
    \hat{\vec{w}}_{t + 1} = \hat{\vec{w}}_t + \frac{ S_t \cdot
-   \vec{x}_t}{\vec{x}_t \cdot S_n \vec{x}_n + \tau^2} (r_t - \hat{\vec{w}}_t
+   \vec{x}_t}{\vec{x}_t \cdot S_t \vec{x}_t + \tau^2} (r_t - \hat{\vec{w}}_t
    \cdot \vec{x}_t)
 
 .. math::

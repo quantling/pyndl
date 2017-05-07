@@ -8,7 +8,7 @@ install it in development mode. Run tests and style checks afterwards.
 
 .. code:: bash
 
-    pip uninstall pyndl  # remove old pyndl installation
+    pip3 uninstall pyndl  # remove old pyndl installation
     git clone git@github.com:<YOUR_USER_NAME>/pyndl.git
     cd pyndl
     python setup.py develop
@@ -27,7 +27,7 @@ http://pandas.pydata.org/pandas-docs/stable/contributing.html#contributing-to-th
 
 Building documentation
 ----------------------
-You need to have sphix (http://www.sphinx-doc.org/en/stable/) installed.
+You need to have sphinx (http://www.sphinx-doc.org/en/stable/) installed.
 
 .. code::
 
