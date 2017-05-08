@@ -29,8 +29,8 @@ the Rescorla-Wagner learning rule to these corpora.
 .. warning::
 
     This package is still in alpha and there might be some API changes in the
-    near future. If you want to suggest us some contact us under konstantin
-    (dot) sering (ät) uni-tuebingen.de.
+    near future. If you have suggestings concerning the ``pyndl`` package,
+    contact us under konstantin (dot) sering (ät) uni-tuebingen.de.
 
 .. note::
 
@@ -136,15 +136,15 @@ Contributing
 Please read
 `CONTRIBUTING.rst
 <https://github.com/quantling/pyndl/blob/master/CONTRIBUTING.rst>`_ for details
-on our code of conduct, and the process for submitting pull requests to us.
+on our code of conduct and the process for submitting pull requests to us.
 
 
 Versioning
 ==========
-At the moment we are still in alpha and therefore no API garatuees are given,
-but soon we will change to use `SemVer <http://semver.org/>`_ for versioning. For
-the versions available,
-see the `tags on this repository <https://github.com/quantling/pyndl/tags>`_.
+At the moment we are still in alpha and therefore no stable API is guaranteed
+between minor version increments, but soon we will change to use `SemVer
+<http://semver.org/>`_ for versioning. For the versions available, see the
+`tags on this repository <https://github.com/quantling/pyndl/tags>`_.
 
 
 Authors
