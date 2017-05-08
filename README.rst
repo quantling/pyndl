@@ -98,11 +98,11 @@ The entry point for the html documentation is ``doc/build/html/index.html``.
 
 Running the tests
 =================
-If you have cloned ``pyndl`` run the following to run some testing:
+If you have cloned ``pyndl`` from github, you can start the tests by executing
+the following within the outer ``pyndl`` folder:
 
 .. code:: bash
 
-    cd pyndl
     py.test
     py.test doc/souce/example.rst
 
