@@ -39,9 +39,11 @@ the Rescorla-Wagner learning rule to these corpora.
 
 Getting Started
 ===============
-These instructions will get you a copy of the project up and running on your
-local machine for development and testing purposes. See deployment for notes on
-how to deploy the project on a live system.
+These instructions will get you a copy of the ``pyndl`` package on your local
+machine. If you only want to use ``pyndl`` as a python package use ``pip3`` in
+order to install it into your python3 environment. If you want to inspect and
+change the code download and install it via ``git clone`` and ``python3
+setup.py``. For details see below.
 
 
 Prerequisites
@@ -68,8 +70,8 @@ If you only want to use the package run you can install ``pyndl`` from pypi with
     pip3 install --user pyndl
 
 If you want to inspect and change the source code as well as running tests and
-having the documentation at hand clone the repository and install the package
-in 'development' mode by running
+having local documentation, clone the repository and install the package in
+'development' mode by running
 
 .. code:: bash
 
