@@ -120,7 +120,7 @@ For manually checking coding guidelines run:
     pep8 pyndl tests
     pylint --ignore-patterns='.*\.so' --rcfile=setup.cfg -j 2 pyndl tests
 
-For more details on which tests are run in the continuous testing environment
+For more details on which tests run in the continuous testing environment
 look at the file ``tox.ini``.
 
 
