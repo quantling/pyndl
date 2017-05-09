@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
-# run py.test-3 from the above folder
+
+# pylint: disable=C0111
+
 from collections import OrderedDict
+import gzip
 import os
 
 import pytest
@@ -14,14 +17,14 @@ from pyndl.count import (cues_outcomes, load_counter, save_counter)
 from pyndl import ndl
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
-EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
+EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab.gz")
 RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 
 
 def test_bandsample():
-    resource_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab")
-    cue_freq_map, outcome_freq_map = cues_outcomes(resource_file,
-                                                   number_of_processes=2)
+    resource_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab.gz")
+    n_events, cue_freq_map, outcome_freq_map = cues_outcomes(resource_file,
+                                                             number_of_processes=2)
     outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=None, verbose=False)
     assert len(outcome_freq_map_filtered) == 50
 
@@ -62,7 +65,7 @@ def test_create_event_file_bad_event_event():
 
 
 def test_create_event_file_upper_case():
-    event_file = os.path.join(TEST_ROOT, "temp/events_corpus_upper_case.tab")
+    event_file = os.path.join(TEST_ROOT, "temp/events_corpus_upper_case.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
@@ -71,8 +74,8 @@ def test_create_event_file_upper_case():
 
 
 def test_create_event_file_trigrams_to_word():
-    event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word.tab")
-    reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab")
+    event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word.tab.gz")
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
@@ -83,8 +86,8 @@ def test_create_event_file_trigrams_to_word():
 
 
 def test_create_event_file_trigrams_to_word_line_based():
-    event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word_line_based.tab")
-    reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word_line_based.tab")
+    event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word_line_based.tab.gz")
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word_line_based.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="line", event_options=(3, ),
@@ -94,8 +97,8 @@ def test_create_event_file_trigrams_to_word_line_based():
 
 
 def test_create_event_file_bigrams_to_word():
-    event_file = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word.tab")
-    reference_file = os.path.join(TEST_ROOT, "reference/event_file_bigrams_to_word.tab")
+    event_file = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word.tab.gz")
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_bigrams_to_word.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
@@ -107,8 +110,8 @@ def test_create_event_file_bigrams_to_word():
 
 
 def test_create_event_file_word_to_word():
-    event_file = os.path.join(TEST_ROOT, "temp/event_file_word_to_word.tab")
-    reference_file = os.path.join(TEST_ROOT, "reference/event_file_word_to_word.tab")
+    event_file = os.path.join(TEST_ROOT, "temp/event_file_word_to_word.tab.gz")
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_word_to_word.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="word_to_word", event_options=(2, 1),
@@ -119,8 +122,8 @@ def test_create_event_file_word_to_word():
 
 
 def test_filter_event_file_bad_event_file():
-    input_event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word_BAD.tab")
-    output_event_file = os.path.join(TEST_ROOT, "temp/event_file_BAD_output.tab")
+    input_event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word_BAD.tab.gz")
+    output_event_file = os.path.join(TEST_ROOT, "temp/event_file_BAD_output.tab.gz")
     with pytest.raises(ValueError):
         filter_event_file(input_event_file, output_event_file)
     os.remove(output_event_file)
@@ -151,8 +154,8 @@ def test_job_filter():
 
 
 def test_filter_event_file():
-    input_event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab")
-    output_event_file = os.path.join(TEST_ROOT, "temp/event_file_filtered.tab")
+    input_event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab.gz")
+    output_event_file = os.path.join(TEST_ROOT, "temp/event_file_filtered.tab.gz")
     cues = ["#of", "of#"]
     cues.sort()
     outcomes = ["of", ]
@@ -162,7 +165,7 @@ def test_filter_event_file():
                       keep_outcomes=outcomes,
                       number_of_processes=2,
                       verbose=True)
-    cue_freq_map, outcome_freq_map = cues_outcomes(output_event_file)
+    n_events, cue_freq_map, outcome_freq_map = cues_outcomes(output_event_file)
     cues_new = list(cue_freq_map)
     cues_new.sort()
     outcomes_new = list(outcome_freq_map)
@@ -173,8 +176,8 @@ def test_filter_event_file():
 
 
 def test_write_events():
-    event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab")
-    cue_freq_map, outcome_freq_map = cues_outcomes(event_file)
+    event_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab.gz")
+    n_events, cue_freq_map, outcome_freq_map = cues_outcomes(event_file)
     outcomes = list(outcome_freq_map.keys())
     outcomes.sort()
     cues = list(cue_freq_map.keys())
@@ -212,7 +215,7 @@ def test_write_events():
 
     # bad event file
     with pytest.raises(ValueError):
-        event_bad_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word_BAD.tab")
+        event_bad_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word_BAD.tab.gz")
         events = event_generator(event_bad_file, cue_id_map,
                                  outcome_id_map)
         # traverse generator
@@ -226,14 +229,14 @@ def test_byte_conversion():
 
 
 def test_read_binary_file():
-    file_path = "resources/event_file_trigrams_to_word.tab"
+    file_path = "resources/event_file_trigrams_to_word.tab.gz"
     binary_path = "binary_resources/"
 
     abs_file_path = os.path.join(TEST_ROOT, file_path)
     abs_binary_path = os.path.join(TEST_ROOT, binary_path)
     abs_binary_file_path = os.path.join(abs_binary_path, "events_0_0.dat")
 
-    cues, outcomes = cues_outcomes(abs_file_path)
+    n_events, cues, outcomes = cues_outcomes(abs_file_path)
     cue_id_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues.keys())))
     outcome_id_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes.keys())))
 
@@ -241,8 +244,8 @@ def test_read_binary_file():
                                               outcome_id_map, overwrite=True, remove_duplicates=False)
 
     bin_events = read_binary_file(abs_binary_file_path)
-    events = ndl.events(abs_file_path)
-    events_dup = ndl.events(abs_file_path)
+    events = ndl.events_from_file(abs_file_path)
+    events_dup = ndl.events_from_file(abs_file_path)
 
     assert number_events == len(list(events_dup))
 
@@ -266,7 +269,7 @@ def test_read_binary_file():
 
 def test_preprocessing():
     corpus_file = os.path.join(TEST_ROOT, "resources/corpus.txt")
-    event_file = os.path.join(TEST_ROOT, "temp/events_corpus.tab")
+    event_file = os.path.join(TEST_ROOT, "temp/events_corpus.tab.gz")
     symbols = "abcdefghijklmnopqrstuvwxyzóąćęłńśźż"  # polish
 
     # create event file
@@ -277,8 +280,8 @@ def test_preprocessing():
                       lower_case=True, verbose=True)
 
     # read in cues and outcomes
-    cue_freq_map, outcome_freq_map = cues_outcomes(event_file,
-                                                   number_of_processes=2)
+    n_events, cue_freq_map, outcome_freq_map = cues_outcomes(event_file,
+                                                             number_of_processes=2)
     cues = list(cue_freq_map.keys())
     cues.sort()
     cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
@@ -320,9 +323,9 @@ def test_preprocessing():
 
 
 def compare_event_files(newfile, oldfile):
-    with open(newfile, "rt") as new_file:
+    with gzip.open(newfile, "rt") as new_file:
         lines_new = new_file.readlines()
-    with open(oldfile, "rt") as reference:
+    with gzip.open(oldfile, "rt") as reference:
         lines_reference = reference.readlines()
     assert len(lines_new) == len(lines_reference)
     for ii in range(len(lines_new)):

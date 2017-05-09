@@ -10,7 +10,9 @@ Welcome to pyndl's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   leading_remarks
    examples
+   comparison_of_algorithms
    pyndl
 
 

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+# pylint: disable=C0111
 
 import numpy as np
 

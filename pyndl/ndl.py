@@ -1,18 +1,19 @@
 from collections import defaultdict, OrderedDict
-import os
-import tempfile
-import time
-import getpass
-import socket
 import copy
-
-import threading
+import getpass
+import gzip
+import os
 from queue import Queue
+import socket
+import sys
+import tempfile
+import threading
+import time
 
-import numpy as np
-import pandas as pd
-import xarray as xr
 import cython
+import pandas as pd
+import numpy as np
+import xarray as xr
 
 from . import __version__
 from . import count
@@ -20,14 +21,14 @@ from . import preprocess
 from . import ndl_parallel
 
 
-def events(event_path):
+def events_from_file(event_path):
     """
-    Yields events for all events in event_file.
+    Yields events for all events in a gzipped event file.
 
     Parameters
     ----------
     event_path : str
-        path to event file
+        path to gzipped event file
 
     Yields
     ------
@@ -35,7 +36,7 @@ def events(event_path):
         a tuple of two lists containing cues and outcomes
 
     """
-    with open(event_path, 'rt') as event_file:
+    with gzip.open(event_path, 'rt') as event_file:
         # skip header
         event_file.readline()
         for line in event_file:
@@ -45,9 +46,10 @@ def events(event_path):
             yield (cues, outcomes)
 
 
-def ndl(event_path, alpha, betas, lambda_=1.0, *,
+def ndl(events, alpha, betas, lambda_=1.0, *,
         method='openmp', weights=None,
-        number_of_threads=8, sequence=10, remove_duplicates=None):
+        number_of_threads=8, len_sublists=10, remove_duplicates=None,
+        verbose=False):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -57,7 +59,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
 
     Parameters
     ----------
-    event_path : str
+    events : str
         path to the event file
     alpha : float
         saliency of all cues
@@ -71,13 +73,15 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     number_of_threads : int
         a integer giving the number of threads in which the job should
         executed
-    sequence : int
+    len_sublists : int
         a integer giving the length of sublists generated from all outcomes
     remove_duplicates : {None, True, False}
         if None though a ValueError when the same cue is present multiple times
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
         preferred!)
+    verbose : bool
+        print some output if True.
 
     Returns
     -------
@@ -90,13 +94,17 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
 
     if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
         raise ValueError("remove_duplicates must be None, True or False")
+    if not isinstance(events, str):
+        raise ValueError("'events' need to be the path to a gzipped event file not {}".format(type(events)))
 
     weights_ini = weights
     wall_time_start = time.perf_counter()
     cpu_time_start = time.process_time()
 
     # preprocessing
-    cues, outcomes = count.cues_outcomes(event_path, number_of_processes=number_of_threads)
+    n_events, cues, outcomes = count.cues_outcomes(events,
+                                                   number_of_processes=number_of_threads,
+                                                   verbose=verbose)
     cues = list(cues.keys())
     outcomes = list(outcomes.keys())
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
@@ -141,21 +149,25 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     beta1, beta2 = betas
 
     with tempfile.TemporaryDirectory(prefix="pyndl") as binary_path:
-        number_events = preprocess.create_binary_event_files(event_path, binary_path, cue_map,
+        number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
                                                              outcome_map, overwrite=True,
                                                              number_of_processes=number_of_threads,
-                                                             remove_duplicates=remove_duplicates)
+                                                             remove_duplicates=remove_duplicates,
+                                                             verbose=verbose)
+        assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
         binary_files = [os.path.join(binary_path, binary_file)
                         for binary_file in os.listdir(binary_path)
                         if os.path.isfile(os.path.join(binary_path, binary_file))]
+        if verbose:
+            print('start learning...')
         # learning
         if method == 'openmp':
             ndl_parallel.learn_inplace(binary_files, weights, alpha,
                                        beta1, beta2, lambda_,
                                        np.array(all_outcome_indices, dtype=np.uint32),
-                                       sequence, number_of_threads)
+                                       len_sublists, number_of_threads)
         elif method == 'threading':
-            part_lists = slice_list(all_outcome_indices, sequence)
+            part_lists = slice_list(all_outcome_indices, len_sublists)
 
             working_queue = Queue(len(part_lists))
             threads = []
@@ -194,7 +206,7 @@ def ndl(event_path, alpha, betas, lambda_=1.0, *,
     else:
         attrs_to_be_updated = None
 
-    attrs = _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time, wall_time,
+    attrs = _attributes(events, number_events, alpha, betas, lambda_, cpu_time, wall_time,
                         __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
@@ -216,26 +228,29 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
                                     getpass.getuser())])
     width = max(19, width)
 
-    def format_(ss):
-        return '{0: <{width}}'.format(ss, width=width)
+    def _format(value):
+        return '{0: <{width}}'.format(value, width=width)
 
-    new_attrs = {'date': format_(time.strftime("%Y-%m-%d %H:%M:%S")),
-                 'event_path': format_(event_path),
-                 'number_events': format_(number_events),
-                 'alpha': format_(str(alpha)),
-                 'betas': format_(str(betas)),
-                 'lambda': format_(str(lambda_)),
-                 'function': format_(function),
-                 'method': format_(str(method)),
-                 'cpu_time': format_(str(cpu_time)),
-                 'wall_time': format_(str(wall_time)),
-                 'hostname': format_(socket.gethostname()),
-                 'username': format_(getpass.getuser()),
-                 'pyndl': format_(__version__),
-                 'numpy': format_(np.__version__),
-                 'pandas': format_(pd.__version__),
-                 'xarray': format_(xr.__version__),
-                 'cython': format_(cython.__version__)}
+    if not type(alpha) in (float, int):
+        alpha = 'varying'
+
+    new_attrs = {'date': _format(time.strftime("%Y-%m-%d %H:%M:%S")),
+                 'event_path': _format(event_path),
+                 'number_events': _format(number_events),
+                 'alpha': _format(str(alpha)),
+                 'betas': _format(str(betas)),
+                 'lambda': _format(str(lambda_)),
+                 'function': _format(function),
+                 'method': _format(str(method)),
+                 'cpu_time': _format(str(cpu_time)),
+                 'wall_time': _format(str(wall_time)),
+                 'hostname': _format(socket.gethostname()),
+                 'username': _format(getpass.getuser()),
+                 'pyndl': _format(__version__),
+                 'numpy': _format(np.__version__),
+                 'pandas': _format(pd.__version__),
+                 'xarray': _format(xr.__version__),
+                 'cython': _format(cython.__version__)}
 
     if attrs is not None:
         for key in set(attrs.keys()) | set(new_attrs.keys()):
@@ -280,9 +295,9 @@ class WeightDict(defaultdict):
         self._attrs = OrderedDict(attrs)
 
 
-def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
+def dict_ndl(events, alphas, betas, lambda_=1.0, *,
              weights=None, inplace=False, remove_duplicates=None,
-             make_data_array=False):
+             make_data_array=False, verbose=False):
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
@@ -296,7 +311,7 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
 
     Parameters
     ----------
-    event_list : generator or str
+    events : generator or str
         generates cues, outcomes pairs or the path to the event file
     alphas : dict or float
         a (default)dict having cues as keys and a value below 1 as value
@@ -315,6 +330,8 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
         preferred!)
     make_data_array : {False, True}
         if True makes a xarray.DataArray out of the dict of dicts.
+    verbose : bool
+        print some output if True.
 
     Returns
     -------
@@ -340,8 +357,8 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
 
     wall_time_start = time.perf_counter()
     cpu_time_start = time.process_time()
-    if isinstance(event_list, str):
-        event_path = event_list
+    if isinstance(events, str):
+        event_path = events
     else:
         event_path = ""
     attrs_to_update = None
@@ -369,15 +386,18 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     beta1, beta2 = betas
     all_outcomes = set(weights.keys())
 
-    if isinstance(event_list, str):
-        event_list = events(event_list)
+    if isinstance(events, str):
+        events = events_from_file(events)
     if isinstance(alphas, float):
         alpha = alphas
         alphas = defaultdict(lambda: alpha)
     number_events = 0
 
-    for cues, outcomes in event_list:
+    for cues, outcomes in events:
         number_events += 1
+        if verbose and number_events % 1000:
+            print('.', end='')
+            sys.stdout.flush()
         if remove_duplicates is None:
             if (len(cues) != len(set(cues)) or
                     len(outcomes) != len(set(outcomes))):
@@ -431,30 +451,30 @@ def dict_ndl(event_list, alphas, betas, lambda_=1.0, *,
     return weights
 
 
-def slice_list(li, sequence):
-    """
-    Slices a list in sublists with the length sequence.
+def slice_list(list_, len_sublists):
+    r"""
+    Slices a list in sublists with the length len_sublists.
 
     Parameters
     ----------
-    li : list
+    list\_ : list
          list which should be sliced in sublists
-    sequence : int
+    len_sublists : int
          integer which determines the length of the sublists
 
     Returns
     -------
     seq_list : list of lists
-        a list of sublists with the length sequence
+        a list of sublists with the length len_sublists
 
     """
-    if sequence < 1:
-        raise ValueError("sequence must be larger then one")
-    assert len(li) == len(set(li))
+    if len_sublists < 1:
+        raise ValueError("'len_sublists' must be larger then one")
+    assert len(list_) == len(set(list_))
     ii = 0
     seq_list = list()
-    while ii < len(li):
-        seq_list.append(li[ii:ii+sequence])
-        ii = ii+sequence
+    while ii < len(list_):
+        seq_list.append(list_[ii:ii + len_sublists])
+        ii = ii + len_sublists
 
     return seq_list

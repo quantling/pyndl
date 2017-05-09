@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+
+# pylint: disable=C0111
+
 import time
 import gc
 import os
@@ -15,8 +19,8 @@ slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
                           reason="need --runslow option to run")
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
-FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab")
-FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab")
+FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab.gz")
+FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab.gz")
 
 LAMBDA_ = 1.0
 ALPHA = 0.1

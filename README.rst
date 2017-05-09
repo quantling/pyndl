@@ -29,135 +29,144 @@ the Rescorla-Wagner learning rule to these corpora.
 .. warning::
 
     This package is still in alpha and there might be some API changes in the
-    near future. If you want to suggest us some contact us under konstantin
-    (dot) sering (ät) uni-tuebingen.de.
+    near future. If you have suggestings concerning the ``pyndl`` package,
+    contact us under konstantin (dot) sering (ät) uni-tuebingen.de.
 
 .. note::
 
     This package is not intended to be used under python2.
 
 
-Installation
-============
-Install with::
-
-    python setup.py install [--user]
-
-or development install with::
-
-    python setup.py develop
-
-in order to build a source package run::
-
-    python setup.py sdist
+Getting Started
+===============
+These instructions will get you a copy of the ``pyndl`` package on your local
+machine. If you only want to use ``pyndl`` as a python package use ``pip3`` in
+order to install it into your python3 environment. If you want to inspect and
+change the code download and install it via ``git clone`` and ``python3
+setup.py``. For details see below.
 
 
-Usage
-=====
-This package is intended to be used as a python package in (small) python
-script or via the ipython REPL. For example code and explanations look into
-``doc/source/examples.rst``.
-
+Prerequisites
+-------------
+You need python 3.4 or newer and git installed on your machine. We recommend to
+install Minicoda (https://conda.io/miniconda.html) before installing ``pyndl``
+or to create a virtualenv within your personal folder.
 
 Development
-===========
+^^^^^^^^^^^
+If you want to develop ``pyndl`` you should additionally install:
+
+.. code:: bash
+
+   pip3 install --user tox pylint pytest pep8 sphinx
 
 
-Documentation
--------------
-The documentation and the doc-strings within the source code should follow the
-numpy doc-string conventions (which are used by pandas as well).
+Installing
+----------
+If you only want to use the package run you can install ``pyndl`` from pypi with:
 
-https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt
+.. code:: bash
 
-http://pandas.pydata.org/pandas-docs/stable/contributing.html#contributing-to-the-documentation
+    pip3 install --user pyndl
+
+If you want to inspect and change the source code as well as running tests and
+having local documentation, clone the repository and install the package in
+'development' mode by running
+
+.. code:: bash
+
+    git clone https://github.com/quantling/pyndl.git
+    cd pyndl
+    python3 setup.py --user develop
 
 
-Install
--------
-You can install this package with pip from a folder, git repository, or sdist
-bundle::
+Documentation and Examples
+--------------------------
+Documentation and examples can be found under
+http://pyndl.readthedocs.io/en/latest/ or in the ``doc/`` folder after cloning
+the repository.
 
-    pip install ~/pyndl/|git+ssh://git@github.com/<user>/pyndl.git|pyndl-<version>.tar.gz
+If you have installed ``sphinx`` you should be able to build the documentation with:
+
+.. code:: bash
+
+   cd doc/
+   make html
+
+The entry point for the html documentation is ``doc/build/html/index.html``.
 
 
-Testing
+Running the tests
+=================
+If you have cloned ``pyndl`` from github, you can start the tests by executing
+the following within the outer ``pyndl`` folder:
+
+.. code:: bash
+
+    py.test
+    py.test doc/souce/example.rst
+
+
+For full tests you can run:
+
+.. code:: bash
+
+    tox -e test
+
+For manually checking coding guidelines run:
+
+.. code:: bash
+
+    pep8 pyndl tests
+    pylint --ignore-patterns='.*\.so' --rcfile=setup.cfg -j 2 pyndl tests
+
+For more details on which tests run in the continuous testing environment
+look at the file ``tox.ini``.
+
+
+Deployment
+==========
+In order to create a source dist package run:
+
+.. code:: bash
+
+    python3 setup.py sdist
+
+
+Contributing
+============
+Please read
+`CONTRIBUTING.rst
+<https://github.com/quantling/pyndl/blob/master/CONTRIBUTING.rst>`_ for details
+on our code of conduct and the process for submitting pull requests to us.
+
+
+Versioning
+==========
+At the moment we are still in alpha and therefore no stable API is guaranteed
+between minor version increments, but soon we will change to use `SemVer
+<http://semver.org/>`_ for versioning. For the versions available, see the
+`tags on this repository <https://github.com/quantling/pyndl/tags>`_.
+
+
+Authors
 =======
-Check if the package does what it is supposed to do by running the test with
-``py.test``::
-
-    py.test-3 --cov-report html --cov=pyndl
-
-The more general way of testing - including unit tests, documentation checks
-and style checking - can be done via tox. Tox does testing in a virtual
-environment and installs all dependencies. ::
-
-    (pip install tox)
-    tox
+See also the list of `contributors
+<https://github.com/quantling/pyndl/contributors>`_ who participated in this
+project.
 
 
-Important terminology
-=====================
-Some terminology used in these modules and scripts which descripe specific
-behaviour:
+License
+=======
+This project is licensed under the MIT License - see the `LICENSE.txt
+<https://github.com/quantling/pyndl/blob/master/LICENSE.txt>`_ file for details
 
-cue :
-    A cue is something that gives a hint on something else. The something else
-    is called outcome. Examples for cues in a text corpus are trigraphs or
-    preceeding words for the word or meaning of the word.
 
-outcome :
-    A something that happens or is the result of an event. Examples are words,
-    the meaning of the word, or lexomes.
+Acknowledgments
+===============
+This package is build as a python replacement for the R ndl2 package. Some
+ideas on how to build the API and how to efficiently run the Rescorla Wagner
+iterative learning on large text corpora are inspired by the way the ndl2
+package solves this problems. The ndl2 package will be published to github in
+August 2017 and a reference will be placed here.
 
-event :
-    An event connects cues with outcomes. In any event one or more unordered
-    cues are present and one or more outcomes are present.
-
-weights :
-    The weights represent the learned experience / association between all cues
-    and outcomes of interest. Usually, some meta data is stored alongside the
-    learned weights.
-
-cue file :
-    A cue file contains a list of all cues that are interesting for a specific
-    question. It is a utf-8 encoded tab delimitered text file with a header in
-    the first line. It has two columns. The first column contains the cue and
-    the second column contains the frequency of the cue. There is one cue per
-    line. The ordering does not matter.
-
-outcome file :
-    An outcome file contains a list of all outcomes that are interesting for a
-    specific question. It is a utf-8 encoded tab delimitered text file with a
-    header in the first line. It has two columns. The first column contains the
-    outcome and the second column contains the frequency of the outcome. There
-    is one outcome per line. The ordering does not matter.
-
-symbol file :
-    A symbol file contains a list of all symbols that are allowed to occur in
-    an outcome or a cue. It is a utf-8 encoded tab delimitered text file with a
-    header in the first line. It has two columns. The first column contains the
-    symbol and the second column contains the frequency of the symbol. There is
-    one symbol per line. The ordering does not matter.
-
-event file :
-    An event file contains a list of all events that should be learned. The
-    learning will start at the first event and continue to the last event in
-    order of the lines. The event file is a utf-8 encoded tab delimitered text
-    file with a header in the first line. It has three columns. The first
-    column contains an underscore delimitered list of all cues. The second
-    column contains an underscore delimitered list of all outcomes. The third
-    column contains the frequency of the event. The ordering of the cues and
-    outcomes does not matter. There is one event per line. The ordering of the
-    lines in the file *does* matter.
-
-corpus file :
-    A corpus file is a utf-8 encoded text file that contains huge amounts of
-    text. A ``---end.of.document---`` or ``---END.OF.DOCUMENT---`` string marks
-    where an old document finished and a new document starts.
-
-weights file :
-    A weights file contains the learned weights between cues and outcomes. The
-    netCDF format is used to store these information along side with meta data,
-    which contains the learning parameters, the time needed to calculate the
-    weights, the version of the software used and other information.

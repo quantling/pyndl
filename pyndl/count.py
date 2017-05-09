@@ -8,26 +8,30 @@ This module provides functions in order to count
 
 """
 
+# pylint: disable=redefined-outer-name, invalid-name
+
 from collections import Counter
+import gzip
 import itertools
 import multiprocessing
 import os
 import sys
 
 
-def _job_cues_outcomes(event_file_name, start, step, verbose=True):
+def _job_cues_outcomes(event_file_name, start, step, verbose=False):
     """
     Counts cues and outcomes for every ``step`` event starting from
     ``start`` event.
 
     Returns
     -------
-    (cues, outcomes) : (collections.Counter, collections.Counter)
+    (nn, cues, outcomes) : (int, collections.Counter, collections.Counter)
 
     """
     cues = Counter()
     outcomes = Counter()
-    with open(event_file_name, 'r') as dfile:
+    nn = -1  # in case the for loop never gets called and 1 gets added in the end
+    with gzip.open(event_file_name, 'rt') as dfile:
         # skip header
         dfile.readline()
         for nn, line in enumerate(itertools.islice(dfile, start, None, step)):
@@ -39,18 +43,18 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=True):
             if verbose and nn % 100000 == 0:
                 print('.', end='')
                 sys.stdout.flush()
-    return (cues, outcomes)
+    return (nn + 1, cues, outcomes)
 
 
 def cues_outcomes(event_file_name,
-                  *, number_of_processes=2, verbose=True):
+                  *, number_of_processes=2, verbose=False):
     """
     Counts cues and outcomes in event_file_name using number_of_processes
     processes.
 
     Returns
     -------
-    (cues, outcomes) : (collections.Counter, collections.Counter)
+    (n_events, cues, outcomes) : (int, collections.Counter, collections.Counter)
 
     """
     with multiprocessing.Pool(number_of_processes) as pool:
@@ -61,20 +65,22 @@ def cues_outcomes(event_file_name,
                                  step,
                                  verbose)
                                 for start in range(number_of_processes)))
+        n_events = 0
         cues = Counter()
         outcomes = Counter()
-        for cues_process, outcomes_process in results:
+        for nn, cues_process, outcomes_process in results:
+            n_events += nn
             cues += cues_process
             outcomes += outcomes_process
 
     if verbose:
         print('\n...counting done.')
 
-    return cues, outcomes
+    return n_events, cues, outcomes
 
 
-def _job_words_symbols(corpus_file_name, start, step, lower_case=True,
-                       verbose=True):
+def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
+                       verbose=False):
     """
     Counts the words and symbols for every ``step`` line starting from
     ``start`` line.
@@ -112,7 +118,7 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=True,
 
 
 def words_symbols(corpus_file_name,
-                  *, number_of_processes=2, lower_case=True, verbose=True):
+                  *, number_of_processes=2, lower_case=False, verbose=False):
     """
     Counts words and symbols in corpus_file_name using number_of_processes
     processes.
@@ -175,7 +181,7 @@ if __name__ == '__main__':
 
     if len(sys.argv) < 2:
         print('Usage: python3 %s corpus=corpus_file.txt [num_of_processes]' % sys.argv[0])
-        print('Or:    python3 %s event=event_file.tab [num_of_processes]' % sys.argv[0])
+        print('Or:    python3 %s event=event_file.tab.gz [num_of_processes]' % sys.argv[0])
         sys.exit('Wrong command line option.')
     modus, filename = sys.argv[1].strip().split("=")
     path, filename = os.path.split(filename)
@@ -187,9 +193,9 @@ if __name__ == '__main__':
         step = 1
 
     if modus == 'event':
-        cues, outcomes = cues_outcomes(os.path.join(path, filename),
-                                       number_of_processes=step,
-                                       verbose=True)
+        n_events, cues, outcomes = cues_outcomes(os.path.join(path, filename),
+                                                 number_of_processes=step,
+                                                 verbose=True)
         save_counter(cues, filename + ".cues", header="cues\tfreq\n")
         save_counter(outcomes, filename + ".outcomes", header="outcomes\tfreq\n")
 
