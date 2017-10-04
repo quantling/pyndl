@@ -9,6 +9,30 @@ import xarray as xr
 
 from . import ndl
 
+def predictions(events, weights, decisions):  #number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
+    """
+    Estimate activations and predictions for given events in event file and
+    outcome-cue weights and outcome-outcome decisions.
+
+    """
+    if not isinstance(weights, xr.DataArray):
+        raise ValueError('weights need to be xr.DataArray')
+    if not isinstance(decisions, xr.DataArray):
+        raise ValueError('decisions need to be xr.DataArray')
+
+    activations = np.zeros((len(events), len(weights.outcomes)))
+    predictions = np.zeros((len(events), len(decisions.output)))
+
+    for ii, (cues, outcomes) in enumerate(events):
+        cue_vector = np.zeros(len(weights.cues))
+        for jj, cue in enumerate(weights.cues):
+            if cue in cues:
+                cue_vector[jj] = 1.0
+        activations[ii, :] = weights.data @ cue_vector
+        predictions[ii, :] = decisions.data @ activations[ii, :]
+
+    return (activations, predictions)
+
 
 def activation(events, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
     """

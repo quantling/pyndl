@@ -217,7 +217,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
 def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
                 wall_time, function, method=None, attrs=None):
-    width = max([len(ss) for ss in (event_path,
+    width = max([len(ss.strip()) for ss in (event_path,
                                     str(number_events),
                                     str(alpha),
                                     str(betas),
@@ -226,12 +226,13 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
                                     str(method),
                                     socket.gethostname(),
                                     getpass.getuser())])
-    width = max(19, width)
+    #width = max(19, width)
+    width = 19
 
     def _format(value):
         return '{0: <{width}}'.format(value, width=width)
 
-    if not type(alpha) in (float, int):
+    if not isinstance(alpha, (float, int)):
         alpha = 'varying'
 
     new_attrs = {'date': _format(time.strftime("%Y-%m-%d %H:%M:%S")),
@@ -301,13 +302,11 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
-    This is a pure python implementation using dicts.
+    This is a pure python implementation using WeightDict.
 
     Notes
     -----
-    The metadata will only be stored when `make_data_array` is True and then
-    `dict_ndl` cannot be used to continue learning. At the moment there is no
-    proper way to automatically store the meta data into the default dict.
+    The meta data can be accessed under ``weights.attrs`` and ``decisions.attrs``.
 
     Parameters
     ----------
@@ -318,7 +317,7 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
     betas : (float, float)
         one value for successful prediction (reward) one for punishment
     lambda\\_ : float
-    weights : dict of dicts or xarray.DataArray or None
+    weights : WeightDict or xarray.DataArray or None
         initial weights
     inplace: {True, False}
         if True calculates the weightmatrix inplace
@@ -329,13 +328,13 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
         keep multiple instances of the same cue or outcome (this is usually not
         preferred!)
     make_data_array : {False, True}
-        if True makes a xarray.DataArray out of the dict of dicts.
+        if True makes a xarray.DataArray out of WeightDict.
     verbose : bool
         print some output if True.
 
     Returns
     -------
-    weights : dict of dicts of floats
+    weights : WeightDict
         the first dict has outcomes as keys and dicts as values
         the second dict has cues as keys and weights as values
         weights[outcome][cue] gives the weight between outcome and cue.
@@ -360,7 +359,7 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
     if isinstance(events, str):
         event_path = events
     else:
-        event_path = ""
+        event_path = "iterator"
     attrs_to_update = None
 
     # weights can be seen as an infinite outcome by cue matrix
@@ -377,8 +376,8 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
         for oi, outcome in enumerate(coords['outcomes'].values):
             for ci, cue in enumerate(coords['cues'].values):
                 weights[outcome][cue] = weights_ini.item((oi, ci))
-    elif not isinstance(weights, defaultdict):
-        raise ValueError('weights needs to be either defaultdict or None')
+    else:
+        raise ValueError('weights needs to be either WeightDict, xr.DataArray or None')
 
     if not inplace:
         weights = copy.deepcopy(weights)
@@ -395,8 +394,14 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
 
     for cues, outcomes in events:
         number_events += 1
-        if verbose and number_events % 1000:
+        if verbose and number_events % 1000 == 0:
             print('.', end='')
+            sys.stdout.flush()
+        if verbose and number_events % 10000 == 0:
+            print(' ', end='')
+            sys.stdout.flush()
+        if verbose and number_events % 50000 == 0:
+            print('\n', end='')
             sys.stdout.flush()
         if remove_duplicates is None:
             if (len(cues) != len(set(cues)) or
@@ -449,6 +454,220 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
         weights.attrs = attrs
 
     return weights
+
+
+
+def dict_ndl_plus(events, alphas, betas, lambda_=1.0, eta_plus=0.01, *,
+                  weights=None, decisions=None, inplace=False,
+                  remove_duplicates=None, make_data_array=False,
+                  verbose=False):
+    """
+    Calculate the weights and decisions for all_outcomes over all events in
+    event_file.
+
+    This is a pure python implementation using WeightDict.
+
+    Notes
+    -----
+    The meta data can be accessed under ``weights.attrs`` and ``decisions.attrs``.
+
+    Parameters
+    ----------
+    events : generator or str
+        generates cues, outcomes pairs or the path to the event file
+    alphas : dict or float
+        a (default)dict having cues as keys and a value below 1 as value
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    lambda\\_ : float
+    eta_plus : float
+    weights : WeightDict or xarray.DataArray or None
+        initial weights
+    decisions : WeightDict or xarray.DataArray or None
+        initial decisions
+    inplace: {True, False}
+        if True calculates the weight and the decision matrix inplace
+        if False creates a new weight and decision matrix to learn on
+    remove_duplicates : {None, True, False}
+        if None though a ValueError when the same cue is present multiple times
+        in the same event; True make cues and outcomes unique per event; False
+        keep multiple instances of the same cue or outcome (this is usually not
+        preferred!)
+    make_data_array : {False, True}
+        if True makes a xarray.DataArray out of the WeightDicts.
+    verbose : bool
+        print some output if True.
+
+    Returns
+    -------
+    (weights, decisions) : WeightsDict, WeightDict
+        the first dict has outcomes as keys and dicts as values
+        the second dict has cues as keys and weights as values
+        weights[outcome][cue] gives the weight between outcome and cue.
+
+    or
+
+    (weights, decisions) : xarray.DataArray, xarray.DataArray
+        with dimensions 'outcomes' and 'cues'. You can lookup the weights
+        between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
+        'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``. And dimensions of
+        'input' and 'output' for the decisions matrix.
+
+    """
+
+    if not isinstance(make_data_array, bool):
+        raise ValueError("make_data_array must be True or False")
+
+    if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
+        raise ValueError("remove_duplicates must be None, True or False")
+
+    wall_time_start = time.perf_counter()
+    cpu_time_start = time.process_time()
+    if isinstance(events, str):
+        event_path = events
+    else:
+        event_path = "iterator"
+    attrs_to_update = None
+
+
+    # weights can be seen as an infinite outcome by cue matrix
+    # weights[outcome][cue]
+    if weights is None:
+        weights = WeightDict()
+    elif isinstance(weights, WeightDict):
+        attrs_to_update = weights.attrs
+    elif isinstance(weights, xr.DataArray):
+        weights_ini = weights
+        attrs_to_update = weights_ini.attrs
+        coords = weights_ini.coords
+        weights = WeightDict()
+        for oi, outcome in enumerate(coords['outcomes'].values):
+            for ci, cue in enumerate(coords['cues'].values):
+                weights[outcome][cue] = weights_ini.item((oi, ci))
+    else:
+        raise ValueError('weights needs to be either WeightDict, xr.DataArray or None')
+
+    if decisions is None:
+        decisions = WeightDict()
+    elif isinstance(decisions, WeightDict):
+        attrs_to_update = decisions.attrs
+    elif isinstance(decisions, xr.DataArray):
+        decisions_ini = decisions
+        attrs_to_update = decisions_ini.attrs
+        coords = decisions_ini.coords
+        decisions = WeightDict()
+        for oi, outcome in enumerate(coords['outcomes'].values):
+            for ci, cue in enumerate(coords['cues'].values):
+                decisions[outcome][cue] = decisions_ini.item((oi, ci))
+    else:
+        raise ValueError('decisions needs to be either WeightDict, xr.DataArray or None')
+
+    
+    if not inplace:
+        weights = copy.deepcopy(weights)
+        decisions = copy.deepcopy(decisions)
+
+    beta1, beta2 = betas
+    all_outcomes = set(weights.keys())
+
+    if isinstance(events, str):
+        events = events_from_file(events)
+    if isinstance(alphas, float):
+        alpha = alphas
+        alphas = defaultdict(lambda: alpha)
+    number_events = 0
+
+    for cues, outcomes in events:
+        number_events += 1
+        if verbose and number_events % 1000 == 0:
+            print('.', end='')
+            sys.stdout.flush()
+        if verbose and number_events % 10000 == 0:
+            print(' ', end='')
+            sys.stdout.flush()
+        if verbose and number_events % 50000 == 0:
+            print('\n', end='')
+            sys.stdout.flush()
+        if remove_duplicates is None:
+            if (len(cues) != len(set(cues)) or
+                    len(outcomes) != len(set(outcomes))):
+                raise ValueError('cues or outcomes needs to be unique: cues '
+                                 '"%s"; outcomes "%s"; use '
+                                 'remove_duplicates=True' %
+                                 (' '.join(cues), ' '.join(outcomes)))
+        elif remove_duplicates:
+            cues = set(cues)
+            outcomes = set(outcomes)
+        else:
+            pass
+
+        # initialise decisions dynamically as diagonal matrix with ones on the
+        # diagonal
+        new_outcomes = set(outcomes) - all_outcomes
+        for outcome in new_outcomes:
+            decisions[outcome][outcome] = 1.0
+        all_outcomes.update(outcomes)
+
+        # update weights
+        for outcome in all_outcomes:
+            association_strength = sum(weights[outcome][cue] for cue in cues)
+            if outcome in outcomes:
+                update = beta1 * (lambda_ - association_strength)
+            else:
+                update = beta2 * (0 - association_strength)
+            for cue in cues:
+                weights[outcome][cue] += alphas[cue] * update
+
+        # update decisions
+        for outcome in all_outcomes:
+            association_strength = sum(
+                decisions[outcome][outcome2] * sum(weights[outcome2][cue] for cue in cues) for outcome2 in
+                all_outcomes)
+            if outcome in outcomes:
+                update = eta_plus * (lambda_ - association_strength)
+            else:
+                update = eta_plus * (0 - association_strength)
+            for outcome2 in all_outcomes:
+                decisions[outcome][outcome2] += update
+
+    cpu_time_stop = time.process_time()
+    wall_time_stop = time.perf_counter()
+    cpu_time = cpu_time_stop - cpu_time_start
+    wall_time = wall_time_stop - wall_time_start
+    attrs = _attributes(event_path, number_events, alphas, betas, lambda_, cpu_time, wall_time,
+                        __name__ + "." + dict_ndl.__name__, attrs=attrs_to_update)
+
+    if make_data_array:
+        outcomes = list(weights.keys())
+        cues = set()
+        for outcome in outcomes:
+            cues.update(set(weights[outcome].keys()))
+        cues = list(cues)
+
+        # convert weights
+        weights_dict = weights
+        shape = (len(outcomes), len(cues))
+        weights = xr.DataArray(np.zeros(shape), attrs=attrs,
+                               coords={'outcomes': outcomes, 'cues': cues},
+                               dims=('outcomes', 'cues'))
+        for outcome in outcomes:
+            for cue in cues:
+                weights.loc[{"outcomes": outcome, "cues": cue}] = weights_dict[outcome][cue]
+
+        # convert decisions
+        decisions_dict = decisions
+        shape = (len(outcomes), len(outcomes))
+        decisions = xr.DataArray(np.zeros(shape), attrs=attrs,
+                               coords={'output': outcomes, 'input': outcomes},
+                               dims=('output', 'input'))
+        for outcome in outcomes:
+            for outcome2 in outcomes:
+                decisions.loc[{"output": outcome, "input": outcome2}] = decisions_dict[outcome][outcome2]
+    else:
+        weights.attrs = attrs
+        decisions.attrs = attrs
+
+    return weights, decisions
 
 
 def slice_list(list_, len_sublists):
