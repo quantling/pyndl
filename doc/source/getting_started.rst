@@ -11,7 +11,7 @@ setup.py``. For details see below.
 Prerequisites
 -------------
 You need python 3.4 or newer and git installed on your machine. We recommend to
-install Minicoda (https://conda.io/miniconda.html) before installing ``pyndl``
+install `Minicoda <https://conda.io/miniconda.html>`_ before installing ``pyndl``
 or to create a virtualenv within your personal folder.
 
 Development
@@ -56,21 +56,29 @@ Mac OS X
 gcc/g++ might be outdated as xcode provides 4.X, while 6.3 is needed. Therefore,
 it might be necesarry to update gcc first, before installing pyndl.
 
-1. for safe-guarding redo the xcode install in the Terminal::
+1. for safe-guarding redo the xcode install in the Terminal:
+
+.. code:: bash
 
         xcode-select --install
 
-2. download gcc from Mac OSX High Performance Computing
-    http://prdownloads.sourceforge.net/hpc/gcc-6.3-bin.tar.gz
-    then run these commands in Terminal::
+2. download gcc from `Mac OSX High Performance Computing <http://prdownloads.sourceforge.net/hpc/gcc-6.3-bin.tar.gz>`_
+then run these commands in Terminal:
+
+.. code:: bash
 
         gunzip gcc-6.X-bin.tar.gz
         sudo tar -xvf gcc-6.X-bin.tar -C /
 
-3. finally, install pyndl::
+3. finally, install pyndl:
+
+.. code:: bash
 
         pip install pyndl
 
-Hopefully, you have successfully installed pyndl on your OS X Machine. Please be
-aware that we currently offer no support for OS X and can therefore not provide,
-whether a safe installation or usage on OS X is possible.
+Hopefully, you have successfully installed pyndl on your OS X Machine.
+
+.. warning::
+
+    Please be aware that we currently offer no support for OS X and can therefore
+    not provide, whether a safe installation or usage on OS X is possible.
