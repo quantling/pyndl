@@ -1,10 +1,8 @@
-Leading Remarks
-===============
+Terminology
+===========
 
-Important terminology
----------------------
 Some terminology used in these modules and scripts which describe specific
-behaviour:
+behavior:
 
 cue :
     A cue is something that gives a hint on something else. The something else
@@ -67,4 +65,3 @@ weights file :
     netCDF format is used to store these information along side with meta data,
     which contains the learning parameters, the time needed to calculate the
     weights, the version of the software used and other information.
-
