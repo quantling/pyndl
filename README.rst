@@ -82,7 +82,7 @@ having local documentation, clone the repository and install the package in
 
     git clone https://github.com/quantling/pyndl.git
     cd pyndl
-    python3 setup.py --user develop
+    python3 setup.py develop --user
 
 
 Mac OS X
@@ -133,7 +133,7 @@ the following within the outer ``pyndl`` folder:
 .. code:: bash
 
     py.test
-    py.test doc/souce/example.rst
+    py.test doc/source/examples.rst
 
 
 For full tests you can run:
