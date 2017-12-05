@@ -61,9 +61,14 @@ If you want to develop ``pyndl`` you should additionally install:
    pip3 install --user tox pylint pytest pep8 sphinx
 
 
-Installing
-----------
-If you only want to use the package run you can install ``pyndl`` from pypi with:
+Installation
+------------
+
+Linux
+^^^^^
+
+If you want to install pyndl on Linux and only want to use the package run you
+can easily install ``pyndl`` from pypi with:
 
 .. code:: bash
 
@@ -79,6 +84,30 @@ having local documentation, clone the repository and install the package in
     cd pyndl
     python3 setup.py --user develop
 
+
+Mac OS X
+^^^^^^^^
+gcc/g++ might be outdated as xcode provides 4.X, while 6.3 is needed. Therefore,
+it might be necesarry to update gcc first, before installing pyndl.
+
+1. for safe-guarding redo the xcode install in the Terminal::
+
+        xcode-select --install
+
+2. download gcc from Mac OSX High Performance Computing
+    http://prdownloads.sourceforge.net/hpc/gcc-6.3-bin.tar.gz
+    then run these commands in Terminal::
+
+        gunzip gcc-6.X-bin.tar.gz
+        sudo tar -xvf gcc-6.X-bin.tar -C /
+
+3. finally, install pyndl::
+
+        pip install pyndl
+
+Hopefully, you have successfully installed pyndl on your OS X Machine. Please be
+aware that we currently offer no support for OS X and can therefore not provide,
+whether a safe installation or usage on OS X is possible. 
 
 Documentation and Examples
 --------------------------
@@ -169,4 +198,3 @@ ideas on how to build the API and how to efficiently run the Rescorla Wagner
 iterative learning on large text corpora are inspired by the way the ndl2
 package solves this problems. The ndl2 package will be published to github in
 August 2017 and a reference will be placed here.
-
