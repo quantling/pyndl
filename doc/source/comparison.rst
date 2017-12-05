@@ -1,8 +1,8 @@
 
 .. _comparison_of_algorithms:
 
-Comparison of Algorithms
-========================
+Comparison with other Algorithms
+================================
 
 Rescorla Wagner learning rule
 -----------------------------
@@ -11,7 +11,7 @@ In order to update the association strengths (weights) between cues and
 outcomes we do for each event the following:
 
 We calculate the activation (prediction) :math:`a_j` for each outcome
-:math:`o_j` by using all present cues :math:`C_\text{PRESENT}`: 
+:math:`o_j` by using all present cues :math:`C_\text{PRESENT}`:
 
 .. math::
 
@@ -58,7 +58,7 @@ rule as:
 
    \Delta &= \eta \vec{c} \cdot (\lambda \vec{o} - \vec{a})^T \\
    &= \eta \vec{c} \cdot (\lambda \vec{o} - W^T \cdot \vec{c})^T
-   
+
 Let us first check the dimensionality of the matrices:
 
 :math:`\Delta` is the update of the weight matrix :math:`W` and therefore needs
@@ -84,8 +84,8 @@ rewrite the equation.
 
 .. math::
    \Delta &= \eta \vec{c} \cdot ((\lambda \vec{o})^T - (W^T \cdot \vec{c})^T) \\
-   &= \eta \vec{c} \cdot (\lambda \vec{o}^T - \vec{c}^T \cdot W) \\ 
-   &= \eta \lambda \vec{c} \cdot \vec{o}^T - \eta \vec{c} \cdot \vec{c}^T \cdot W \\ 
+   &= \eta \vec{c} \cdot (\lambda \vec{o}^T - \vec{c}^T \cdot W) \\
+   &= \eta \lambda \vec{c} \cdot \vec{o}^T - \eta \vec{c} \cdot \vec{c}^T \cdot W \\
 
 If we now look at the full update:
 
@@ -110,9 +110,9 @@ In index notation we can write:
 
 .. math::
 
-   
-   W^{t + 1} &= W^{t} + \eta \vec{c} \cdot (\lambda \vec{o}^T - \vec{c}^T \cdot W) \\ 
-   W^{t + 1}_{ij} &= W^{t}_{ij} + \eta c_i (\lambda o_j - \sum_k c_k W_{kj}) \\ 
+
+   W^{t + 1} &= W^{t} + \eta \vec{c} \cdot (\lambda \vec{o}^T - \vec{c}^T \cdot W) \\
+   W^{t + 1}_{ij} &= W^{t}_{ij} + \eta c_i (\lambda o_j - \sum_k c_k W_{kj}) \\
 
 
 .. note::

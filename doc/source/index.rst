@@ -22,16 +22,6 @@ Pyndl is a python3 package containing a lot of useful methods in order to run ta
 huge amounts of text file corpora. Especially, it allows to efficiently apply
 the Rescorla-Wagner learning rule to these corpora.
 
-**Source Repository:** `https://github.com/quantling/pyndl <https://github.com/quantling/pyndl>`_
-**Binary Installers:** `https://pypi.python.org/pypi/pyndl/ <https://pypi.python.org/pypi/pyndl/>`_
-**Issues & Ideas:** `https://github.com/quantling/pyndl/issues <https://github.com/quantling/pyndl/issues>`_
-
-.. automodule:: pyndl
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -39,14 +29,5 @@ the Rescorla-Wagner learning rule to these corpora.
    getting_started
    terminology
    examples
-   comparison_of_algorithms
+   comparison
    references
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
