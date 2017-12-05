@@ -29,5 +29,6 @@ the Rescorla-Wagner learning rule to these corpora.
    getting_started
    terminology
    examples
-   comparison
    references
+   comparison
+   about
