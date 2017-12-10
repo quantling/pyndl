@@ -111,20 +111,20 @@ Cues               Outcomes
 pyndl.ndl module
 ----------------
 We can now compute the strength of associations (weights or weight matrix)
-after the  presentation of the 419 tokens of the 10 words using **pyndl**.
-**pyndl** provides the two functions :py:mod:`pyndl.ndl.ndl` and
-:py:mod:`pyndl.ndl.dict_ndl` to calculate the weights for all outcomes over all
-events. :py:mod:`pyndl.ndl.ndl` itself provides to methods regarding estimation,
-``openmp`` and ``threading``. We have to specify the path of our event file
-``lexample.tab.gz`` and for this example set :math:`\alpha = 0.1`,
-:math:`\beta_{1} = 0.1`, :math:`\beta_{2} = 0.1` with leaving
-:math:`\lambda = 1.0` at its default value. You can use **pyndl** directly
-in a Python3 Shell or you can write an executable script, this is up to you.
-For educational purposes we use a Python3 Shell in this example.
+after the  presentation of the 419 tokens of the 10 words using
+:py:mod:`pyndl.ndl`. :py:mod:`pyndl.ndl` provides the two functions
+:py:mod:`pyndl.ndl.ndl` and :py:mod:`pyndl.ndl.dict_ndl` to calculate the
+weights for all outcomes over all events. :py:mod:`pyndl.ndl.ndl` itself
+provides to methods regarding estimation, ``openmp`` and ``threading``. We have
+to specify the path of our event file ``lexample.tab.gz`` and for this example
+set :math:`\alpha = 0.1`, :math:`\beta_{1} = 0.1`, :math:`\beta_{2} = 0.1` with
+leaving :math:`\lambda = 1.0` at its default value. You can use **pyndl**
+directly in a Python3 Shell or you can write an executable script, this is up to
+you. For educational purposes we use a Python3 Shell in this example.
 
 
 pyndl.ndl.ndl
-^^^^^^^
+^^^^^^^^^^^^^
 :py:mod:`pyndl.ndl.ndl` is a parallel Python implementation using numpy,
 multithreading and a binary format which is created automatically. It allows
 you to choose between the two methods ``openmp`` and ``threading``, with the
@@ -212,8 +212,8 @@ moment of your calculations:
    OrderedDict(...)
 
 
-ndl.dict_ndl
-------------
+pyndl.ndl.dict_ndl
+^^^^^^^^^^^^^^^^^^
 :py:mod:`pyndl.ndl.dict_ndl` is a pure Python implementation, however, it
 differs from :py:mod:`pyndl.ndl.ndl` regarding the following:
 
