@@ -16,3 +16,6 @@
 ### System details
 * Operating System:
 * Python Version:
+<!-- run `python --version` for version details -->
+* Installed python packages
+<!-- run `pip freeze` for a list of installed packages -->
