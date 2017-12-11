@@ -17,8 +17,10 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
+import os
 # import sys
+import shutil
+import easydev
 # sys.path.insert(0, os.path.abspath('.'))
 
 
@@ -40,7 +42,14 @@ extensions = ['sphinx.ext.autodoc',
     'sphinx.ext.ifconfig',
     'sphinx.ext.viewcode',
     'numpydoc',
+    'easydev.copybutton',
     ]
+
+if os.path.isdir('_static')==False:
+    os.mkdir('_static')
+
+jscopybutton_path = easydev.copybutton.get_copybutton_path()
+shutil.copy(jscopybutton_path, '_static')
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
