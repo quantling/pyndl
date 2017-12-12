@@ -58,7 +58,7 @@ If you want to develop ``pyndl`` you should additionally install:
 
 .. code:: bash
 
-   pip3 install --user tox pylint pytest pep8 sphinx
+   pip3 install --user tox pylint pytest pycodestyle sphinx
 
 
 Installation
@@ -146,7 +146,7 @@ For manually checking coding guidelines run:
 
 .. code:: bash
 
-    pep8 pyndl tests
+    pycodestyle pyndl tests
     pylint --ignore-patterns='.*\.so' --rcfile=setup.cfg -j 2 pyndl tests
 
 For more details on which tests run in the continuous testing environment

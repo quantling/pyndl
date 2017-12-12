@@ -3,7 +3,7 @@ PYTHON_VERSION := ''
 PYTHONPATH := .
 VENV := .venv
 PYTEST := env PYTHONPATH=$(PYTHONPATH) PYTEST=1 $(VENV)/bin/py.test
-PEP8 := env PYTHONPATH=$(PYTHONPATH) $(VENV)/bin/pep8 --repeat
+PYCODESTYLE := env PYTHONPATH=$(PYTHONPATH) $(VENV)/bin/pycodestyle --repeat
 PYTHON := env PYTHONPATH=$(PYTHONPATH) $(VENV)/bin/python$(PYTHON_VERSION)
 PIP := $(VENV)/bin/pip
 
