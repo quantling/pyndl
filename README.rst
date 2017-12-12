@@ -58,7 +58,7 @@ If you want to develop ``pyndl`` you should additionally install:
 
 .. code:: bash
 
-   pip3 install --user tox pylint pytest pep8 sphinx
+   pip3 install --user tox pylint pytest pycodestyle sphinx
 
 
 Installing
@@ -117,7 +117,7 @@ For manually checking coding guidelines run:
 
 .. code:: bash
 
-    pep8 pyndl tests
+    pycodestyle pyndl tests
     pylint --ignore-patterns='.*\.so' --rcfile=setup.cfg -j 2 pyndl tests
 
 For more details on which tests run in the continuous testing environment
@@ -169,4 +169,3 @@ ideas on how to build the API and how to efficiently run the Rescorla Wagner
 iterative learning on large text corpora are inspired by the way the ndl2
 package solves this problems. The ndl2 package will be published to github in
 August 2017 and a reference will be placed here.
-
