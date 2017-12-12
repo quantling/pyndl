@@ -45,9 +45,10 @@ extensions = ['sphinx.ext.autodoc',
     'easydev.copybutton',
     ]
 
-if os.path.isdir('_static')==False:
+if os.path.isdir('_static') == False:
     os.mkdir('_static')
 
+# Add copy button
 jscopybutton_path = easydev.copybutton.get_copybutton_path()
 shutil.copy(jscopybutton_path, '_static')
 
