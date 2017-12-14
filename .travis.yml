@@ -10,6 +10,6 @@ script:
   - tox -e testcov
   - tox -e lint
   - tox -e checktypes
-  - tox -e docs
+  - tox -e documentation
 env:
   OMP_NUM_THREADS: 4
