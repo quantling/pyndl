@@ -4,6 +4,39 @@ About
 Authors
 -------
 
+The Pyndl package was mainly developed by
+`Konstantin Sering <https://github.com/derNarr>`_,
+`Marc Weity <https://github.com/trybnetic>`_,
+`David-Elias Künstle <https://github.com/dekuenstle/>`_
+und `Lennart Schneider <https://github.com/sumny>`_. For the full list of
+contributers have a look at `Github's Contributer summary <https://github.com/quantling/pyndl/contributors>`_.
+
+If this work was helpful in your work, feel free to cite it as
+
+    Konstantin Sering, Marc Weitz, David-Elias Künstle, & Lennart Schneider.
+    (2017). Pyndl: Naive discriminative learning in python.
+    http://doi.org/10.5281/zenodo.597964
+
+If you are using BibTex you may want to use this example BibTex entry::
+
+    @misc{pyndl,
+          author       = {Konstantin Sering and
+                          Marc Weitz and
+                          David-Elias Künstle and
+                          Lennart Schneider},
+          title        = {Pyndl: Naive discriminative learning in python},
+          year         = 2017,
+          doi          = {10.5281/zenodo.597964},
+          url          = {https://doi.org/10.5281/zenodo.597964}
+    }
+
+.. note::
+
+    If you want to cite a specific version, check out the history on
+    `zenodo <https://zenodo.org/search?page=1&size=20&q=conceptrecid:%22597964%22&
+    sort=-version&all_versions=True>`_!
+
+
 Funding
 -------
 Pyndl was partially funded by the Humboldt grant, the ERC advandced grant
