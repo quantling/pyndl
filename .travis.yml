@@ -19,7 +19,7 @@ matrix:
           language: generic
           env: TOXENV=py36
 install:
-    - if [[ $TRAVIS_OS_NAME == 'osx' ]]; then brew install python3; pip3 install tox-travis; else pip install tox-travis; fi
+    - ./.travis/install.sh
 script:
   - tox
   - tox -e checkstyle
