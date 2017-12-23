@@ -19,7 +19,7 @@ matrix:
           language: generic
           env: TOXENV=py36
 install:
-    - ./.travis/install.sh
+    - bash .travis/install.sh
 script:
   - tox
   - tox -e checkstyle
