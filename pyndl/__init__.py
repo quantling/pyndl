@@ -1,7 +1,7 @@
 __author__ = ('David-Elias Künstle, Lennard Schneider, '
               'Konstantin Sering, Marc Weitz')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.3.2'
+__version__ = '0.3.3'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '
@@ -13,7 +13,6 @@ __classifiers__ = [
     'License :: OSI Approved :: MIT License',
     'Operating System :: POSIX :: Linux',
     'Programming Language :: Python',
-    'Programming Language :: Python :: 3.4',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
     'Programming Language :: Python :: 3 :: Only',
