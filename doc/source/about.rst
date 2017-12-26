@@ -39,7 +39,7 @@ If you are using BibTex you may want to use this example BibTex entry::
 
 Funding
 -------
-Pyndl was partially funded by the Humboldt grant, the ERC advandced grant
+Pyndl was partially funded by the Humboldt grant, the ERC advanced grant
 and by the University of Tübingen.
 
 Acknowledgements
