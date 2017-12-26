@@ -67,7 +67,7 @@ master_doc = 'index'
 # General information about the project.
 pkg = __import__('pyndl')
 project = 'pyndl'
-author = author =  pkg.__author__
+author =  pkg.__author__
 copyright = '2017 ' + pkg.__author__
 
 # The version info for the project you're documenting, acts as replacement for
