@@ -1,24 +1,34 @@
 #!/bin/bash
 
+set -e
+set -x
+
+uname -a
+python -c "import sys; print(sys.version)"
+
 if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
-  wget https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O miniconda.sh;
-  bash miniconda.sh -b -p $HOME/miniconda;
-  export PATH="$HOME/miniconda/bin:$PATH"
-  hash -r
-  conda config --set always_yes yes --set changeps1 no
-  conda update -q conda
-  conda config --add channels conda-forge
-  conda info -a
-  case "${TOXENV}" in
+    brew update || brew update
+    brew outdated pyenv || brew upgrade pyenv
+    brew install pyenv-virtualenv
+
+    if which pyenv > /dev/null; then
+        eval "$(pyenv init -)"
+    fi
+
+    case "${PYVER}" in
         py35)
-            conda install python=3.5;
+            pyenv install 3.5
+            pyenv virtualenv 3.5 pyndl
             ;;
         py36)
-            conda install python=3.6;
+            pyenv install 3.6
+            pyenv virtualenv 3.5 pyndl
             ;;
-  esac
-  conda info
-  which python
-else
-    pip install tox-travis;
+
+    esac
+    pyenv rehash
+    pyenv activate pyndl
 fi
+
+which python
+pip install tox-travis
