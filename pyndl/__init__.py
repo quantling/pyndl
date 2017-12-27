@@ -58,9 +58,11 @@ def sysinfo():
     osinfo += "Kernel: " + kernel + "\n"
     osinfo += "CPU: " + str(mp.cpu_count()) + "\n"
     if system == "Linux":
-        names, memory, swap = os.popen("free -m").readlines()
+        names, *lines = os.popen("free -m").readlines()
+        memory = [line for line in lines if "Mem:" in line][0]
         ix, total, used, *rest = memory.split()
         osinfo += "Memory: " + used + "MiB/" + total + "MiB\n"
+        swap = [line for line in lines if "Swap:" in line][0]
         ix, total, used, *rest = swap.split()
         osinfo += "Swap: " + used + "MiB/" + total + "MiB\n"
     osinfo += "\n"
