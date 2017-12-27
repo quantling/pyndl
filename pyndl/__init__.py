@@ -38,6 +38,7 @@ __doc__ = """
 :copyright: %s
 """ % (__description__, __version__, __author__, __author_email__, __license__)
 
+
 def sysinfo():
     """
     Prints system the dependency information
@@ -49,7 +50,7 @@ def sysinfo():
     header += ("=" * (len(header) - 1)) + "\n"
     header += "\n"
 
-    system,node,kernel,version,machine = os.uname()
+    system, node, kernel, version, machine = os.uname()
 
     osinfo = "Operating System\n"
     osinfo += ("-" * (len(osinfo) - 1)) + "\n"
