@@ -15,14 +15,14 @@ if [[ $TRAVIS_OS_NAME == 'osx' ]]; then
         eval "$(pyenv init -)"
     fi
 
-    case "${PYVER}" in
+    case "${TOXENV}" in
         py35)
             pyenv install 3.5
             pyenv virtualenv 3.5 pyndl
             ;;
         py36)
             pyenv install 3.6
-            pyenv virtualenv 3.5 pyndl
+            pyenv virtualenv 3.6 pyndl
             ;;
 
     esac
