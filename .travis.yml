@@ -15,9 +15,4 @@ matrix:
 install:
     - bash .travis/install.sh
 script:
-  - tox
-  - tox -e checkstyle
-  - tox -e testcov
-  - tox -e lint
-  - tox -e checktypes
-  - tox -e docs
+    - bash .travis/run.sh
