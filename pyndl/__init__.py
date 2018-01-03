@@ -46,36 +46,34 @@ def sysinfo():
     pyndl = pkg_resources.working_set.by_key["pyndl"]
     dependencies = [str(r) for r in pyndl.requires()]
 
-    header = "Pyndl " + __version__ + " Information\n"
-    header += ("=" * (len(header) - 1)) + "\n"
-    header += "\n"
+    header = ("Pyndl Information\n"
+              "=================\n\n")
 
-    system, node, kernel, version, machine = os.uname()
+    general = ("General Information\n"
+               "-------------------\n"
+               "Python version: {}\n"
+               "Pyndl version: {}\n\n").format(sys.version.split()[0], __version__)
 
-    osinfo = "Operating System\n"
-    osinfo += ("-" * (len(osinfo) - 1)) + "\n"
-    osinfo += "OS: " + system + " " + machine + "\n"
-    osinfo += "Kernel: " + kernel + "\n"
-    osinfo += "CPU: " + str(mp.cpu_count()) + "\n"
-    if system == "Linux":
+    uname = os.uname()
+    osinfo = ("Operating System\n"
+              "----------------\n"
+              "OS: {s.sysname} {s.machine}\n"
+              "Kernel: {s.release}\n"
+              "CPU: {cpu_count}\n").format(s=uname, cpu_count=mp.cpu_count())
+
+    if uname.sysname == "Linux":
         names, *lines = os.popen("free -m").readlines()
-        memory = [line for line in lines if "Mem:" in line][0]
-        ix, total, used, *rest = memory.split()
-        osinfo += "Memory: " + used + "MiB/" + total + "MiB\n"
-        swap = [line for line in lines if "Swap:" in line][0]
-        ix, total, used, *rest = swap.split()
-        osinfo += "Swap: " + used + "MiB/" + total + "MiB\n"
+        for identifier in ["Mem:", "Swap:"]:
+            memory = [line for line in lines if identifier in line][0]
+            ix, total, used, *rest = memory.split()
+            osinfo += "{} {}MiB/{}MiB\n".format(identifier, used, total)
+
     osinfo += "\n"
 
-    py = "Python\n"
-    py += ("-" * (len(py) - 1)) + "\n"
-    py += "Version: " + sys.version.split()[0] + "\n"
-    py += "\n"
+    deps = ("Dependencies\n"
+            "------------\n")
 
-    deps = "Dependencies\n"
-    deps += ("-" * (len(deps) - 1)) + "\n"
-    for dep in dependencies:
-        pkg = __import__(dep)
-        deps += pkg.__name__ + ": " + pkg.__version__ + "\n"
+    deps += "\n".join("{pkg.__name__}: {pkg.__version__}".format(pkg=__import__(dep))
+                      for dep in dependencies)
 
-    print(header + osinfo + py + deps)
+    print(header + general + osinfo + deps)
