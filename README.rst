@@ -48,7 +48,7 @@ setup.py``. For details see below.
 
 Prerequisites
 -------------
-You need python 3.4 or newer and git installed on your machine. We recommend to
+You need python 3.5 or newer and git installed on your machine. We recommend to
 install Minicoda (https://conda.io/miniconda.html) before installing ``pyndl``
 or to create a virtualenv within your personal folder.
 
