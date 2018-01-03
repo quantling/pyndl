@@ -297,7 +297,7 @@ class WeightDict(defaultdict):
 
 def dict_ndl(events, alphas, betas, lambda_=1.0, *,
              weights=None, inplace=False, remove_duplicates=None,
-             make_data_array=False, verbose=False):
+             make_data_array=False, verbose=False, ndl_plus=False):
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
@@ -363,6 +363,8 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
         event_path = ""
     attrs_to_update = None
 
+    if ndl_plus:
+        decisions = WeightDict()
     # weights can be seen as an infinite outcome by cue matrix
     # weights[outcome][cue]
     if weights is None:
@@ -393,14 +395,25 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
         alphas = defaultdict(lambda: alpha)
     number_events = 0
 
+    # @ali
+    cue_set = set()
+    outcome_set = set()
+
     for cues, outcomes in events:
+
+        for cue in cues:
+            cue_set.add(cue)
+
+        for outcome in outcomes:
+            outcome_set.add(outcome)
+
         number_events += 1
         if verbose and number_events % 1000:
             print('.', end='')
             sys.stdout.flush()
         if remove_duplicates is None:
             if (len(cues) != len(set(cues)) or
-                    len(outcomes) != len(set(outcomes))):
+                        len(outcomes) != len(set(outcomes))):
                 raise ValueError('cues or outcomes needs to be unique: cues '
                                  '"%s"; outcomes "%s"; use '
                                  'remove_duplicates=True' %
@@ -413,6 +426,7 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
 
         all_outcomes.update(outcomes)
         for outcome in all_outcomes:
+
             association_strength = sum(weights[outcome][cue] for cue in cues)
             if outcome in outcomes:
                 update = beta1 * (lambda_ - association_strength)
@@ -420,6 +434,18 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
                 update = beta2 * (0 - association_strength)
             for cue in cues:
                 weights[outcome][cue] += alphas[cue] * update
+
+        for outcome in all_outcomes:
+            if ndl_plus:
+                association_strength = sum(
+                    decisions[outcome][outcome2] * sum(weights[outcome2][cue] for cue in cues) for outcome2 in
+                    all_outcomes)
+                if outcome in outcomes:
+                    update = beta1 * (lambda_ - association_strength)
+                else:
+                    update = beta2 * (0 - association_strength)
+                for outcome2 in all_outcomes:
+                    decisions[outcome][outcome2] += update
 
     cpu_time_stop = time.process_time()
     wall_time_stop = time.perf_counter()
@@ -448,7 +474,10 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
     else:
         weights.attrs = attrs
 
-    return weights
+    if ndl_plus:
+        return weights, decisions
+    else:
+        return weights
 
 
 def slice_list(list_, len_sublists):
@@ -478,3 +507,28 @@ def slice_list(list_, len_sublists):
         ii = ii + len_sublists
 
     return seq_list
+
+
+def calculate_delta():
+    """
+    {\displaystyle \Delta w_{ji}=\alpha (t_{j}-y_{j})g'(h_{j})x_{i}},
+    where
+    {\displaystyle \alpha } \alpha  is a small constant called learning rate
+    {\displaystyle g(x)} {\displaystyle g(x)} is the neuron's activation function
+    {\displaystyle t_{j}} {\displaystyle t_{j}} is the target output
+    {\displaystyle h_{j}} {\displaystyle h_{j}} is the weighted sum of the neuron's inputs
+    {\displaystyle y_{j}} {\displaystyle y_{j}} is the actual output
+    {\displaystyle x_{i}} x_{i} is the {\displaystyle i} ith input.
+
+    :param alphas:
+    :return:
+    """
+
+    value = 0
+    activation_val = activation_fun(1)
+
+    return value
+
+
+def activation_fun(x):
+    return x
