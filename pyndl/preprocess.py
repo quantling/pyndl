@@ -1,5 +1,11 @@
-# !/usr/bin/env/python3
+"""
+pyndl.preprocess
+----------------
 
+*pyndl.preprocess* provides functions in order to preprocess data and create
+event files from it.
+
+"""
 import collections
 import gzip
 import multiprocessing
