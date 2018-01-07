@@ -1,8 +1,30 @@
+Naive Discriminative Learning
+=============================
 
-.. _comparison_of_algorithms:
+Terminology
+-----------
 
-Comparison with other Algorithms
-================================
+Before explaining Naive Discriminative Learning (NDL) in detail, we want to
+give you a brief overview over important notions:
+
+cue :
+    A cue is something that gives a hint on something else. The something else
+    is called outcome. Examples for cues in a text corpus are trigraphs or
+    preceding words for the word or meaning of the word.
+
+outcome :
+    The outcome is the result of an event. Examples are words, the meaning of
+    the word, or lexomes.
+
+event :
+    An event connects cues with outcomes. In any event one or more unordered
+    cues are present and one or more outcomes are present.
+
+weights :
+    The weights represent the learned experience / association between all cues
+    and outcomes of interest. Usually, some meta data is stored alongside the
+    learned weights.
+
 
 Rescorla Wagner learning rule
 -----------------------------
@@ -31,12 +53,11 @@ cue-outcome-combination:
 In the end, we update all weights according to :math:`w_{ij} = w_{ij} + \Delta
 w_{ij}`.
 
-Usually, we set :math:`\lambda = 1`, :math:`\beta_1 = \beta_2 = \beta = 0.01`,
-and :math:`\alpha_i = \alpha = 0.01`.
+.. note::
 
-If we set all the :math:`\alpha`'s and :math:`\beta`'s to a fixed value we can
-replace them in the equation with a general learning parameter :math:`\eta =
-\alpha \cdot \beta`.
+    If we set all the :math:`\alpha`'s and :math:`\beta`'s to a fixed value we
+    can replace them in the equation with a general learning parameter
+    :math:`\eta = \alpha \cdot \beta`.
 
 
 In matrix notation
@@ -101,7 +122,7 @@ If we now look at the full update:
    \cdot W \\
 
 We therefore see that the Rescorla-Wagner update is an affine (linear)
-transformation [affine_transformation]_ in the weights :math:`W` with an
+transformation [1]_ in the weights :math:`W` with an
 intercept of :math:`\eta
 \lambda \vec{c} \cdot \vec{o}^T` and a slope of :math:`(1 - \eta \vec{c} \cdot
 \vec{c}^T)`.
@@ -117,7 +138,7 @@ In index notation we can write:
 
 .. note::
 
-   Properties of the transpose [transpose]_ with :math:`A` and :math:`B`
+   Properties of the transpose [4]_ with :math:`A` and :math:`B`
    matrices and :math:`\alpha` skalar:
 
    .. math::
@@ -133,15 +154,18 @@ In index notation we can write:
       (A \cdot B)^T = B^T \cdot A^T
 
 
+Other Learning Algorithms
+-------------------------
+
 
 Delta rule
-----------
+^^^^^^^^^^
 
-   The delta rule is a gradient descent learning rule for updating the weights
-   of the inputs to artificial neurons in a single-layer neural network. It is
-   a special case of the more general backpropagation algorithm. [delta_rule]_
+The delta rule [2]_ is a gradient descent learning rule for updating the weights
+of the inputs to artificial neurons in a single-layer neural network. It is
+a special case of the more general backpropagation algorithm [3]_.
 
-The delta rule can be expressed as [delta_rule]_:
+The delta rule can be expressed as:
 
 .. math::
 
@@ -199,7 +223,7 @@ notation.
 
 
 Kalman filter
--------------
+^^^^^^^^^^^^^
 
 .. warning::
 
@@ -317,10 +341,10 @@ Useful Links for Kalman filters
 References
 ----------
 
-.. [affine_transformation] Affine transformation. https://en.wikipedia.org/wiki/Affine_transformation
+.. [1] https://en.wikipedia.org/wiki/Affine_transformation
 
-.. [transpose] Transpose. https://en.wikipedia.org/wiki/Transpose
+.. [2] https://en.wikipedia.org/wiki/Delta_rule
 
-.. [delta_rule] Delta rule. https://en.wikipedia.org/wiki/Delta_rule
+.. [3] https://en.wikipedia.org/wiki/Backpropagation
 
-.. [dayan_explaining_away_in_weight_space] https://homes.cs.washington.edu/~sham/papers/neuro/kd_weight.pdf
+.. [4] https://en.wikipedia.org/wiki/Transpose

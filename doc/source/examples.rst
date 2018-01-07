@@ -1,12 +1,12 @@
-========
-Examples
-========
+=============
+More Examples
+=============
 
 Lexical example
 ===============
 
-The lexical example illustrates the Rescorla-Wagner[@rescorlawagner1972]
-equations. This example is taken from [@baayen2011].
+The lexical example illustrates the Rescorla-Wagner equations [1]_.
+This example is taken from Baayen, Milin, Đurđević, Hendrix & Marelli [2]_.
 
 Premises
 --------
@@ -82,7 +82,7 @@ an artificial lexicon in the wide format. In the following, the letters
 (unigrams and bigrams) of the words constitute the cues, the meanings represent
 the outcomes.
 
-Analyzing any data using **pyndl** requires them to be in the long format as an
+Analyzing any data using *pyndl* requires them to be in the long format as an
 utf-8 encoded tab delimited gzipped text file with a header in the first line
 and two columns:
 
@@ -118,7 +118,7 @@ weights for all outcomes over all events. :py:mod:`pyndl.ndl.ndl` itself
 provides to methods regarding estimation, ``openmp`` and ``threading``. We have
 to specify the path of our event file ``lexample.tab.gz`` and for this example
 set :math:`\alpha = 0.1`, :math:`\beta_{1} = 0.1`, :math:`\beta_{2} = 0.1` with
-leaving :math:`\lambda = 1.0` at its default value. You can use **pyndl**
+leaving :math:`\lambda = 1.0` at its default value. You can use *pyndl*
 directly in a Python3 Shell or you can write an executable script, this is up to
 you. For educational purposes we use a Python3 Shell in this example.
 
@@ -405,7 +405,7 @@ example:
 
 Save and load a weight matrix
 -----------------------------
-is straight forward using the netCDF format [@netCDF]
+is straight forward using the netCDF format [3]_
 
 .. code-block:: python
 
@@ -424,8 +424,8 @@ created in this tutorial:
    >>> os.remove('doc/data/levent.tab.gz.filtered')
 
 
-Load a weight matrix to R[@R2016]
----------------------------------
+Load a weight matrix to R [4]_
+------------------------------
 We can load a in netCDF format saved matrix into R:
 
 .. code-block:: R
@@ -438,3 +438,22 @@ We can load a in netCDF format saved matrix into R:
    > colnames(weights_read) <- ncvar_get(nc = weights_nc, varid = "cues")
    > nc_close(nc = weights_nc)
    > rm(weights_nc)
+
+----
+
+.. [1] Rescorla, R. A., & Wagner, A. R. (1972). A theory of Pavlovian
+      conditioning: Variations in the effectiveness of reinforcement and
+      nonreinforcement. *Classical conditioning II: Current research and
+      theory*, 2, 64-99.
+
+.. [2] Baayen, R. H., Milin, P., Đurđević, D. F., Hendrix, P., & Marelli, M.
+      (2011). An amorphous model for morphological processing in visual
+      comprehension based on naive discriminative learning.
+      *Psychological review*, 118(3), 438.
+
+.. [3] Unidata (2012). NetCDF. doi:10.5065/D6H70CW6. Retrieved from
+       http://doi.org/10.5065/D6RN35XM)
+
+.. [4] R Core Team (2013). R: A language and environment for statistical
+      computing. R Foundation for Statistical Computing, Vienna, Austria.
+      URL https://www.R-project.org/.

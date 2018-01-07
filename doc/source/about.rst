@@ -4,12 +4,19 @@ About
 Authors
 -------
 
-The Pyndl package was mainly developed by
+*pyndl* was mainly developed by
 `Konstantin Sering <https://github.com/derNarr>`_,
-`Marc Weity <https://github.com/trybnetic>`_,
+`Marc Weitz <https://github.com/trybnetic>`_,
 `David-Elias Künstle <https://github.com/dekuenstle/>`_
-und `Lennart Schneider <https://github.com/sumny>`_. For the full list of
-contributers have a look at `Github's Contributer summary <https://github.com/quantling/pyndl/contributors>`_.
+and `Lennart Schneider <https://github.com/sumny>`_. For the full list of
+contributers have a look at `Github's Contributer summary
+<https://github.com/quantling/pyndl/contributors>`_.
+
+Currently, it is maintained by `Konstantin Sering <https://github.com/derNarr>`_
+and `Marc Weitz <https://github.com/trybnetic>`_.
+
+Citation
+--------
 
 If this work was helpful in your work, feel free to cite it as
 
@@ -39,7 +46,7 @@ If you are using BibTex you may want to use this example BibTex entry::
 
 Funding
 -------
-Pyndl was partially funded by the Humboldt grant, the ERC advanced grant
+*pyndl* was partially funded by the Humboldt grant, the ERC advanced grant
 and by the University of Tübingen.
 
 Acknowledgements
