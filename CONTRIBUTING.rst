@@ -2,36 +2,120 @@
 Contribute to pyndl
 ===================
 
-In order to participate in `pyndl` development it is best to fork the
-repository on github, then clone your forked repository to your machine and
-install it in development mode. Run tests and style checks afterwards.
+Getting Involved
+----------------
+
+The *pyndl* project welcomes help in the following ways:
+
+* Making Pull Requests for
+  `code <https://github.com/quantling/pyndl/tree/master/pyndl>`_,
+  `tests <https://github.com/quantling/pyndl/tree/master/tests>`_
+  or `documentation <https://github.com/quantling/pyndl/tree/master/doc>`_.
+* Commenting on `open issues <https://github.com/quantling/pyndl/issues>`_
+  and `pull requests <https://github.com/quantling/pyndl/pulls>`_.
+* Helping to answer `questions in the issue section
+  <https://github.com/quantling/pyndl/labels/question>`_.
+* Creating feature requests or adding bug reports in the `issue section
+  <https://github.com/quantling/pyndl/issues/new>`_.
+
+
+Workflow
+--------
+
+1. Fork this repository on Github. From here on we assume you successfully
+   forked this repository to https://github.com/yourname/pyndl.git
+
+2. Get a local copy of your fork and install the package in 'development'
+   mode, which will make changes in the source code active immediately, by running
 
 .. code:: bash
 
-    pip3 uninstall pyndl  # remove old pyndl installation
-    git clone git@github.com:<YOUR_USER_NAME>/pyndl.git
+    git clone https://github.com/yourname/pyndl.git
     cd pyndl
-    python setup.py develop
-    tox
+    python3 setup.py develop --user
+
+3. Add code, tests or documentation. You can reference relevant issues in
+   commit messages (like #42) to make GitHub link issues and commits together,
+   and with phrase like "fixes #42" you can even close relevant issues
+   automatically.
+
+4. Push your local changes to your fork:
+
+.. code:: bash
+
+    git push git@github.com:yourname/pyndl.git
+
+5. Open the Pull Requests page at https://github.com/yourname/pyndl/pulls and
+   click "New pull request" to submit your Pull Request to
+   https://github.com/quantling/pyndl.
 
 
-Documentation
-=============
-The documentation and the doc-strings within the source code should follow the
-numpy doc-string conventions (which are used by pandas as well).
+**Note:** If you want to develop *pyndl* you should install:
 
-https://github.com/numpy/numpy/blob/master/doc/HOWTO_DOCUMENT.rst.txt
+.. code:: bash
 
-http://pandas.pydata.org/pandas-docs/stable/contributing.html#contributing-to-the-documentation
+    pip3 install --user tox pylint pytest pycodestyle sphinx
+
+
+Running tests
+-------------
+
+We use ``tox`` to manage testing. You can run the tests by executing the
+following within the repository's root folder:
+
+.. code:: bash
+
+    tox -e test
+
+For manually checking coding guidelines run:
+
+.. code:: bash
+
+    tox -e checkstyle
+    tox -e lint
 
 
 Building documentation
 ----------------------
-You need to have sphinx (http://www.sphinx-doc.org/en/stable/) installed.
 
-.. code::
+The projects documentation is stored in the ``doc/`` folder and is created with
+``sphinx``. You can rebuild the documentation by either executing
 
-    cd doc/
-    make html
-    make latexpdf
+.. code:: bash
 
+   make documentation
+
+in the repository's root folder or by executing
+
+.. code:: bash
+
+   make html
+
+in the documentation folder.
+
+
+Continous Integration
+---------------------
+
+We use several services in order to continuously monitor our project:
+
+===========  ===========  =================  ===========================
+Service      Status       Config file        Description
+===========  ===========  =================  ===========================
+Travis CI    |travis|     `.travis.yml`_     Automated testing
+Coveralls    |coveralls|                     Monitoring of test coverage
+Landscape    |landscape|  `.landscape.yml`_  Monitoring of code quality
+===========  ===========  =================  ===========================
+
+.. |travis| image:: https://travis-ci.org/quantling/pyndl.svg?branch=master
+    :target: https://travis-ci.org/quantling/pyndl?branch=master
+
+.. |landscape| image:: https://landscape.io/github/quantling/pyndl/master/landscape.svg?style=flat
+    :target: https://landscape.io/github/quantling/pyndl/master
+
+.. |coveralls| image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
+    :target: https://coveralls.io/github/quantling/pyndl?branch=master
+
+.. _.travis.yml: https://github.com/quantling/pyndl/blob/master/.travis.yml
+
+.. _.landscape.yml: https://github.com/quantling/pyndl/blob/master/.landscape.yml
