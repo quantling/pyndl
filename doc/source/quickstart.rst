@@ -124,10 +124,10 @@ and two columns:
 
 As the data in table 1 are artificial we can generate such a file for this
 example by expanding table 1 randomly regarding the frequency of occurrence of
-each event. The resulting event file ``lexample.tab.gz`` (which you can find in
-the subdirectory ``data``) consists of 420 lines (419 = sum of frequencies + 1
-header) and looks like the following (nevertheless you are encouraged to take a
-closer look at this file using any text editor of your choice):
+each event. The resulting event file `lexample.tab.gz`_
+consists of 420 lines (419 = sum of frequencies + 1 header) and looks like the
+following (nevertheless you are encouraged to take a closer look at this file
+using any text editor of your choice):
 
 =================  =============
 Cues               Outcomes
@@ -156,8 +156,7 @@ corpus file and filter it:
     ...                              event_options=(1, ),
     ...                              cue_structure='bigrams_to_word')
 
-Here we use the example corpus `lcorpus.txt
-<https://github.com/quantling/pyndl/blob/master/doc/data/lcorpus.txt>`_ to
+Here we use the example corpus `lcorpus.txt`_ to
 produce an event file ``levent.tab.gz`` which (uncompressed) looks like this:
 
 =================  ========
@@ -221,6 +220,12 @@ to load a in netCDF format saved matrix:
    > nc_close(nc = weights_nc)
    > rm(weights_nc)
 
+
+.. _lexample.tab.gz:
+     https://github.com/quantling/pyndl/blob/master/doc/data/lexample.tab.gz
+
+.. _lcorpus.txt:
+     https://github.com/quantling/pyndl/blob/master/doc/data/lcorpus.txt
 
 ----
 

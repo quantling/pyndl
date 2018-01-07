@@ -94,10 +94,10 @@ and two columns:
 
 As the data in table 1 are artificial we can generate such a file for this
 example by expanding table 1 randomly regarding the frequency of occurrence of
-each event. The resulting event file ``lexample.tab.gz`` (which you can find in
-the subdirectory ``data``) consists of 420 lines (419 = sum of frequencies + 1
-header) and looks like the following (nevertheless you are encouraged to take a
-closer look at this file using any text editor of your choice):
+each event. The resulting event file `lexample.tab.gz`_ consists of 420 lines
+(419 = sum of frequencies + 1 header) and looks like the following
+(nevertheless you are encouraged to take a closer look at this file using any
+text editor of your choice):
 
 =================  =============
 Cues               Outcomes
@@ -116,11 +116,12 @@ after the  presentation of the 419 tokens of the 10 words using
 :py:mod:`pyndl.ndl.ndl` and :py:mod:`pyndl.ndl.dict_ndl` to calculate the
 weights for all outcomes over all events. :py:mod:`pyndl.ndl.ndl` itself
 provides to methods regarding estimation, ``openmp`` and ``threading``. We have
-to specify the path of our event file ``lexample.tab.gz`` and for this example
-set :math:`\alpha = 0.1`, :math:`\beta_{1} = 0.1`, :math:`\beta_{2} = 0.1` with
-leaving :math:`\lambda = 1.0` at its default value. You can use *pyndl*
-directly in a Python3 Shell or you can write an executable script, this is up to
-you. For educational purposes we use a Python3 Shell in this example.
+to specify the path of our event file `lexample.tab.gz`_ and
+for this example set :math:`\alpha = 0.1`, :math:`\beta_{1} = 0.1`,
+:math:`\beta_{2} = 0.1` with leaving :math:`\lambda = 1.0` at its default
+value. You can use *pyndl* directly in a Python3 Shell or you can write an
+executable script, this is up to you. For educational purposes we use a Python3
+Shell in this example.
 
 
 pyndl.ndl.ndl
@@ -282,11 +283,10 @@ Generate an event file based on a raw corpus file
 Suppose you have a raw utf-8 encoded corpus file (by the way,
 :py:mod:`pyndl.corpus` allows you to generate such a corpus file from a bunch of
 gunzipped xml subtitle files filled with words, which we will not cover here).
-For example take a look at ``lcorpus.txt`` (which you also can find in the
-subdirectory ``data``)
+For example take a look at `lcorpus.txt_`.
 
 To analyse the data, you need to convert the file into an event file similar to
-``lexample.tab.gz`` in our lexical learning example, as currently there is only
+`lexample.tab.gz`_ in our lexical learning example, as currently there is only
 one word per line and neither is there the column for cues nor for outcomes::
 
    hand
@@ -438,6 +438,12 @@ We can load a in netCDF format saved matrix into R:
    > colnames(weights_read) <- ncvar_get(nc = weights_nc, varid = "cues")
    > nc_close(nc = weights_nc)
    > rm(weights_nc)
+
+.. _lexample.tab.gz:
+      https://github.com/quantling/pyndl/blob/master/doc/data/lexample.tab.gz
+
+.. _lcorpus.txt:
+    https://github.com/quantling/pyndl/blob/master/doc/data/lcorpus.txt
 
 ----
 
