@@ -64,7 +64,7 @@ The *pyndl* project welcomes help in the following ways:
   <https://github.com/quantling/pyndl/issues/new>`_.
 
 For more information on how to contribute to *pyndl* have a look at the
-`development section <http://pyndl.readthedocs.io/en/latest/development.html`_.
+`development section <http://pyndl.readthedocs.io/en/latest/development.html>`_.
 
 
 Authors and Contributers
