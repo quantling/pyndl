@@ -1,6 +1,6 @@
-============
-Readme pyndl
-============
+===============================================
+Pyndl - Naive Discriminative Learning in Python
+===============================================
 
 .. image:: https://travis-ci.org/quantling/pyndl.svg?branch=master
     :target: https://travis-ci.org/quantling/pyndl?branch=master
@@ -21,180 +21,62 @@ Readme pyndl
 .. image:: https://zenodo.org/badge/80022085.svg
     :target: https://zenodo.org/badge/latestdoi/80022085
 
-
-This python3 package is a collection of useful script in order to run tasks on
-huge amounts of text file corpora. Especially, it allows to efficiently apply
-the Rescorla-Wagner learning rule to these corpora.
-
-.. warning::
-
-    This package is still in alpha and there might be some API changes in the
-    near future. If you have suggestings concerning the ``pyndl`` package,
-    contact us under konstantin (dot) sering (ät) uni-tuebingen.de.
-
-.. note::
-
-    This package is not intended to be used under python2.
-
-
-Getting Started
-===============
-These instructions will get you a copy of the ``pyndl`` package on your local
-machine. If you only want to use ``pyndl`` as a python package use ``pip3`` in
-order to install it into your python3 environment. If you want to inspect and
-change the code download and install it via ``git clone`` and ``python3
-setup.py``. For details see below.
-
-
-Prerequisites
--------------
-You need python 3.5 or newer and git installed on your machine. We recommend to
-install Minicoda (https://conda.io/miniconda.html) before installing ``pyndl``
-or to create a virtualenv within your personal folder.
-
-Development
-^^^^^^^^^^^
-If you want to develop ``pyndl`` you should additionally install:
-
-.. code:: bash
-
-   pip3 install --user tox pylint pytest pycodestyle sphinx
+*pyndl* is an implementation of Naive Discriminative Learning in Python. It was
+created to analyse huge amounts of text file corpora. Especially, it allows to
+efficiently apply the Rescorla-Wagner learning rule to these corpora.
 
 
 Installation
-------------
-
-Linux
-^^^^^
-
-If you want to install pyndl on Linux and only want to use the package run you
-can easily install ``pyndl`` from pypi with:
-
-.. code:: bash
-
-    pip3 install --user pyndl
-
-If you want to inspect and change the source code as well as running tests and
-having local documentation, clone the repository and install the package in
-'development' mode by running
-
-.. code:: bash
-
-    git clone https://github.com/quantling/pyndl.git
-    cd pyndl
-    python3 setup.py develop --user
-
-
-Mac OS X
-^^^^^^^^
-gcc/g++ might be outdated as xcode provides 4.X, while 6.3 is needed. Therefore,
-it might be necesarry to update gcc first, before installing pyndl.
-
-1. for safe-guarding redo the xcode install in the Terminal::
-
-        xcode-select --install
-
-2. download gcc from Mac OSX High Performance Computing
-    http://prdownloads.sourceforge.net/hpc/gcc-6.3-bin.tar.gz
-    then run these commands in Terminal::
-
-        gunzip gcc-6.X-bin.tar.gz
-        sudo tar -xvf gcc-6.X-bin.tar -C /
-
-3. finally, install pyndl::
-
-        pip install pyndl
-
-Hopefully, you have successfully installed pyndl on your OS X Machine. Please be
-aware that we currently offer no support for OS X and can therefore not provide,
-whether a safe installation or usage on OS X is possible. 
-
-Documentation and Examples
---------------------------
-Documentation and examples can be found under
-http://pyndl.readthedocs.io/en/latest/ or in the ``doc/`` folder after cloning
-the repository.
-
-If you have installed ``sphinx`` you should be able to build the documentation with:
-
-.. code:: bash
-
-   cd doc/
-   make html
-
-The entry point for the html documentation is ``doc/build/html/index.html``.
-
-
-Running the tests
-=================
-If you have cloned ``pyndl`` from github, you can start the tests by executing
-the following within the outer ``pyndl`` folder:
-
-.. code:: bash
-
-    py.test
-    py.test doc/source/examples.rst
-
-
-For full tests you can run:
-
-.. code:: bash
-
-    tox -e test
-
-For manually checking coding guidelines run:
-
-.. code:: bash
-
-    pycodestyle pyndl tests
-    pylint --ignore-patterns='.*\.so' --rcfile=setup.cfg -j 2 pyndl tests
-
-For more details on which tests run in the continuous testing environment
-look at the file ``tox.ini``.
-
-
-Deployment
-==========
-In order to create a source dist package run:
-
-.. code:: bash
-
-    python3 setup.py sdist
-
-
-Contributing
 ============
-Please read
-`CONTRIBUTING.rst
-<https://github.com/quantling/pyndl/blob/master/CONTRIBUTING.rst>`_ for details
-on our code of conduct and the process for submitting pull requests to us.
+
+The easiest way to install *pyndl* is using
+`pip <https://pip.pypa.io/en/stable/>`_:
+
+.. code:: bash
+
+    pip install pyndl --user
+
+For more information have a look at the `Instalation Guide
+<http://pyndl.readthedocs.io/en/latest/installation.html>`_.
 
 
-Versioning
-==========
-At the moment we are still in alpha and therefore no stable API is guaranteed
-between minor version increments, but soon we will change to use `SemVer
-<http://semver.org/>`_ for versioning. For the versions available, see the
-`tags on this repository <https://github.com/quantling/pyndl/tags>`_.
+Documentation
+=============
+
+*pyndl* uses ``sphinx`` to create a documentation manual. The documentation is
+hosted on `Read the Docs <http://pyndl.readthedocs.io/en/latest/>`_.
 
 
-Authors
-=======
-See also the list of `contributors
-<https://github.com/quantling/pyndl/contributors>`_ who participated in this
-project.
+Getting involved
+================
+
+The *pyndl* project welcomes help in the following ways:
+
+    * Making Pull Requests for
+      `code <https://github.com/quantling/pyndl/tree/master/pyndl>`_,
+      `tests <https://github.com/quantling/pyndl/tree/master/tests>`_
+      or `documentation <https://github.com/quantling/pyndl/tree/master/doc>`_.
+    * Commenting on `open issues <https://github.com/quantling/pyndl/issues>`_
+      and `pull requests <https://github.com/quantling/pyndl/pulls>`_.
+    * Helping to answer `questions in the issue section
+      <https://github.com/quantling/pyndl/labels/question>`_.
+    * Creating feature requests or adding bug reports in the `issue section
+      <https://github.com/quantling/pyndl/issues/new>`_.
+
+For more information on how to contribute to *pyndl* have a look at the
+`development section <http://pyndl.readthedocs.io/en/latest/development.html`_.
 
 
-License
-=======
-This project is licensed under the MIT License - see the `LICENSE.txt
-<https://github.com/quantling/pyndl/blob/master/LICENSE.txt>`_ file for details
+Authors and Contributers
+========================
 
+*pyndl* was mainly developed by
+`Konstantin Sering <https://github.com/derNarr>`_,
+`Marc Weitz <https://github.com/trybnetic>`_,
+`David-Elias Künstle <https://github.com/dekuenstle/>`_
+and `Lennart Schneider <https://github.com/sumny>`_. For the full list of
+contributers have a look at `Github's Contributer summary
+<https://github.com/quantling/pyndl/contributors>`_.
 
-Acknowledgments
-===============
-This package is build as a python replacement for the R ndl2 package. Some
-ideas on how to build the API and how to efficiently run the Rescorla Wagner
-iterative learning on large text corpora are inspired by the way the ndl2
-package solves this problems. The ndl2 package will be published to github in
-August 2017 and a reference will be placed here.
+Currently, it is maintained by `Konstantin Sering <https://github.com/derNarr>`_
+and `Marc Weitz <https://github.com/trybnetic>`_.
