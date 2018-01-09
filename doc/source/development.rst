@@ -144,28 +144,26 @@ Release Process
 1. Merge Pull Requests with new features or bugfixes into *pyndl*'s' ``master``
    branch. Ensure, that the version is adequately increased (``X.Y+1.Z`` for new
    features and ``X.Y.Z+1`` for a bugfix).
-2. Create a signed tag of the `master` branch of the form ``vX.Y.Z`` using the
-   command
+2. Create a new release on Github of the `master` branch of the form ``vX.Y.Z``.
+   Add a description of the new feature or bugfix
+
+3. Pull the repository and checkout the tag and create the distribution files
+   using
 
 .. code:: bash
 
-    git tag -s vX.Y.Z
-
-3. Checkout the tag and create the distribution files using
-
-.. code:: bash
-
+    git pull
     git checkout vX.Y.Z
-    python setup.py sdist bdist_wheel.
+    python setup.py sdist
 
-4. Upload the distribution files to PyPI using twine.
+4. Create GPG signatures of the distribution files using
+
+.. code:: bash
+
+    gpg --detach-sign -a dist/pyndl-X.Y.Z.tar.gz
+
+5. (maintainers only) Upload the distribution files to PyPI using twine.
 
 .. code:: bash
 
     twine upload -s dist/*
-
-5. Push all of the changes.
-
-.. note::
-
-    The upload should include GPG signatures of the distribution files.
