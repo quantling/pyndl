@@ -5,5 +5,4 @@ pandas
 xarray
 netCDF4
 numpydoc
-docopt
 pip

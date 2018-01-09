@@ -12,7 +12,6 @@ import sys
 import gzip
 import multiprocessing
 import xml.etree.ElementTree
-from docopt import docopt
 
 __version__ = '0.2.0'
 
