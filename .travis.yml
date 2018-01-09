@@ -5,7 +5,6 @@ python:
 install: pip install tox-travis
 script:
   - tox
-  - python -c 'import pyndl; pyndl.sysinfo()'
   - tox -e checkstyle
   - tox -e testcov
   - tox -e lint
