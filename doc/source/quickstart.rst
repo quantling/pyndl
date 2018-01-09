@@ -182,7 +182,7 @@ the :py:mod:`pyndl.ndl.ndl` function from the :py:mod:`pyndl.ndl` module:
 .. code-block:: python
 
    >>> from pyndl import ndl
-   >>> weights = ndl.ndl(events='doc/data/levent.tab.gz.filtered',
+   >>> weights = ndl.ndl(events='doc/data/levent.tab.gz',
    ...                   alpha=0.1, betas=(0.1, 0.1), method="threading")
 
 
