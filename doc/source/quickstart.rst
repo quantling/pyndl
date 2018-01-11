@@ -14,7 +14,7 @@ First, you need to install *pyndl*. The easiest way to do this is using
 
 .. warning::
 
-    If you are using a other operating system then Linux this process can be
+    If you are using another operating system than Linux this process can be
     more difficult. Check out :doc:`installation` for more detailed installation
     instruction.
     However, currently we can only ensure the expected behaviour on Linux
