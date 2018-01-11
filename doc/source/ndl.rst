@@ -156,7 +156,7 @@ In index notation we can write:
 
 Other Learning Algorithms
 -------------------------
-
+.. _comparison_of_algorithms:
 
 Delta rule
 ^^^^^^^^^^
