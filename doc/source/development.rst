@@ -70,7 +70,7 @@ Workflow
 
     .. code:: bash
 
-        pip3 install --user tox pylint pytest pycodestyle sphinx
+        pip install --user tox pylint pytest pycodestyle sphinx
 
 
 Running tests

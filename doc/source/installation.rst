@@ -28,7 +28,7 @@ from `pypi <https://pypi.python.org/pypi>`_ with:
 
 .. code:: bash
 
-    pip3 install pyndl --user
+    pip install pyndl --user
 
 MacOS
 -----
@@ -57,11 +57,7 @@ then run these commands in Terminal:
 
 .. code:: bash
 
-        pip install pyndl
-
-.. code:: bash
-
-    pip3 install pyndl --user
+    pip install pyndl --user
 
 .. warning::
 
