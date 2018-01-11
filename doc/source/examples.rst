@@ -145,7 +145,6 @@ Let's start:
 
 .. code-block:: python
 
-    >>> import pyndl
     >>> from pyndl import ndl
     >>> weights = ndl.ndl(events='doc/data/lexample.tab.gz', alpha=0.1,
     ...                   betas=(0.1, 0.1), method='openmp')
