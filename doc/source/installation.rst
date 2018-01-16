@@ -34,11 +34,13 @@ MacOS
 -----
 
 If you want to install *pyndl* on MacOS you can also install it from
-`pypi <https://pypi.python.org/pypi>`_. However, gcc/g++ might be outdated as
-xcode provides 4.X, while 6.3 is needed. Therefore, it might be necessary to
-update gcc first, before installing *pyndl*:
+`pypi <https://pypi.python.org/pypi>`_. However, you need xcode and gcc/g++ 6.3
+installed. As gcc/g++ might be outdated as xcode provides only 4.X, it might be
+necessary to update gcc first, before installing *pyndl*:
 
-1. for safe-guarding redo the xcode install in the Terminal:
+1. `Download and install x-code <https://developer.apple.com/xcode/>`_ or
+   for safe-guarding redo the xcode install in the Terminal if you have already
+   installed it:
 
 .. code:: bash
 
