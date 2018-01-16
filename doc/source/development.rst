@@ -137,6 +137,15 @@ Landscape    |landscape|  `.landscape.yml`_  Monitoring of code quality
 .. _.landscape.yml: https://github.com/quantling/pyndl/blob/master/.landscape.yml
 
 
+Licensing
+---------
+
+All contributions to this project are licensed under the `MIT license
+<https://github.com/quantling/pyndl/blob/master/LICENSE.txt>`_. Exceptions are
+explicitly marked.
+All contributions will be made available under MIT license if no explicit
+request for another license is made and agreed on.
+
 
 Release Process
 ---------------

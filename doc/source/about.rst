@@ -15,6 +15,15 @@ contributors have a look at `Github's Contributor summary
 Currently, it is maintained by `Konstantin Sering <https://github.com/derNarr>`_
 and `Marc Weitz <https://github.com/trybnetic>`_.
 
+
+Contact
+-------
+
+In case you want to contact the project maintainers, please send an email to
+
+      konstantin [dot] sering [at] uni [minus] tuebingen [dot de
+
+
 Citation
 --------
 
@@ -48,6 +57,7 @@ Funding
 -------
 *pyndl* was partially funded by the Humboldt grant, the ERC advanced grant
 and by the University of Tübingen.
+
 
 Acknowledgements
 ----------------
