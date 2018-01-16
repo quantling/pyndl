@@ -28,13 +28,16 @@ Naive Discriminative Learning
 Naive Discriminative Learning, henceforth NDL, is an incremental learning
 algorithm based on the learning rule of Rescorla and Wagner [1]_, which
 describes the learning of direct associations between cues and outcomes.
-It is naive in the sense that cue-outcome associations are estimated
-separately for each outcome.
+The learning is thereby structured in events where each event consists of a
+set of cues which give hints to outcomes. Outcomes can be seen as the result of
+an event, where each outcome can be either present or absent. NDL is naive in
+the sense that cue-outcome associations are estimated separately for each
+outcome.
 
 The Rescorla-Wagner learning rule describes how the association strength
 :math:`\Delta V_{i}^{t}` at time :math:`t` changes over time. Time is here
-described in form of learning events (see :doc:`terminology` for more
-information). For each event the association strength is updated as
+described in form of learning events. For each event the association strength
+is updated as
 
 .. math::
 
@@ -141,8 +144,13 @@ Cues               Outcomes
 From Corpus to Long Format
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Often the corpus which should be analysed is only a raw utf-8 encoded corpus
-file. Therefore, the :py:mod:`pyndl.preprocess` module (besides other things)
+Often the corpus which should be analysed is only a raw utf-8 encoded text file
+that contains huge amounts of text. From here on we will refer to such a file
+as a corpus file. In the corpus files several documents can be stored with  a
+``---end.of.document---`` or ``---END.OF.DOCUMENT---`` string marking
+where an old document finished and a new document starts.
+
+The :py:mod:`pyndl.preprocess` module (besides other things)
 provides the functionality to directly generate an event file based on a raw
 corpus file and filter it:
 
