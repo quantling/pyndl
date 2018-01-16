@@ -14,7 +14,7 @@ First, you need to install *pyndl*. The easiest way to do this is using
 
 .. warning::
 
-    If you are using a other operating system then Linux this process can be
+    If you are using any other operating system than Linux this process can be
     more difficult. Check out :doc:`installation` for more detailed installation
     instruction.
     However, currently we can only ensure the expected behaviour on Linux
@@ -119,7 +119,7 @@ and two columns:
 1. the first column contains an underscore delimited list of all cues
 2. the second column contains an underscore delimited list of all outcomes
 3. each line therefore represents an event with a pair of a cue and an outcome
-   (occuring one time)
+   (occurring one time)
 4. the events (lines) are ordered chronologically
 
 As the data in table 1 are artificial we can generate such a file for this
@@ -231,7 +231,7 @@ to load a in netCDF format saved matrix:
 
 .. [1] Rescorla, R. A., & Wagner, A. R. (1972). A theory of Pavlovian
        conditioning: Variations in the effectiveness of reinforcement and
-       nonreinforcement. *Classical conditioning II: Current research and
+       non-reinforcement. *Classical conditioning II: Current research and
        theory*, 2, 64-99.
 
 .. [2] Baayen, R. H., Milin, P., Đurđević, D. F., Hendrix, P., & Marelli, M.

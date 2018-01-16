@@ -110,8 +110,8 @@ in the repository's root folder or by executing
 in the documentation folder.
 
 
-Continous Integration
----------------------
+Continuous Integration
+----------------------
 
 We use several services in order to continuously monitor our project:
 

@@ -162,7 +162,7 @@ def create_event_file(corpus_file,
     event_options : None or (number_of_words,) or (before, after) or None
         in "consecutive words" the number of words of the sliding window as
         an integer; in "word_to_word" the number of words before and after the
-        word of interst each as an integer.
+        word of interest each as an integer.
     cue_structure: {"trigrams_to_word", "word_to_word", "bigrams_to_word"}
 
     lower_case : bool

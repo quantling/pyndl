@@ -89,7 +89,7 @@ and two columns:
 1. the first column contains an underscore delimited list of all cues
 2. the second column contains an underscore delimited list of all outcomes
 3. each line therefore represents an event with a pair of a cue and an outcome
-   (occuring one time)
+   (occurring one time)
 4. the events (lines) are ordered chronologically
 
 As the data in table 1 are artificial we can generate such a file for this
@@ -315,7 +315,7 @@ as in this case the context is the whole document,
 ``event_structure='consecutive_words'`` as these are our events,
 ``event_options=(1, )`` as we define an event to be one word and
 ``cue_structure='bigrams_to_word'`` to set cues being bigrams.
-There are also several technical arguments you can specifiy, which we will not
+There are also several technical arguments you can specify, which we will not
 change here. Our generated event file ``levent.tab.gz`` now looks
 (uncompressed) like this:
 
@@ -449,7 +449,7 @@ We can load a in netCDF format saved matrix into R:
 
 .. [1] Rescorla, R. A., & Wagner, A. R. (1972). A theory of Pavlovian
       conditioning: Variations in the effectiveness of reinforcement and
-      nonreinforcement. *Classical conditioning II: Current research and
+      non-reinforcement. *Classical conditioning II: Current research and
       theory*, 2, 64-99.
 
 .. [2] Baayen, R. H., Milin, P., Đurđević, D. F., Hendrix, P., & Marelli, M.

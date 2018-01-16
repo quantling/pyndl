@@ -9,7 +9,7 @@ Authors
 `Marc Weitz <https://github.com/trybnetic>`_,
 `David-Elias Künstle <https://github.com/dekuenstle/>`_
 and `Lennart Schneider <https://github.com/sumny>`_. For the full list of
-contributers have a look at `Github's Contributor summary
+contributors have a look at `Github's Contributor summary
 <https://github.com/quantling/pyndl/contributors>`_.
 
 Currently, it is maintained by `Konstantin Sering <https://github.com/derNarr>`_
