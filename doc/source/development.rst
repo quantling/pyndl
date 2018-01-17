@@ -43,24 +43,39 @@ Workflow
 2. Get a local copy of your fork and install the package in 'development'
    mode, which will make changes in the source code active immediately, by running
 
-.. code:: bash
+   .. code:: bash
 
-    git clone https://github.com/yourname/pyndl.git
-    cd pyndl
-    python3 setup.py develop --user
+       git clone https://github.com/yourname/pyndl.git
+       cd pyndl
+       python setup.py develop --user
 
-3. Add code, tests or documentation. You can reference relevant issues in
-   commit messages (like #42) to make GitHub link issues and commits together,
-   and with phrase like "fixes #42" you can even close relevant issues
-   automatically.
+3. Add code, tests or documentation.
 
-4. Push your local changes to your fork:
+4. Test your changes locally by running within the root folder (``pyndl/``)
 
-.. code:: bash
+   .. code:: bash
 
-    git push git@github.com:yourname/pyndl.git
+       make checkstyle
+       make test
 
-5. Open the Pull Requests page at https://github.com/yourname/pyndl/pulls and
+5. Add and commit your changes after tests run through without complaints.
+
+   .. code:: bash
+
+       git add -u
+       git commit -m'fixes #42 by posing the question in the right way'
+
+   You can reference relevant issues in commit messages (like #42) to make GitHub
+   link issues and commits together, and with phrase like "fixes #42" you can
+   even close relevant issues automatically.
+
+6. Push your local changes to your fork:
+
+   .. code:: bash
+
+       git push git@github.com:yourname/pyndl.git
+
+7. Open the Pull Requests page at https://github.com/yourname/pyndl/pulls and
    click "New pull request" to submit your Pull Request to
    https://github.com/quantling/pyndl.
 
@@ -76,38 +91,46 @@ Workflow
 Running tests
 -------------
 
-We use ``tox`` to manage testing. You can run the tests by executing the
-following within the repository's root folder:
+We use ``make`` and ``tox`` to manage testing. You can run the tests by
+executing the following within the repository's root folder (``pyndl/``):
 
 .. code:: bash
 
-    tox -e test
+    make test
 
 For manually checking coding guidelines run:
 
 .. code:: bash
 
-    tox -e checkstyle
+    make checkstyle
+
+There is an additional way to invoke ``pylint`` as a linter with tox by running
+
+.. code:: bash
+
     tox -e lint
+
+The linting gives still a lot of complaints that need some decisions on how to
+fix them appropriately.
 
 
 Building documentation
 ----------------------
 
-The projects documentation is stored in the ``doc/`` folder and is created with
+The projects documentation is stored in the ``pyndl/doc/`` folder and is created with
 ``sphinx``. You can rebuild the documentation by either executing
 
 .. code:: bash
 
    make documentation
 
-in the repository's root folder or by executing
+in the repository's root folder (``pyndl``) or by executing
 
 .. code:: bash
 
    make html
 
-in the documentation folder.
+in the documentation folder (``pyndl/doc/``).
 
 
 Continuous Integration
