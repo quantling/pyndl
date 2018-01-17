@@ -36,7 +36,7 @@ The easiest way to install *pyndl* is using
 
     pip install pyndl --user
 
-For more information have a look at the `Instalation Guide
+For more information have a look at the `Installation Guide
 <http://pyndl.readthedocs.io/en/latest/installation.html>`_.
 
 
