@@ -10,14 +10,17 @@ Supported systems and versions
 .. image:: https://img.shields.io/pypi/pyversions/pyndl.svg
     :target: https://pypi.python.org/pypi/pyndl/
 
-*pyndl* currently only supports installation on Linux systems. However, it is
-possible to install it on other operating systems, but be aware
-that some functionality might not work or will not work as intended.
+*pyndl* currently is only tested and mainly used on 64-bit Linux systems.
+However, it is possible to install it on other operating systems, but be aware
+that some functionality might not work or will not work as intended. Therefore
+be extra careful and run the test suite after installing it on a non Linux
+system.
 
 .. note::
 
-  We recommend to install `Minicoda <https://conda.io/miniconda.html>`_ before
-  installing *pyndl* or to create a virtualenv within your personal folder.
+    We recommend to install `Minicoda <https://conda.io/miniconda.html>`_
+    before installing *pyndl* or to create a virtualenv within your personal
+    folder.
 
 
 Linux
@@ -29,6 +32,7 @@ from `pypi <https://pypi.python.org/pypi>`_ with:
 .. code:: bash
 
     pip install pyndl --user
+
 
 MacOS
 -----
@@ -42,18 +46,18 @@ necessary to update gcc first, before installing *pyndl*:
    for safe-guarding redo the xcode install in the Terminal if you have already
    installed it:
 
-.. code:: bash
+   .. code:: bash
 
-        xcode-select --install
+       xcode-select --install
 
 2. download gcc from `Mac OSX High Performance Computing
-<http://prdownloads.sourceforge.net/hpc/gcc-6.3-bin.tar.gz>`_
-then run these commands in Terminal:
+   <http://prdownloads.sourceforge.net/hpc/gcc-6.3-bin.tar.gz>`_ then run these
+   commands in Terminal:
 
-.. code:: bash
+   .. code:: bash
 
-        gunzip gcc-6.X-bin.tar.gz
-        sudo tar -xvf gcc-6.X-bin.tar -C /
+       gunzip gcc-6.X-bin.tar.gz
+       sudo tar -xvf gcc-6.X-bin.tar -C /
 
 3. finally, install pyndl:
 
@@ -66,3 +70,33 @@ then run these commands in Terminal:
     This procedure is experimental and might not work. As long as we do not
     actively support MacOS be aware that these installation instructions can
     fail or the installed package does not always works as intended!
+
+
+Windows 10
+----------
+
+.. note::
+
+    You might need to enable the ``bash`` within Windows 10 first to be able to
+    follow the following instructions.
+
+After installing Anaconda or Miniconda, first install the dependencies with the
+``conda`` command in the bash or the Ana/Miniconda terminal:
+
+.. code:: bash
+
+    conda update --all
+    conda install numpy cython pandas xarray netCDF4 numpydoc pip
+
+After the installation of the dependencies finished successfully you should be
+able to install ``pyndl`` with pip:
+
+.. code:: bash
+
+    pip install --user pyndl
+
+.. warning::
+
+    This procedure is experimental and might not work. As long as we do not
+    actively support Windows 10 be aware that these installation instructions
+    can fail or the installed package does not always works as intended!
