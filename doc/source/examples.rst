@@ -6,7 +6,7 @@ Lexical example
 ===============
 
 The lexical example illustrates the Rescorla-Wagner equations [1]_.
-This example is taken from Baayen, Milin, Đurđević, Hendrix & Marelli [2]_.
+This example is taken from Baayen, Milin, Đurđević, Hendrix and Marelli [2]_.
 
 Premises
 --------
@@ -248,11 +248,7 @@ learning or do both:
     ...                         alphas=alphas_cues, betas=(0.1, 0.1),
     ...                         weights=weights)
 
-.. note::
-
-    Note that at the moment, continuing learning is only possible via a
-    previous ``dict`` and meta data as in :py:mod:`pyndl.ndl.ndl` is only
-    returned if you set ``make_data_array=True``:
+If you prefer to get a ``xarray.DataArray`` returned you can set the flag ``make_data_array=True``:
 
 .. code-block:: python
 
