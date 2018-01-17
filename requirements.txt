@@ -1,5 +1,4 @@
 numpy
-matplotlib
 cython
 pandas
 xarray
