@@ -3,6 +3,4 @@ cython
 pandas
 xarray
 netCDF4
-numpydoc
-easydev
 pip

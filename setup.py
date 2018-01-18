@@ -55,6 +55,16 @@ setup(
     platforms='Linux',
     packages=['pyndl'],
     install_requires=load_requirements('requirements.txt'),
+    extras_require={
+        'tests': [
+            'pylint',
+            'pytest',
+            'pycodestyle'],
+        'docs': [
+            'sphinx >= 1.4',
+            'sphinx_rtd_theme',
+            'numpydoc',
+            'easydev==0.9.35']}
     ext_modules=ext_modules,
     cmdclass=cmdclass
 )
