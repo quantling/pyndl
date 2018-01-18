@@ -34,7 +34,7 @@ The easiest way to install *pyndl* is using
 
 .. code:: bash
 
-    pip install pyndl --user
+    pip install --user pyndl
 
 For more information have a look at the `Installation Guide
 <http://pyndl.readthedocs.io/en/latest/installation.html>`_.

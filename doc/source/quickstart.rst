@@ -9,7 +9,7 @@ First, you need to install *pyndl*. The easiest way to do this is using
 
 .. code:: bash
 
-    pip install pyndl --user
+    pip install --user pyndl
 
 
 .. warning::

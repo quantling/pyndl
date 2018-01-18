@@ -31,7 +31,7 @@ from `pypi <https://pypi.python.org/pypi>`_ with:
 
 .. code:: bash
 
-    pip install pyndl --user
+    pip install --user pyndl
 
 
 MacOS
@@ -63,7 +63,7 @@ necessary to update gcc first, before installing *pyndl*:
 
 .. code:: bash
 
-    pip install pyndl --user
+    pip install --user pyndl
 
 .. warning::
 
