@@ -14,8 +14,8 @@ import multiprocessing as mp
 from pip._vendor import pkg_resources
 
 
-__author__ = ('David-Elias Künstle, Lennard Schneider, '
-              'Konstantin Sering, Marc Weitz')
+__author__ = ('Konstantin Sering, Marc Weitz, '
+              'David-Elias Künstle, Lennard Schneider')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
 __version__ = '0.4.0'
 __license__ = 'MIT'
