@@ -1,3 +1,13 @@
+"""
+Pyndl - Naive Discriminative Learning in Python
+===============================================
+
+*pyndl* is an implementation of Naive Discriminative Learning in Python. It was
+created to analyse huge amounts of text file corpora. Especially, it allows to
+efficiently apply the Rescorla-Wagner learning rule to these corpora.
+
+"""
+
 import os
 import sys
 import multiprocessing as mp
@@ -7,7 +17,7 @@ from pip._vendor import pkg_resources
 __author__ = ('David-Elias Künstle, Lennard Schneider, '
               'Konstantin Sering, Marc Weitz')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.3.4'
+__version__ = '0.4.0'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '
@@ -26,17 +36,6 @@ __classifiers__ = [
     'Topic :: Scientific/Engineering :: Artificial Intelligence',
     'Topic :: Scientific/Engineering :: Information Analysis',
     ]
-
-
-# pylint: disable=W0622
-__doc__ = """
-:abstract: %s
-:version: %s
-:author: %s
-:contact: %s
-:date: 2017-12-27
-:copyright: %s
-""" % (__description__, __version__, __author__, __author_email__, __license__)
 
 
 def sysinfo():

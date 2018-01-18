@@ -17,6 +17,8 @@ install: install-venv
 		which tox > /dev/null || (echo "Please install tox (pip install tox)!" && exit 1) && echo "All right! Run with tox."
 checkstyle:
 		tox -e checkstyle
+documentation:
+		tox -e documentation
 test:
 		tox -e test
 test-versions:

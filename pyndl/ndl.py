@@ -1,3 +1,10 @@
+"""
+pyndl.ndl
+---------
+
+*pyndl.ndl* provides functions in order to train NDL models
+
+"""
 from collections import defaultdict, OrderedDict
 import copy
 import getpass

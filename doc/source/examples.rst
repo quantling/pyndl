@@ -1,12 +1,12 @@
-========
-Examples
-========
+=============
+More Examples
+=============
 
 Lexical example
 ===============
 
-The lexical example illustrates the Rescorla-Wagner[@rescorlawagner1972]
-equations. This example is taken from [@baayen2011].
+The lexical example illustrates the Rescorla-Wagner equations [1]_.
+This example is taken from Baayen, Milin, Đurđević, Hendrix and Marelli [2]_.
 
 Premises
 --------
@@ -35,7 +35,7 @@ Premises
 
 .. math::
     :label: RW
-   
+
     \Delta V_{i}^{t} =
     \begin{array}{ll}
     \begin{cases}
@@ -82,22 +82,22 @@ an artificial lexicon in the wide format. In the following, the letters
 (unigrams and bigrams) of the words constitute the cues, the meanings represent
 the outcomes.
 
-Analyzing any data using **pyndl** requires them to be in the long format as an
+Analyzing any data using *pyndl* requires them to be in the long format as an
 utf-8 encoded tab delimited gzipped text file with a header in the first line
 and two columns:
 
 1. the first column contains an underscore delimited list of all cues
 2. the second column contains an underscore delimited list of all outcomes
 3. each line therefore represents an event with a pair of a cue and an outcome
-   (occuring one time)
+   (occurring one time)
 4. the events (lines) are ordered chronologically
 
 As the data in table 1 are artificial we can generate such a file for this
 example by expanding table 1 randomly regarding the frequency of occurrence of
-each event. The resulting event file ``lexample.tab.gz`` (which you can find in
-the subdirectory ``data``) consists of 420 lines (419 = sum of frequencies + 1
-header) and looks like the following (nevertheless you are encouraged to take a
-closer look at this file using any text editor of your choice):
+each event. The resulting event file `lexample.tab.gz`_ consists of 420 lines
+(419 = sum of frequencies + 1 header) and looks like the following
+(nevertheless you are encouraged to take a closer look at this file using any
+text editor of your choice):
 
 =================  =============
 Cues               Outcomes
@@ -111,26 +111,27 @@ Cues               Outcomes
 pyndl.ndl module
 ----------------
 We can now compute the strength of associations (weights or weight matrix)
-after the  presentation of the 419 tokens of the 10 words using **pyndl**.
-**pyndl** provides the two functions ``ndl.ndl`` and ``ndl.dict_ndl`` to
-calculate the weights for all outcomes over all events. ``ndl.ndl`` itself
-provides to methods regarding estimation, ``openmp`` and ``threading``. We
-have to specify the path of our event file ``lexample.tab.gz`` and for this
-example set :math:`\alpha = 0.1`, :math:`\beta_{1} = 0.1`, :math:`\beta_{2} =
-0.1` with leaving :math:`\lambda = 1.0` at its default value. You can use
-**pyndl** directly in a Python3 Shell or you can write an executable script,
-this is up to you. For educational purposes we use a Python3 Shell in this
-example.
+after the  presentation of the 419 tokens of the 10 words using
+:py:mod:`pyndl.ndl`. :py:mod:`pyndl.ndl` provides the two functions
+:py:mod:`pyndl.ndl.ndl` and :py:mod:`pyndl.ndl.dict_ndl` to calculate the
+weights for all outcomes over all events. :py:mod:`pyndl.ndl.ndl` itself
+provides to methods regarding estimation, ``openmp`` and ``threading``. We have
+to specify the path of our event file `lexample.tab.gz`_ and
+for this example set :math:`\alpha = 0.1`, :math:`\beta_{1} = 0.1`,
+:math:`\beta_{2} = 0.1` with leaving :math:`\lambda = 1.0` at its default
+value. You can use *pyndl* directly in a Python3 Shell or you can write an
+executable script, this is up to you. For educational purposes we use a Python3
+Shell in this example.
 
 
-ndl.ndl
-^^^^^^^
-``ndl.ndl`` is a parallel Python implementation using numpy, multithreading
-and a binary format which is created automatically. It allows you to choose
-between the two methods ``openmp`` and ``threading``, with the former one
-using openMP and therefore being expected to be much faster when analyzing
-larger data.  Besides, you can set three technical arguments which we will not
-change here:
+pyndl.ndl.ndl
+^^^^^^^^^^^^^
+:py:mod:`pyndl.ndl.ndl` is a parallel Python implementation using numpy,
+multithreading and a binary format which is created automatically. It allows
+you to choose between the two methods ``openmp`` and ``threading``, with the
+former one using `openMP <http://www.openmp.org/>`_ and therefore being expected
+to be much faster when analyzing larger data. Besides, you can set three
+technical arguments which we will not change here:
 
 1. ``number_of_threads`` (int) giving the number of threads in which the job
    should be executed (default=2)
@@ -144,7 +145,6 @@ Let's start:
 
 .. code-block:: python
 
-    >>> import pyndl
     >>> from pyndl import ndl
     >>> weights = ndl.ndl(events='doc/data/lexample.tab.gz', alpha=0.1,
     ...                   betas=(0.1, 0.1), method='openmp')
@@ -166,14 +166,14 @@ methods
     ...
     >>> weights.loc[{'outcomes': 'plural', 'cues': 's#'}]  # doctest: +ELLIPSIS
     <xarray.DataArray ()>
-    array(0.07698822703296752)
+    array(0.076988...)
     Coordinates:
         outcomes  <U6 'plural'
         cues      <U2 's#'
     ...
     >>> weights.loc['plural'].loc['s#']  # doctest: +ELLIPSIS
     <xarray.DataArray ()>
-    array(0.07698822703296752)
+    array(0.076988...)
     Coordinates:
         outcomes  <U6 'plural'
         cues      <U2 's#'
@@ -183,8 +183,8 @@ return the weight of the cue 's#' (the unigram 's' being the word-final) for
 the outcome 'plural' (remember counting in Python does start at 0) as ca. 0.077
 and hence indicate 's#' being a marker for plurality.
 
-``ndl.ndl`` also allows you to continue learning from a previous weight matrix
-by specifying the ``weight`` argument:
+:py:mod:`pyndl.ndl.ndl` also allows you to continue learning from a previous
+weight matrix by specifying the ``weight`` argument:
 
 .. code-block:: python
 
@@ -201,8 +201,8 @@ by specifying the ``weight`` argument:
     Attributes:
     ...
 
-As you may have noticed already, ``ndl.ndl`` provides you with meta data
-organized in a ``dict`` which was collected during your calculations. Each
+As you may have noticed already, :py:mod:`pyndl.ndl.ndl` provides you with meta
+data organized in a ``dict`` which was collected during your calculations. Each
 entry of each ``list`` of this meta data therefore references one specific
 moment of your calculations:
 
@@ -212,10 +212,10 @@ moment of your calculations:
    OrderedDict(...)
 
 
-ndl.dict_ndl
-------------
-``ndl.dict_ndl`` is a pure Python implementation, however, it differs from
-``ndl.ndl`` regarding the following:
+pyndl.ndl.dict_ndl
+^^^^^^^^^^^^^^^^^^
+:py:mod:`pyndl.ndl.dict_ndl` is a pure Python implementation, however, it
+differs from :py:mod:`pyndl.ndl.ndl` regarding the following:
 
 1. there are only two technical arguments: ``remove_duplicates`` (logical) and
    ``make_data_array`` (logical)
@@ -235,8 +235,8 @@ Therefore
     0.076988227...
 
 yields approximately the same results as before, however, you now can specify
-different :math:`\alpha`'s per cue and as in ``ndl.ndl`` continue learning or
-do both:
+different :math:`\alpha`'s per cue and as in :py:mod:`pyndl.ndl.ndl` continue
+learning or do both:
 
 .. code-block:: python
 
@@ -248,11 +248,7 @@ do both:
     ...                         alphas=alphas_cues, betas=(0.1, 0.1),
     ...                         weights=weights)
 
-.. note::
-
-    Note that at the moment, continuing learning is only possible via a
-    previous ``dict`` and meta data as in ``ndl.ndl`` is only returned if you
-    set ``make_data_array=True``:
+If you prefer to get a ``xarray.DataArray`` returned you can set the flag ``make_data_array=True``:
 
 .. code-block:: python
 
@@ -266,8 +262,8 @@ do both:
 
 A minimal workflow example
 ==========================
-As you should have a basic understanding of ``pyndl.ndl`` by now, the following
-example will show you how to:
+As you should have a basic understanding of :py:mod:`pyndl.ndl` by now, the
+following example will show you how to:
 
 1. generate an event file based on a raw corpus file
 2. count cues and outcomes
@@ -279,14 +275,13 @@ example will show you how to:
 
 Generate an event file based on a raw corpus file
 -------------------------------------------------
-Suppose you have a raw utf-8 encoded corpus file (by the way, ``pyndl.corpus``
-allows you to generate such a corpus file from a bunch of gunzipped xml
-subtitle files filled with words, which we will not cover here). For example
-take a look at ``lcorpus.txt`` (which you also can find in the subdirectory
-``data``)
+Suppose you have a raw utf-8 encoded corpus file (by the way,
+:py:mod:`pyndl.corpus` allows you to generate such a corpus file from a bunch of
+gunzipped xml subtitle files filled with words, which we will not cover here).
+For example take a look at `lcorpus.txt_`.
 
 To analyse the data, you need to convert the file into an event file similar to
-``lexample.tab.gz`` in our lexical learning example, as currently there is only
+`lexample.tab.gz`_ in our lexical learning example, as currently there is only
 one word per line and neither is there the column for cues nor for outcomes::
 
    hand
@@ -294,10 +289,8 @@ one word per line and neither is there the column for cues nor for outcomes::
    hands
 
 
-pyndl.preprocess module
-^^^^^^^^^^^^^^^^^^^^^^^
-This module (besides other things) allows you to generate an event file based
-on a raw corpus file and filter it:
+The :py:mod:`pyndl.preprocess` module (besides other things) allows you to
+generate an event file based on a raw corpus file and filter it:
 
 .. code-block:: python
 
@@ -310,13 +303,14 @@ on a raw corpus file and filter it:
     ...                              event_options=(1, ),
     ...                              cue_structure='bigrams_to_word')
 
-The function ``preprocess.create_event_file`` has several arguments which you
-might have to change to suit them your data, so you are strongly recommended to
-read its documentation. We set ``context_structure='document'`` as in this case
-the context is the whole document, ``event_structure='consecutive_words'`` as
-these are our events, ``event_options=(1, )`` as we define an event to be one
-word and ``cue_structure='bigrams_to_word'`` to set cues being bigrams.
-There are also several technical arguments you can specifiy, which we will not
+The function :py:mod:`pyndl.preprocess.create_event_file` has several arguments
+which you might have to change to suit them your data, so you are strongly
+recommended to read its documentation. We set ``context_structure='document'``
+as in this case the context is the whole document,
+``event_structure='consecutive_words'`` as these are our events,
+``event_options=(1, )`` as we define an event to be one word and
+``cue_structure='bigrams_to_word'`` to set cues being bigrams.
+There are also several technical arguments you can specify, which we will not
 change here. Our generated event file ``levent.tab.gz`` now looks
 (uncompressed) like this:
 
@@ -332,11 +326,7 @@ ds_s#_an_#h_ha_nd  hands
 Count cues and outcomes
 -----------------------
 We can now count the cues and outcomes in our event file using the
-
-
-pyndl.count module
-^^^^^^^^^^^^^^^^^^
-and also generate id maps for cues and outcomes:
+:py:mod:`pyndl.count` module and also generate id maps for cues and outcomes:
 
 .. code-block:: python
 
@@ -364,11 +354,8 @@ Filter the events
 -----------------
 As we do not want to include the outcomes 'foot' and 'feet' in this example
 as well as their cues '#f', 'fo' 'oo', 'ot', 't#', 'fe', 'ee' 'et', we use the
-
-
-pyndl.preprocess module
-^^^^^^^^^^^^^^^^^^^^^^^
-again, filtering our event file and update the id maps for cues and outcomes:
+:py:mod:`pyndl.preprocess` module again, filtering our event file and update
+the id maps for cues and outcomes:
 
 .. code-block:: python
 
@@ -388,25 +375,21 @@ again, filtering our event file and update the id maps for cues and outcomes:
     >>> outcome_id_map  # doctest: +ELLIPSIS
     {...}
 
-Alternatively, using ``preprocess.filter_event_file`` you can also specify
-which cues and outcomes to keep (``keep_cues`` and ``keep_outcomes``) or remap
-cues and outcomes (``cue_map`` and ``outcomes_map``). Besides, there are also
-some technical arguments you can specify, which will not discuss here.
+Alternatively, using :py:mod:`pyndl.preprocess.filter_event_file` you can also
+specify which cues and outcomes to keep (``keep_cues`` and ``keep_outcomes``)
+or remap cues and outcomes (``cue_map`` and ``outcomes_map``). Besides, there
+are also some technical arguments you can specify, which will not discuss here.
 
-Last but not least ``pyndl.preprocess`` does provide some other very useful
-functions regarding preprocessing of which we did not make any use here, so
-make sure to go through its documentation.
+Last but not least :py:mod:`pyndl.preprocess` does provide some other very
+useful functions regarding preprocessing of which we did not make any use here,
+so make sure to go through its documentation.
 
 
 Learn the weights
 -----------------
 Computing the strength of associations for the data is now easy, using for
-example ``ndl.ndl`` from the
-
-
-pyndl.ndl module
-^^^^^^^^^^^^^^^^
-like in the lexical learning example:
+example :py:mod:`pyndl.ndl.ndl` from the :py:mod:`pyndl.ndl` module like in the lexical learning
+example:
 
 .. code-block:: python
 
@@ -417,7 +400,7 @@ like in the lexical learning example:
 
 Save and load a weight matrix
 -----------------------------
-is straight forward using the netCDF format [@netCDF]
+is straight forward using the netCDF format [3]_
 
 .. code-block:: python
 
@@ -436,8 +419,8 @@ created in this tutorial:
    >>> os.remove('doc/data/levent.tab.gz.filtered')
 
 
-Load a weight matrix to R[@R2016]
----------------------------------
+Load a weight matrix to R [4]_
+------------------------------
 We can load a in netCDF format saved matrix into R:
 
 .. code-block:: R
@@ -451,3 +434,27 @@ We can load a in netCDF format saved matrix into R:
    > nc_close(nc = weights_nc)
    > rm(weights_nc)
 
+.. _lexample.tab.gz:
+      https://github.com/quantling/pyndl/blob/master/doc/data/lexample.tab.gz
+
+.. _lcorpus.txt:
+    https://github.com/quantling/pyndl/blob/master/doc/data/lcorpus.txt
+
+----
+
+.. [1] Rescorla, R. A., & Wagner, A. R. (1972). A theory of Pavlovian
+      conditioning: Variations in the effectiveness of reinforcement and
+      non-reinforcement. *Classical conditioning II: Current research and
+      theory*, 2, 64-99.
+
+.. [2] Baayen, R. H., Milin, P., Đurđević, D. F., Hendrix, P., & Marelli, M.
+      (2011). An amorphous model for morphological processing in visual
+      comprehension based on naive discriminative learning.
+      *Psychological review*, 118(3), 438.
+
+.. [3] Unidata (2012). NetCDF. doi:10.5065/D6H70CW6. Retrieved from
+       http://doi.org/10.5065/D6RN35XM)
+
+.. [4] R Core Team (2013). R: A language and environment for statistical
+      computing. R Foundation for Statistical Computing, Vienna, Austria.
+      URL https://www.R-project.org/.

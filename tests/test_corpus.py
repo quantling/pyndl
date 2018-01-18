@@ -16,13 +16,13 @@ def test_read_clean_gzfile():
     assert len(lines) == 3
 
 
-def test_main():
+def test_create_corpus_from_gz():
     corpus_file = os.path.join(TEST_ROOT, 'temp/xml_gz_corpus.txt')
     resource_file = os.path.join(TEST_ROOT, 'resources/xml_gz_corpus')
     reference_file = os.path.join(TEST_ROOT, 'reference/xml_gz_corpus.txt')
-    corpus.main(resource_file, corpus_file, n_threads=1, verbose=False)
+    corpus.create_corpus_from_gz(resource_file, corpus_file, n_threads=1, verbose=False)
     os.remove(corpus_file)
-    corpus.main(resource_file, corpus_file, n_threads=2, verbose=True)
+    corpus.create_corpus_from_gz(resource_file, corpus_file, n_threads=2, verbose=True)
     with open(corpus_file, "rt") as new_file:
         lines_new = new_file.readlines()
     with open(reference_file, "rt") as reference:
