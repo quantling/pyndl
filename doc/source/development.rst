@@ -63,7 +63,7 @@ Workflow
    .. code:: bash
 
        git add -u
-       git commit -m'fixes #42 by posing the question in the right way'
+       git commit -m 'fixes #42 by posing the question in the right way'
 
    You can reference relevant issues in commit messages (like #42) to make GitHub
    link issues and commits together, and with phrase like "fixes #42" you can
@@ -117,8 +117,16 @@ fix them appropriately.
 Building documentation
 ----------------------
 
-The projects documentation is stored in the ``pyndl/doc/`` folder and is created with
-``sphinx``. You can rebuild the documentation by either executing
+Building the documentation requires some extra dependencies. Therefore, run
+
+.. code:: bash
+
+    pip install -e .[docs]
+
+in the project root directory. This command will install all required
+dependencies. The projects documentation is stored in the ``pyndl/doc/`` folder
+and is created with ``sphinx``. You can rebuild the documentation by either
+executing
 
 .. code:: bash
 
@@ -131,6 +139,7 @@ in the repository's root folder (``pyndl``) or by executing
    make html
 
 in the documentation folder (``pyndl/doc/``).
+
 
 
 Continuous Integration
