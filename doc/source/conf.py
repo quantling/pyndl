@@ -20,6 +20,8 @@
 import os
 # import sys
 import shutil
+import time
+
 import easydev
 # sys.path.insert(0, os.path.abspath('.'))
 
@@ -68,7 +70,7 @@ master_doc = 'index'
 pkg = __import__('pyndl')
 project = 'pyndl'
 author =  pkg.__author__
-copyright = '2017 ' + pkg.__author__
+copyright = time.strftime('2017 - %Y ') + pkg.__author__
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
