@@ -118,19 +118,14 @@ Building documentation
 ----------------------
 
 The projects documentation is stored in the ``pyndl/doc/`` folder and is created with
-``sphinx``. You can rebuild the documentation by either executing
+``sphinx``. The source files for the documentation can be found in
+``pyndl/doc/source/``. If you want to improve the documentation you should find
+everyting in this source folder. You can rebuild the documentation running in
+the repository's root folder (``pyndl``):
 
 .. code:: bash
 
    make documentation
-
-in the repository's root folder (``pyndl``) or by executing
-
-.. code:: bash
-
-   make html
-
-in the documentation folder (``pyndl/doc/``).
 
 
 Continuous Integration
