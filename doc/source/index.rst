@@ -3,23 +3,17 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to pyndl's documentation!
-=================================
+.. automodule:: pyndl
+
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   leading_remarks
+   quickstart
+   installation
+   ndl
    examples
-   comparison_of_algorithms
    pyndl
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   development
+   about

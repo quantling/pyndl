@@ -1,8 +1,30 @@
+Naive Discriminative Learning
+=============================
 
-.. _comparison_of_algorithms:
+Terminology
+-----------
 
-Comparison of Algorithms
-========================
+Before explaining Naive Discriminative Learning (NDL) in detail, we want to
+give you a brief overview over important notions:
+
+cue :
+    A cue is something that gives a hint on something else. The something else
+    is called outcome. Examples for cues in a text corpus are trigraphs or
+    preceding words for the word or meaning of the word.
+
+outcome :
+    The outcome is the result of an event. Examples are words, the meaning of
+    the word, or lexomes.
+
+event :
+    An event connects cues with outcomes. In any event one or more unordered
+    cues are present and one or more outcomes are present.
+
+weights :
+    The weights represent the learned experience / association between all cues
+    and outcomes of interest. Usually, some meta data is stored alongside the
+    learned weights.
+
 
 Rescorla Wagner learning rule
 -----------------------------
@@ -11,7 +33,7 @@ In order to update the association strengths (weights) between cues and
 outcomes we do for each event the following:
 
 We calculate the activation (prediction) :math:`a_j` for each outcome
-:math:`o_j` by using all present cues :math:`C_\text{PRESENT}`: 
+:math:`o_j` by using all present cues :math:`C_\text{PRESENT}`:
 
 .. math::
 
@@ -31,12 +53,11 @@ cue-outcome-combination:
 In the end, we update all weights according to :math:`w_{ij} = w_{ij} + \Delta
 w_{ij}`.
 
-Usually, we set :math:`\lambda = 1`, :math:`\beta_1 = \beta_2 = \beta = 0.01`,
-and :math:`\alpha_i = \alpha = 0.01`.
+.. note::
 
-If we set all the :math:`\alpha`'s and :math:`\beta`'s to a fixed value we can
-replace them in the equation with a general learning parameter :math:`\eta =
-\alpha \cdot \beta`.
+    If we set all the :math:`\alpha`'s and :math:`\beta`'s to a fixed value we
+    can replace them in the equation with a general learning parameter
+    :math:`\eta = \alpha \cdot \beta`.
 
 
 In matrix notation
@@ -58,7 +79,7 @@ rule as:
 
    \Delta &= \eta \vec{c} \cdot (\lambda \vec{o} - \vec{a})^T \\
    &= \eta \vec{c} \cdot (\lambda \vec{o} - W^T \cdot \vec{c})^T
-   
+
 Let us first check the dimensionality of the matrices:
 
 :math:`\Delta` is the update of the weight matrix :math:`W` and therefore needs
@@ -84,8 +105,8 @@ rewrite the equation.
 
 .. math::
    \Delta &= \eta \vec{c} \cdot ((\lambda \vec{o})^T - (W^T \cdot \vec{c})^T) \\
-   &= \eta \vec{c} \cdot (\lambda \vec{o}^T - \vec{c}^T \cdot W) \\ 
-   &= \eta \lambda \vec{c} \cdot \vec{o}^T - \eta \vec{c} \cdot \vec{c}^T \cdot W \\ 
+   &= \eta \vec{c} \cdot (\lambda \vec{o}^T - \vec{c}^T \cdot W) \\
+   &= \eta \lambda \vec{c} \cdot \vec{o}^T - \eta \vec{c} \cdot \vec{c}^T \cdot W \\
 
 If we now look at the full update:
 
@@ -101,7 +122,7 @@ If we now look at the full update:
    \cdot W \\
 
 We therefore see that the Rescorla-Wagner update is an affine (linear)
-transformation [affine_transformation]_ in the weights :math:`W` with an
+transformation [1]_ in the weights :math:`W` with an
 intercept of :math:`\eta
 \lambda \vec{c} \cdot \vec{o}^T` and a slope of :math:`(1 - \eta \vec{c} \cdot
 \vec{c}^T)`.
@@ -110,14 +131,14 @@ In index notation we can write:
 
 .. math::
 
-   
-   W^{t + 1} &= W^{t} + \eta \vec{c} \cdot (\lambda \vec{o}^T - \vec{c}^T \cdot W) \\ 
-   W^{t + 1}_{ij} &= W^{t}_{ij} + \eta c_i (\lambda o_j - \sum_k c_k W_{kj}) \\ 
+
+   W^{t + 1} &= W^{t} + \eta \vec{c} \cdot (\lambda \vec{o}^T - \vec{c}^T \cdot W) \\
+   W^{t + 1}_{ij} &= W^{t}_{ij} + \eta c_i (\lambda o_j - \sum_k c_k W_{kj}) \\
 
 
 .. note::
 
-   Properties of the transpose [transpose]_ with :math:`A` and :math:`B`
+   Properties of the transpose [4]_ with :math:`A` and :math:`B`
    matrices and :math:`\alpha` skalar:
 
    .. math::
@@ -133,15 +154,18 @@ In index notation we can write:
       (A \cdot B)^T = B^T \cdot A^T
 
 
+Other Learning Algorithms
+-------------------------
+.. _comparison_of_algorithms:
 
 Delta rule
-----------
+^^^^^^^^^^
 
-   The delta rule is a gradient descent learning rule for updating the weights
-   of the inputs to artificial neurons in a single-layer neural network. It is
-   a special case of the more general backpropagation algorithm. [delta_rule]_
+The delta rule [2]_ is a gradient descent learning rule for updating the weights
+of the inputs to artificial neurons in a single-layer neural network. It is
+a special case of the more general backpropagation algorithm [3]_.
 
-The delta rule can be expressed as [delta_rule]_:
+The delta rule can be expressed as:
 
 .. math::
 
@@ -198,129 +222,13 @@ notation.
    \lambda o_j` to be binary.
 
 
-Kalman filter
--------------
-
-.. warning::
-
-   This section is still under construction.
-
-
-According to Dayan & Kakade [dayan_explaining_away_in_weight_space]_ one can
-write a simplified version of the Kalman filter as:
-
-.. math::
-
-   r_t = \vec{w}^T_t \cdot \vec{x}_t + \epsilon_t
-
-Here :math:`\vec{w}^T_t` are the true weights mediating between the presented stimuli
-:math:`\vec{x}_t` and the scalar reward :math:`r_t` at time :math:`t`. The last
-term :math:`\epsilon_t` is zero mean Gaussian noise with variance
-:math:`\tau^2`, i. e. :math:`\epsilon_t \sim N(0, \tau^2)`.
-
-We want to allow for a change in the true weights :math:`\vec{w}^T_t` over time.
-Therefore we need the additional diffusion term for the propagation of the
-weights:
-
-.. math::
-
-   \vec{w}_{t + 1} = \vec{w}_t + \vec{\eta}_t
-
-where :math:`\vec{\eta}_t \sim N(\vec{0}, \sigma^2 I)` is a multivariate Gaussian.
-
-As we do not know the true values for :math:`\vec{w}_t`, we need to infer them
-from observations for each trial :math:`t` of stimuli (cues) :math:`\vec{x}_t`
-and the reward (outcome) :math:`r_t`. According to
-[dayan_explaining_away_in_weight_space]_ one way to infer / estimate the
-distribution of the association vector :math:`\Pr(\vec{w}_t | r_1, \cdot, r_{t
-- 1}) \sim N(\hat{\vec{w}}, S_t)` is:
-
-.. math::
-
-   \hat{\vec{w}}_{t + 1} = \hat{\vec{w}}_t + \frac{ S_t \cdot
-   \vec{x}_t}{\vec{x}_t \cdot S_t \vec{x}_t + \tau^2} (r_t - \hat{\vec{w}}_t
-   \cdot \vec{x}_t)
-
-.. math::
-
-   S_{t + 1} = S_t + \sigma^2 I - \frac{S_t \cdot \vec{x}_t \cdot \vec{x}_t^T
-   \cdot S_t}{\vec{x}^T_t \cdot S_t \cdot \vec{x}_t + \tau^2}
-
-
-Comparison to Rescorla-Wagner
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-Problems:
-
-* equations above only for one reward / outcome not for a vector of rewards /
-  outcomes
-
-We can make the following identifications:
-
-=================  =============================================
-Kalman             Rescorla-Wagner
-=================  =============================================
-:math:`\vec{x}_t`  :math:`\vec{c}`
-:math:`r_t`        :math:`\lambda o_j` for one outcome :math:`j`
-:math:`\vec{w}_t`  :math:`(w_{ij})` for one outcome :math:`j`
-=================  =============================================
-
-We can rewrite the update of :math:`\hat{\vec{w}}_{t + 1}` as:
-
-.. math::
-
-   W_{ij}^{t + 1} = W_{ij}^{t} + \frac{\sum_k S_{ik}^{j, t} c_k^t}{\sum_l
-   \sum_k c_k^t S_{kl}^{j, t} c_l^t + \tau^2} (o_j^t - \sum_k W_{kj}^t c_k^t)
-
-where :math:`S^{j, t}` is the covariance matrix for outcome :math:`j` at trial
-/ event :math:`t`. We wrote the trial / event index as a superscript and will
-omit it in the following for all events :math:`t`.
-
-If we set the covariance matrix for all outcomes to the identity matrix we get:
-
-.. math::
-
-   W_{ij}^{t + 1} &= W_{ij} + \frac{\sum_k I_{ik} c_k}{\sum_l \sum_k c_k I_{kl}
-   c_l + \tau^2} (\lambda o_j - \sum_k W_{kj} c_k) \\
-   &= W_{ij} + \frac{c_i}{\sum_k c_k c_k + \tau^2} (\lambda o_j - \sum_k W_{kj} c_k) \\
-   &= W_{ij} + \frac{1}{\sum_k c_k c_k + \tau^2} c_i (\lambda o_j - \sum_k W_{kj} c_k) \\
-   &= W_{ij} + \eta^t c_i (\lambda o_j - \sum_k W_{kj} c_k) \\
-
-where we have a variable learning rate which is smaller for events with many
-cues and larger for events with few cues:
-
-.. math::
-
-   \eta^t = \frac{1}{\sum_k c_k^t c_k^t + \tau^2}
-
-Note that :math:`\sum_k c_k^t c_k^t` is the number of cues in event :math:`t`.
-
-.. admonition:: Conclusion
-
-   Except for the variable learning rate the equation is identical to the
-   Rescorla Wagner learning rule. If we set the variance-covariance matrix of
-   the distribution of the association vector :math:`\vec{w}`, which is assumed
-   to be multinomial, to the identity matrix. Furthermore, we need to assume
-   that we have only binary stimuli / cues / inputs and a binary reward.
-
-.. warning::
-
-   Did I made somewhere some error? Is this sound? --Tino
-
-
-Useful Links for Kalman filters
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-* https://math.stackexchange.com/questions/840662/an-explanation-of-the-kalman-filter
-
-
 References
 ----------
 
-.. [affine_transformation] Affine transformation. https://en.wikipedia.org/wiki/Affine_transformation
+.. [1] https://en.wikipedia.org/wiki/Affine_transformation
 
-.. [transpose] Transpose. https://en.wikipedia.org/wiki/Transpose
+.. [2] https://en.wikipedia.org/wiki/Delta_rule
 
-.. [delta_rule] Delta rule. https://en.wikipedia.org/wiki/Delta_rule
+.. [3] https://en.wikipedia.org/wiki/Backpropagation
 
-.. [dayan_explaining_away_in_weight_space] https://homes.cs.washington.edu/~sham/papers/neuro/kd_weight.pdf
+.. [4] https://en.wikipedia.org/wiki/Transpose

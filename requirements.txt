@@ -1,8 +1,6 @@
 numpy
-matplotlib
 cython
 pandas
 xarray
 netCDF4
-numpydoc
-docopt
+pip

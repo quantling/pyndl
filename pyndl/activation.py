@@ -1,5 +1,11 @@
-#!/bin/python
+"""
+pyndl.activation
+----------------
 
+*pyndl.activation* provides the functionality to estimate activation of a
+trained ndl model for given events. The trained ndl model is thereby
+represented as the outcome-cue weights.
+"""
 import multiprocessing as mp
 import ctypes
 from collections import defaultdict, OrderedDict

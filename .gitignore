@@ -24,3 +24,6 @@ pyndl.egg-info/
 doc/data/levent.tab
 doc/data/levent.tab.filtered
 doc/data/weights.nc
+
+# copybutton js script
+doc/source/_static/copybutton.js
