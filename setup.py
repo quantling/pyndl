@@ -36,7 +36,6 @@ ext_modules = [
         ["pyndl/ndl_parallel.pyx"],
         extra_compile_args=['-fopenmp'],
         extra_link_args=['-fopenmp'],
-        #include_dirs=[numpy.get_include()]  # this is dealt with in the boot strap class
     )
 ]
 
