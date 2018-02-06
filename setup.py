@@ -1,7 +1,7 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext as _build_ext
 
-# Do not import cython as this will be done py setuptools automagically
+# Do not import ``Cython`` as this will be done by ``setuptools`` automagically
 
 # boot strap numpy
 # https://stackoverflow.com/questions/19919905/how-to-bootstrap-numpy-installation-in-setup-py
