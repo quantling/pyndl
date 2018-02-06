@@ -1,9 +1,7 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext as _build_ext
 
-# Do not import ``Cython`` as this will be done by ``setuptools`` automagically
-
-# boot strap numpy
+# bootstrap numpy
 # https://stackoverflow.com/questions/19919905/how-to-bootstrap-numpy-installation-in-setup-py
 class build_ext(_build_ext):
     def finalize_options(self):
@@ -30,6 +28,8 @@ def load_requirements(fn):
         return [x.rstrip() for x in list(f) if x and not x.startswith('#')]
 
 
+# by giving ``cython`` as ``install_requires`` this will be ``cythonized``
+# automagically
 ext_modules = [
     Extension(
         "pyndl.ndl_parallel",
@@ -53,7 +53,7 @@ setup(
     classifiers=classifiers,
     platforms='Linux',
     packages=['pyndl'],
-    setup_requires=['numpy', 'Cython'],
+    setup_requires=['numpy', 'cython'],
     install_requires=load_requirements('requirements.txt'),
     extras_require={
         'tests': [
