@@ -19,6 +19,7 @@ import time
 
 import cython
 import pandas as pd
+import psutil
 import numpy as np
 import xarray as xr
 
@@ -109,6 +110,9 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     cpu_time_start = time.process_time()
 
     # preprocessing
+    if verbose:
+        print("Counting number of events and number of unique outcomes and cues."
+              "Each dot represents 100,000 events.")
     n_events, cues, outcomes = count.cues_outcomes(events,
                                                    number_of_processes=number_of_threads,
                                                    verbose=verbose)
@@ -120,6 +124,12 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
 
     shape = (len(outcome_map), len(cue_map))
+
+    if verbose:
+        print("Counted {} events, {} unique outcomes, and {} unique cues.".format(n_events, shape[0], shape[1]))
+        print("Allocating the weights matrix needs {:.3f} MB of memory.".format(shape[0] * shape[1] / 1024 / 1024))
+        mem = psutil.virtual_memory()
+        print("This system seems to have {:.3f} MB of total memory and {:.3f} MB are available.".format(mem.total / 1024 / 1024, mem.available / 1024 / 1024))
 
     # initialize weights
     if weights is None:

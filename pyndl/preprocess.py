@@ -747,10 +747,13 @@ def create_binary_event_files(event_file,
         raise IOError("folder %s exists and overwrite is False" % path_name)
     else:
         if verbose:
-            print("removing event files in '%s'" % path_name)
+            print("removing old event files in '%s'" % path_name)
         for file_name in os.listdir(path_name):
             if "events_0_" in file_name:
                 os.remove(os.path.join(path_name, file_name))
+
+    if verbose:
+        print("creating new events files in '{}'".format(path_name))
 
     number_events = 0
 
@@ -769,7 +772,8 @@ def create_binary_event_files(event_file,
             nonlocal number_events
             number_events += result
             if verbose:
-                print("finished job")
+                #print("finished job")
+                print('f', end='')
                 sys.stdout.flush()
 
         ii = 0
@@ -790,7 +794,8 @@ def create_binary_event_files(event_file,
                                           callback=_callback,
                                           error_callback=_error_callback)
                 if verbose:
-                    print("submitted job %i" % ii)
+                    #print("submitted job %i" % ii)
+                    print('s', end='')
             except ValueError as error:
                 # someone has closed the pool with the correct error callback
                 if error.args[0] == 'Pool not running':
@@ -807,7 +812,7 @@ def create_binary_event_files(event_file,
                         break
                     time.sleep(1.0)  # check every second
                     if verbose:
-                        print('c')
+                        print('c', end='')
                         sys.stdout.flush()
         # wait until all jobs are done
         pool.close()
