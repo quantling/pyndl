@@ -195,6 +195,7 @@ Release Process
 
     git pull
     git checkout vX.Y.Z
+    python setup.py build  # to compile *.pyx -> *.c
     python setup.py sdist
 
 4. Create GPG signatures of the distribution files using
