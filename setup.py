@@ -1,15 +1,16 @@
 from setuptools import setup, Extension
+from setuptools.command.build_ext import build_ext as _build_ext
 
-# While setup, this file will be called twice:
-# One time, to read the dependencies,
-# and after their installation.
-try:
-    from Cython.Distutils import build_ext
-    import numpy
-except ImportError as e:
-    use_deps = False
-else:
-    use_deps = True
+# bootstrap numpy
+# https://stackoverflow.com/questions/19919905/how-to-bootstrap-numpy-installation-in-setup-py
+class build_ext(_build_ext):
+    def finalize_options(self):
+        _build_ext.finalize_options(self)
+        # Prevent numpy from thinking it is still in its setup process:
+        __builtins__.__NUMPY_SETUP__ = False
+        import numpy
+        self.include_dirs.append(numpy.get_include())
+
 
 pkg = __import__('pyndl')
 
@@ -27,20 +28,17 @@ def load_requirements(fn):
         return [x.rstrip() for x in list(f) if x and not x.startswith('#')]
 
 
-if use_deps:
-    ext_modules = [
-        Extension(
-            "pyndl.ndl_parallel",
-            ["pyndl/ndl_parallel.pyx"],
-            extra_compile_args=['-fopenmp'],
-            extra_link_args=['-fopenmp'],
-            include_dirs=[numpy.get_include()]
-        )
-    ]
-    cmdclass = {'build_ext': build_ext}
-else:
-    ext_modules = []
-    cmdclass = {}
+# by giving ``cython`` as ``install_requires`` this will be ``cythonized``
+# automagically
+ext_modules = [
+    Extension(
+        "pyndl.ndl_parallel",
+        ["pyndl/ndl_parallel.pyx"],
+        extra_compile_args=['-fopenmp'],
+        extra_link_args=['-fopenmp'],
+    )
+]
+
 
 setup(
     name='pyndl',
@@ -54,6 +52,7 @@ setup(
     classifiers=classifiers,
     platforms='Linux',
     packages=['pyndl'],
+    setup_requires=['numpy', 'cython'],
     install_requires=load_requirements('requirements.txt'),
     extras_require={
         'tests': [
@@ -66,5 +65,5 @@ setup(
             'numpydoc',
             'easydev==0.9.35']},
     ext_modules=ext_modules,
-    cmdclass=cmdclass
+    cmdclass={'build_ext': build_ext}
 )
