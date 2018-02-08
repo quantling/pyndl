@@ -61,10 +61,10 @@ def sysinfo():
               "CPU: {cpu_count}\n").format(s=uname, cpu_count=mp.cpu_count())
 
     if uname.sysname == "Linux":
-        names, *lines = os.popen("free -m").readlines()
+        _, *lines = os.popen("free -m").readlines()
         for identifier in ["Mem:", "Swap:"]:
             memory = [line for line in lines if identifier in line][0]
-            ix, total, used, *rest = memory.split()
+            _, total, used, *_ = memory.split()
             osinfo += "{} {}MiB/{}MiB\n".format(identifier, used, total)
 
     osinfo += "\n"

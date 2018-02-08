@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-# pylint: disable=C0111
+# pylint: disable=C0111, redefined-outer-name
+
 
 from collections import defaultdict, OrderedDict
 import os
@@ -8,15 +9,14 @@ import time
 import tempfile
 import copy
 
-
-import pytest
 import numpy as np
 import xarray as xr
 import pandas as pd
+import pytest
 
 from pyndl import ndl, count
 
-slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
+slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),  # pylint: disable=invalid-name
                           reason="need --runslow option to run")
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
@@ -66,8 +66,8 @@ def result_continue_learning():
     part_1 = events_simple.head(CONTINUE_SPLIT_POINT)
     part_2 = events_simple.tail(len(events_simple) - CONTINUE_SPLIT_POINT)
 
-    assert len(part_1) > 0
-    assert len(part_2) > 0
+    assert len(part_1) > 0  # pylint: disable=len-as-condition
+    assert len(part_2) > 0  # pylint: disable=len-as-condition
 
     part_path_1 = os.path.join(TMP_PATH, "event_file_simple_1.tab.gz")
     part_path_2 = os.path.join(TMP_PATH, "event_file_simple_2.tab.gz")
@@ -81,11 +81,8 @@ def result_continue_learning():
 
     del events_simple, part_1, part_2
 
-    result_part = ndl.ndl(part_path_1,
-                          ALPHA, BETAS)
-
-    result = ndl.ndl(part_path_2, ALPHA, BETAS,
-                     weights=result_part)
+    result_part = ndl.ndl(part_path_1, ALPHA, BETAS)
+    result = ndl.ndl(part_path_2, ALPHA, BETAS, weights=result_part)
 
     return result
 
@@ -130,8 +127,8 @@ def test_continue_learning_dict():
     part_1 = events_simple.head(CONTINUE_SPLIT_POINT)
     part_2 = events_simple.tail(len(events_simple) - CONTINUE_SPLIT_POINT)
 
-    assert len(part_1) > 0
-    assert len(part_2) > 0
+    assert len(part_1) > 0  # pylint: disable=len-as-condition
+    assert len(part_2) > 0  # pylint: disable=len-as-condition
 
     part_path_1 = os.path.join(TMP_PATH, "event_file_simple_1.tab.gz")
     part_path_2 = os.path.join(TMP_PATH, "event_file_simple_2.tab.gz")
@@ -174,7 +171,7 @@ def test_continue_learning_dict_ndl_data_array(result_dict_ndl, result_dict_ndl_
                                             continue_from_data_array)
     print(continue_from_data_array)
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 def test_continue_learning(result_continue_learning, result_ndl_openmp):
@@ -188,7 +185,7 @@ def test_continue_learning(result_continue_learning, result_ndl_openmp):
                                             result_continue_learning,
                                             result_ndl_openmp)
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 def test_save_to_netcdf4(result_ndl_openmp):
@@ -223,14 +220,14 @@ def test_dict_ndl_vs_ndl_threading(result_dict_ndl, result_ndl_threading):
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
                                             result_ndl_threading)
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 def test_dict_ndl_vs_dict_ndl_generator(result_dict_ndl, result_dict_ndl_generator):
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
                                             result_dict_ndl_generator)
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 def test_dict_ndl_data_array_vs_ndl_threading(result_ndl_threading):
@@ -239,7 +236,7 @@ def test_dict_ndl_data_array_vs_ndl_threading(result_ndl_threading):
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
                                             result_ndl_threading)
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 def test_multiple_cues_dict_ndl_vs_ndl_threading():
@@ -249,7 +246,7 @@ def test_multiple_cues_dict_ndl_vs_ndl_threading():
     unequal, unequal_ratio = compare_arrays(FILE_PATH_MULTIPLE_CUES, result_dict_ndl,
                                             result_ndl_threading)
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
@@ -257,7 +254,7 @@ def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
                                             result_ndl_openmp)
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 def test_meta_data(result_dict_ndl, result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
@@ -306,7 +303,7 @@ def test_compare_weights_ndl2(result_dict_ndl):
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_ndl2, result_dict_ndl)
     print(set(outcome for outcome, *_ in unequal))
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 def test_multiple_cues_dict_ndl_vs_ndl2():
@@ -341,7 +338,7 @@ def test_multiple_cues_dict_ndl_vs_ndl2():
     unequal, unequal_ratio = compare_arrays(FILE_PATH_MULTIPLE_CUES, result_ndl2, result_python)
     print(set(outcome for outcome, *_ in unequal))
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 def test_compare_weights_rescorla_vs_ndl2():
@@ -384,13 +381,12 @@ def test_compare_weights_rescorla_vs_ndl2():
 
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_ndl2, result_rescorla)
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
 @slow
 def test_compare_time_dict_inplace_parallel_thread():
     file_path = os.path.join(TEST_ROOT, 'resources/event_file_many_cues.tab.gz')
-    cue_map, outcome_map, all_outcomes = generate_mapping(file_path)
 
     result_dict_ndl, duration_not_parallel = clock(ndl.dict_ndl, (file_path, ALPHA, BETAS, LAMBDA_))
 
@@ -402,25 +398,25 @@ def test_compare_time_dict_inplace_parallel_thread():
 
     unequal, unequal_ratio = compare_arrays(file_path, result_thread_ndl, result_dict_ndl)
     print('%.2f ratio unequal' % unequal_ratio)
-    assert len(unequal) == 0
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
     print('parallel: %.3e  dict: %.3e' % (duration_parallel, duration_not_parallel))
     assert duration_parallel < duration_not_parallel
 
 
 def test_slice_list():
-    l1 = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    lst = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-    res = ndl.slice_list(l1, 2)
+    res = ndl.slice_list(lst, 2)
     assert res == [[0, 1], [2, 3], [4, 5], [6, 7], [8, 9]]
 
-    res2 = ndl.slice_list(l1, 3)
+    res2 = ndl.slice_list(lst, 3)
     assert res2 == [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]
 
 
-def clock(f, args, **kwargs):
+def clock(func, args, **kwargs):
     start = time.time()
-    result = f(*args, **kwargs)
+    result = func(*args, **kwargs)
     stop = time.time()
 
     duration = stop - start
@@ -429,11 +425,9 @@ def clock(f, args, **kwargs):
 
 
 def compare_arrays(file_path, arr1, arr2):
-    n_events, cues, outcomes = count.cues_outcomes(file_path)
-    cue_map, outcome_map, all_outcomes = generate_mapping(file_path)
+    _, cues, outcomes = count.cues_outcomes(file_path)
+    cue_map, outcome_map, _ = generate_mapping(file_path)
 
-    cue_indices = [cue_map[cue] for cue in cues]
-    outcome_indices = [outcome_map[outcome] for outcome in outcomes]
     unequal = list()
 
     for outcome in outcomes:
@@ -451,7 +445,7 @@ def compare_arrays(file_path, arr1, arr2):
                 else:
                     values.append(array[outcome][cue])
 
-            value1, value2 = values
+            value1, value2 = values  #pylint: disable=unbalanced-tuple-unpacking
             if not np.isclose(value1, value2, rtol=1e-02, atol=1e-05):
                 unequal.append((outcome, cue, value1, value2))
 
@@ -460,7 +454,7 @@ def compare_arrays(file_path, arr1, arr2):
 
 
 def generate_mapping(event_path):
-    n_events, cues, outcomes = count.cues_outcomes(event_path)
+    _, cues, outcomes = count.cues_outcomes(event_path)
     all_cues = list(cues.keys())
     all_outcomes = list(outcomes.keys())
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(all_cues)))

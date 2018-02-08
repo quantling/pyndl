@@ -15,7 +15,7 @@ import pytest
 from pyndl import ndl
 from pyndl.activation import activation
 
-slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),
+slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),  # pylint: disable=invalid-name
                           reason="need --runslow option to run")
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
@@ -29,8 +29,8 @@ BETAS = (0.1, 0.1)
 
 def test_exceptions():
     with pytest.raises(ValueError) as e_info:
-        wm = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, remove_duplicates=None)
-        activation(FILE_PATH_MULTIPLE_CUES, wm)
+        weights = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, remove_duplicates=None)
+        activation(FILE_PATH_MULTIPLE_CUES, weights)
         assert e_info == 'cues or outcomes needs to be unique: cues "a a"; outcomes "A"; use remove_duplicates=True'
 
     with pytest.raises(ValueError) as e_info:
@@ -149,22 +149,22 @@ def test_activation_matrix_large():
     print("")
     print("Start setup...")
 
-    def time_test(func, of=""):
+    def time_test(func, of=""):  #pylint: disable=invalid-name
         def dec_func(*args, **kwargs):
             print("start test '{}'".format(of))
-            st = time.clock()
+            start = time.clock()
             res = func(*args, **kwargs)
-            et = time.clock()
+            end = time.clock()
             print("finished test '{}'".format(of))
-            print("  duration: {:.3f}s".format(et-st))
+            print("  duration: {:.3f}s".format(end - start))
             print("")
             return res
         return dec_func
 
-    n = 2000
-    n_cues = 10*n
-    n_outcomes = n
-    n_events = 10*n
+    nn = 2000
+    n_cues = 10*nn
+    n_outcomes = nn
+    n_events = 10*nn
     n_cues_per_event = 30
     weight_mat = np.random.rand(n_cues, n_outcomes)
     cues = ['c'+str(i) for i in range(n_cues)]
