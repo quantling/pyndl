@@ -105,7 +105,6 @@ def ngrams_to_word(occurrences, n_chars, outfile, remove_duplicates=True):
             outfile.write("{}\t{}\n".format("_".join(ngrams), occurrence))
 
 
-
 def process_occurrences(occurrences, outfile, *,
                         cue_structure="trigrams_to_word", remove_duplicates=True):
     """

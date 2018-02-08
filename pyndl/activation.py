@@ -15,6 +15,7 @@ import xarray as xr
 
 from . import ndl
 
+
 # pylint: disable=W0621
 def activation(events, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
     """

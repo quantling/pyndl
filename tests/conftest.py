@@ -3,6 +3,7 @@ Configuration for py.test-3.
 
 '''
 
+
 def pytest_addoption(parser):
     """
     adds custom option to the pytest parser

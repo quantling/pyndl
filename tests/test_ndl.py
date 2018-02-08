@@ -445,7 +445,7 @@ def compare_arrays(file_path, arr1, arr2):
                 else:
                     values.append(array[outcome][cue])
 
-            value1, value2 = values  #pylint: disable=unbalanced-tuple-unpacking
+            value1, value2 = values  # pylint: disable=unbalanced-tuple-unpacking
             if not np.isclose(value1, value2, rtol=1e-02, atol=1e-05):
                 unequal.append((outcome, cue, value1, value2))
 

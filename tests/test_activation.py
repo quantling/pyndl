@@ -149,7 +149,7 @@ def test_activation_matrix_large():
     print("")
     print("Start setup...")
 
-    def time_test(func, of=""):  #pylint: disable=invalid-name
+    def time_test(func, of=""):  # pylint: disable=invalid-name
         def dec_func(*args, **kwargs):
             print("start test '{}'".format(of))
             start = time.clock()
