@@ -124,9 +124,6 @@ def test_exceptions():
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, remove_duplicates="magic")
         assert e_info == "remove_duplicates must be None, True or False"
 
-    with pytest.raises(FileNotFoundError, match="No such file or directory") as e_info:
-        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, temporary_directory="./magic")
-
 
 def test_continue_learning_dict():
     events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
@@ -218,11 +215,6 @@ def test_return_values(result_dict_ndl, result_dict_ndl_data_array, result_ndl_t
     assert isinstance(result_ndl_openmp, xr.DataArray)
     # threading
     assert isinstance(result_ndl_threading, xr.DataArray)
-
-
-def test_provide_temporary_directory():
-    with tempfile.TemporaryDirectory(dir=TMP_PATH) as temporary_directory:
-        result = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, temporary_directory=temporary_directory)
 
 
 # Test internal consistency
