@@ -8,6 +8,7 @@ import random
 import re
 import sys
 import time
+import pandas as pd
 
 
 def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
@@ -339,6 +340,154 @@ def create_event_file(corpus_file,
             if context_structure != 'line':
                 process_words(words)
 
+
+def create_event_data_frame(corpus_file,
+                           event_file,
+                           symbols="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                           *,
+                           context_structure="document",
+                           event_structure="consecutive_words",
+                           event_options=(3,),  # number_of_words,
+                           cue_structure="trigrams_to_word",
+                           lower_case=False,
+                           remove_duplicates=True,
+                           verbose=False):
+    if '_' in symbols or '#' in symbols or '\t' in symbols:
+        raise ValueError('"_", "#", and "\\t" are special symbols and cannot be in symbols string')
+
+    if event_structure not in ('consecutive_words', 'line', 'word_to_word'):
+        raise NotImplementedError('This event structure (%s) is not implemented yet.' % event_structure)
+
+    if context_structure not in ('document', 'line'):
+        raise NotImplementedError('This context structure (%s) is not implemented yet.' % context_structure)
+
+    # in_symbols = re.compile("^[%s]*$" % symbols)
+    not_in_symbols = re.compile("[^%s]" % symbols)
+    context_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
+
+    if event_structure == 'consecutive_words':
+        number_of_words, = event_options
+    elif event_structure == 'word_to_word':
+        before, after = event_options
+
+    def gen_occurrences(words):
+        """
+        Make an occurrence out of consecutive words.
+
+        Take all number_of_words number of consecutive words and make an
+        occurrence out of it.
+
+        For words = (A, B, C, D); number_of_words = 3 make: (A, ), (A_B, ),
+        (A_B_C, ), (B_C_D, ), (C_D, ), (D, )
+
+        """
+        if event_structure == 'consecutive_words':
+            occurrences = list()
+            cur_words = list()
+            ii = 0
+            while True:
+                if ii < len(words):
+                    cur_words.append(words[ii])
+                if ii >= len(words) or ii >= number_of_words:
+                    # remove the first word
+                    cur_words = cur_words[1:]
+                # append (cues, outcomes) with empty outcomes
+                occurrences.append(("_".join(cur_words), ''))
+                ii += 1
+                if not cur_words:
+                    break
+            return occurrences
+        # for words = (A, B, C, D); before = 2, after = 1
+        # make: (B, A), (A_C, B), (A_B_D, C), (B_C, D)
+        elif event_structure == 'word_to_word':
+            occurrences = list()
+            for ii, word in enumerate(words):
+                # words before the word to a maximum of before
+                cues = words[max(0, ii - before):ii]
+                # words after the word to a maximum of before
+                cues.extend(words[(ii + 1):min(len(words), ii + 1 + after)])
+                # append (cues, outcomes)
+                occurrences.append(("_".join(cues), word))
+            return occurrences
+        elif event_structure == 'line':
+            # (cues, outcomes) with empty outcomes
+            return [('_'.join(words), ''), ]
+
+    def process_line(line):
+        """processes one line of text."""
+        if lower_case:
+            line = line.lower()
+        # replace all weird characters with space
+        line = not_in_symbols.sub(" ", line)
+        return line
+
+    def gen_words(line):
+        """generates words out of a line of text."""
+        return [word.strip() for word in line.split(" ") if word.strip()]
+
+    def process_words(words):
+        """processes one word and makes an occurrence out of it."""
+        nonlocal output
+
+        occurrences = gen_occurrences(words)
+        output = process_occurrences_dataFrame(occurrences, output,
+                                      cue_structure=cue_structure,
+                                      remove_duplicates=remove_duplicates)
+
+    def process_context(line):
+        """called when a context boundary is found."""
+        if context_structure == 'document':
+            # remove document marker
+            line = context_pattern.sub("", line)
+        return line
+
+    with open(corpus_file, "rt") as corpus:
+        output = pd.DataFrame()
+        words = []
+        for ii, line in enumerate(corpus):
+            if verbose and ii % 100000 == 0:
+                print(".", end="")
+                sys.stdout.flush()
+            line = line.strip()
+
+            if context_structure == 'line':
+                line = process_line(line)
+                words = gen_words(line)
+                process_words(words)
+            else:
+                if context_pattern.search(line) is not None:
+                    # process the first context
+                    context1, *contexts = context_pattern.split(line)
+                    context1 = process_context(context1)
+
+                    if context1.strip():
+                        context1 = process_line(context1.strip())
+                        words.extend(gen_words(context1))
+                    process_words(words)
+                    # process in between contexts
+                    while len(contexts) > 1:
+                        words = []
+                        context1, *contexts = contexts
+                        context1 = process_context(context1)
+                        if context1.strip():
+                            context1 = process_line(context1.strip())
+                            words.extend(gen_words(context1))
+                            process_words(words)
+                    # add last part to next context
+                    context1 = contexts[0]
+                    context1 = process_context(context1)
+                    if context1.strip():
+                        context1 = process_line(context1.strip())
+                        words.extend(gen_words(context1))
+                else:
+                    line = process_line(line)
+                    words.extend(gen_words(line))
+
+        # write the last context (the rest) when context_structure is not
+        # 'line'
+        if context_structure != 'line':
+            process_words(words)
+    return output
 
 class JobFilter():
     # pylint: disable=E0202,missing-docstring
@@ -774,8 +923,8 @@ def create_binary_event_files(event_file,
                 "cue_id_map": cue_id_map,
                 "outcome_id_map": outcome_id_map,
                 "sort_within_event": sort_within_event,
-                "start": ii*events_per_file,
-                "stop": (ii+1)*events_per_file,
+                "start": ii * events_per_file,
+                "stop": (ii + 1) * events_per_file,
                 "remove_duplicates": remove_duplicates,
             }
             try:
@@ -795,7 +944,7 @@ def create_binary_event_files(event_file,
                     raise error
             ii += 1
             # only start jobs in chunks of 4*number_of_processes
-            if ii % (number_of_processes*4) == 0:
+            if ii % (number_of_processes * 4) == 0:
                 while True:
                     if result.ready():
                         break
@@ -809,6 +958,74 @@ def create_binary_event_files(event_file,
         if verbose:
             print("finished all jobs.\n")
     return number_events
+
+
+def process_occurrences_dataFrame(occurrences, out_data_frame, *,
+                                  cue_structure="trigrams_to_word", remove_duplicates=True):
+    """
+    Process the occurrences and write them to Dataframe.
+
+    Parameters
+    ----------
+    occurrences : sequence of (cues, outcomes) tuples
+        cues and outcomes are both strings where underscores and # are
+        special symbols.
+    out_data_frame : file handle
+
+    cue_structure : {'bigrams_to_word', 'trigrams_to_word', 'word_to_word'}
+
+    remove_duplicates : bool
+        if True make cues and outcomes per event unique
+
+    """
+    if cue_structure == "bigrams_to_word":
+        for cues, outcomes in occurrences:
+            if cues and outcomes:
+                occurrence = cues + '_' + outcomes
+            else:  # take either
+                occurrence = cues + outcomes
+            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
+            bigrams = (phrase_string[i:(i + 2)] for i in
+                       range(len(phrase_string) - 2 + 1))
+            if not bigrams or not occurrence:
+                continue
+            if remove_duplicates:
+                out_data_frame = out_data_frame.append(
+                    pd.Series(["_".join(set(bigrams)), occurrence], index=['cues', 'events']), ignore_index=True)
+            else:
+                out_data_frame = out_data_frame.append(
+                    pd.Series(["_".join(bigrams), occurrence], index=['cues', 'events']), ignore_index=True)
+    elif cue_structure == "trigrams_to_word":
+        for cues, outcomes in occurrences:
+            if cues and outcomes:
+                occurrence = cues + '_' + outcomes
+            else:  # take either
+                occurrence = cues + outcomes
+            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
+            trigrams = (phrase_string[i:(i + 3)] for i in
+                        range(len(phrase_string) - 3 + 1))
+            if not trigrams or not occurrence:
+                continue
+            if remove_duplicates:
+                out_data_frame = out_data_frame.append(
+                    pd.Series(["_".join(set(trigrams)), occurrence], index=['cues', 'events']), ignore_index=True)
+            else:
+                out_data_frame = out_data_frame.append(
+                    pd.Series(["_".join(trigrams), occurrence], index=['cues', 'events']), ignore_index=True)
+    elif cue_structure == "word_to_word":
+        for cues, outcomes in occurrences:
+            if not cues:
+                continue
+            if remove_duplicates:
+                out_data_frame = out_data_frame.append(
+                    pd.Series(["_".join(set(cues.split("_"))), outcomes], index=['cues', 'events']), ignore_index=True)
+            else:
+                out_data_frame = out_data_frame.append(
+                    pd.Series([cues, outcomes], index=['cues', 'events']), ignore_index=True)
+    else:
+        raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
+
+    return out_data_frame
 
 # for example code see function test_preprocess in file
 # ./tests/test_preprocess.py.
