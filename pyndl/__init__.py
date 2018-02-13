@@ -43,7 +43,7 @@ def sysinfo():
     Prints system the dependency information
     """
     pyndl = pkg_resources.working_set.by_key["pyndl"]
-    dependencies = [str(r) for r in pyndl.requires()]
+    dependencies = [r.project_name for r in pyndl.requires()]
 
     header = ("Pyndl Information\n"
               "=================\n\n")

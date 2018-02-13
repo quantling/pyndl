@@ -111,7 +111,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     # preprocessing
     if verbose:
-        print("Counting number of events and number of unique outcomes and cues."
+        print("Counting number of events and number of unique outcomes and cues.\n"
               "Each dot represents 100,000 events.")
     n_events, cues, outcomes = count.cues_outcomes(events,
                                                    number_of_processes=number_of_threads,
