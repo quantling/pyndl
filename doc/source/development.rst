@@ -230,3 +230,5 @@ Release Process
 .. code:: bash
 
     twine upload -s dist/*
+
+6. Check if the new version is on pypi (https://pypi.python.org/pypi/pyndl/).
