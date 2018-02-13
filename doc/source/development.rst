@@ -190,6 +190,7 @@ commands are as follows:
 
     conda create -n testpyndl
     conda activate testpyndl
+    conda install python
     python -c 'from pyndl import ndl; print("success")'  # this should fail
     git clone https://github.com/quantling/pyndl.git
     pip install pyndl
