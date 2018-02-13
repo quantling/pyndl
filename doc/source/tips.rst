@@ -1,7 +1,7 @@
 Tips and Tricks
 ===============
 
-A collection of more or less unrelated tips and tricks that can be helpful
+This is collection of more or less unrelated tips and tricks that can be helpful
 during development and maintanance.
 
 
