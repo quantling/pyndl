@@ -91,36 +91,29 @@ def process_occurrences(occurrences, outfile, *,
         if True make cues and outcomes per event unique
 
     """
-    if cue_structure == "bigrams_to_word":
+    if cue_structure in ("bigrams_to_word", "trigrams_to_word"):
+        if cue_structure == "bigrams_to_word":
+            gram_size = 2
+        else:
+            gram_size = 3
+
         for cues, outcomes in occurrences:
             if cues and outcomes:
                 occurrence = cues + '_' + outcomes
             else:  # take either
                 occurrence = cues + outcomes
             phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
-            bigrams = (phrase_string[i:(i + 2)] for i in
-                       range(len(phrase_string) - 2 + 1))
-            if not bigrams or not occurrence:
+            n_grams = (phrase_string[i:(i + gram_size)] for i in
+                       range(len(phrase_string) - gram_size + 1))
+            if not n_grams or not occurrence:
                 continue
             if remove_duplicates:
-                outfile.write("_".join(set(bigrams)) + "\t" + occurrence + "\n")
+                n_grams = "_".join(set(n_grams))
+                occurrence = "_".join(set(occurrence.split("_")))
+                outfile.write(n_grams + "\t" + occurrence + "\n")
             else:
-                outfile.write("_".join(bigrams) + "\t" + occurrence + "\n")
-    elif cue_structure == "trigrams_to_word":
-        for cues, outcomes in occurrences:
-            if cues and outcomes:
-                occurrence = cues + '_' + outcomes
-            else:  # take either
-                occurrence = cues + outcomes
-            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
-            trigrams = (phrase_string[i:(i + 3)] for i in
-                        range(len(phrase_string) - 3 + 1))
-            if not trigrams or not occurrence:
-                continue
-            if remove_duplicates:
-                outfile.write("_".join(set(trigrams)) + "\t" + occurrence + "\n")
-            else:
-                outfile.write("_".join(trigrams) + "\t" + occurrence + "\n")
+                outfile.write("_".join(n_grams) + "\t" + occurrence + "\n")
+
     elif cue_structure == "word_to_word":
         for cues, outcomes in occurrences:
             if not cues:
@@ -239,19 +232,16 @@ def create_event_file(corpus_file,
         """
         if event_structure == 'consecutive_words':
             occurrences = list()
-            cur_words = list()
-            ii = 0
-            while True:
-                if ii < len(words):
-                    cur_words.append(words[ii])
-                if ii >= len(words) or ii >= number_of_words:
-                    # remove the first word
-                    cur_words = cur_words[1:]
+            # can't have more consecutive words than total words
+            length = min(number_of_words, len(words))
+            # slide window over list of words
+            for ii in range(1 - length, len(words)):
+                # no consecutive words before first word
+                start = max(ii, 0)
+                # no consecutive words after last word
+                end = min(ii + length, len(words))
                 # append (cues, outcomes) with empty outcomes
-                occurrences.append(("_".join(cur_words), ''))
-                ii += 1
-                if not cur_words:
-                    break
+                occurrences.append(("_".join(words[start:end]), ""))
             return occurrences
         # for words = (A, B, C, D); before = 2, after = 1
         # make: (B, A), (A_C, B), (A_B_D, C), (B_C, D)
@@ -267,7 +257,7 @@ def create_event_file(corpus_file,
             return occurrences
         elif event_structure == 'line':
             # (cues, outcomes) with empty outcomes
-            return [('_'.join(words), ''), ]
+            return [('_'.join(words), '')]
 
     def process_line(line):
         """processes one line of text."""
@@ -288,13 +278,6 @@ def create_event_file(corpus_file,
                             cue_structure=cue_structure,
                             remove_duplicates=remove_duplicates)
 
-    def process_context(line):
-        """called when a context boundary is found."""
-        if context_structure == 'document':
-            # remove document marker
-            line = context_pattern.sub("", line)
-        return line
-
     with open(corpus_file, "rt") as corpus:
         with gzip.open(event_file, "wt") as outfile:
             outfile.write("cues\toutcomes\n")
@@ -313,29 +296,16 @@ def create_event_file(corpus_file,
                     process_words(words)
                 else:
                     if context_pattern.search(line) is not None:
-                        # process the first context
-                        context1, *contexts = context_pattern.split(line)
-                        context1 = process_context(context1)
+                        contexts = context_pattern.split(line)
 
-                        if context1.strip():
-                            context1 = process_line(context1.strip())
-                            words.extend(gen_words(context1))
-                        process_words(words)
-                        # process in between contexts
-                        while len(contexts) > 1:
-                            words = []
-                            context1, *contexts = contexts
-                            context1 = process_context(context1)
-                            if context1.strip():
-                                context1 = process_line(context1.strip())
-                                words.extend(gen_words(context1))
+                        # process contexts; only extend words on last context
+                        for ii, context in enumerate(contexts):
+                            context = process_line(context.strip())
+                            words.extend(gen_words(context))
+                            if ii < len(contexts):
                                 process_words(words)
-                        # add last part to next context
-                        context1 = contexts[0]
-                        context1 = process_context(context1)
-                        if context1.strip():
-                            context1 = process_line(context1.strip())
-                            words.extend(gen_words(context1))
+                                words = []
+
                     else:
                         line = process_line(line)
                         words.extend(gen_words(line))
