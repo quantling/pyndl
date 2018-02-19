@@ -169,6 +169,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         binary_files = [os.path.join(binary_path, binary_file)
                         for binary_file in os.listdir(binary_path)
                         if os.path.isfile(os.path.join(binary_path, binary_file))]
+        # sort binary files as they were created
+        binary_files.sort(key=lambda filename: int(os.path.basename(filename)[9:-4]))
         if verbose:
             print('start learning...')
         # learning
