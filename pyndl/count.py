@@ -16,7 +16,10 @@ import itertools
 import multiprocessing
 import os
 import sys
+import logging
 
+#configuring Logging
+logging.basicConfig(filename="/home/shadi/PycharmProjects/pyndl/pyndl/logs/count.log",level=logging.DEBUG,format="%(asctime)s %(levelname)s: %(message)s",datefmt='%d %b %Y %H:%M:%S')
 
 def _job_cues_outcomes(event_file_name, start, step, verbose=False):
     """
@@ -41,8 +44,10 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=False):
             for outcome in outcomes_line.strip().split('_'):
                 outcomes[outcome] += 1
             if verbose and nn % 100000 == 0:
-                print('.', end='')
-                sys.stdout.flush()
+                # print('.', end='')
+                logging.debug('.', end='')
+
+            sys.stdout.flush()
     return (nn + 1, cues, outcomes)
 
 
@@ -74,8 +79,8 @@ def cues_outcomes(event_file_name,
             outcomes += outcomes_process
 
     if verbose:
-        print('\n...counting done.')
-
+        # print('\n...counting done.')
+          logging.debug('\n...counting done.')
     return n_events, cues, outcomes
 
 
@@ -112,7 +117,8 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
                 words[word] += 1
                 symbols += Counter(word)
             if verbose and nn % 100000 == 0:
-                print('.', end='')
+                # print('.', end='')
+                logging.debug('.', end='')
                 sys.stdout.flush()
     return (words, symbols)
 
@@ -144,8 +150,8 @@ def words_symbols(corpus_file_name,
             symbols += symbols_process
 
     if verbose:
-        print('\n...counting done.')
-
+        # print('\n...counting done.')
+          logging.debug('\n...counting done.')
     return words, symbols
 
 

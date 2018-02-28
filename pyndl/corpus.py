@@ -12,6 +12,10 @@ import sys
 import gzip
 import multiprocessing
 import xml.etree.ElementTree
+import logging
+
+#configuring Logging
+logging.basicConfig(filename="/home/shadi/PycharmProjects/pyndl/pyndl/logs/corpus.log",level=logging.DEBUG,format="%(asctime)s %(levelname)s: %(message)s",datefmt='%d %b %Y %H:%M:%S')
 
 __version__ = '0.2.0'
 
@@ -146,14 +150,16 @@ def create_corpus_from_gz(directory, outfile, *, n_threads=1, verbose=False):
                       % outfile)
 
     if verbose:
-        print("Walk through '%s' and read in all file names..." % directory)
+        # print("Walk through '%s' and read in all file names..." % directory)
+        logging.debug("Walk through '%s' and read in all file names..." % directory)
     gz_files = [os.path.join(root, name)
                 for root, dirs, files in os.walk(directory, followlinks=True)
                 for name in files
                 if name.endswith((".gz",))]
     gz_files.sort()
     if verbose:
-        print("Start processing %i files." % len(gz_files))
+        # print("Start processing %i files." % len(gz_files))
+        logging.debug("Start processing %i files." % len(gz_files))
         start_time = time.time()
     not_founds = list()
     with multiprocessing.Pool(n_threads) as pool:
@@ -164,7 +170,8 @@ def create_corpus_from_gz(directory, outfile, *, n_threads=1, verbose=False):
             for lines, not_found in pool.imap(job.run, gz_files):
                 progress_counter += 1
                 if verbose and progress_counter % 1000 == 0:
-                    print("%i%% " % (progress_counter / n_files * 100), end="")
+                    # print("%i%% " % (progress_counter / n_files * 100), end="")
+                    logging.debug("%i%% " % (progress_counter / n_files * 100), end="")
                     sys.stdout.flush()
 
                 if lines is not None:
@@ -175,10 +182,14 @@ def create_corpus_from_gz(directory, outfile, *, n_threads=1, verbose=False):
                     raise NotImplementedError("This should never happend!")
     if verbose:
         duration = time.time() - start_time
-        print("\nProcessed %i files. %i files where not found." %
-              (len(gz_files), len(not_founds)))
-        print("Processing took %.2f seconds (%ih%.2im)." %
-              (duration, duration // (60 * 60), duration // 60))
+        # print("\nProcessed %i files. %i files where not found." %
+        #       (len(gz_files), len(not_founds)))
+        logging.debug("\nProcessed %i files. %i files where not found." %
+                      (len(gz_files), len(not_founds)))
+        # print("Processing took %.2f seconds (%ih%.2im)." %
+        #       (duration, duration // (60 * 60), duration // 60))
+        logging.debug("Processing took %.2f seconds (%ih%.2im)." %
+                      (duration, duration // (60 * 60), duration // 60))
 
     if not_founds:
         # prevent overwriting files

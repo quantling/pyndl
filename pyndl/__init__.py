@@ -10,8 +10,12 @@ efficiently apply the Rescorla-Wagner learning rule to these corpora.
 
 import os
 import sys
+import logging
 import multiprocessing as mp
 from pip._vendor import pkg_resources
+
+#configuring Logging
+logging.basicConfig(filename="/home/shadi/PycharmProjects/pyndl/pyndl/logs/init.log",level=logging.DEBUG,format="%(asctime)s %(levelname)s: %(message)s",datefmt='%d %b %Y %H:%M:%S')
 
 
 __author__ = ('Konstantin Sering, Marc Weitz, '
@@ -75,4 +79,6 @@ def sysinfo():
     deps += "\n".join("{pkg.__name__}: {pkg.__version__}".format(pkg=__import__(dep))
                       for dep in dependencies)
 
-    print(header + general + osinfo + deps)
+    # print(header + general + osinfo + deps)
+    logging.debug(header + general + osinfo + deps)
+
