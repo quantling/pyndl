@@ -16,5 +16,5 @@
    examples
    pyndl
    development
-   tips
+   misc
    about
