@@ -178,25 +178,6 @@ All contributions will be made available under MIT license if no explicit
 request for another license is made and agreed on.
 
 
-Local testing with conda
-------------------------
-
-Sometimes it might be useful to test if ``pyndl`` works in a clean python
-environment. Besides ``tox`` this is possible with ``conda`` as well. The
-commands are as follows:
-
-.. coda:: bash
-
-    conda create -n testpyndl
-    conda activate testpyndl
-    python -c 'from pyndl import ndl; print("success")'  # this should fail
-    git clone https://github.com/quantling/pyndl.git
-    pip install pyndl
-    python -c 'from pyndl import ndl; print("success")'  # this should succeed
-    conda deactivate
-    conda env remove -n testpyndl
-
-
 Release Process
 ---------------
 
