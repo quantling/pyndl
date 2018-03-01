@@ -121,6 +121,12 @@ def test_exceptions():
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, remove_duplicates="magic")
         assert e_info == "remove_duplicates must be None, True or False"
 
+    with pytest.raises(FileNotFoundError, match="No such file or directory") as e_info:
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, temporary_directory="./magic")
+
+    with pytest.raises(ValueError, match="events_per_file has to be larger than 1") as e_info:
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, events_per_temporary_file=1)
+
 
 def test_continue_learning_dict():
     events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
@@ -214,6 +220,11 @@ def test_return_values(result_dict_ndl, result_dict_ndl_data_array, result_ndl_t
     assert isinstance(result_ndl_threading, xr.DataArray)
 
 
+def test_provide_temporary_directory():
+    with tempfile.TemporaryDirectory(dir=TMP_PATH) as temporary_directory:
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, temporary_directory=temporary_directory)
+
+
 # Test internal consistency
 
 def test_dict_ndl_vs_ndl_threading(result_dict_ndl, result_ndl_threading):
@@ -237,6 +248,16 @@ def test_dict_ndl_data_array_vs_ndl_threading(result_ndl_threading):
                                             result_ndl_threading)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+
+def test_ordering_of_temporary_event_files(result_dict_ndl):
+    result_ndl = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading',
+                         events_per_temporary_file=2)
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
+                                            result_ndl)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0
 
 
 def test_multiple_cues_dict_ndl_vs_ndl_threading():

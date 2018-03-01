@@ -4,11 +4,6 @@ python:
     - "3.6"
 install: pip install tox-travis
 script:
-  - tox -e test
-  - tox -e checkstyle
-  - tox -e testcov
-  - tox -e lint
-  - tox -e checktypes
-  - tox -e documentation
+  - tox -e travis
 env:
   OMP_NUM_THREADS: 4

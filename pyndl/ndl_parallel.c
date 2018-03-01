@@ -804,7 +804,7 @@ typedef struct {
 #endif
 
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":743
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":743
  * # in Cython to enable them only on the right systems.
  * 
  * ctypedef npy_int8       int8_t             # <<<<<<<<<<<<<<
@@ -813,7 +813,7 @@ typedef struct {
  */
 typedef npy_int8 __pyx_t_5numpy_int8_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":744
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":744
  * 
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t             # <<<<<<<<<<<<<<
@@ -822,7 +822,7 @@ typedef npy_int8 __pyx_t_5numpy_int8_t;
  */
 typedef npy_int16 __pyx_t_5numpy_int16_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":745
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":745
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t             # <<<<<<<<<<<<<<
@@ -831,7 +831,7 @@ typedef npy_int16 __pyx_t_5numpy_int16_t;
  */
 typedef npy_int32 __pyx_t_5numpy_int32_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":746
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":746
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t
  * ctypedef npy_int64      int64_t             # <<<<<<<<<<<<<<
@@ -840,7 +840,7 @@ typedef npy_int32 __pyx_t_5numpy_int32_t;
  */
 typedef npy_int64 __pyx_t_5numpy_int64_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":750
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":750
  * #ctypedef npy_int128     int128_t
  * 
  * ctypedef npy_uint8      uint8_t             # <<<<<<<<<<<<<<
@@ -849,7 +849,7 @@ typedef npy_int64 __pyx_t_5numpy_int64_t;
  */
 typedef npy_uint8 __pyx_t_5numpy_uint8_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":751
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":751
  * 
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t             # <<<<<<<<<<<<<<
@@ -858,7 +858,7 @@ typedef npy_uint8 __pyx_t_5numpy_uint8_t;
  */
 typedef npy_uint16 __pyx_t_5numpy_uint16_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":752
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":752
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t             # <<<<<<<<<<<<<<
@@ -867,7 +867,7 @@ typedef npy_uint16 __pyx_t_5numpy_uint16_t;
  */
 typedef npy_uint32 __pyx_t_5numpy_uint32_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":753
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":753
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t
  * ctypedef npy_uint64     uint64_t             # <<<<<<<<<<<<<<
@@ -876,7 +876,7 @@ typedef npy_uint32 __pyx_t_5numpy_uint32_t;
  */
 typedef npy_uint64 __pyx_t_5numpy_uint64_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":757
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":757
  * #ctypedef npy_uint128    uint128_t
  * 
  * ctypedef npy_float32    float32_t             # <<<<<<<<<<<<<<
@@ -885,7 +885,7 @@ typedef npy_uint64 __pyx_t_5numpy_uint64_t;
  */
 typedef npy_float32 __pyx_t_5numpy_float32_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":758
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":758
  * 
  * ctypedef npy_float32    float32_t
  * ctypedef npy_float64    float64_t             # <<<<<<<<<<<<<<
@@ -894,7 +894,7 @@ typedef npy_float32 __pyx_t_5numpy_float32_t;
  */
 typedef npy_float64 __pyx_t_5numpy_float64_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":767
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":767
  * # The int types are mapped a bit surprising --
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t             # <<<<<<<<<<<<<<
@@ -903,7 +903,7 @@ typedef npy_float64 __pyx_t_5numpy_float64_t;
  */
 typedef npy_long __pyx_t_5numpy_int_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":768
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":768
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t
  * ctypedef npy_longlong   long_t             # <<<<<<<<<<<<<<
@@ -912,7 +912,7 @@ typedef npy_long __pyx_t_5numpy_int_t;
  */
 typedef npy_longlong __pyx_t_5numpy_long_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":769
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":769
  * ctypedef npy_long       int_t
  * ctypedef npy_longlong   long_t
  * ctypedef npy_longlong   longlong_t             # <<<<<<<<<<<<<<
@@ -921,7 +921,7 @@ typedef npy_longlong __pyx_t_5numpy_long_t;
  */
 typedef npy_longlong __pyx_t_5numpy_longlong_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":771
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":771
  * ctypedef npy_longlong   longlong_t
  * 
  * ctypedef npy_ulong      uint_t             # <<<<<<<<<<<<<<
@@ -930,7 +930,7 @@ typedef npy_longlong __pyx_t_5numpy_longlong_t;
  */
 typedef npy_ulong __pyx_t_5numpy_uint_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":772
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":772
  * 
  * ctypedef npy_ulong      uint_t
  * ctypedef npy_ulonglong  ulong_t             # <<<<<<<<<<<<<<
@@ -939,7 +939,7 @@ typedef npy_ulong __pyx_t_5numpy_uint_t;
  */
 typedef npy_ulonglong __pyx_t_5numpy_ulong_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":773
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":773
  * ctypedef npy_ulong      uint_t
  * ctypedef npy_ulonglong  ulong_t
  * ctypedef npy_ulonglong  ulonglong_t             # <<<<<<<<<<<<<<
@@ -948,7 +948,7 @@ typedef npy_ulonglong __pyx_t_5numpy_ulong_t;
  */
 typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":775
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":775
  * ctypedef npy_ulonglong  ulonglong_t
  * 
  * ctypedef npy_intp       intp_t             # <<<<<<<<<<<<<<
@@ -957,7 +957,7 @@ typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
  */
 typedef npy_intp __pyx_t_5numpy_intp_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":776
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":776
  * 
  * ctypedef npy_intp       intp_t
  * ctypedef npy_uintp      uintp_t             # <<<<<<<<<<<<<<
@@ -966,7 +966,7 @@ typedef npy_intp __pyx_t_5numpy_intp_t;
  */
 typedef npy_uintp __pyx_t_5numpy_uintp_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":778
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":778
  * ctypedef npy_uintp      uintp_t
  * 
  * ctypedef npy_double     float_t             # <<<<<<<<<<<<<<
@@ -975,7 +975,7 @@ typedef npy_uintp __pyx_t_5numpy_uintp_t;
  */
 typedef npy_double __pyx_t_5numpy_float_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":779
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":779
  * 
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t             # <<<<<<<<<<<<<<
@@ -984,7 +984,7 @@ typedef npy_double __pyx_t_5numpy_float_t;
  */
 typedef npy_double __pyx_t_5numpy_double_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":780
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":780
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t
  * ctypedef npy_longdouble longdouble_t             # <<<<<<<<<<<<<<
@@ -992,6 +992,15 @@ typedef npy_double __pyx_t_5numpy_double_t;
  * ctypedef npy_cfloat      cfloat_t
  */
 typedef npy_longdouble __pyx_t_5numpy_longdouble_t;
+
+/* "pyndl/ndl_parallel.pyx":3
+ * import numpy as np
+ * cimport numpy as np
+ * ctypedef np.float64_t dtype_t             # <<<<<<<<<<<<<<
+ * cimport cython
+ * from cython.parallel cimport parallel, prange
+ */
+typedef __pyx_t_5numpy_float64_t __pyx_t_5pyndl_12ndl_parallel_dtype_t;
 /* Declarations.proto */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -1019,7 +1028,7 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
 
 /*--- Type declarations ---*/
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":782
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":782
  * ctypedef npy_longdouble longdouble_t
  * 
  * ctypedef npy_cfloat      cfloat_t             # <<<<<<<<<<<<<<
@@ -1028,7 +1037,7 @@ static CYTHON_INLINE __pyx_t_double_complex __pyx_t_double_complex_from_parts(do
  */
 typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":783
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":783
  * 
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t             # <<<<<<<<<<<<<<
@@ -1037,7 +1046,7 @@ typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":784
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":784
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t
  * ctypedef npy_clongdouble clongdouble_t             # <<<<<<<<<<<<<<
@@ -1046,7 +1055,7 @@ typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
  */
 typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":786
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":786
  * ctypedef npy_clongdouble clongdouble_t
  * 
  * ctypedef npy_cdouble     complex_t             # <<<<<<<<<<<<<<
@@ -1527,8 +1536,8 @@ static unsigned int __pyx_v_5pyndl_12ndl_parallel_CURRENT_VERSION_WITH_FREQ;
 static unsigned int __pyx_v_5pyndl_12ndl_parallel_CURRENT_VERSION;
 static CYTHON_INLINE void __pyx_f_5pyndl_12ndl_parallel_read_next_int(void *, FILE *); /*proto*/
 static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int, unsigned int *, unsigned int); /*proto*/
-static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *, double *, unsigned int, double, double, double, double, unsigned int *, unsigned int, unsigned int); /*proto*/
-static __Pyx_TypeInfo __Pyx_TypeInfo_double = { "double", NULL, sizeof(double), { 0 }, 0, 'R', 0, 0 };
+static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *, __pyx_t_5pyndl_12ndl_parallel_dtype_t *, unsigned int, __pyx_t_5pyndl_12ndl_parallel_dtype_t, __pyx_t_5pyndl_12ndl_parallel_dtype_t, __pyx_t_5pyndl_12ndl_parallel_dtype_t, __pyx_t_5pyndl_12ndl_parallel_dtype_t, unsigned int *, unsigned int, unsigned int); /*proto*/
+static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5pyndl_12ndl_parallel_dtype_t = { "dtype_t", NULL, sizeof(__pyx_t_5pyndl_12ndl_parallel_dtype_t), { 0 }, 0, 'R', 0, 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_unsigned_int = { "unsigned int", NULL, sizeof(unsigned int), { 0 }, 0, IS_UNSIGNED(unsigned int) ? 'U' : 'I', IS_UNSIGNED(unsigned int), 0 };
 #define __Pyx_MODULE_NAME "pyndl.ndl_parallel"
 extern int __pyx_module_is_main_pyndl__ndl_parallel;
@@ -1636,8 +1645,8 @@ static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_kp_s_unsigned_int_needs_to_be_4_bytes;
 static PyObject *__pyx_n_s_weights;
 static PyObject *__pyx_n_s_weights_ptr;
-static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, double __pyx_v_alpha, double __pyx_v_beta1, double __pyx_v_beta2, double __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes, unsigned int __pyx_v_chunksize, unsigned int __pyx_v_number_of_threads); /* proto */
-static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, double __pyx_v_alpha, double __pyx_v_beta1, double __pyx_v_beta2, double __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes); /* proto */
+static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes, unsigned int __pyx_v_chunksize, unsigned int __pyx_v_number_of_threads); /* proto */
+static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
 static PyObject *__pyx_tuple_;
@@ -1656,7 +1665,7 @@ static PyObject *__pyx_tuple__14;
 static PyObject *__pyx_codeobj__13;
 static PyObject *__pyx_codeobj__15;
 
-/* "pyndl/ndl_parallel.pyx":16
+/* "pyndl/ndl_parallel.pyx":17
  * 
  * 
  * cdef inline void read_next_int(void *data, FILE *binary_file) nogil:             # <<<<<<<<<<<<<<
@@ -1666,7 +1675,7 @@ static PyObject *__pyx_codeobj__15;
 
 static CYTHON_INLINE void __pyx_f_5pyndl_12ndl_parallel_read_next_int(void *__pyx_v_data, FILE *__pyx_v_binary_file) {
 
-  /* "pyndl/ndl_parallel.pyx":17
+  /* "pyndl/ndl_parallel.pyx":18
  * 
  * cdef inline void read_next_int(void *data, FILE *binary_file) nogil:
  *     fread(data, 4, 1, binary_file) # little endian             # <<<<<<<<<<<<<<
@@ -1675,7 +1684,7 @@ static CYTHON_INLINE void __pyx_f_5pyndl_12ndl_parallel_read_next_int(void *__py
  */
   fread(__pyx_v_data, 4, 1, __pyx_v_binary_file);
 
-  /* "pyndl/ndl_parallel.pyx":16
+  /* "pyndl/ndl_parallel.pyx":17
  * 
  * 
  * cdef inline void read_next_int(void *data, FILE *binary_file) nogil:             # <<<<<<<<<<<<<<
@@ -1686,12 +1695,12 @@ static CYTHON_INLINE void __pyx_f_5pyndl_12ndl_parallel_read_next_int(void *__py
   /* function exit code */
 }
 
-/* "pyndl/ndl_parallel.pyx":29
+/* "pyndl/ndl_parallel.pyx":30
  * 
  * 
- * def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,             # <<<<<<<<<<<<<<
- *                   double alpha, double beta1,
- *                   double beta2, double lambda_,
+ * def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
+ *                   dtype_t alpha, dtype_t beta1,
+ *                   dtype_t beta2, dtype_t lambda_,
  */
 
 /* Python wrapper */
@@ -1700,10 +1709,10 @@ static PyMethodDef __pyx_mdef_5pyndl_12ndl_parallel_1learn_inplace = {"learn_inp
 static PyObject *__pyx_pw_5pyndl_12ndl_parallel_1learn_inplace(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_binary_file_paths = 0;
   PyArrayObject *__pyx_v_weights = 0;
-  double __pyx_v_alpha;
-  double __pyx_v_beta1;
-  double __pyx_v_beta2;
-  double __pyx_v_lambda_;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_;
   PyArrayObject *__pyx_v_all_outcomes = 0;
   unsigned int __pyx_v_chunksize;
   unsigned int __pyx_v_number_of_threads;
@@ -1747,53 +1756,53 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_1learn_inplace(PyObject *__pyx_s
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_weights)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 1); __PYX_ERR(0, 29, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 1); __PYX_ERR(0, 30, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_alpha)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 2); __PYX_ERR(0, 29, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 2); __PYX_ERR(0, 30, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_beta1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 3); __PYX_ERR(0, 29, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 3); __PYX_ERR(0, 30, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_beta2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 4); __PYX_ERR(0, 29, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 4); __PYX_ERR(0, 30, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_lambda)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 5); __PYX_ERR(0, 29, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 5); __PYX_ERR(0, 30, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_all_outcomes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 6); __PYX_ERR(0, 29, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 6); __PYX_ERR(0, 30, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_chunksize)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 7); __PYX_ERR(0, 29, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 7); __PYX_ERR(0, 30, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_number_of_threads)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 8); __PYX_ERR(0, 29, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 8); __PYX_ERR(0, 30, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "learn_inplace") < 0)) __PYX_ERR(0, 29, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "learn_inplace") < 0)) __PYX_ERR(0, 30, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 9) {
       goto __pyx_L5_argtuple_error;
@@ -1810,24 +1819,24 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_1learn_inplace(PyObject *__pyx_s
     }
     __pyx_v_binary_file_paths = values[0];
     __pyx_v_weights = ((PyArrayObject *)values[1]);
-    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L3_error)
-    __pyx_v_beta1 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_beta1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L3_error)
-    __pyx_v_beta2 = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_beta2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L3_error)
-    __pyx_v_lambda_ = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_lambda_ == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L3_error)
+    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_alpha == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L3_error)
+    __pyx_v_beta1 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_beta1 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 31, __pyx_L3_error)
+    __pyx_v_beta2 = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_beta2 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L3_error)
+    __pyx_v_lambda_ = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_lambda_ == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 32, __pyx_L3_error)
     __pyx_v_all_outcomes = ((PyArrayObject *)values[6]);
-    __pyx_v_chunksize = __Pyx_PyInt_As_unsigned_int(values[7]); if (unlikely((__pyx_v_chunksize == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 33, __pyx_L3_error)
-    __pyx_v_number_of_threads = __Pyx_PyInt_As_unsigned_int(values[8]); if (unlikely((__pyx_v_number_of_threads == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L3_error)
+    __pyx_v_chunksize = __Pyx_PyInt_As_unsigned_int(values[7]); if (unlikely((__pyx_v_chunksize == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 34, __pyx_L3_error)
+    __pyx_v_number_of_threads = __Pyx_PyInt_As_unsigned_int(values[8]); if (unlikely((__pyx_v_number_of_threads == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 35, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 29, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 30, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyndl.ndl_parallel.learn_inplace", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_weights), __pyx_ptype_5numpy_ndarray, 1, "weights", 0))) __PYX_ERR(0, 29, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_all_outcomes), __pyx_ptype_5numpy_ndarray, 1, "all_outcomes", 0))) __PYX_ERR(0, 32, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_weights), __pyx_ptype_5numpy_ndarray, 1, "weights", 0))) __PYX_ERR(0, 30, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_all_outcomes), __pyx_ptype_5numpy_ndarray, 1, "all_outcomes", 0))) __PYX_ERR(0, 33, __pyx_L1_error)
   __pyx_r = __pyx_pf_5pyndl_12ndl_parallel_learn_inplace(__pyx_self, __pyx_v_binary_file_paths, __pyx_v_weights, __pyx_v_alpha, __pyx_v_beta1, __pyx_v_beta2, __pyx_v_lambda_, __pyx_v_all_outcomes, __pyx_v_chunksize, __pyx_v_number_of_threads);
 
   /* function exit code */
@@ -1839,7 +1848,7 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_1learn_inplace(PyObject *__pyx_s
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, double __pyx_v_alpha, double __pyx_v_beta1, double __pyx_v_beta2, double __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes, unsigned int __pyx_v_chunksize, unsigned int __pyx_v_number_of_threads) {
+static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes, unsigned int __pyx_v_chunksize, unsigned int __pyx_v_number_of_threads) {
   unsigned int __pyx_v_mm;
   unsigned int *__pyx_v_all_outcomes_ptr;
   unsigned int __pyx_v_length_all_outcomes;
@@ -1849,7 +1858,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   unsigned int __pyx_v_ii;
   CYTHON_UNUSED unsigned int __pyx_v_number_parts;
   int __pyx_v_error;
-  double *__pyx_v_weights_ptr;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t *__pyx_v_weights_ptr;
   PyObject *__pyx_v_binary_file_path = NULL;
   PyObject *__pyx_v_filename_byte_string = NULL;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_all_outcomes;
@@ -1883,16 +1892,16 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   __pyx_pybuffernd_all_outcomes.rcbuffer = &__pyx_pybuffer_all_outcomes;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 29, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_nn___pyx_t_5pyndl_12ndl_parallel_dtype_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 30, __pyx_L1_error)
   }
   __pyx_pybuffernd_weights.diminfo[0].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_weights.diminfo[0].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_weights.diminfo[1].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_weights.diminfo[1].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer, (PyObject*)__pyx_v_all_outcomes, &__Pyx_TypeInfo_unsigned_int, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 29, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer, (PyObject*)__pyx_v_all_outcomes, &__Pyx_TypeInfo_unsigned_int, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 30, __pyx_L1_error)
   }
   __pyx_pybuffernd_all_outcomes.diminfo[0].strides = __pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_all_outcomes.diminfo[0].shape = __pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer.shape[0];
 
-  /* "pyndl/ndl_parallel.pyx":36
+  /* "pyndl/ndl_parallel.pyx":37
  *                   unsigned int number_of_threads):
  * 
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns             # <<<<<<<<<<<<<<
@@ -1901,7 +1910,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
   __pyx_v_mm = (__pyx_v_weights->dimensions[1]);
 
-  /* "pyndl/ndl_parallel.pyx":37
+  /* "pyndl/ndl_parallel.pyx":38
  * 
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
  *     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data             # <<<<<<<<<<<<<<
@@ -1910,7 +1919,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
   __pyx_v_all_outcomes_ptr = ((unsigned int *)__pyx_v_all_outcomes->data);
 
-  /* "pyndl/ndl_parallel.pyx":38
+  /* "pyndl/ndl_parallel.pyx":39
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
  *     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
  *     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]             # <<<<<<<<<<<<<<
@@ -1919,7 +1928,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
   __pyx_v_length_all_outcomes = (__pyx_v_all_outcomes->dimensions[0]);
 
-  /* "pyndl/ndl_parallel.pyx":41
+  /* "pyndl/ndl_parallel.pyx":42
  *     cdef char* fname
  *     cdef unsigned int start_val, end_val, ii, number_parts
  *     cdef int error = 4             # <<<<<<<<<<<<<<
@@ -1928,17 +1937,17 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
   __pyx_v_error = 4;
 
-  /* "pyndl/ndl_parallel.pyx":46
+  /* "pyndl/ndl_parallel.pyx":47
  *     # weights muss contigousarray sein und mode=c, siehe:
  *     #cdef np.ndarray[np.uint32_t, ndim=3, mode = 'c'] np_buff = np.ascontiguousarray(im, dtype = np.uint32)
- *     cdef double* weights_ptr = <double *> weights.data # ueberlegen ob [][] oder ** oder [] oder *             # <<<<<<<<<<<<<<
+ *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *             # <<<<<<<<<<<<<<
  * 
  *     for binary_file_path in binary_file_paths: #
  */
-  __pyx_v_weights_ptr = ((double *)__pyx_v_weights->data);
+  __pyx_v_weights_ptr = ((__pyx_t_5pyndl_12ndl_parallel_dtype_t *)__pyx_v_weights->data);
 
-  /* "pyndl/ndl_parallel.pyx":48
- *     cdef double* weights_ptr = <double *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
+  /* "pyndl/ndl_parallel.pyx":49
+ *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
  * 
  *     for binary_file_path in binary_file_paths: #             # <<<<<<<<<<<<<<
  *       filename_byte_string = binary_file_path.encode("UTF-8")
@@ -1948,26 +1957,26 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
     __pyx_t_1 = __pyx_v_binary_file_paths; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_binary_file_paths); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_binary_file_paths); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 49, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 48, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 49, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 48, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 49, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -1977,7 +1986,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 48, __pyx_L1_error)
+          else __PYX_ERR(0, 49, __pyx_L1_error)
         }
         break;
       }
@@ -1986,32 +1995,32 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
     __Pyx_XDECREF_SET(__pyx_v_binary_file_path, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "pyndl/ndl_parallel.pyx":49
+    /* "pyndl/ndl_parallel.pyx":50
  * 
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")             # <<<<<<<<<<<<<<
  *       fname = filename_byte_string
  * 
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_binary_file_path, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 49, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_binary_file_path, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 49, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_XDECREF_SET(__pyx_v_filename_byte_string, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "pyndl/ndl_parallel.pyx":50
+    /* "pyndl/ndl_parallel.pyx":51
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")
  *       fname = filename_byte_string             # <<<<<<<<<<<<<<
  * 
  *       number_parts = (length_all_outcomes // chunksize) + 1
  */
-    __pyx_t_6 = __Pyx_PyObject_AsWritableString(__pyx_v_filename_byte_string); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 50, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_AsWritableString(__pyx_v_filename_byte_string); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 51, __pyx_L1_error)
     __pyx_v_fname = __pyx_t_6;
 
-    /* "pyndl/ndl_parallel.pyx":52
+    /* "pyndl/ndl_parallel.pyx":53
  *       fname = filename_byte_string
  * 
  *       number_parts = (length_all_outcomes // chunksize) + 1             # <<<<<<<<<<<<<<
@@ -2020,11 +2029,11 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
     if (unlikely(__pyx_v_chunksize == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 52, __pyx_L1_error)
+      __PYX_ERR(0, 53, __pyx_L1_error)
     }
     __pyx_v_number_parts = ((__pyx_v_length_all_outcomes / __pyx_v_chunksize) + 1);
 
-    /* "pyndl/ndl_parallel.pyx":54
+    /* "pyndl/ndl_parallel.pyx":55
  *       number_parts = (length_all_outcomes // chunksize) + 1
  * 
  *       with nogil, parallel(num_threads=number_of_threads):             # <<<<<<<<<<<<<<
@@ -2050,7 +2059,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
               #endif /* _OPENMP */
               {
 
-                  /* "pyndl/ndl_parallel.pyx":55
+                  /* "pyndl/ndl_parallel.pyx":56
  * 
  *       with nogil, parallel(num_threads=number_of_threads):
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):             # <<<<<<<<<<<<<<
@@ -2082,7 +2091,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
                                   __pyx_v_error = ((int)0xbad0bad0);
                                   __pyx_v_start_val = ((unsigned int)0xbad0bad0);
 
-                                  /* "pyndl/ndl_parallel.pyx":56
+                                  /* "pyndl/ndl_parallel.pyx":57
  *       with nogil, parallel(num_threads=number_of_threads):
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
  *           start_val = ii * chunksize             # <<<<<<<<<<<<<<
@@ -2091,7 +2100,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
                                   __pyx_v_start_val = (__pyx_v_ii * __pyx_v_chunksize);
 
-                                  /* "pyndl/ndl_parallel.pyx":57
+                                  /* "pyndl/ndl_parallel.pyx":58
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
  *           start_val = ii * chunksize
  *           end_val = min(start_val + chunksize, length_all_outcomes)             # <<<<<<<<<<<<<<
@@ -2107,7 +2116,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
                                   }
                                   __pyx_v_end_val = __pyx_t_13;
 
-                                  /* "pyndl/ndl_parallel.pyx":58
+                                  /* "pyndl/ndl_parallel.pyx":59
  *           start_val = ii * chunksize
  *           end_val = min(start_val + chunksize, length_all_outcomes)
  *           if start_val == length_all_outcomes:             # <<<<<<<<<<<<<<
@@ -2117,7 +2126,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
                                   __pyx_t_14 = ((__pyx_v_start_val == __pyx_v_length_all_outcomes) != 0);
                                   if (__pyx_t_14) {
 
-                                    /* "pyndl/ndl_parallel.pyx":59
+                                    /* "pyndl/ndl_parallel.pyx":60
  *           end_val = min(start_val + chunksize, length_all_outcomes)
  *           if start_val == length_all_outcomes:
  *             break             # <<<<<<<<<<<<<<
@@ -2126,7 +2135,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
                                     goto __pyx_L15_break;
 
-                                    /* "pyndl/ndl_parallel.pyx":58
+                                    /* "pyndl/ndl_parallel.pyx":59
  *           start_val = ii * chunksize
  *           end_val = min(start_val + chunksize, length_all_outcomes)
  *           if start_val == length_all_outcomes:             # <<<<<<<<<<<<<<
@@ -2135,7 +2144,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
                                   }
 
-                                  /* "pyndl/ndl_parallel.pyx":60
+                                  /* "pyndl/ndl_parallel.pyx":61
  *           if start_val == length_all_outcomes:
  *             break
  *           error = 0             # <<<<<<<<<<<<<<
@@ -2144,7 +2153,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
                                   __pyx_v_error = 0;
 
-                                  /* "pyndl/ndl_parallel.pyx":61
+                                  /* "pyndl/ndl_parallel.pyx":62
  *             break
  *           error = 0
  *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,             # <<<<<<<<<<<<<<
@@ -2192,7 +2201,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
           #endif
         }
 
-        /* "pyndl/ndl_parallel.pyx":54
+        /* "pyndl/ndl_parallel.pyx":55
  *       number_parts = (length_all_outcomes // chunksize) + 1
  * 
  *       with nogil, parallel(num_threads=number_of_threads):             # <<<<<<<<<<<<<<
@@ -2211,8 +2220,8 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
         }
     }
 
-    /* "pyndl/ndl_parallel.pyx":48
- *     cdef double* weights_ptr = <double *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
+    /* "pyndl/ndl_parallel.pyx":49
+ *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
  * 
  *     for binary_file_path in binary_file_paths: #             # <<<<<<<<<<<<<<
  *       filename_byte_string = binary_file_path.encode("UTF-8")
@@ -2221,7 +2230,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyndl/ndl_parallel.pyx":64
+  /* "pyndl/ndl_parallel.pyx":65
  *                             beta2, lambda_, all_outcomes_ptr, start_val,
  *                             end_val)
  *     if (error != 0):             # <<<<<<<<<<<<<<
@@ -2231,31 +2240,31 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   __pyx_t_14 = ((__pyx_v_error != 0) != 0);
   if (__pyx_t_14) {
 
-    /* "pyndl/ndl_parallel.pyx":65
+    /* "pyndl/ndl_parallel.pyx":66
  *                             end_val)
  *     if (error != 0):
  *         raise IOError('binary files does not have proper format, error code %i' % error)             # <<<<<<<<<<<<<<
  * 
- * def learn_inplace_2(binary_file_paths, np.ndarray[double, ndim=2] weights,
+ * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
  */
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyString_Format(__pyx_kp_s_binary_files_does_not_have_prope, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyString_Format(__pyx_kp_s_binary_files_does_not_have_prope, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_GIVEREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_5);
     __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_IOError, __pyx_t_1, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 65, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_IOError, __pyx_t_1, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 66, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_Raise(__pyx_t_5, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __PYX_ERR(0, 65, __pyx_L1_error)
+    __PYX_ERR(0, 66, __pyx_L1_error)
 
-    /* "pyndl/ndl_parallel.pyx":64
+    /* "pyndl/ndl_parallel.pyx":65
  *                             beta2, lambda_, all_outcomes_ptr, start_val,
  *                             end_val)
  *     if (error != 0):             # <<<<<<<<<<<<<<
@@ -2264,12 +2273,12 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
   }
 
-  /* "pyndl/ndl_parallel.pyx":29
+  /* "pyndl/ndl_parallel.pyx":30
  * 
  * 
- * def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,             # <<<<<<<<<<<<<<
- *                   double alpha, double beta1,
- *                   double beta2, double lambda_,
+ * def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
+ *                   dtype_t alpha, dtype_t beta1,
+ *                   dtype_t beta2, dtype_t lambda_,
  */
 
   /* function exit code */
@@ -2300,12 +2309,12 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "pyndl/ndl_parallel.pyx":67
+/* "pyndl/ndl_parallel.pyx":68
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
- * def learn_inplace_2(binary_file_paths, np.ndarray[double, ndim=2] weights,             # <<<<<<<<<<<<<<
- *                   double alpha, double beta1,
- *                   double beta2, double lambda_,
+ * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
+ *                   dtype_t alpha, dtype_t beta1,
+ *                   dtype_t beta2, dtype_t lambda_,
  */
 
 /* Python wrapper */
@@ -2314,10 +2323,10 @@ static PyMethodDef __pyx_mdef_5pyndl_12ndl_parallel_3learn_inplace_2 = {"learn_i
 static PyObject *__pyx_pw_5pyndl_12ndl_parallel_3learn_inplace_2(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_binary_file_paths = 0;
   PyArrayObject *__pyx_v_weights = 0;
-  double __pyx_v_alpha;
-  double __pyx_v_beta1;
-  double __pyx_v_beta2;
-  double __pyx_v_lambda_;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_;
   PyArrayObject *__pyx_v_all_outcomes = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
@@ -2355,41 +2364,41 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_3learn_inplace_2(PyObject *__pyx
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_weights)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 1); __PYX_ERR(0, 67, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 1); __PYX_ERR(0, 68, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_alpha)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 2); __PYX_ERR(0, 67, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 2); __PYX_ERR(0, 68, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_beta1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 3); __PYX_ERR(0, 67, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 3); __PYX_ERR(0, 68, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_beta2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 4); __PYX_ERR(0, 67, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 4); __PYX_ERR(0, 68, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_lambda)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 5); __PYX_ERR(0, 67, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 5); __PYX_ERR(0, 68, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_all_outcomes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 6); __PYX_ERR(0, 67, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 6); __PYX_ERR(0, 68, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "learn_inplace_2") < 0)) __PYX_ERR(0, 67, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "learn_inplace_2") < 0)) __PYX_ERR(0, 68, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
@@ -2404,22 +2413,22 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_3learn_inplace_2(PyObject *__pyx
     }
     __pyx_v_binary_file_paths = values[0];
     __pyx_v_weights = ((PyArrayObject *)values[1]);
-    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_alpha == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 68, __pyx_L3_error)
-    __pyx_v_beta1 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_beta1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 68, __pyx_L3_error)
-    __pyx_v_beta2 = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_beta2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L3_error)
-    __pyx_v_lambda_ = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_lambda_ == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L3_error)
+    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_alpha == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L3_error)
+    __pyx_v_beta1 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_beta1 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 69, __pyx_L3_error)
+    __pyx_v_beta2 = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_beta2 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L3_error)
+    __pyx_v_lambda_ = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_lambda_ == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L3_error)
     __pyx_v_all_outcomes = ((PyArrayObject *)values[6]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 67, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 68, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyndl.ndl_parallel.learn_inplace_2", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_weights), __pyx_ptype_5numpy_ndarray, 1, "weights", 0))) __PYX_ERR(0, 67, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_all_outcomes), __pyx_ptype_5numpy_ndarray, 1, "all_outcomes", 0))) __PYX_ERR(0, 70, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_weights), __pyx_ptype_5numpy_ndarray, 1, "weights", 0))) __PYX_ERR(0, 68, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_all_outcomes), __pyx_ptype_5numpy_ndarray, 1, "all_outcomes", 0))) __PYX_ERR(0, 71, __pyx_L1_error)
   __pyx_r = __pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(__pyx_self, __pyx_v_binary_file_paths, __pyx_v_weights, __pyx_v_alpha, __pyx_v_beta1, __pyx_v_beta2, __pyx_v_lambda_, __pyx_v_all_outcomes);
 
   /* function exit code */
@@ -2431,13 +2440,13 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_3learn_inplace_2(PyObject *__pyx
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, double __pyx_v_alpha, double __pyx_v_beta1, double __pyx_v_beta2, double __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes) {
+static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes) {
   unsigned int __pyx_v_mm;
   unsigned int *__pyx_v_all_outcomes_ptr;
   unsigned int __pyx_v_length_all_outcomes;
   char *__pyx_v_fname;
   int __pyx_v_error;
-  double *__pyx_v_weights_ptr;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t *__pyx_v_weights_ptr;
   PyObject *__pyx_v_binary_file_path = NULL;
   PyObject *__pyx_v_filename_byte_string = NULL;
   __Pyx_LocalBuf_ND __pyx_pybuffernd_all_outcomes;
@@ -2464,16 +2473,16 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
   __pyx_pybuffernd_all_outcomes.rcbuffer = &__pyx_pybuffer_all_outcomes;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_double, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 67, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_nn___pyx_t_5pyndl_12ndl_parallel_dtype_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 68, __pyx_L1_error)
   }
   __pyx_pybuffernd_weights.diminfo[0].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_weights.diminfo[0].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_weights.diminfo[1].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_weights.diminfo[1].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer, (PyObject*)__pyx_v_all_outcomes, &__Pyx_TypeInfo_unsigned_int, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 67, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer, (PyObject*)__pyx_v_all_outcomes, &__Pyx_TypeInfo_unsigned_int, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 68, __pyx_L1_error)
   }
   __pyx_pybuffernd_all_outcomes.diminfo[0].strides = __pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_all_outcomes.diminfo[0].shape = __pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer.shape[0];
 
-  /* "pyndl/ndl_parallel.pyx":72
+  /* "pyndl/ndl_parallel.pyx":73
  *                   np.ndarray[unsigned int, ndim=1] all_outcomes):
  * 
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns             # <<<<<<<<<<<<<<
@@ -2482,7 +2491,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
   __pyx_v_mm = (__pyx_v_weights->dimensions[1]);
 
-  /* "pyndl/ndl_parallel.pyx":73
+  /* "pyndl/ndl_parallel.pyx":74
  * 
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
  *     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data             # <<<<<<<<<<<<<<
@@ -2491,7 +2500,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
   __pyx_v_all_outcomes_ptr = ((unsigned int *)__pyx_v_all_outcomes->data);
 
-  /* "pyndl/ndl_parallel.pyx":74
+  /* "pyndl/ndl_parallel.pyx":75
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
  *     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
  *     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]             # <<<<<<<<<<<<<<
@@ -2500,7 +2509,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
   __pyx_v_length_all_outcomes = (__pyx_v_all_outcomes->dimensions[0]);
 
-  /* "pyndl/ndl_parallel.pyx":77
+  /* "pyndl/ndl_parallel.pyx":78
  *     cdef char* fname
  *     cdef unsigned int start_val, end_val
  *     cdef int error = 4             # <<<<<<<<<<<<<<
@@ -2509,17 +2518,17 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
   __pyx_v_error = 4;
 
-  /* "pyndl/ndl_parallel.pyx":82
+  /* "pyndl/ndl_parallel.pyx":83
  *     # weights muss contigousarray sein und mode=c, siehe:
  *     #cdef np.ndarray[np.uint32_t, ndim=3, mode = 'c'] np_buff = np.ascontiguousarray(im, dtype = np.uint32)
- *     cdef double* weights_ptr = <double *> weights.data # ueberlegen ob [][] oder ** oder [] oder *             # <<<<<<<<<<<<<<
+ *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *             # <<<<<<<<<<<<<<
  * 
  *     for binary_file_path in binary_file_paths: #
  */
-  __pyx_v_weights_ptr = ((double *)__pyx_v_weights->data);
+  __pyx_v_weights_ptr = ((__pyx_t_5pyndl_12ndl_parallel_dtype_t *)__pyx_v_weights->data);
 
-  /* "pyndl/ndl_parallel.pyx":84
- *     cdef double* weights_ptr = <double *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
+  /* "pyndl/ndl_parallel.pyx":85
+ *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
  * 
  *     for binary_file_path in binary_file_paths: #             # <<<<<<<<<<<<<<
  *       filename_byte_string = binary_file_path.encode("UTF-8")
@@ -2529,26 +2538,26 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
     __pyx_t_1 = __pyx_v_binary_file_paths; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_binary_file_paths); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_binary_file_paths); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 85, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 84, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 85, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 84, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 84, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 85, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 84, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -2558,7 +2567,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 84, __pyx_L1_error)
+          else __PYX_ERR(0, 85, __pyx_L1_error)
         }
         break;
       }
@@ -2567,32 +2576,32 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
     __Pyx_XDECREF_SET(__pyx_v_binary_file_path, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "pyndl/ndl_parallel.pyx":85
+    /* "pyndl/ndl_parallel.pyx":86
  * 
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")             # <<<<<<<<<<<<<<
  *       fname = filename_byte_string
  * 
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_binary_file_path, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 85, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_binary_file_path, __pyx_n_s_encode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 86, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 85, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 86, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_XDECREF_SET(__pyx_v_filename_byte_string, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "pyndl/ndl_parallel.pyx":86
+    /* "pyndl/ndl_parallel.pyx":87
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")
  *       fname = filename_byte_string             # <<<<<<<<<<<<<<
  * 
  *       with nogil:
  */
-    __pyx_t_6 = __Pyx_PyObject_AsWritableString(__pyx_v_filename_byte_string); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 86, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_AsWritableString(__pyx_v_filename_byte_string); if (unlikely((!__pyx_t_6) && PyErr_Occurred())) __PYX_ERR(0, 87, __pyx_L1_error)
     __pyx_v_fname = __pyx_t_6;
 
-    /* "pyndl/ndl_parallel.pyx":88
+    /* "pyndl/ndl_parallel.pyx":89
  *       fname = filename_byte_string
  * 
  *       with nogil:             # <<<<<<<<<<<<<<
@@ -2607,7 +2616,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
         #endif
         /*try:*/ {
 
-          /* "pyndl/ndl_parallel.pyx":89
+          /* "pyndl/ndl_parallel.pyx":90
  * 
  *       with nogil:
  *           error = 0             # <<<<<<<<<<<<<<
@@ -2616,7 +2625,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
           __pyx_v_error = 0;
 
-          /* "pyndl/ndl_parallel.pyx":90
+          /* "pyndl/ndl_parallel.pyx":91
  *       with nogil:
  *           error = 0
  *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,             # <<<<<<<<<<<<<<
@@ -2626,7 +2635,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
           __pyx_v_error = __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(__pyx_v_fname, __pyx_v_weights_ptr, __pyx_v_mm, __pyx_v_alpha, __pyx_v_beta1, __pyx_v_beta2, __pyx_v_lambda_, __pyx_v_all_outcomes_ptr, 0, __pyx_v_length_all_outcomes);
         }
 
-        /* "pyndl/ndl_parallel.pyx":88
+        /* "pyndl/ndl_parallel.pyx":89
  *       fname = filename_byte_string
  * 
  *       with nogil:             # <<<<<<<<<<<<<<
@@ -2645,8 +2654,8 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
         }
     }
 
-    /* "pyndl/ndl_parallel.pyx":84
- *     cdef double* weights_ptr = <double *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
+    /* "pyndl/ndl_parallel.pyx":85
+ *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
  * 
  *     for binary_file_path in binary_file_paths: #             # <<<<<<<<<<<<<<
  *       filename_byte_string = binary_file_path.encode("UTF-8")
@@ -2655,7 +2664,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyndl/ndl_parallel.pyx":93
+  /* "pyndl/ndl_parallel.pyx":94
  *                             beta2, lambda_, all_outcomes_ptr, 0,
  *                             length_all_outcomes)
  *     if (error != 0):             # <<<<<<<<<<<<<<
@@ -2665,31 +2674,31 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
   __pyx_t_7 = ((__pyx_v_error != 0) != 0);
   if (__pyx_t_7) {
 
-    /* "pyndl/ndl_parallel.pyx":94
+    /* "pyndl/ndl_parallel.pyx":95
  *                             length_all_outcomes)
  *     if (error != 0):
  *         raise IOError('binary files does not have proper format, error code %i' % error)             # <<<<<<<<<<<<<<
  * 
- * cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:
+ * 
  */
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyString_Format(__pyx_kp_s_binary_files_does_not_have_prope, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 94, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyString_Format(__pyx_kp_s_binary_files_does_not_have_prope, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 95, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 95, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_GIVEREF(__pyx_t_5);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_5);
     __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_IOError, __pyx_t_1, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 94, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_IOError, __pyx_t_1, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 95, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_Raise(__pyx_t_5, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __PYX_ERR(0, 94, __pyx_L1_error)
+    __PYX_ERR(0, 95, __pyx_L1_error)
 
-    /* "pyndl/ndl_parallel.pyx":93
+    /* "pyndl/ndl_parallel.pyx":94
  *                             beta2, lambda_, all_outcomes_ptr, 0,
  *                             length_all_outcomes)
  *     if (error != 0):             # <<<<<<<<<<<<<<
@@ -2698,12 +2707,12 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
   }
 
-  /* "pyndl/ndl_parallel.pyx":67
+  /* "pyndl/ndl_parallel.pyx":68
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
- * def learn_inplace_2(binary_file_paths, np.ndarray[double, ndim=2] weights,             # <<<<<<<<<<<<<<
- *                   double alpha, double beta1,
- *                   double beta2, double lambda_,
+ * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
+ *                   dtype_t alpha, dtype_t beta1,
+ *                   dtype_t beta2, dtype_t lambda_,
  */
 
   /* function exit code */
@@ -2734,8 +2743,8 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
   return __pyx_r;
 }
 
-/* "pyndl/ndl_parallel.pyx":96
- *         raise IOError('binary files does not have proper format, error code %i' % error)
+/* "pyndl/ndl_parallel.pyx":98
+ * 
  * 
  * cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:             # <<<<<<<<<<<<<<
  *     cdef unsigned int ii
@@ -2749,7 +2758,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
   unsigned int __pyx_t_2;
   int __pyx_t_3;
 
-  /* "pyndl/ndl_parallel.pyx":98
+  /* "pyndl/ndl_parallel.pyx":100
  * cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:
  *     cdef unsigned int ii
  *     for ii in range(size):             # <<<<<<<<<<<<<<
@@ -2760,7 +2769,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
   for (__pyx_t_2 = 0; __pyx_t_2 < __pyx_t_1; __pyx_t_2+=1) {
     __pyx_v_ii = __pyx_t_2;
 
-    /* "pyndl/ndl_parallel.pyx":99
+    /* "pyndl/ndl_parallel.pyx":101
  *     cdef unsigned int ii
  *     for ii in range(size):
  *       if arr[ii] == elem:             # <<<<<<<<<<<<<<
@@ -2770,7 +2779,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
     __pyx_t_3 = (((__pyx_v_arr[__pyx_v_ii]) == __pyx_v_elem) != 0);
     if (__pyx_t_3) {
 
-      /* "pyndl/ndl_parallel.pyx":100
+      /* "pyndl/ndl_parallel.pyx":102
  *     for ii in range(size):
  *       if arr[ii] == elem:
  *         return True             # <<<<<<<<<<<<<<
@@ -2780,7 +2789,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
       __pyx_r = 1;
       goto __pyx_L0;
 
-      /* "pyndl/ndl_parallel.pyx":99
+      /* "pyndl/ndl_parallel.pyx":101
  *     cdef unsigned int ii
  *     for ii in range(size):
  *       if arr[ii] == elem:             # <<<<<<<<<<<<<<
@@ -2790,7 +2799,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
     }
   }
 
-  /* "pyndl/ndl_parallel.pyx":101
+  /* "pyndl/ndl_parallel.pyx":103
  *       if arr[ii] == elem:
  *         return True
  *     return False             # <<<<<<<<<<<<<<
@@ -2800,8 +2809,8 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "pyndl/ndl_parallel.pyx":96
- *         raise IOError('binary files does not have proper format, error code %i' % error)
+  /* "pyndl/ndl_parallel.pyx":98
+ * 
  * 
  * cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:             # <<<<<<<<<<<<<<
  *     cdef unsigned int ii
@@ -2813,20 +2822,20 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
   return __pyx_r;
 }
 
-/* "pyndl/ndl_parallel.pyx":105
+/* "pyndl/ndl_parallel.pyx":107
  * 
  * # ggf exception zurckgeben
- * cdef int learn_inplace_ptr(char* binary_file_path, double* weights,             # <<<<<<<<<<<<<<
+ * cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,             # <<<<<<<<<<<<<<
  *                         unsigned int mm,
- *                         double alpha, double beta1,
+ *                         dtype_t alpha, dtype_t beta1,
  */
 
-static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_file_path, double *__pyx_v_weights, unsigned int __pyx_v_mm, double __pyx_v_alpha, double __pyx_v_beta1, double __pyx_v_beta2, double __pyx_v_lambda_, unsigned int *__pyx_v_all_outcome_indices, unsigned int __pyx_v_start, unsigned int __pyx_v_end) {
+static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_file_path, __pyx_t_5pyndl_12ndl_parallel_dtype_t *__pyx_v_weights, unsigned int __pyx_v_mm, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, unsigned int *__pyx_v_all_outcome_indices, unsigned int __pyx_v_start, unsigned int __pyx_v_end) {
   unsigned int __pyx_v_number_of_events;
   unsigned int __pyx_v_number_of_cues;
   unsigned int __pyx_v_number_of_outcomes;
-  double __pyx_v_association_strength;
-  double __pyx_v_update;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_association_strength;
+  __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_update;
   unsigned int __pyx_v_magic_number;
   unsigned int __pyx_v_version;
   unsigned int __pyx_v_ii;
@@ -2848,7 +2857,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   unsigned int __pyx_t_7;
   unsigned int __pyx_t_8;
 
-  /* "pyndl/ndl_parallel.pyx":119
+  /* "pyndl/ndl_parallel.pyx":121
  *     cdef unsigned int* cue_indices
  *     cdef unsigned int* outcome_indices
  *     cdef unsigned int max_number_of_cues = 1024             # <<<<<<<<<<<<<<
@@ -2857,25 +2866,25 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_v_max_number_of_cues = 0x400;
 
-  /* "pyndl/ndl_parallel.pyx":120
+  /* "pyndl/ndl_parallel.pyx":122
  *     cdef unsigned int* outcome_indices
  *     cdef unsigned int max_number_of_cues = 1024
  *     cdef unsigned int max_number_of_outcomes = 1024             # <<<<<<<<<<<<<<
  * 
- *     cdef FILE* cfile
+ *     cdef FILE* binary_file
  */
   __pyx_v_max_number_of_outcomes = 0x400;
 
-  /* "pyndl/ndl_parallel.pyx":123
+  /* "pyndl/ndl_parallel.pyx":125
  * 
- *     cdef FILE* cfile
+ *     cdef FILE* binary_file
  *     binary_file = fopen(binary_file_path, "rb")             # <<<<<<<<<<<<<<
  * 
  *     read_next_int(&magic_number, binary_file)
  */
   __pyx_v_binary_file = fopen(__pyx_v_binary_file_path, ((char const *)"rb"));
 
-  /* "pyndl/ndl_parallel.pyx":125
+  /* "pyndl/ndl_parallel.pyx":127
  *     binary_file = fopen(binary_file_path, "rb")
  * 
  *     read_next_int(&magic_number, binary_file)             # <<<<<<<<<<<<<<
@@ -2884,7 +2893,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_magic_number), __pyx_v_binary_file);
 
-  /* "pyndl/ndl_parallel.pyx":126
+  /* "pyndl/ndl_parallel.pyx":128
  * 
  *     read_next_int(&magic_number, binary_file)
  *     if not magic_number == MAGIC_NUMBER:             # <<<<<<<<<<<<<<
@@ -2894,7 +2903,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   __pyx_t_1 = ((!((__pyx_v_magic_number == __pyx_v_5pyndl_12ndl_parallel_MAGIC_NUMBER) != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "pyndl/ndl_parallel.pyx":127
+    /* "pyndl/ndl_parallel.pyx":129
  *     read_next_int(&magic_number, binary_file)
  *     if not magic_number == MAGIC_NUMBER:
  *         fclose(binary_file)             # <<<<<<<<<<<<<<
@@ -2903,7 +2912,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     fclose(__pyx_v_binary_file);
 
-    /* "pyndl/ndl_parallel.pyx":128
+    /* "pyndl/ndl_parallel.pyx":130
  *     if not magic_number == MAGIC_NUMBER:
  *         fclose(binary_file)
  *         return 1             # <<<<<<<<<<<<<<
@@ -2913,7 +2922,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "pyndl/ndl_parallel.pyx":126
+    /* "pyndl/ndl_parallel.pyx":128
  * 
  *     read_next_int(&magic_number, binary_file)
  *     if not magic_number == MAGIC_NUMBER:             # <<<<<<<<<<<<<<
@@ -2922,7 +2931,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   }
 
-  /* "pyndl/ndl_parallel.pyx":129
+  /* "pyndl/ndl_parallel.pyx":131
  *         fclose(binary_file)
  *         return 1
  *     read_next_int(&version, binary_file)             # <<<<<<<<<<<<<<
@@ -2931,7 +2940,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_version), __pyx_v_binary_file);
 
-  /* "pyndl/ndl_parallel.pyx":130
+  /* "pyndl/ndl_parallel.pyx":132
  *         return 1
  *     read_next_int(&version, binary_file)
  *     if version == CURRENT_VERSION:             # <<<<<<<<<<<<<<
@@ -2943,7 +2952,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     goto __pyx_L4;
   }
 
-  /* "pyndl/ndl_parallel.pyx":133
+  /* "pyndl/ndl_parallel.pyx":135
  *         pass
  *     else:
  *         fclose(binary_file)             # <<<<<<<<<<<<<<
@@ -2953,7 +2962,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   /*else*/ {
     fclose(__pyx_v_binary_file);
 
-    /* "pyndl/ndl_parallel.pyx":134
+    /* "pyndl/ndl_parallel.pyx":136
  *     else:
  *         fclose(binary_file)
  *         return 2             # <<<<<<<<<<<<<<
@@ -2965,7 +2974,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   }
   __pyx_L4:;
 
-  /* "pyndl/ndl_parallel.pyx":137
+  /* "pyndl/ndl_parallel.pyx":139
  * 
  *     # preallocate memory
  *     cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)             # <<<<<<<<<<<<<<
@@ -2974,7 +2983,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_v_cue_indices = ((unsigned int *)malloc(((sizeof(unsigned int)) * __pyx_v_max_number_of_cues)));
 
-  /* "pyndl/ndl_parallel.pyx":138
+  /* "pyndl/ndl_parallel.pyx":140
  *     # preallocate memory
  *     cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
  *     outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)             # <<<<<<<<<<<<<<
@@ -2983,7 +2992,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_v_outcome_indices = ((unsigned int *)malloc(((sizeof(unsigned int)) * __pyx_v_max_number_of_outcomes)));
 
-  /* "pyndl/ndl_parallel.pyx":140
+  /* "pyndl/ndl_parallel.pyx":142
  *     outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
  * 
  *     read_next_int(&number_of_events, binary_file)             # <<<<<<<<<<<<<<
@@ -2992,7 +3001,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_number_of_events), __pyx_v_binary_file);
 
-  /* "pyndl/ndl_parallel.pyx":142
+  /* "pyndl/ndl_parallel.pyx":144
  *     read_next_int(&number_of_events, binary_file)
  * 
  *     for event in range(number_of_events):             # <<<<<<<<<<<<<<
@@ -3003,7 +3012,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_event = __pyx_t_3;
 
-    /* "pyndl/ndl_parallel.pyx":144
+    /* "pyndl/ndl_parallel.pyx":146
  *     for event in range(number_of_events):
  *         # cues
  *         read_next_int(&number_of_cues, binary_file)             # <<<<<<<<<<<<<<
@@ -3012,7 +3021,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_number_of_cues), __pyx_v_binary_file);
 
-    /* "pyndl/ndl_parallel.pyx":145
+    /* "pyndl/ndl_parallel.pyx":147
  *         # cues
  *         read_next_int(&number_of_cues, binary_file)
  *         if number_of_cues > max_number_of_cues:             # <<<<<<<<<<<<<<
@@ -3022,7 +3031,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     __pyx_t_1 = ((__pyx_v_number_of_cues > __pyx_v_max_number_of_cues) != 0);
     if (__pyx_t_1) {
 
-      /* "pyndl/ndl_parallel.pyx":146
+      /* "pyndl/ndl_parallel.pyx":148
  *         read_next_int(&number_of_cues, binary_file)
  *         if number_of_cues > max_number_of_cues:
  *             max_number_of_cues = number_of_cues             # <<<<<<<<<<<<<<
@@ -3031,7 +3040,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       __pyx_v_max_number_of_cues = __pyx_v_number_of_cues;
 
-      /* "pyndl/ndl_parallel.pyx":147
+      /* "pyndl/ndl_parallel.pyx":149
  *         if number_of_cues > max_number_of_cues:
  *             max_number_of_cues = number_of_cues
  *             free(cue_indices)             # <<<<<<<<<<<<<<
@@ -3040,7 +3049,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       free(__pyx_v_cue_indices);
 
-      /* "pyndl/ndl_parallel.pyx":148
+      /* "pyndl/ndl_parallel.pyx":150
  *             max_number_of_cues = number_of_cues
  *             free(cue_indices)
  *             cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)             # <<<<<<<<<<<<<<
@@ -3049,7 +3058,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       __pyx_v_cue_indices = ((unsigned int *)malloc(((sizeof(unsigned int)) * __pyx_v_max_number_of_cues)));
 
-      /* "pyndl/ndl_parallel.pyx":145
+      /* "pyndl/ndl_parallel.pyx":147
  *         # cues
  *         read_next_int(&number_of_cues, binary_file)
  *         if number_of_cues > max_number_of_cues:             # <<<<<<<<<<<<<<
@@ -3058,7 +3067,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     }
 
-    /* "pyndl/ndl_parallel.pyx":149
+    /* "pyndl/ndl_parallel.pyx":151
  *             free(cue_indices)
  *             cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
  *         fread(cue_indices, 4, number_of_cues, binary_file)             # <<<<<<<<<<<<<<
@@ -3067,7 +3076,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     fread(__pyx_v_cue_indices, 4, __pyx_v_number_of_cues, __pyx_v_binary_file);
 
-    /* "pyndl/ndl_parallel.pyx":152
+    /* "pyndl/ndl_parallel.pyx":154
  * 
  *         # outcomes
  *         read_next_int(&number_of_outcomes, binary_file)             # <<<<<<<<<<<<<<
@@ -3076,7 +3085,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_number_of_outcomes), __pyx_v_binary_file);
 
-    /* "pyndl/ndl_parallel.pyx":153
+    /* "pyndl/ndl_parallel.pyx":155
  *         # outcomes
  *         read_next_int(&number_of_outcomes, binary_file)
  *         if number_of_outcomes > max_number_of_outcomes:             # <<<<<<<<<<<<<<
@@ -3086,7 +3095,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     __pyx_t_1 = ((__pyx_v_number_of_outcomes > __pyx_v_max_number_of_outcomes) != 0);
     if (__pyx_t_1) {
 
-      /* "pyndl/ndl_parallel.pyx":154
+      /* "pyndl/ndl_parallel.pyx":156
  *         read_next_int(&number_of_outcomes, binary_file)
  *         if number_of_outcomes > max_number_of_outcomes:
  *             max_number_of_outcomes = number_of_outcomes             # <<<<<<<<<<<<<<
@@ -3095,25 +3104,25 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       __pyx_v_max_number_of_outcomes = __pyx_v_number_of_outcomes;
 
-      /* "pyndl/ndl_parallel.pyx":155
+      /* "pyndl/ndl_parallel.pyx":157
  *         if number_of_outcomes > max_number_of_outcomes:
  *             max_number_of_outcomes = number_of_outcomes
  *             free(outcome_indices)             # <<<<<<<<<<<<<<
  *             outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
- *         outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_outcomes)
+ *         fread(outcome_indices, 4, number_of_outcomes, binary_file)
  */
       free(__pyx_v_outcome_indices);
 
-      /* "pyndl/ndl_parallel.pyx":156
+      /* "pyndl/ndl_parallel.pyx":158
  *             max_number_of_outcomes = number_of_outcomes
  *             free(outcome_indices)
  *             outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)             # <<<<<<<<<<<<<<
- *         outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_outcomes)
  *         fread(outcome_indices, 4, number_of_outcomes, binary_file)
+ * 
  */
       __pyx_v_outcome_indices = ((unsigned int *)malloc(((sizeof(unsigned int)) * __pyx_v_max_number_of_outcomes)));
 
-      /* "pyndl/ndl_parallel.pyx":153
+      /* "pyndl/ndl_parallel.pyx":155
  *         # outcomes
  *         read_next_int(&number_of_outcomes, binary_file)
  *         if number_of_outcomes > max_number_of_outcomes:             # <<<<<<<<<<<<<<
@@ -3122,25 +3131,16 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     }
 
-    /* "pyndl/ndl_parallel.pyx":157
+    /* "pyndl/ndl_parallel.pyx":159
  *             free(outcome_indices)
  *             outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
- *         outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_outcomes)             # <<<<<<<<<<<<<<
- *         fread(outcome_indices, 4, number_of_outcomes, binary_file)
- * 
- */
-    __pyx_v_outcome_indices = ((unsigned int *)malloc(((sizeof(unsigned int)) * __pyx_v_number_of_outcomes)));
-
-    /* "pyndl/ndl_parallel.pyx":158
- *             outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
- *         outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_outcomes)
  *         fread(outcome_indices, 4, number_of_outcomes, binary_file)             # <<<<<<<<<<<<<<
  * 
  *         # learn
  */
     fread(__pyx_v_outcome_indices, 4, __pyx_v_number_of_outcomes, __pyx_v_binary_file);
 
-    /* "pyndl/ndl_parallel.pyx":161
+    /* "pyndl/ndl_parallel.pyx":162
  * 
  *         # learn
  *         for ii in range(start, end):             # <<<<<<<<<<<<<<
@@ -3151,7 +3151,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     for (__pyx_t_5 = __pyx_v_start; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_ii = __pyx_t_5;
 
-      /* "pyndl/ndl_parallel.pyx":162
+      /* "pyndl/ndl_parallel.pyx":163
  *         # learn
  *         for ii in range(start, end):
  *             association_strength = 0.0             # <<<<<<<<<<<<<<
@@ -3160,7 +3160,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       __pyx_v_association_strength = 0.0;
 
-      /* "pyndl/ndl_parallel.pyx":163
+      /* "pyndl/ndl_parallel.pyx":164
  *         for ii in range(start, end):
  *             association_strength = 0.0
  *             for jj in range(number_of_cues):             # <<<<<<<<<<<<<<
@@ -3171,7 +3171,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
       for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
         __pyx_v_jj = __pyx_t_7;
 
-        /* "pyndl/ndl_parallel.pyx":164
+        /* "pyndl/ndl_parallel.pyx":165
  *             association_strength = 0.0
  *             for jj in range(number_of_cues):
  *               index = cue_indices[jj] + mm * all_outcome_indices[ii]             # <<<<<<<<<<<<<<
@@ -3180,7 +3180,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_index = ((__pyx_v_cue_indices[__pyx_v_jj]) + (__pyx_v_mm * (__pyx_v_all_outcome_indices[__pyx_v_ii])));
 
-        /* "pyndl/ndl_parallel.pyx":165
+        /* "pyndl/ndl_parallel.pyx":166
  *             for jj in range(number_of_cues):
  *               index = cue_indices[jj] + mm * all_outcome_indices[ii]
  *               association_strength += weights[index]             # <<<<<<<<<<<<<<
@@ -3190,7 +3190,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
         __pyx_v_association_strength = (__pyx_v_association_strength + (__pyx_v_weights[__pyx_v_index]));
       }
 
-      /* "pyndl/ndl_parallel.pyx":166
+      /* "pyndl/ndl_parallel.pyx":167
  *               index = cue_indices[jj] + mm * all_outcome_indices[ii]
  *               association_strength += weights[index]
  *             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):             # <<<<<<<<<<<<<<
@@ -3200,7 +3200,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
       __pyx_t_1 = (__pyx_f_5pyndl_12ndl_parallel_is_element_of((__pyx_v_all_outcome_indices[__pyx_v_ii]), __pyx_v_outcome_indices, __pyx_v_number_of_outcomes) != 0);
       if (__pyx_t_1) {
 
-        /* "pyndl/ndl_parallel.pyx":167
+        /* "pyndl/ndl_parallel.pyx":168
  *               association_strength += weights[index]
  *             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
  *               update = beta1 * (lambda_ - association_strength)             # <<<<<<<<<<<<<<
@@ -3209,7 +3209,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_update = (__pyx_v_beta1 * (__pyx_v_lambda_ - __pyx_v_association_strength));
 
-        /* "pyndl/ndl_parallel.pyx":166
+        /* "pyndl/ndl_parallel.pyx":167
  *               index = cue_indices[jj] + mm * all_outcome_indices[ii]
  *               association_strength += weights[index]
  *             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):             # <<<<<<<<<<<<<<
@@ -3219,7 +3219,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
         goto __pyx_L13;
       }
 
-      /* "pyndl/ndl_parallel.pyx":169
+      /* "pyndl/ndl_parallel.pyx":170
  *               update = beta1 * (lambda_ - association_strength)
  *             else:
  *               update = beta2 * (0.0 - association_strength)             # <<<<<<<<<<<<<<
@@ -3231,7 +3231,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
       }
       __pyx_L13:;
 
-      /* "pyndl/ndl_parallel.pyx":170
+      /* "pyndl/ndl_parallel.pyx":171
  *             else:
  *               update = beta2 * (0.0 - association_strength)
  *             for jj in range(number_of_cues):             # <<<<<<<<<<<<<<
@@ -3242,7 +3242,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
       for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
         __pyx_v_jj = __pyx_t_7;
 
-        /* "pyndl/ndl_parallel.pyx":171
+        /* "pyndl/ndl_parallel.pyx":172
  *               update = beta2 * (0.0 - association_strength)
  *             for jj in range(number_of_cues):
  *               index = cue_indices[jj] + mm * all_outcome_indices[ii]             # <<<<<<<<<<<<<<
@@ -3251,7 +3251,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_index = ((__pyx_v_cue_indices[__pyx_v_jj]) + (__pyx_v_mm * (__pyx_v_all_outcome_indices[__pyx_v_ii])));
 
-        /* "pyndl/ndl_parallel.pyx":172
+        /* "pyndl/ndl_parallel.pyx":173
  *             for jj in range(number_of_cues):
  *               index = cue_indices[jj] + mm * all_outcome_indices[ii]
  *               weights[index] += alpha * update             # <<<<<<<<<<<<<<
@@ -3264,7 +3264,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     }
   }
 
-  /* "pyndl/ndl_parallel.pyx":174
+  /* "pyndl/ndl_parallel.pyx":175
  *               weights[index] += alpha * update
  * 
  *     fclose(binary_file)             # <<<<<<<<<<<<<<
@@ -3273,7 +3273,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   fclose(__pyx_v_binary_file);
 
-  /* "pyndl/ndl_parallel.pyx":175
+  /* "pyndl/ndl_parallel.pyx":176
  * 
  *     fclose(binary_file)
  *     free(cue_indices)             # <<<<<<<<<<<<<<
@@ -3282,7 +3282,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   free(__pyx_v_cue_indices);
 
-  /* "pyndl/ndl_parallel.pyx":176
+  /* "pyndl/ndl_parallel.pyx":177
  *     fclose(binary_file)
  *     free(cue_indices)
  *     free(outcome_indices)             # <<<<<<<<<<<<<<
@@ -3290,7 +3290,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   free(__pyx_v_outcome_indices);
 
-  /* "pyndl/ndl_parallel.pyx":177
+  /* "pyndl/ndl_parallel.pyx":178
  *     free(cue_indices)
  *     free(outcome_indices)
  *     return 0             # <<<<<<<<<<<<<<
@@ -3298,12 +3298,12 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "pyndl/ndl_parallel.pyx":105
+  /* "pyndl/ndl_parallel.pyx":107
  * 
  * # ggf exception zurckgeben
- * cdef int learn_inplace_ptr(char* binary_file_path, double* weights,             # <<<<<<<<<<<<<<
+ * cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,             # <<<<<<<<<<<<<<
  *                         unsigned int mm,
- *                         double alpha, double beta1,
+ *                         dtype_t alpha, dtype_t beta1,
  */
 
   /* function exit code */
@@ -3311,7 +3311,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":214
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":214
  *         # experimental exception made for __getbuffer__ and __releasebuffer__
  *         # -- the details of this may change.
  *         def __getbuffer__(ndarray self, Py_buffer* info, int flags):             # <<<<<<<<<<<<<<
@@ -3358,7 +3358,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __Pyx_GIVEREF(__pyx_v_info->obj);
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":220
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":220
  *             # of flags
  * 
  *             if info == NULL: return             # <<<<<<<<<<<<<<
@@ -3371,7 +3371,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L0;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":223
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":223
  * 
  *             cdef int copy_shape, i, ndim
  *             cdef int endian_detector = 1             # <<<<<<<<<<<<<<
@@ -3380,7 +3380,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_endian_detector = 1;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":224
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":224
  *             cdef int copy_shape, i, ndim
  *             cdef int endian_detector = 1
  *             cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)             # <<<<<<<<<<<<<<
@@ -3389,7 +3389,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_little_endian = ((((char *)(&__pyx_v_endian_detector))[0]) != 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":226
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":226
  *             cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)
  * 
  *             ndim = PyArray_NDIM(self)             # <<<<<<<<<<<<<<
@@ -3398,7 +3398,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_ndim = PyArray_NDIM(__pyx_v_self);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":228
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":228
  *             ndim = PyArray_NDIM(self)
  * 
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -3408,7 +3408,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = (((sizeof(npy_intp)) != (sizeof(Py_ssize_t))) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":229
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":229
  * 
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):
  *                 copy_shape = 1             # <<<<<<<<<<<<<<
@@ -3417,7 +3417,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_copy_shape = 1;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":228
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":228
  *             ndim = PyArray_NDIM(self)
  * 
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -3427,7 +3427,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L4;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":231
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":231
  *                 copy_shape = 1
  *             else:
  *                 copy_shape = 0             # <<<<<<<<<<<<<<
@@ -3439,7 +3439,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   }
   __pyx_L4:;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":233
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":233
  *                 copy_shape = 0
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3453,7 +3453,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L6_bool_binop_done;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":234
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":234
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_C_CONTIGUOUS)):             # <<<<<<<<<<<<<<
@@ -3464,7 +3464,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = __pyx_t_2;
   __pyx_L6_bool_binop_done:;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":233
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":233
  *                 copy_shape = 0
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3473,7 +3473,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":235
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":235
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_C_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not C contiguous")             # <<<<<<<<<<<<<<
@@ -3486,7 +3486,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __PYX_ERR(1, 235, __pyx_L1_error)
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":233
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":233
  *                 copy_shape = 0
  * 
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3495,7 +3495,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":237
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":237
  *                 raise ValueError(u"ndarray is not C contiguous")
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3509,7 +3509,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L9_bool_binop_done;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":238
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":238
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_F_CONTIGUOUS)):             # <<<<<<<<<<<<<<
@@ -3520,7 +3520,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = __pyx_t_2;
   __pyx_L9_bool_binop_done:;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":237
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":237
  *                 raise ValueError(u"ndarray is not C contiguous")
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3529,7 +3529,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":239
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":239
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_F_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not Fortran contiguous")             # <<<<<<<<<<<<<<
@@ -3542,7 +3542,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __PYX_ERR(1, 239, __pyx_L1_error)
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":237
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":237
  *                 raise ValueError(u"ndarray is not C contiguous")
  * 
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)             # <<<<<<<<<<<<<<
@@ -3551,7 +3551,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":241
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":241
  *                 raise ValueError(u"ndarray is not Fortran contiguous")
  * 
  *             info.buf = PyArray_DATA(self)             # <<<<<<<<<<<<<<
@@ -3560,7 +3560,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->buf = PyArray_DATA(__pyx_v_self);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":242
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":242
  * 
  *             info.buf = PyArray_DATA(self)
  *             info.ndim = ndim             # <<<<<<<<<<<<<<
@@ -3569,7 +3569,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->ndim = __pyx_v_ndim;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":243
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":243
  *             info.buf = PyArray_DATA(self)
  *             info.ndim = ndim
  *             if copy_shape:             # <<<<<<<<<<<<<<
@@ -3579,7 +3579,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = (__pyx_v_copy_shape != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":246
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":246
  *                 # Allocate new buffer for strides and shape info.
  *                 # This is allocated as one block, strides first.
  *                 info.strides = <Py_ssize_t*>PyObject_Malloc(sizeof(Py_ssize_t) * 2 * <size_t>ndim)             # <<<<<<<<<<<<<<
@@ -3588,7 +3588,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_info->strides = ((Py_ssize_t *)PyObject_Malloc((((sizeof(Py_ssize_t)) * 2) * ((size_t)__pyx_v_ndim))));
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":247
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":247
  *                 # This is allocated as one block, strides first.
  *                 info.strides = <Py_ssize_t*>PyObject_Malloc(sizeof(Py_ssize_t) * 2 * <size_t>ndim)
  *                 info.shape = info.strides + ndim             # <<<<<<<<<<<<<<
@@ -3597,7 +3597,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_info->shape = (__pyx_v_info->strides + __pyx_v_ndim);
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":248
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":248
  *                 info.strides = <Py_ssize_t*>PyObject_Malloc(sizeof(Py_ssize_t) * 2 * <size_t>ndim)
  *                 info.shape = info.strides + ndim
  *                 for i in range(ndim):             # <<<<<<<<<<<<<<
@@ -3608,7 +3608,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_i = __pyx_t_5;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":249
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":249
  *                 info.shape = info.strides + ndim
  *                 for i in range(ndim):
  *                     info.strides[i] = PyArray_STRIDES(self)[i]             # <<<<<<<<<<<<<<
@@ -3617,7 +3617,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
       (__pyx_v_info->strides[__pyx_v_i]) = (PyArray_STRIDES(__pyx_v_self)[__pyx_v_i]);
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":250
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":250
  *                 for i in range(ndim):
  *                     info.strides[i] = PyArray_STRIDES(self)[i]
  *                     info.shape[i] = PyArray_DIMS(self)[i]             # <<<<<<<<<<<<<<
@@ -3627,7 +3627,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       (__pyx_v_info->shape[__pyx_v_i]) = (PyArray_DIMS(__pyx_v_self)[__pyx_v_i]);
     }
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":243
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":243
  *             info.buf = PyArray_DATA(self)
  *             info.ndim = ndim
  *             if copy_shape:             # <<<<<<<<<<<<<<
@@ -3637,7 +3637,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L11;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":252
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":252
  *                     info.shape[i] = PyArray_DIMS(self)[i]
  *             else:
  *                 info.strides = <Py_ssize_t*>PyArray_STRIDES(self)             # <<<<<<<<<<<<<<
@@ -3647,7 +3647,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   /*else*/ {
     __pyx_v_info->strides = ((Py_ssize_t *)PyArray_STRIDES(__pyx_v_self));
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":253
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":253
  *             else:
  *                 info.strides = <Py_ssize_t*>PyArray_STRIDES(self)
  *                 info.shape = <Py_ssize_t*>PyArray_DIMS(self)             # <<<<<<<<<<<<<<
@@ -3658,7 +3658,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   }
   __pyx_L11:;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":254
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":254
  *                 info.strides = <Py_ssize_t*>PyArray_STRIDES(self)
  *                 info.shape = <Py_ssize_t*>PyArray_DIMS(self)
  *             info.suboffsets = NULL             # <<<<<<<<<<<<<<
@@ -3667,7 +3667,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->suboffsets = NULL;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":255
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":255
  *                 info.shape = <Py_ssize_t*>PyArray_DIMS(self)
  *             info.suboffsets = NULL
  *             info.itemsize = PyArray_ITEMSIZE(self)             # <<<<<<<<<<<<<<
@@ -3676,7 +3676,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->itemsize = PyArray_ITEMSIZE(__pyx_v_self);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":256
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":256
  *             info.suboffsets = NULL
  *             info.itemsize = PyArray_ITEMSIZE(self)
  *             info.readonly = not PyArray_ISWRITEABLE(self)             # <<<<<<<<<<<<<<
@@ -3685,7 +3685,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_info->readonly = (!(PyArray_ISWRITEABLE(__pyx_v_self) != 0));
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":259
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":259
  * 
  *             cdef int t
  *             cdef char* f = NULL             # <<<<<<<<<<<<<<
@@ -3694,7 +3694,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_f = NULL;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":260
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":260
  *             cdef int t
  *             cdef char* f = NULL
  *             cdef dtype descr = self.descr             # <<<<<<<<<<<<<<
@@ -3706,7 +3706,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_v_descr = ((PyArray_Descr *)__pyx_t_3);
   __pyx_t_3 = 0;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":263
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":263
  *             cdef int offset
  * 
  *             cdef bint hasfields = PyDataType_HASFIELDS(descr)             # <<<<<<<<<<<<<<
@@ -3715,7 +3715,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   __pyx_v_hasfields = PyDataType_HASFIELDS(__pyx_v_descr);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":265
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":265
  *             cdef bint hasfields = PyDataType_HASFIELDS(descr)
  * 
  *             if not hasfields and not copy_shape:             # <<<<<<<<<<<<<<
@@ -3733,7 +3733,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_L15_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":267
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":267
  *             if not hasfields and not copy_shape:
  *                 # do not call releasebuffer
  *                 info.obj = None             # <<<<<<<<<<<<<<
@@ -3746,7 +3746,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __Pyx_DECREF(__pyx_v_info->obj);
     __pyx_v_info->obj = Py_None;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":265
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":265
  *             cdef bint hasfields = PyDataType_HASFIELDS(descr)
  * 
  *             if not hasfields and not copy_shape:             # <<<<<<<<<<<<<<
@@ -3756,7 +3756,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     goto __pyx_L14;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":270
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":270
  *             else:
  *                 # need to call releasebuffer
  *                 info.obj = self             # <<<<<<<<<<<<<<
@@ -3772,7 +3772,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   }
   __pyx_L14:;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":272
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":272
  *                 info.obj = self
  * 
  *             if not hasfields:             # <<<<<<<<<<<<<<
@@ -3782,7 +3782,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   __pyx_t_1 = ((!(__pyx_v_hasfields != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":273
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":273
  * 
  *             if not hasfields:
  *                 t = descr.type_num             # <<<<<<<<<<<<<<
@@ -3792,7 +3792,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_t_4 = __pyx_v_descr->type_num;
     __pyx_v_t = __pyx_t_4;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":274
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":274
  *             if not hasfields:
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -3812,7 +3812,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     }
     __pyx_L20_next_or:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":275
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":275
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or
  *                     (descr.byteorder == c'<' and not little_endian)):             # <<<<<<<<<<<<<<
@@ -3829,7 +3829,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_t_1 = __pyx_t_2;
     __pyx_L19_bool_binop_done:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":274
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":274
  *             if not hasfields:
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -3838,7 +3838,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     if (__pyx_t_1) {
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":276
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":276
  *                 if ((descr.byteorder == c'>' and little_endian) or
  *                     (descr.byteorder == c'<' and not little_endian)):
  *                     raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
@@ -3851,7 +3851,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __PYX_ERR(1, 276, __pyx_L1_error)
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":274
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":274
  *             if not hasfields:
  *                 t = descr.type_num
  *                 if ((descr.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -3860,7 +3860,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     }
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":277
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":277
  *                     (descr.byteorder == c'<' and not little_endian)):
  *                     raise ValueError(u"Non-native byte order not supported")
  *                 if   t == NPY_BYTE:        f = "b"             # <<<<<<<<<<<<<<
@@ -3872,7 +3872,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"b");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":278
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":278
  *                     raise ValueError(u"Non-native byte order not supported")
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"             # <<<<<<<<<<<<<<
@@ -3883,7 +3883,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"B");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":279
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":279
  *                 if   t == NPY_BYTE:        f = "b"
  *                 elif t == NPY_UBYTE:       f = "B"
  *                 elif t == NPY_SHORT:       f = "h"             # <<<<<<<<<<<<<<
@@ -3894,7 +3894,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"h");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":280
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":280
  *                 elif t == NPY_UBYTE:       f = "B"
  *                 elif t == NPY_SHORT:       f = "h"
  *                 elif t == NPY_USHORT:      f = "H"             # <<<<<<<<<<<<<<
@@ -3905,7 +3905,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"H");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":281
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":281
  *                 elif t == NPY_SHORT:       f = "h"
  *                 elif t == NPY_USHORT:      f = "H"
  *                 elif t == NPY_INT:         f = "i"             # <<<<<<<<<<<<<<
@@ -3916,7 +3916,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"i");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":282
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":282
  *                 elif t == NPY_USHORT:      f = "H"
  *                 elif t == NPY_INT:         f = "i"
  *                 elif t == NPY_UINT:        f = "I"             # <<<<<<<<<<<<<<
@@ -3927,7 +3927,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"I");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":283
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":283
  *                 elif t == NPY_INT:         f = "i"
  *                 elif t == NPY_UINT:        f = "I"
  *                 elif t == NPY_LONG:        f = "l"             # <<<<<<<<<<<<<<
@@ -3938,7 +3938,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"l");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":284
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":284
  *                 elif t == NPY_UINT:        f = "I"
  *                 elif t == NPY_LONG:        f = "l"
  *                 elif t == NPY_ULONG:       f = "L"             # <<<<<<<<<<<<<<
@@ -3949,7 +3949,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"L");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":285
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":285
  *                 elif t == NPY_LONG:        f = "l"
  *                 elif t == NPY_ULONG:       f = "L"
  *                 elif t == NPY_LONGLONG:    f = "q"             # <<<<<<<<<<<<<<
@@ -3960,7 +3960,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"q");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":286
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":286
  *                 elif t == NPY_ULONG:       f = "L"
  *                 elif t == NPY_LONGLONG:    f = "q"
  *                 elif t == NPY_ULONGLONG:   f = "Q"             # <<<<<<<<<<<<<<
@@ -3971,7 +3971,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"Q");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":287
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":287
  *                 elif t == NPY_LONGLONG:    f = "q"
  *                 elif t == NPY_ULONGLONG:   f = "Q"
  *                 elif t == NPY_FLOAT:       f = "f"             # <<<<<<<<<<<<<<
@@ -3982,7 +3982,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"f");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":288
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":288
  *                 elif t == NPY_ULONGLONG:   f = "Q"
  *                 elif t == NPY_FLOAT:       f = "f"
  *                 elif t == NPY_DOUBLE:      f = "d"             # <<<<<<<<<<<<<<
@@ -3993,7 +3993,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"d");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":289
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":289
  *                 elif t == NPY_FLOAT:       f = "f"
  *                 elif t == NPY_DOUBLE:      f = "d"
  *                 elif t == NPY_LONGDOUBLE:  f = "g"             # <<<<<<<<<<<<<<
@@ -4004,7 +4004,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"g");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":290
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":290
  *                 elif t == NPY_DOUBLE:      f = "d"
  *                 elif t == NPY_LONGDOUBLE:  f = "g"
  *                 elif t == NPY_CFLOAT:      f = "Zf"             # <<<<<<<<<<<<<<
@@ -4015,7 +4015,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"Zf");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":291
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":291
  *                 elif t == NPY_LONGDOUBLE:  f = "g"
  *                 elif t == NPY_CFLOAT:      f = "Zf"
  *                 elif t == NPY_CDOUBLE:     f = "Zd"             # <<<<<<<<<<<<<<
@@ -4026,7 +4026,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"Zd");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":292
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":292
  *                 elif t == NPY_CFLOAT:      f = "Zf"
  *                 elif t == NPY_CDOUBLE:     f = "Zd"
  *                 elif t == NPY_CLONGDOUBLE: f = "Zg"             # <<<<<<<<<<<<<<
@@ -4037,7 +4037,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       __pyx_v_f = ((char *)"Zg");
       break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":293
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":293
  *                 elif t == NPY_CDOUBLE:     f = "Zd"
  *                 elif t == NPY_CLONGDOUBLE: f = "Zg"
  *                 elif t == NPY_OBJECT:      f = "O"             # <<<<<<<<<<<<<<
@@ -4049,7 +4049,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
       default:
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":295
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":295
  *                 elif t == NPY_OBJECT:      f = "O"
  *                 else:
  *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)             # <<<<<<<<<<<<<<
@@ -4075,7 +4075,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
       break;
     }
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":296
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":296
  *                 else:
  *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
  *                 info.format = f             # <<<<<<<<<<<<<<
@@ -4084,7 +4084,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_info->format = __pyx_v_f;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":297
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":297
  *                     raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
  *                 info.format = f
  *                 return             # <<<<<<<<<<<<<<
@@ -4094,7 +4094,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":272
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":272
  *                 info.obj = self
  * 
  *             if not hasfields:             # <<<<<<<<<<<<<<
@@ -4103,7 +4103,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":299
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":299
  *                 return
  *             else:
  *                 info.format = <char*>PyObject_Malloc(_buffer_format_string_len)             # <<<<<<<<<<<<<<
@@ -4113,7 +4113,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   /*else*/ {
     __pyx_v_info->format = ((char *)PyObject_Malloc(0xFF));
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":300
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":300
  *             else:
  *                 info.format = <char*>PyObject_Malloc(_buffer_format_string_len)
  *                 info.format[0] = c'^' # Native data types, manual alignment             # <<<<<<<<<<<<<<
@@ -4122,7 +4122,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     (__pyx_v_info->format[0]) = '^';
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":301
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":301
  *                 info.format = <char*>PyObject_Malloc(_buffer_format_string_len)
  *                 info.format[0] = c'^' # Native data types, manual alignment
  *                 offset = 0             # <<<<<<<<<<<<<<
@@ -4131,7 +4131,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
  */
     __pyx_v_offset = 0;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":302
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":302
  *                 info.format[0] = c'^' # Native data types, manual alignment
  *                 offset = 0
  *                 f = _util_dtypestring(descr, info.format + 1,             # <<<<<<<<<<<<<<
@@ -4141,7 +4141,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     __pyx_t_7 = __pyx_f_5numpy__util_dtypestring(__pyx_v_descr, (__pyx_v_info->format + 1), (__pyx_v_info->format + 0xFF), (&__pyx_v_offset)); if (unlikely(__pyx_t_7 == ((char *)NULL))) __PYX_ERR(1, 302, __pyx_L1_error)
     __pyx_v_f = __pyx_t_7;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":305
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":305
  *                                       info.format + _buffer_format_string_len,
  *                                       &offset)
  *                 f[0] = c'\0' # Terminate format string             # <<<<<<<<<<<<<<
@@ -4151,7 +4151,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
     (__pyx_v_f[0]) = '\x00';
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":214
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":214
  *         # experimental exception made for __getbuffer__ and __releasebuffer__
  *         # -- the details of this may change.
  *         def __getbuffer__(ndarray self, Py_buffer* info, int flags):             # <<<<<<<<<<<<<<
@@ -4183,7 +4183,7 @@ static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, P
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":307
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":307
  *                 f[0] = c'\0' # Terminate format string
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):             # <<<<<<<<<<<<<<
@@ -4207,7 +4207,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("__releasebuffer__", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":308
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":308
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):
  *             if PyArray_HASFIELDS(self):             # <<<<<<<<<<<<<<
@@ -4217,7 +4217,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   __pyx_t_1 = (PyArray_HASFIELDS(__pyx_v_self) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":309
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":309
  *         def __releasebuffer__(ndarray self, Py_buffer* info):
  *             if PyArray_HASFIELDS(self):
  *                 PyObject_Free(info.format)             # <<<<<<<<<<<<<<
@@ -4226,7 +4226,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
     PyObject_Free(__pyx_v_info->format);
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":308
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":308
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):
  *             if PyArray_HASFIELDS(self):             # <<<<<<<<<<<<<<
@@ -4235,7 +4235,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":310
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":310
  *             if PyArray_HASFIELDS(self):
  *                 PyObject_Free(info.format)
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -4245,7 +4245,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   __pyx_t_1 = (((sizeof(npy_intp)) != (sizeof(Py_ssize_t))) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":311
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":311
  *                 PyObject_Free(info.format)
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):
  *                 PyObject_Free(info.strides)             # <<<<<<<<<<<<<<
@@ -4254,7 +4254,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
     PyObject_Free(__pyx_v_info->strides);
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":310
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":310
  *             if PyArray_HASFIELDS(self):
  *                 PyObject_Free(info.format)
  *             if sizeof(npy_intp) != sizeof(Py_ssize_t):             # <<<<<<<<<<<<<<
@@ -4263,7 +4263,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
  */
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":307
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":307
  *                 f[0] = c'\0' # Terminate format string
  * 
  *         def __releasebuffer__(ndarray self, Py_buffer* info):             # <<<<<<<<<<<<<<
@@ -4275,7 +4275,7 @@ static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_s
   __Pyx_RefNannyFinishContext();
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":788
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":788
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -4289,7 +4289,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew1", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":789
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":789
  * 
  * cdef inline object PyArray_MultiIterNew1(a):
  *     return PyArray_MultiIterNew(1, <void*>a)             # <<<<<<<<<<<<<<
@@ -4303,7 +4303,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":788
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":788
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -4322,7 +4322,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":791
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":791
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -4336,7 +4336,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew2", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":792
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":792
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)             # <<<<<<<<<<<<<<
@@ -4350,7 +4350,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":791
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":791
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -4369,7 +4369,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":794
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":794
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -4383,7 +4383,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew3", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":795
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":795
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)             # <<<<<<<<<<<<<<
@@ -4397,7 +4397,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":794
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":794
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -4416,7 +4416,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":797
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":797
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -4430,7 +4430,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew4", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":798
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":798
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)             # <<<<<<<<<<<<<<
@@ -4444,7 +4444,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":797
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":797
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -4463,7 +4463,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":800
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":800
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -4477,7 +4477,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew5", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":801
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":801
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)             # <<<<<<<<<<<<<<
@@ -4491,7 +4491,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":800
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":800
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -4510,7 +4510,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":803
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":803
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
@@ -4524,7 +4524,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("PyDataType_SHAPE", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":804
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":804
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
@@ -4534,7 +4534,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   __pyx_t_1 = (PyDataType_HASSUBARRAY(__pyx_v_d) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":805
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":805
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):
  *         return <tuple>d.subarray.shape             # <<<<<<<<<<<<<<
@@ -4546,7 +4546,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
     __pyx_r = ((PyObject*)__pyx_v_d->subarray->shape);
     goto __pyx_L0;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":804
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":804
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
@@ -4555,7 +4555,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
  */
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":807
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":807
  *         return <tuple>d.subarray.shape
  *     else:
  *         return ()             # <<<<<<<<<<<<<<
@@ -4569,7 +4569,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
     goto __pyx_L0;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":803
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":803
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
@@ -4584,7 +4584,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":809
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":809
  *         return ()
  * 
  * cdef inline char* _util_dtypestring(dtype descr, char* f, char* end, int* offset) except NULL:             # <<<<<<<<<<<<<<
@@ -4613,7 +4613,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   char *__pyx_t_9;
   __Pyx_RefNannySetupContext("_util_dtypestring", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":814
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":814
  * 
  *     cdef dtype child
  *     cdef int endian_detector = 1             # <<<<<<<<<<<<<<
@@ -4622,7 +4622,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
   __pyx_v_endian_detector = 1;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":815
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":815
  *     cdef dtype child
  *     cdef int endian_detector = 1
  *     cdef bint little_endian = ((<char*>&endian_detector)[0] != 0)             # <<<<<<<<<<<<<<
@@ -4631,7 +4631,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
   __pyx_v_little_endian = ((((char *)(&__pyx_v_endian_detector))[0]) != 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":818
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":818
  *     cdef tuple fields
  * 
  *     for childname in descr.names:             # <<<<<<<<<<<<<<
@@ -4654,7 +4654,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __Pyx_XDECREF_SET(__pyx_v_childname, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":819
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":819
  * 
  *     for childname in descr.names:
  *         fields = descr.fields[childname]             # <<<<<<<<<<<<<<
@@ -4671,7 +4671,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __Pyx_XDECREF_SET(__pyx_v_fields, ((PyObject*)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":820
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":820
  *     for childname in descr.names:
  *         fields = descr.fields[childname]
  *         child, new_offset = fields             # <<<<<<<<<<<<<<
@@ -4710,7 +4710,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __Pyx_XDECREF_SET(__pyx_v_new_offset, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":822
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":822
  *         child, new_offset = fields
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:             # <<<<<<<<<<<<<<
@@ -4727,7 +4727,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_6 = ((((__pyx_v_end - __pyx_v_f) - ((int)__pyx_t_5)) < 15) != 0);
     if (__pyx_t_6) {
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":823
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":823
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")             # <<<<<<<<<<<<<<
@@ -4740,7 +4740,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __PYX_ERR(1, 823, __pyx_L1_error)
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":822
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":822
  *         child, new_offset = fields
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:             # <<<<<<<<<<<<<<
@@ -4749,7 +4749,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
     }
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":825
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":825
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")
  * 
  *         if ((child.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -4769,7 +4769,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     }
     __pyx_L8_next_or:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":826
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":826
  * 
  *         if ((child.byteorder == c'>' and little_endian) or
  *             (child.byteorder == c'<' and not little_endian)):             # <<<<<<<<<<<<<<
@@ -4786,7 +4786,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_6 = __pyx_t_7;
     __pyx_L7_bool_binop_done:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":825
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":825
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")
  * 
  *         if ((child.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -4795,7 +4795,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
     if (__pyx_t_6) {
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":827
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":827
  *         if ((child.byteorder == c'>' and little_endian) or
  *             (child.byteorder == c'<' and not little_endian)):
  *             raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
@@ -4808,7 +4808,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __PYX_ERR(1, 827, __pyx_L1_error)
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":825
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":825
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")
  * 
  *         if ((child.byteorder == c'>' and little_endian) or             # <<<<<<<<<<<<<<
@@ -4817,7 +4817,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
     }
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":837
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":837
  * 
  *         # Output padding bytes
  *         while offset[0] < new_offset:             # <<<<<<<<<<<<<<
@@ -4833,7 +4833,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       if (!__pyx_t_6) break;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":838
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":838
  *         # Output padding bytes
  *         while offset[0] < new_offset:
  *             f[0] = 120 # "x"; pad byte             # <<<<<<<<<<<<<<
@@ -4842,7 +4842,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       (__pyx_v_f[0]) = 0x78;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":839
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":839
  *         while offset[0] < new_offset:
  *             f[0] = 120 # "x"; pad byte
  *             f += 1             # <<<<<<<<<<<<<<
@@ -4851,7 +4851,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       __pyx_v_f = (__pyx_v_f + 1);
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":840
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":840
  *             f[0] = 120 # "x"; pad byte
  *             f += 1
  *             offset[0] += 1             # <<<<<<<<<<<<<<
@@ -4862,7 +4862,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       (__pyx_v_offset[__pyx_t_8]) = ((__pyx_v_offset[__pyx_t_8]) + 1);
     }
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":842
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":842
  *             offset[0] += 1
  * 
  *         offset[0] += child.itemsize             # <<<<<<<<<<<<<<
@@ -4872,7 +4872,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_8 = 0;
     (__pyx_v_offset[__pyx_t_8]) = ((__pyx_v_offset[__pyx_t_8]) + __pyx_v_child->elsize);
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":844
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":844
  *         offset[0] += child.itemsize
  * 
  *         if not PyDataType_HASFIELDS(child):             # <<<<<<<<<<<<<<
@@ -4882,7 +4882,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     __pyx_t_6 = ((!(PyDataType_HASFIELDS(__pyx_v_child) != 0)) != 0);
     if (__pyx_t_6) {
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":845
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":845
  * 
  *         if not PyDataType_HASFIELDS(child):
  *             t = child.type_num             # <<<<<<<<<<<<<<
@@ -4894,7 +4894,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __Pyx_XDECREF_SET(__pyx_v_t, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":846
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":846
  *         if not PyDataType_HASFIELDS(child):
  *             t = child.type_num
  *             if end - f < 5:             # <<<<<<<<<<<<<<
@@ -4904,7 +4904,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       __pyx_t_6 = (((__pyx_v_end - __pyx_v_f) < 5) != 0);
       if (__pyx_t_6) {
 
-        /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":847
+        /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":847
  *             t = child.type_num
  *             if end - f < 5:
  *                 raise RuntimeError(u"Format string allocated too short.")             # <<<<<<<<<<<<<<
@@ -4917,7 +4917,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __PYX_ERR(1, 847, __pyx_L1_error)
 
-        /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":846
+        /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":846
  *         if not PyDataType_HASFIELDS(child):
  *             t = child.type_num
  *             if end - f < 5:             # <<<<<<<<<<<<<<
@@ -4926,7 +4926,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":850
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":850
  * 
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  *             if   t == NPY_BYTE:        f[0] =  98 #"b"             # <<<<<<<<<<<<<<
@@ -4944,7 +4944,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":851
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":851
  *             # Until ticket #99 is fixed, use integers to avoid warnings
  *             if   t == NPY_BYTE:        f[0] =  98 #"b"
  *             elif t == NPY_UBYTE:       f[0] =  66 #"B"             # <<<<<<<<<<<<<<
@@ -4962,7 +4962,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":852
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":852
  *             if   t == NPY_BYTE:        f[0] =  98 #"b"
  *             elif t == NPY_UBYTE:       f[0] =  66 #"B"
  *             elif t == NPY_SHORT:       f[0] = 104 #"h"             # <<<<<<<<<<<<<<
@@ -4980,7 +4980,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":853
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":853
  *             elif t == NPY_UBYTE:       f[0] =  66 #"B"
  *             elif t == NPY_SHORT:       f[0] = 104 #"h"
  *             elif t == NPY_USHORT:      f[0] =  72 #"H"             # <<<<<<<<<<<<<<
@@ -4998,7 +4998,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":854
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":854
  *             elif t == NPY_SHORT:       f[0] = 104 #"h"
  *             elif t == NPY_USHORT:      f[0] =  72 #"H"
  *             elif t == NPY_INT:         f[0] = 105 #"i"             # <<<<<<<<<<<<<<
@@ -5016,7 +5016,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":855
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":855
  *             elif t == NPY_USHORT:      f[0] =  72 #"H"
  *             elif t == NPY_INT:         f[0] = 105 #"i"
  *             elif t == NPY_UINT:        f[0] =  73 #"I"             # <<<<<<<<<<<<<<
@@ -5034,7 +5034,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":856
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":856
  *             elif t == NPY_INT:         f[0] = 105 #"i"
  *             elif t == NPY_UINT:        f[0] =  73 #"I"
  *             elif t == NPY_LONG:        f[0] = 108 #"l"             # <<<<<<<<<<<<<<
@@ -5052,7 +5052,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":857
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":857
  *             elif t == NPY_UINT:        f[0] =  73 #"I"
  *             elif t == NPY_LONG:        f[0] = 108 #"l"
  *             elif t == NPY_ULONG:       f[0] = 76  #"L"             # <<<<<<<<<<<<<<
@@ -5070,7 +5070,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":858
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":858
  *             elif t == NPY_LONG:        f[0] = 108 #"l"
  *             elif t == NPY_ULONG:       f[0] = 76  #"L"
  *             elif t == NPY_LONGLONG:    f[0] = 113 #"q"             # <<<<<<<<<<<<<<
@@ -5088,7 +5088,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":859
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":859
  *             elif t == NPY_ULONG:       f[0] = 76  #"L"
  *             elif t == NPY_LONGLONG:    f[0] = 113 #"q"
  *             elif t == NPY_ULONGLONG:   f[0] = 81  #"Q"             # <<<<<<<<<<<<<<
@@ -5106,7 +5106,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":860
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":860
  *             elif t == NPY_LONGLONG:    f[0] = 113 #"q"
  *             elif t == NPY_ULONGLONG:   f[0] = 81  #"Q"
  *             elif t == NPY_FLOAT:       f[0] = 102 #"f"             # <<<<<<<<<<<<<<
@@ -5124,7 +5124,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":861
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":861
  *             elif t == NPY_ULONGLONG:   f[0] = 81  #"Q"
  *             elif t == NPY_FLOAT:       f[0] = 102 #"f"
  *             elif t == NPY_DOUBLE:      f[0] = 100 #"d"             # <<<<<<<<<<<<<<
@@ -5142,7 +5142,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":862
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":862
  *             elif t == NPY_FLOAT:       f[0] = 102 #"f"
  *             elif t == NPY_DOUBLE:      f[0] = 100 #"d"
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"             # <<<<<<<<<<<<<<
@@ -5160,7 +5160,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":863
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":863
  *             elif t == NPY_DOUBLE:      f[0] = 100 #"d"
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"
  *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf             # <<<<<<<<<<<<<<
@@ -5180,7 +5180,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":864
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":864
  *             elif t == NPY_LONGDOUBLE:  f[0] = 103 #"g"
  *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf
  *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd             # <<<<<<<<<<<<<<
@@ -5200,7 +5200,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":865
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":865
  *             elif t == NPY_CFLOAT:      f[0] = 90; f[1] = 102; f += 1 # Zf
  *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd
  *             elif t == NPY_CLONGDOUBLE: f[0] = 90; f[1] = 103; f += 1 # Zg             # <<<<<<<<<<<<<<
@@ -5220,7 +5220,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":866
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":866
  *             elif t == NPY_CDOUBLE:     f[0] = 90; f[1] = 100; f += 1 # Zd
  *             elif t == NPY_CLONGDOUBLE: f[0] = 90; f[1] = 103; f += 1 # Zg
  *             elif t == NPY_OBJECT:      f[0] = 79 #"O"             # <<<<<<<<<<<<<<
@@ -5238,7 +5238,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
         goto __pyx_L15;
       }
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":868
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":868
  *             elif t == NPY_OBJECT:      f[0] = 79 #"O"
  *             else:
  *                 raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)             # <<<<<<<<<<<<<<
@@ -5262,7 +5262,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       }
       __pyx_L15:;
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":869
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":869
  *             else:
  *                 raise ValueError(u"unknown dtype code in numpy.pxd (%d)" % t)
  *             f += 1             # <<<<<<<<<<<<<<
@@ -5271,7 +5271,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
  */
       __pyx_v_f = (__pyx_v_f + 1);
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":844
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":844
  *         offset[0] += child.itemsize
  * 
  *         if not PyDataType_HASFIELDS(child):             # <<<<<<<<<<<<<<
@@ -5281,7 +5281,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
       goto __pyx_L13;
     }
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":873
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":873
  *             # Cython ignores struct boundary information ("T{...}"),
  *             # so don't output it
  *             f = _util_dtypestring(child, f, end, offset)             # <<<<<<<<<<<<<<
@@ -5294,7 +5294,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
     }
     __pyx_L13:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":818
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":818
  *     cdef tuple fields
  * 
  *     for childname in descr.names:             # <<<<<<<<<<<<<<
@@ -5304,7 +5304,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":874
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":874
  *             # so don't output it
  *             f = _util_dtypestring(child, f, end, offset)
  *     return f             # <<<<<<<<<<<<<<
@@ -5314,7 +5314,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   __pyx_r = __pyx_v_f;
   goto __pyx_L0;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":809
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":809
  *         return ()
  * 
  * cdef inline char* _util_dtypestring(dtype descr, char* f, char* end, int* offset) except NULL:             # <<<<<<<<<<<<<<
@@ -5339,7 +5339,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy__util_dtypestring(PyArray_Descr *__pyx
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":990
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":990
  * 
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -5354,7 +5354,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("set_array_base", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":992
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":992
  * cdef inline void set_array_base(ndarray arr, object base):
  *      cdef PyObject* baseptr
  *      if base is None:             # <<<<<<<<<<<<<<
@@ -5365,7 +5365,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":993
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":993
  *      cdef PyObject* baseptr
  *      if base is None:
  *          baseptr = NULL             # <<<<<<<<<<<<<<
@@ -5374,7 +5374,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
     __pyx_v_baseptr = NULL;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":992
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":992
  * cdef inline void set_array_base(ndarray arr, object base):
  *      cdef PyObject* baseptr
  *      if base is None:             # <<<<<<<<<<<<<<
@@ -5384,7 +5384,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
     goto __pyx_L3;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":995
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":995
  *          baseptr = NULL
  *      else:
  *          Py_INCREF(base) # important to do this before decref below!             # <<<<<<<<<<<<<<
@@ -5394,7 +5394,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   /*else*/ {
     Py_INCREF(__pyx_v_base);
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":996
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":996
  *      else:
  *          Py_INCREF(base) # important to do this before decref below!
  *          baseptr = <PyObject*>base             # <<<<<<<<<<<<<<
@@ -5405,7 +5405,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   }
   __pyx_L3:;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":997
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":997
  *          Py_INCREF(base) # important to do this before decref below!
  *          baseptr = <PyObject*>base
  *      Py_XDECREF(arr.base)             # <<<<<<<<<<<<<<
@@ -5414,7 +5414,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   Py_XDECREF(__pyx_v_arr->base);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":998
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":998
  *          baseptr = <PyObject*>base
  *      Py_XDECREF(arr.base)
  *      arr.base = baseptr             # <<<<<<<<<<<<<<
@@ -5423,7 +5423,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   __pyx_v_arr->base = __pyx_v_baseptr;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":990
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":990
  * 
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -5435,7 +5435,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   __Pyx_RefNannyFinishContext();
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1000
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1000
  *      arr.base = baseptr
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -5449,7 +5449,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("get_array_base", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1001
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1001
  * 
  * cdef inline object get_array_base(ndarray arr):
  *     if arr.base is NULL:             # <<<<<<<<<<<<<<
@@ -5459,7 +5459,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __pyx_t_1 = ((__pyx_v_arr->base == NULL) != 0);
   if (__pyx_t_1) {
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1002
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1002
  * cdef inline object get_array_base(ndarray arr):
  *     if arr.base is NULL:
  *         return None             # <<<<<<<<<<<<<<
@@ -5471,7 +5471,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
     __pyx_r = Py_None;
     goto __pyx_L0;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1001
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1001
  * 
  * cdef inline object get_array_base(ndarray arr):
  *     if arr.base is NULL:             # <<<<<<<<<<<<<<
@@ -5480,7 +5480,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
  */
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1004
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1004
  *         return None
  *     else:
  *         return <object>arr.base             # <<<<<<<<<<<<<<
@@ -5494,7 +5494,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
     goto __pyx_L0;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1000
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1000
  *      arr.base = baseptr
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -5509,7 +5509,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1009
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1009
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -5530,7 +5530,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("import_array", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1010
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1010
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5546,7 +5546,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1011
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1011
  * cdef inline int import_array() except -1:
  *     try:
  *         _import_array()             # <<<<<<<<<<<<<<
@@ -5555,7 +5555,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
  */
       __pyx_t_4 = _import_array(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(1, 1011, __pyx_L3_error)
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1010
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1010
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5569,7 +5569,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1012
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1012
  *     try:
  *         _import_array()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -5584,7 +5584,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1013
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1013
  *         _import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
@@ -5600,7 +5600,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1010
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1010
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5615,7 +5615,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1009
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1009
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -5638,7 +5638,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1015
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1015
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -5659,7 +5659,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("import_umath", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1016
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1016
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5675,7 +5675,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1017
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1017
  * cdef inline int import_umath() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -5684,7 +5684,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(1, 1017, __pyx_L3_error)
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1016
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1016
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5698,7 +5698,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1018
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1018
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -5713,7 +5713,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1019
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1019
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -5729,7 +5729,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1016
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1016
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5744,7 +5744,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1015
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1015
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -5767,7 +5767,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   return __pyx_r;
 }
 
-/* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1021
+/* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1021
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -5788,7 +5788,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("import_ufunc", 0);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1022
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1022
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5804,7 +5804,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1023
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1023
  * cdef inline int import_ufunc() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -5813,7 +5813,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(1, 1023, __pyx_L3_error)
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1022
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1022
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5827,7 +5827,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1024
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1024
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -5841,7 +5841,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1025
+      /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1025
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -5855,7 +5855,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1022
+    /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1022
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -5870,7 +5870,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1021
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1021
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -5981,9 +5981,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(0, 13, __pyx_L1_error)
-  __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) __PYX_ERR(0, 65, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(0, 14, __pyx_L1_error)
+  __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 100, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 235, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 823, __pyx_L1_error)
   return 0;
@@ -5995,29 +5995,29 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "pyndl/ndl_parallel.pyx":49
+  /* "pyndl/ndl_parallel.pyx":50
  * 
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")             # <<<<<<<<<<<<<<
  *       fname = filename_byte_string
  * 
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_UTF_8); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_kp_s_UTF_8); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "pyndl/ndl_parallel.pyx":85
+  /* "pyndl/ndl_parallel.pyx":86
  * 
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")             # <<<<<<<<<<<<<<
  *       fname = filename_byte_string
  * 
  */
-  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_UTF_8); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_kp_s_UTF_8); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__2);
   __Pyx_GIVEREF(__pyx_tuple__2);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":235
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":235
  *             if ((flags & pybuf.PyBUF_C_CONTIGUOUS == pybuf.PyBUF_C_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_C_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not C contiguous")             # <<<<<<<<<<<<<<
@@ -6028,7 +6028,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":239
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":239
  *             if ((flags & pybuf.PyBUF_F_CONTIGUOUS == pybuf.PyBUF_F_CONTIGUOUS)
  *                 and not PyArray_CHKFLAGS(self, NPY_F_CONTIGUOUS)):
  *                 raise ValueError(u"ndarray is not Fortran contiguous")             # <<<<<<<<<<<<<<
@@ -6039,7 +6039,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":276
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":276
  *                 if ((descr.byteorder == c'>' and little_endian) or
  *                     (descr.byteorder == c'<' and not little_endian)):
  *                     raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
@@ -6050,7 +6050,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":823
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":823
  * 
  *         if (end - f) - <int>(new_offset - offset[0]) < 15:
  *             raise RuntimeError(u"Format string allocated too short, see comment in numpy.pxd")             # <<<<<<<<<<<<<<
@@ -6061,7 +6061,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":827
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":827
  *         if ((child.byteorder == c'>' and little_endian) or
  *             (child.byteorder == c'<' and not little_endian)):
  *             raise ValueError(u"Non-native byte order not supported")             # <<<<<<<<<<<<<<
@@ -6072,7 +6072,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":847
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":847
  *             t = child.type_num
  *             if end - f < 5:
  *                 raise RuntimeError(u"Format string allocated too short.")             # <<<<<<<<<<<<<<
@@ -6083,7 +6083,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1013
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1013
  *         _import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
@@ -6094,7 +6094,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1019
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1019
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -6105,7 +6105,7 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1025
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1025
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -6114,29 +6114,29 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__11);
   __Pyx_GIVEREF(__pyx_tuple__11);
 
-  /* "pyndl/ndl_parallel.pyx":29
+  /* "pyndl/ndl_parallel.pyx":30
  * 
  * 
- * def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,             # <<<<<<<<<<<<<<
- *                   double alpha, double beta1,
- *                   double beta2, double lambda_,
+ * def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
+ *                   dtype_t alpha, dtype_t beta1,
+ *                   dtype_t beta2, dtype_t lambda_,
  */
-  __pyx_tuple__12 = PyTuple_Pack(21, __pyx_n_s_binary_file_paths, __pyx_n_s_weights, __pyx_n_s_alpha, __pyx_n_s_beta1, __pyx_n_s_beta2, __pyx_n_s_lambda, __pyx_n_s_all_outcomes, __pyx_n_s_chunksize, __pyx_n_s_number_of_threads, __pyx_n_s_mm, __pyx_n_s_all_outcomes_ptr, __pyx_n_s_length_all_outcomes, __pyx_n_s_fname, __pyx_n_s_start_val, __pyx_n_s_end_val, __pyx_n_s_ii, __pyx_n_s_number_parts, __pyx_n_s_error, __pyx_n_s_weights_ptr, __pyx_n_s_binary_file_path, __pyx_n_s_filename_byte_string); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(21, __pyx_n_s_binary_file_paths, __pyx_n_s_weights, __pyx_n_s_alpha, __pyx_n_s_beta1, __pyx_n_s_beta2, __pyx_n_s_lambda, __pyx_n_s_all_outcomes, __pyx_n_s_chunksize, __pyx_n_s_number_of_threads, __pyx_n_s_mm, __pyx_n_s_all_outcomes_ptr, __pyx_n_s_length_all_outcomes, __pyx_n_s_fname, __pyx_n_s_start_val, __pyx_n_s_end_val, __pyx_n_s_ii, __pyx_n_s_number_parts, __pyx_n_s_error, __pyx_n_s_weights_ptr, __pyx_n_s_binary_file_path, __pyx_n_s_filename_byte_string); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(9, 0, 21, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyndl_ndl_parallel_pyx, __pyx_n_s_learn_inplace, 29, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(9, 0, 21, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyndl_ndl_parallel_pyx, __pyx_n_s_learn_inplace, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 30, __pyx_L1_error)
 
-  /* "pyndl/ndl_parallel.pyx":67
+  /* "pyndl/ndl_parallel.pyx":68
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
- * def learn_inplace_2(binary_file_paths, np.ndarray[double, ndim=2] weights,             # <<<<<<<<<<<<<<
- *                   double alpha, double beta1,
- *                   double beta2, double lambda_,
+ * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
+ *                   dtype_t alpha, dtype_t beta1,
+ *                   dtype_t beta2, dtype_t lambda_,
  */
-  __pyx_tuple__14 = PyTuple_Pack(17, __pyx_n_s_binary_file_paths, __pyx_n_s_weights, __pyx_n_s_alpha, __pyx_n_s_beta1, __pyx_n_s_beta2, __pyx_n_s_lambda, __pyx_n_s_all_outcomes, __pyx_n_s_mm, __pyx_n_s_all_outcomes_ptr, __pyx_n_s_length_all_outcomes, __pyx_n_s_fname, __pyx_n_s_start_val, __pyx_n_s_end_val, __pyx_n_s_error, __pyx_n_s_weights_ptr, __pyx_n_s_binary_file_path, __pyx_n_s_filename_byte_string); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(17, __pyx_n_s_binary_file_paths, __pyx_n_s_weights, __pyx_n_s_alpha, __pyx_n_s_beta1, __pyx_n_s_beta2, __pyx_n_s_lambda, __pyx_n_s_all_outcomes, __pyx_n_s_mm, __pyx_n_s_all_outcomes_ptr, __pyx_n_s_length_all_outcomes, __pyx_n_s_fname, __pyx_n_s_start_val, __pyx_n_s_end_val, __pyx_n_s_error, __pyx_n_s_weights_ptr, __pyx_n_s_binary_file_path, __pyx_n_s_filename_byte_string); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(7, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyndl_ndl_parallel_pyx, __pyx_n_s_learn_inplace_2, 67, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(7, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyndl_ndl_parallel_pyx, __pyx_n_s_learn_inplace_2, 68, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -6320,15 +6320,15 @@ static int __pyx_pymod_exec_ndl_parallel(PyObject *__pyx_pyinit_module)
   /* "pyndl/ndl_parallel.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as np
- * cimport cython
+ * ctypedef np.float64_t dtype_t
  */
   __pyx_t_1 = __Pyx_Import(__pyx_n_s_numpy, 0, -1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyndl/ndl_parallel.pyx":8
- * from libc.stdio cimport *
+  /* "pyndl/ndl_parallel.pyx":9
+ * from libc.stdio cimport fopen, fread, fclose, FILE
  * 
  * cdef unsigned int MAGIC_NUMBER = 14159265             # <<<<<<<<<<<<<<
  * cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215
@@ -6336,7 +6336,7 @@ static int __pyx_pymod_exec_ndl_parallel(PyObject *__pyx_pyinit_module)
  */
   __pyx_v_5pyndl_12ndl_parallel_MAGIC_NUMBER = 0xD80DA1;
 
-  /* "pyndl/ndl_parallel.pyx":9
+  /* "pyndl/ndl_parallel.pyx":10
  * 
  * cdef unsigned int MAGIC_NUMBER = 14159265
  * cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215             # <<<<<<<<<<<<<<
@@ -6345,7 +6345,7 @@ static int __pyx_pymod_exec_ndl_parallel(PyObject *__pyx_pyinit_module)
  */
   __pyx_v_5pyndl_12ndl_parallel_CURRENT_VERSION_WITH_FREQ = 0xD7;
 
-  /* "pyndl/ndl_parallel.pyx":10
+  /* "pyndl/ndl_parallel.pyx":11
  * cdef unsigned int MAGIC_NUMBER = 14159265
  * cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215
  * cdef unsigned int CURRENT_VERSION = 2048 + 215             # <<<<<<<<<<<<<<
@@ -6354,7 +6354,7 @@ static int __pyx_pymod_exec_ndl_parallel(PyObject *__pyx_pyinit_module)
  */
   __pyx_v_5pyndl_12ndl_parallel_CURRENT_VERSION = 0x8D7;
 
-  /* "pyndl/ndl_parallel.pyx":12
+  /* "pyndl/ndl_parallel.pyx":13
  * cdef unsigned int CURRENT_VERSION = 2048 + 215
  * 
  * if sizeof(unsigned int) != 4:             # <<<<<<<<<<<<<<
@@ -6364,31 +6364,31 @@ static int __pyx_pymod_exec_ndl_parallel(PyObject *__pyx_pyinit_module)
   __pyx_t_2 = (((sizeof(unsigned int)) != 4) != 0);
   if (__pyx_t_2) {
 
-    /* "pyndl/ndl_parallel.pyx":13
+    /* "pyndl/ndl_parallel.pyx":14
  * 
  * if sizeof(unsigned int) != 4:
  *     raise ImportError('unsigned int needs to be 4 bytes not %i bytes' % sizeof(unsigned int))             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_1 = __Pyx_PyInt_FromSize_t((sizeof(unsigned int))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_FromSize_t((sizeof(unsigned int))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = __Pyx_PyString_Format(__pyx_kp_s_unsigned_int_needs_to_be_4_bytes, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 13, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyString_Format(__pyx_kp_s_unsigned_int_needs_to_be_4_bytes, __pyx_t_1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 14, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 13, __pyx_L1_error)
+    __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_GIVEREF(__pyx_t_3);
     PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_t_3);
     __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_t_1, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 13, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_ImportError, __pyx_t_1, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 14, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_Raise(__pyx_t_3, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __PYX_ERR(0, 13, __pyx_L1_error)
+    __PYX_ERR(0, 14, __pyx_L1_error)
 
-    /* "pyndl/ndl_parallel.pyx":12
+    /* "pyndl/ndl_parallel.pyx":13
  * cdef unsigned int CURRENT_VERSION = 2048 + 215
  * 
  * if sizeof(unsigned int) != 4:             # <<<<<<<<<<<<<<
@@ -6397,41 +6397,41 @@ static int __pyx_pymod_exec_ndl_parallel(PyObject *__pyx_pyinit_module)
  */
   }
 
-  /* "pyndl/ndl_parallel.pyx":29
+  /* "pyndl/ndl_parallel.pyx":30
  * 
  * 
- * def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,             # <<<<<<<<<<<<<<
- *                   double alpha, double beta1,
- *                   double beta2, double lambda_,
+ * def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
+ *                   dtype_t alpha, dtype_t beta1,
+ *                   dtype_t beta2, dtype_t lambda_,
  */
-  __pyx_t_3 = PyCFunction_NewEx(&__pyx_mdef_5pyndl_12ndl_parallel_1learn_inplace, NULL, __pyx_n_s_pyndl_ndl_parallel); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 29, __pyx_L1_error)
+  __pyx_t_3 = PyCFunction_NewEx(&__pyx_mdef_5pyndl_12ndl_parallel_1learn_inplace, NULL, __pyx_n_s_pyndl_ndl_parallel); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_learn_inplace, __pyx_t_3) < 0) __PYX_ERR(0, 29, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_learn_inplace, __pyx_t_3) < 0) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyndl/ndl_parallel.pyx":67
+  /* "pyndl/ndl_parallel.pyx":68
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
- * def learn_inplace_2(binary_file_paths, np.ndarray[double, ndim=2] weights,             # <<<<<<<<<<<<<<
- *                   double alpha, double beta1,
- *                   double beta2, double lambda_,
+ * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
+ *                   dtype_t alpha, dtype_t beta1,
+ *                   dtype_t beta2, dtype_t lambda_,
  */
-  __pyx_t_3 = PyCFunction_NewEx(&__pyx_mdef_5pyndl_12ndl_parallel_3learn_inplace_2, NULL, __pyx_n_s_pyndl_ndl_parallel); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_3 = PyCFunction_NewEx(&__pyx_mdef_5pyndl_12ndl_parallel_3learn_inplace_2, NULL, __pyx_n_s_pyndl_ndl_parallel); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_learn_inplace_2, __pyx_t_3) < 0) __PYX_ERR(0, 67, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_learn_inplace_2, __pyx_t_3) < 0) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
   /* "pyndl/ndl_parallel.pyx":1
  * import numpy as np             # <<<<<<<<<<<<<<
  * cimport numpy as np
- * cimport cython
+ * ctypedef np.float64_t dtype_t
  */
   __pyx_t_3 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_3) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "../../../../../miniconda3/envs/testpyndl/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1021
+  /* "../../../../../miniconda3/lib/python3.6/site-packages/Cython/Includes/numpy/__init__.pxd":1021
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
