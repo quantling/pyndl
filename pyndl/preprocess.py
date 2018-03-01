@@ -293,6 +293,13 @@ def create_event_file(corpus_file,
                             cue_structure=cue_structure,
                             remove_duplicates=remove_duplicates)
 
+    def process_context(line):
+        """called when a context boundary is found."""
+        if context_structure == 'document':
+            # remove document marker
+            line = context_pattern.sub("", line)
+        return line
+
     with open(corpus_file, "rt") as corpus:
         with gzip.open(event_file, "wt") as outfile:
             outfile.write("cues\toutcomes\n")
@@ -311,16 +318,29 @@ def create_event_file(corpus_file,
                     process_words(words)
                 else:
                     if context_pattern.search(line) is not None:
-                        contexts = context_pattern.split(line)
+                        # process the first context
+                        context1, *contexts = context_pattern.split(line)
+                        context1 = process_context(context1)
 
-                        # process contexts; only extend words on last context
-                        for jj, context in enumerate(contexts):
-                            context = process_line(context.strip())
-                            words.extend(gen_words(context))
-                            if jj < len(contexts):
+                        if context1.strip():
+                            context1 = process_line(context1.strip())
+                            words.extend(gen_words(context1))
+                        process_words(words)
+                        # process in between contexts
+                        while len(contexts) > 1:
+                            words = []
+                            context1, *contexts = contexts
+                            context1 = process_context(context1)
+                            if context1.strip():
+                                context1 = process_line(context1.strip())
+                                words.extend(gen_words(context1))
                                 process_words(words)
-                                words = []
-
+                        # add last part to next context
+                        context1 = contexts[0]
+                        context1 = process_context(context1)
+                        if context1.strip():
+                            context1 = process_line(context1.strip())
+                            words.extend(gen_words(context1))
                     else:
                         line = process_line(line)
                         words.extend(gen_words(line))
