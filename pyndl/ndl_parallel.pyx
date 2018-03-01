@@ -1,9 +1,10 @@
 import numpy as np
 cimport numpy as np
+ctypedef np.float64_t dtype_t
 cimport cython
 from cython.parallel cimport parallel, prange
 from libc.stdlib cimport abort, malloc, free
-from libc.stdio cimport *
+from libc.stdio cimport fopen, fread, fclose, FILE
 
 cdef unsigned int MAGIC_NUMBER = 14159265
 cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215
@@ -26,9 +27,9 @@ cdef extern from "stdio.h":
     size_t fread (void *, size_t, size_t, FILE *) nogil
 
 
-def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
-                  double alpha, double beta1,
-                  double beta2, double lambda_,
+def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
+                  dtype_t alpha, dtype_t beta1,
+                  dtype_t beta2, dtype_t lambda_,
                   np.ndarray[unsigned int, ndim=1] all_outcomes,
                   unsigned int chunksize,
                   unsigned int number_of_threads):
@@ -43,7 +44,7 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
   #  cdef String
     # weights muss contigousarray sein und mode=c, siehe:
     #cdef np.ndarray[np.uint32_t, ndim=3, mode = 'c'] np_buff = np.ascontiguousarray(im, dtype = np.uint32)
-    cdef double* weights_ptr = <double *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
+    cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
 
     for binary_file_path in binary_file_paths: #
       filename_byte_string = binary_file_path.encode("UTF-8")
@@ -64,9 +65,9 @@ def learn_inplace(binary_file_paths, np.ndarray[double, ndim=2] weights,
     if (error != 0):
         raise IOError('binary files does not have proper format, error code %i' % error)
 
-def learn_inplace_2(binary_file_paths, np.ndarray[double, ndim=2] weights,
-                  double alpha, double beta1,
-                  double beta2, double lambda_,
+def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
+                  dtype_t alpha, dtype_t beta1,
+                  dtype_t beta2, dtype_t lambda_,
                   np.ndarray[unsigned int, ndim=1] all_outcomes):
 
     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
@@ -79,7 +80,7 @@ def learn_inplace_2(binary_file_paths, np.ndarray[double, ndim=2] weights,
   #  cdef String
     # weights muss contigousarray sein und mode=c, siehe:
     #cdef np.ndarray[np.uint32_t, ndim=3, mode = 'c'] np_buff = np.ascontiguousarray(im, dtype = np.uint32)
-    cdef double* weights_ptr = <double *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
+    cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
 
     for binary_file_path in binary_file_paths: #
       filename_byte_string = binary_file_path.encode("UTF-8")
@@ -93,6 +94,7 @@ def learn_inplace_2(binary_file_paths, np.ndarray[double, ndim=2] weights,
     if (error != 0):
         raise IOError('binary files does not have proper format, error code %i' % error)
 
+
 cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:
     cdef unsigned int ii
     for ii in range(size):
@@ -102,24 +104,24 @@ cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) 
 
 
 # ggf exception zurückgeben
-cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
+cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
                         unsigned int mm,
-                        double alpha, double beta1,
-                        double beta2, double lambda_,
+                        dtype_t alpha, dtype_t beta1,
+                        dtype_t beta2, dtype_t lambda_,
                         unsigned int* all_outcome_indices,
                         unsigned int start,
                         unsigned int end) nogil:
 
 
     cdef unsigned int number_of_events, number_of_cues, number_of_outcomes
-    cdef double association_strength, update
+    cdef dtype_t association_strength, update
     cdef unsigned int magic_number, version, ii, jj, event, index, appearance
     cdef unsigned int* cue_indices
     cdef unsigned int* outcome_indices
     cdef unsigned int max_number_of_cues = 1024
     cdef unsigned int max_number_of_outcomes = 1024
 
-    cdef FILE* cfile
+    cdef FILE* binary_file
     binary_file = fopen(binary_file_path, "rb")
 
     read_next_int(&magic_number, binary_file)
@@ -154,7 +156,6 @@ cdef int learn_inplace_ptr(char* binary_file_path, double* weights,
             max_number_of_outcomes = number_of_outcomes
             free(outcome_indices)
             outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
-        outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * number_of_outcomes)
         fread(outcome_indices, 4, number_of_outcomes, binary_file)
 
         # learn
