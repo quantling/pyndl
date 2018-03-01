@@ -699,7 +699,7 @@ def create_binary_event_files(event_file,
                               *,
                               sort_within_event=False,
                               number_of_processes=2,
-                              events_per_file=1000000,
+                              events_per_file=10000000,
                               overwrite=False,
                               remove_duplicates=None,
                               verbose=False):
@@ -722,7 +722,7 @@ def create_binary_event_files(event_file,
     number_of_processes : int
         number of threads to use
     events_per_file : int
-
+        Number of events in each binary file. Has to be larger than 1
     overwrite : bool
         overwrite files if they exist
     remove_duplicates : {None, True, False}
@@ -738,6 +738,9 @@ def create_binary_event_files(event_file,
         sum of number of events written to binary files
     """
     # pylint: disable=missing-docstring
+
+    if events_per_file < 2:
+        raise ValueError("events_per_file has to be larger than 1.")
 
     if not os.path.isdir(path_name):
         if verbose:

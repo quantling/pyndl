@@ -56,7 +56,8 @@ def events_from_file(event_path):
 def ndl(events, alpha, betas, lambda_=1.0, *,
         method='openmp', weights=None,
         number_of_threads=8, len_sublists=10, remove_duplicates=None,
-        verbose=False, temporary_directory=None):
+        verbose=False, temporary_directory=None,
+        events_per_temporary_file=10000000):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -93,6 +94,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         path to directory to use for storing temporary files created;
         if none is provided, the operating system's default will
         be used (/tmp on unix)
+    events_per_temporary_file: int
+        Number of events in each temporary binary file. Has to be larger than 1
 
     Returns
     -------
@@ -163,6 +166,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
                                                              outcome_map, overwrite=True,
                                                              number_of_processes=number_of_threads,
+                                                             events_per_file=events_per_temporary_file,
                                                              remove_duplicates=remove_duplicates,
                                                              verbose=verbose)
         assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
