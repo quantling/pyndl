@@ -100,9 +100,9 @@ def ngrams_to_word(occurrences, n_chars, outfile, remove_duplicates=True):
         if not ngrams or not occurrence:
             continue
         if remove_duplicates:
-            outfile.write("{}\t{}\n".format("_".join(set(ngrams)), occurrence))
-        else:
-            outfile.write("{}\t{}\n".format("_".join(ngrams), occurrence))
+            ngrams = set(ngrams)
+            occurrence = "_".join(set(occurrence.split("_")))
+        outfile.write("{}\t{}\n".format("_".join(ngrams), occurrence))
 
 
 def process_occurrences(occurrences, outfile, *,
@@ -270,7 +270,9 @@ def create_event_file(corpus_file,
             return occurrences
         elif event_structure == 'line':
             # (cues, outcomes) with empty outcomes
-            return [('_'.join(words), '')]
+            return [('_'.join(words), ''), ]
+        else:
+            raise ValueError('gen_occurrences should be one of {"consecutive_words", "word_to_word", "line"}')
 
     def process_line(line):
         """processes one line of text."""
@@ -312,10 +314,10 @@ def create_event_file(corpus_file,
                         contexts = context_pattern.split(line)
 
                         # process contexts; only extend words on last context
-                        for ii, context in enumerate(contexts):
+                        for jj, context in enumerate(contexts):
                             context = process_line(context.strip())
                             words.extend(gen_words(context))
-                            if ii < len(contexts):
+                            if jj < len(contexts):
                                 process_words(words)
                                 words = []
 
