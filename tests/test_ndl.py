@@ -127,6 +127,9 @@ def test_exceptions():
     with pytest.raises(FileNotFoundError, match="No such file or directory") as e_info:
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, temporary_directory="./magic")
 
+    with pytest.raises(ValueError, match="events_per_file has to be larger than 1") as e_info:
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, events_per_temporary_file=1)
+
 
 def test_continue_learning_dict():
     events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
@@ -246,6 +249,16 @@ def test_dict_ndl_data_array_vs_ndl_threading(result_ndl_threading):
 
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
                                             result_ndl_threading)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0
+
+
+def test_ordering_of_temporary_event_files(result_dict_ndl):
+    result_ndl = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading',
+                         events_per_temporary_file=2)
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
+                                            result_ndl)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0
 
