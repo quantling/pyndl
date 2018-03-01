@@ -73,6 +73,38 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
     return sample
 
 
+def ngrams_to_word(occurrences, n_chars, outfile, remove_duplicates=True):
+    """
+    Process the occurrences and write them to outfile.
+
+    Parameters
+    ----------
+    occurrences : sequence of (cues, outcomes) tuples
+        cues and outcomes are both strings where underscores and # are
+        special symbols.
+    n_chars : number of characters (e.g. 2 for bigrams, 3 for trigrams, ...)
+    outfile : file handle
+
+    remove_duplicates : bool
+        if True make cues and outcomes per event unique
+
+    """
+    for cues, outcomes in occurrences:
+        if cues and outcomes:
+            occurrence = cues + '_' + outcomes
+        else:  # take either
+            occurrence = cues + outcomes
+        phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
+        ngrams = (phrase_string[i:(i + n_chars)] for i in
+                  range(len(phrase_string) - n_chars + 1))
+        if not ngrams or not occurrence:
+            continue
+        if remove_duplicates:
+            outfile.write("{}\t{}\n".format("_".join(set(ngrams)), occurrence))
+        else:
+            outfile.write("{}\t{}\n".format("_".join(ngrams), occurrence))
+
+
 def process_occurrences(occurrences, outfile, *,
                         cue_structure="trigrams_to_word", remove_duplicates=True):
     """
@@ -92,43 +124,17 @@ def process_occurrences(occurrences, outfile, *,
 
     """
     if cue_structure == "bigrams_to_word":
-        for cues, outcomes in occurrences:
-            if cues and outcomes:
-                occurrence = cues + '_' + outcomes
-            else:  # take either
-                occurrence = cues + outcomes
-            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
-            bigrams = (phrase_string[i:(i + 2)] for i in
-                       range(len(phrase_string) - 2 + 1))
-            if not bigrams or not occurrence:
-                continue
-            if remove_duplicates:
-                outfile.write("_".join(set(bigrams)) + "\t" + occurrence + "\n")
-            else:
-                outfile.write("_".join(bigrams) + "\t" + occurrence + "\n")
+        ngrams_to_word(occurrences, 2, outfile, remove_duplicates=remove_duplicates)
     elif cue_structure == "trigrams_to_word":
-        for cues, outcomes in occurrences:
-            if cues and outcomes:
-                occurrence = cues + '_' + outcomes
-            else:  # take either
-                occurrence = cues + outcomes
-            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
-            trigrams = (phrase_string[i:(i + 3)] for i in
-                        range(len(phrase_string) - 3 + 1))
-            if not trigrams or not occurrence:
-                continue
-            if remove_duplicates:
-                outfile.write("_".join(set(trigrams)) + "\t" + occurrence + "\n")
-            else:
-                outfile.write("_".join(trigrams) + "\t" + occurrence + "\n")
+        ngrams_to_word(occurrences, 3, outfile, remove_duplicates=remove_duplicates)
     elif cue_structure == "word_to_word":
         for cues, outcomes in occurrences:
             if not cues:
                 continue
             if remove_duplicates:
-                outfile.write("_".join(set(cues.split("_"))) + "\t" + outcomes + "\n")
+                outfile.write("{}\t{}\n".format("_".join(set(cues.split("_"))), outcomes))
             else:
-                outfile.write(cues + "\t" + outcomes + "\n")
+                outfile.write("{}\t{}\n".format(cues, outcomes))
     else:
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
@@ -761,9 +767,9 @@ def create_binary_event_files(event_file,
 
         def _error_callback(error):
             if isinstance(error, StopIteration):
-                msg, result = error.value
+                _, result = error.value
                 nonlocal number_events
-                number_events += result
+                number_events += result  # pylint: disable=undefined-variable
                 pool.close()
             else:
                 raise error

@@ -203,7 +203,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                 for partlist in part_lists:
                     working_queue.put(np.array(partlist, dtype=np.uint32))
 
-            for thread_id in range(number_of_threads):
+            for _ in range(number_of_threads):
                 thread = threading.Thread(target=worker)
                 thread.start()
                 threads.append(thread)
@@ -248,7 +248,7 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
     def _format(value):
         return '{0: <{width}}'.format(value, width=width)
 
-    if not type(alpha) in (float, int):
+    if not isinstance(alpha, (float, int)):
         alpha = 'varying'
 
     new_attrs = {'date': _format(time.strftime("%Y-%m-%d %H:%M:%S")),
@@ -278,7 +278,7 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
             if key in new_attrs:
                 new_val = new_attrs[key]
             else:
-                new_val = format_('')
+                new_val = ''
             new_attrs[key] = old_val + ' | ' + new_val
     return new_attrs
 
@@ -295,8 +295,11 @@ class WeightDict(defaultdict):
 
     """
 
+    # pylint: disable=W0613
     def __init__(self, *args, **kwargs):
         super().__init__(lambda: defaultdict(float))
+
+        self._attrs = OrderedDict()
 
         if 'attrs' in kwargs:
             self.attrs = kwargs['attrs']
@@ -391,9 +394,9 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
         attrs_to_update = weights_ini.attrs
         coords = weights_ini.coords
         weights = WeightDict()
-        for oi, outcome in enumerate(coords['outcomes'].values):
-            for ci, cue in enumerate(coords['cues'].values):
-                weights[outcome][cue] = weights_ini.item((oi, ci))
+        for outcome_index, outcome in enumerate(coords['outcomes'].values):
+            for cue_index, cue in enumerate(coords['cues'].values):
+                weights[outcome][cue] = weights_ini.item((outcome_index, cue_index))
     elif not isinstance(weights, defaultdict):
         raise ValueError('weights needs to be either defaultdict or None')
 
