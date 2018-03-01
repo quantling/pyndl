@@ -14,7 +14,6 @@ from collections import Counter
 import gzip
 import itertools
 import multiprocessing
-import os
 import sys
 
 

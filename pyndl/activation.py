@@ -16,6 +16,7 @@ import xarray as xr
 from . import ndl
 
 
+# pylint: disable=W0621
 def activation(events, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
     """
     Estimate activations for given events in event file and outcome-cue weights.
@@ -60,18 +61,17 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
     if isinstance(events, str):
         events = ndl.events_from_file(events)
 
-    event_cues_list = (cues for cues, outcomes in events)
+    events = (cues for cues, outcomes in events)
     if remove_duplicates is None:
-        def enforce_no_duplicates(cues):
+        def check_no_duplicates(cues):
             if len(cues) != len(set(cues)):
-                raise ValueError('cues needs to be unique: "%s"; use '
-                                 'remove_duplicates=True' %
-                                 (' '.join(cues)))
+                raise ValueError('cues needs to be unique: "{}"; use '
+                                 'remove_duplicates=True'.format(' '.join(cues)))
             else:
                 return set(cues)
-        event_cues_list = (enforce_no_duplicates(cues) for cues in event_cues_list)
+        events = (check_no_duplicates(cues) for cues in events)
     elif remove_duplicates is True:
-        event_cues_list = (set(cues) for cues in event_cues_list)
+        events = (set(cues) for cues in events)
 
     if isinstance(weights, xr.DataArray):
         cues = weights.coords["cues"].values.tolist()
@@ -81,11 +81,13 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
         cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
         if ignore_missing_cues:
             event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues if cue in cues)
-                                      for event_cues in event_cues_list)
+                                      for event_cues in events)
         else:
             event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues)
-                                      for event_cues in event_cues_list)
-        activations = _activation_matrix(list(event_cue_indices_list), weights.values, number_of_threads)
+                                      for event_cues in events)
+        # pylint: disable=W0621
+        activations = _activation_matrix(list(event_cue_indices_list),
+                                         weights.values, number_of_threads)
         return xr.DataArray(activations,
                             coords={
                                 'outcomes': outcomes
@@ -93,11 +95,11 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
                             dims=('outcomes', 'events'))
     elif isinstance(weights, dict):
         assert number_of_threads == 1, "Estimating activations with multiprocessing is not implemented for dicts."
-        activations = defaultdict(lambda: np.zeros(len(event_cues_list)))
-        event_cues_list = list(event_cues_list)
+        activations = defaultdict(lambda: np.zeros(len(events)))
+        events = list(events)
         for outcome, cue_dict in weights.items():
             _activations = activations[outcome]
-            for row, cues in enumerate(event_cues_list):
+            for row, cues in enumerate(events):
                 for cue in cues:
                     _activations[row] += cue_dict[cue]
         return activations
@@ -111,6 +113,7 @@ def _init_mp_activation_matrix(weights_, weights_shape_, activations_, activatio
     Initializes shared variables weights and activations.
 
     """
+    # pylint: disable=C0103, W0621, W0601
     global weights, activations
     weights = np.ctypeslib.as_array(weights_)
     weights.shape = weights_shape_

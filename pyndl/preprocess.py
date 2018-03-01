@@ -73,6 +73,38 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
     return sample
 
 
+def ngrams_to_word(occurrences, n_chars, outfile, remove_duplicates=True):
+    """
+    Process the occurrences and write them to outfile.
+
+    Parameters
+    ----------
+    occurrences : sequence of (cues, outcomes) tuples
+        cues and outcomes are both strings where underscores and # are
+        special symbols.
+    n_chars : number of characters (e.g. 2 for bigrams, 3 for trigrams, ...)
+    outfile : file handle
+
+    remove_duplicates : bool
+        if True make cues and outcomes per event unique
+
+    """
+    for cues, outcomes in occurrences:
+        if cues and outcomes:
+            occurrence = cues + '_' + outcomes
+        else:  # take either
+            occurrence = cues + outcomes
+        phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
+        ngrams = (phrase_string[i:(i + n_chars)] for i in
+                  range(len(phrase_string) - n_chars + 1))
+        if not ngrams or not occurrence:
+            continue
+        if remove_duplicates:
+            outfile.write("{}\t{}\n".format("_".join(set(ngrams)), occurrence))
+        else:
+            outfile.write("{}\t{}\n".format("_".join(ngrams), occurrence))
+
+
 def process_occurrences(occurrences, outfile, *,
                         cue_structure="trigrams_to_word", remove_duplicates=True):
     """
@@ -91,37 +123,18 @@ def process_occurrences(occurrences, outfile, *,
         if True make cues and outcomes per event unique
 
     """
-    if cue_structure in ("bigrams_to_word", "trigrams_to_word"):
-        if cue_structure == "bigrams_to_word":
-            gram_size = 2
-        else:
-            gram_size = 3
-
-        for cues, outcomes in occurrences:
-            if cues and outcomes:
-                occurrence = cues + '_' + outcomes
-            else:  # take either
-                occurrence = cues + outcomes
-            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
-            n_grams = (phrase_string[i:(i + gram_size)] for i in
-                       range(len(phrase_string) - gram_size + 1))
-            if not n_grams or not occurrence:
-                continue
-            if remove_duplicates:
-                n_grams = "_".join(set(n_grams))
-                occurrence = "_".join(set(occurrence.split("_")))
-                outfile.write(n_grams + "\t" + occurrence + "\n")
-            else:
-                outfile.write("_".join(n_grams) + "\t" + occurrence + "\n")
-
+    if cue_structure == "bigrams_to_word":
+        ngrams_to_word(occurrences, 2, outfile, remove_duplicates=remove_duplicates)
+    elif cue_structure == "trigrams_to_word":
+        ngrams_to_word(occurrences, 3, outfile, remove_duplicates=remove_duplicates)
     elif cue_structure == "word_to_word":
         for cues, outcomes in occurrences:
             if not cues:
                 continue
             if remove_duplicates:
-                outfile.write("_".join(set(cues.split("_"))) + "\t" + outcomes + "\n")
+                outfile.write("{}\t{}\n".format("_".join(set(cues.split("_"))), outcomes))
             else:
-                outfile.write(cues + "\t" + outcomes + "\n")
+                outfile.write("{}\t{}\n".format(cues, outcomes))
     else:
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
@@ -669,7 +682,7 @@ def create_binary_event_files(event_file,
                               *,
                               sort_within_event=False,
                               number_of_processes=2,
-                              events_per_file=1000000,
+                              events_per_file=10000000,
                               overwrite=False,
                               remove_duplicates=None,
                               verbose=False):
@@ -692,7 +705,7 @@ def create_binary_event_files(event_file,
     number_of_processes : int
         number of threads to use
     events_per_file : int
-
+        Number of events in each binary file. Has to be larger than 1
     overwrite : bool
         overwrite files if they exist
     remove_duplicates : {None, True, False}
@@ -708,6 +721,9 @@ def create_binary_event_files(event_file,
         sum of number of events written to binary files
     """
     # pylint: disable=missing-docstring
+
+    if events_per_file < 2:
+        raise ValueError("events_per_file has to be larger than 1")
 
     if not os.path.isdir(path_name):
         if verbose:
@@ -728,9 +744,9 @@ def create_binary_event_files(event_file,
 
         def _error_callback(error):
             if isinstance(error, StopIteration):
-                msg, result = error.value
+                _, result = error.value
                 nonlocal number_events
-                number_events += result
+                number_events += result  # pylint: disable=undefined-variable
                 pool.close()
             else:
                 raise error

@@ -17,7 +17,7 @@ from pip._vendor import pkg_resources
 __author__ = ('Konstantin Sering, Marc Weitz, '
               'David-Elias Künstle, Lennard Schneider')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.4.3'
+__version__ = '0.5.0'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '
@@ -61,10 +61,10 @@ def sysinfo():
               "CPU: {cpu_count}\n").format(s=uname, cpu_count=mp.cpu_count())
 
     if uname.sysname == "Linux":
-        names, *lines = os.popen("free -m").readlines()
+        _, *lines = os.popen("free -m").readlines()
         for identifier in ["Mem:", "Swap:"]:
             memory = [line for line in lines if identifier in line][0]
-            ix, total, used, *rest = memory.split()
+            _, total, used, *_ = memory.split()
             osinfo += "{} {}MiB/{}MiB\n".format(identifier, used, total)
 
     osinfo += "\n"

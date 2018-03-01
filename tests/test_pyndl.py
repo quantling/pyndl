@@ -2,7 +2,6 @@
 
 # pylint: disable=C0111
 
-import sys
 import re
 from io import StringIO
 from contextlib import redirect_stdout
@@ -16,6 +15,6 @@ def test_sysinfo():
         pyndl.sysinfo()
     out = out.getvalue()
 
-    pattern = re.compile("[a-zA-Z0-9_\. ]*\n[\=]*\n+([a-zA-Z0-9_ ]*\n[\-]*\n"
-                         "([a-zA-Z0-9_ ]*: [a-zA-Z0-9_\.\-/ ]*\n+)+)+")
+    pattern = re.compile(r"[a-zA-Z0-9_\. ]*\n[\=]*\n+([a-zA-Z0-9_ ]*\n[\-]*\n"
+                         r"([a-zA-Z0-9_ ]*: [a-zA-Z0-9_\.\-/ ]*\n+)+)+")
     assert pattern.match(out)

@@ -56,7 +56,8 @@ def events_from_file(event_path):
 def ndl(events, alpha, betas, lambda_=1.0, *,
         method='openmp', weights=None,
         number_of_threads=8, len_sublists=10, remove_duplicates=None,
-        verbose=False, temporary_directory=None):
+        verbose=False, temporary_directory=None,
+        events_per_temporary_file=10000000):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -93,6 +94,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         path to directory to use for storing temporary files created;
         if none is provided, the operating system's default will
         be used (/tmp on unix)
+    events_per_temporary_file: int
+        Number of events in each temporary binary file. Has to be larger than 1
 
     Returns
     -------
@@ -163,12 +166,15 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
                                                              outcome_map, overwrite=True,
                                                              number_of_processes=number_of_threads,
+                                                             events_per_file=events_per_temporary_file,
                                                              remove_duplicates=remove_duplicates,
                                                              verbose=verbose)
         assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
         binary_files = [os.path.join(binary_path, binary_file)
                         for binary_file in os.listdir(binary_path)
                         if os.path.isfile(os.path.join(binary_path, binary_file))]
+        # sort binary files as they were created
+        binary_files.sort(key=lambda filename: int(os.path.basename(filename)[9:-4]))
         if verbose:
             print('start learning...')
         # learning
@@ -197,7 +203,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                 for partlist in part_lists:
                     working_queue.put(np.array(partlist, dtype=np.uint32))
 
-            for thread_id in range(number_of_threads):
+            for _ in range(number_of_threads):
                 thread = threading.Thread(target=worker)
                 thread.start()
                 threads.append(thread)
@@ -242,7 +248,7 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
     def _format(value):
         return '{0: <{width}}'.format(value, width=width)
 
-    if not type(alpha) in (float, int):
+    if not isinstance(alpha, (float, int)):
         alpha = 'varying'
 
     new_attrs = {'date': _format(time.strftime("%Y-%m-%d %H:%M:%S")),
@@ -272,7 +278,7 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
             if key in new_attrs:
                 new_val = new_attrs[key]
             else:
-                new_val = format_('')
+                new_val = ''
             new_attrs[key] = old_val + ' | ' + new_val
     return new_attrs
 
@@ -289,8 +295,11 @@ class WeightDict(defaultdict):
 
     """
 
+    # pylint: disable=W0613
     def __init__(self, *args, **kwargs):
         super().__init__(lambda: defaultdict(float))
+
+        self._attrs = OrderedDict()
 
         if 'attrs' in kwargs:
             self.attrs = kwargs['attrs']
@@ -385,9 +394,9 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
         attrs_to_update = weights_ini.attrs
         coords = weights_ini.coords
         weights = WeightDict()
-        for oi, outcome in enumerate(coords['outcomes'].values):
-            for ci, cue in enumerate(coords['cues'].values):
-                weights[outcome][cue] = weights_ini.item((oi, ci))
+        for outcome_index, outcome in enumerate(coords['outcomes'].values):
+            for cue_index, cue in enumerate(coords['cues'].values):
+                weights[outcome][cue] = weights_ini.item((outcome_index, cue_index))
     elif not isinstance(weights, defaultdict):
         raise ValueError('weights needs to be either defaultdict or None')
 
