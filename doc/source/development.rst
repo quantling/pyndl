@@ -141,7 +141,6 @@ in the repository's root folder (``pyndl``) or by executing
 in the documentation folder (``pyndl/doc/``).
 
 
-
 Continuous Integration
 ----------------------
 
@@ -185,6 +184,7 @@ Release Process
 1. Merge Pull Requests with new features or bugfixes into *pyndl*'s' ``master``
    branch. Ensure, that the version is adequately increased (``X.Y+1.Z`` for new
    features and ``X.Y.Z+1`` for a bugfix).
+
 2. Create a new release on Github of the `master` branch of the form ``vX.Y.Z``.
    Add a description of the new feature or bugfix
 
@@ -209,3 +209,5 @@ Release Process
 .. code:: bash
 
     twine upload -s dist/*
+
+6. Check if the new version is on pypi (https://pypi.python.org/pypi/pyndl/).
