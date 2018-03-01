@@ -132,9 +132,9 @@ def process_occurrences(occurrences, outfile, *,
             if not cues:
                 continue
             if remove_duplicates:
-                outfile.write("{}\t{}\n".format("_".join(set(cues.split("_"))), outcomes))
-            else:
-                outfile.write("{}\t{}\n".format(cues, outcomes))
+                cues = "_".join(set(cues.split("_")))
+                outcomes = "_".join(set(outcomes.split("_")))
+            outfile.write("{}\t{}\n".format(cues, outcomes))
     else:
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
