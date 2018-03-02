@@ -109,6 +109,49 @@ def test_bigrams_to_word():
     os.remove(event_file)
 
 
+def test_remove_duplicates():
+    event_file_noduplicates = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word_noduplicates.tab.gz")
+    event_file_duplicates = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word_duplicates.tab.gz")
+    create_event_file(RESOURCE_FILE, event_file_duplicates,
+                      context_structure="document",
+                      event_structure="consecutive_words",
+                      event_options=(3, ),
+                      cue_structure="bigrams_to_word",
+                      remove_duplicates=False)
+    create_event_file(RESOURCE_FILE, event_file_noduplicates,
+                      context_structure="document",
+                      event_structure="consecutive_words",
+                      event_options=(3, ),
+                      cue_structure="bigrams_to_word",
+                      remove_duplicates=True)
+
+    with gzip.open(event_file_noduplicates, "rt") as new_file:
+        lines_new = new_file.readlines()
+    with gzip.open(event_file_duplicates, "rt") as reference:
+        lines_reference = reference.readlines()
+    assert len(lines_new) == len(lines_reference)
+    n_cues_unequal = 0
+    n_outcomes_unequal = 0
+    for ii, line in enumerate(lines_new):
+        cues, outcomes = line.strip().split('\t')
+        cues = sorted(cues.split('_'))
+        outcomes = sorted(outcomes.split('_'))
+        ref_cues, ref_outcomes = lines_reference[ii].strip().split('\t')
+        ref_cues = sorted(ref_cues.split('_'))
+        ref_outcomes = sorted(ref_outcomes.split('_'))
+        if len(cues) != len(ref_cues):
+            n_cues_unequal += 1
+        if len(outcomes) != len(ref_outcomes):
+            n_outcomes_unequal += 1
+        assert set(cues) == set(ref_cues)
+        assert set(outcomes) == set(ref_outcomes)
+    assert n_cues_unequal == 1098
+    assert n_outcomes_unequal == 66
+
+    os.remove(event_file_noduplicates)
+    os.remove(event_file_duplicates)
+
+
 def test_word_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_word_to_word.tab.gz")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_word_to_word.tab.gz")
