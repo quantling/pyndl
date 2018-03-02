@@ -143,6 +143,10 @@ def test_remove_duplicates():
             n_cues_unequal += 1
         if len(outcomes) != len(ref_outcomes):
             n_outcomes_unequal += 1
+        # there should be no duplicates in (noduplicates)
+        assert len(cues) == len(set(cues))
+        assert len(outcomes) == len(set(outcomes))
+        # after making each list unique it should be the same
         assert set(cues) == set(ref_cues)
         assert set(outcomes) == set(ref_outcomes)
     assert n_cues_unequal == 1098
