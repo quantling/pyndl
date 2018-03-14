@@ -1,20 +1,9 @@
-#!/usr/bin/env python3
-# -*- encoding: utf-8 -*-
-
 """
-corpus.py generates a corpus file (outfile) out of a bunch of gunzipped xml
+pyndl.corpus
+------------
+
+*pyndl.corpus* generates a corpus file (outfile) out of a bunch of gunzipped xml
 subtitle files in a directory and all its subdirectories.
-
-Usage:
-    corpus.py [-n=N_THREADS] [-v] <directory> <outfile>
-    corpus.py -h | --help
-    corpus.py --version
-
-Options:
-    -h, --help      Show this screen.
-    -n=N_THREADS    Number of threads to use [default: 1].
-    -v              Verbose output.
-
 """
 
 import os
@@ -23,7 +12,6 @@ import sys
 import gzip
 import multiprocessing
 import xml.etree.ElementTree
-from docopt import docopt
 
 __version__ = '0.2.0'
 
@@ -112,6 +100,8 @@ def read_clean_gzfile(gz_file_path, *, break_duration=2.0):
 
 
 class JobParseGz():
+    # pylint: disable=E0202,missing-docstring
+
     """
     Stores the persistent information over several jobs and exposes a job
     method that only takes the varying parts as one argument.
@@ -136,10 +126,9 @@ class JobParseGz():
         return (lines, not_found)
 
 
-def main(directory, outfile, *, n_threads=1, verbose=False):
+def create_corpus_from_gz(directory, outfile, *, n_threads=1, verbose=False):
     """
-    Mein corpus.py program that starts the multiple processes and collects all
-    the results.
+    Create a corpus file from a set of gunziped (.gz) files in a directory.
 
     Parameters
     ----------
@@ -203,11 +192,3 @@ def main(directory, outfile, *, n_threads=1, verbose=False):
 
         with open(file_name, "wt") as not_found_file:
             not_found_file.writelines(not_founds)
-
-
-if __name__ == "__main__":
-    ARGUMENTS = docopt(__doc__, version='corpus %s' % __version__)
-    main(ARGUMENTS['<directory>'],
-         ARGUMENTS['<outfile>'],
-         n_threads=int(ARGUMENTS['-n']),
-         verbose=ARGUMENTS['-v'])

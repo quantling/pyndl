@@ -1,20 +1,19 @@
-#!/usr/bin/env python3
-
 """
-This module provides functions in order to count
+pyndl.count
+-----------
+
+*pyndl.count* provides functions in order to count
 
 * words and symbols in a corpus file
 * cues and outcomes in an event file
 
 """
-
 # pylint: disable=redefined-outer-name, invalid-name
 
 from collections import Counter
 import gzip
 import itertools
 import multiprocessing
-import os
 import sys
 
 
@@ -175,36 +174,3 @@ def load_counter(filename):
                 raise ValueError("%s contains two instances (words, symbols, ...) of the same spelling." % filename)
             counter[key] = int(count)
     return counter
-
-
-if __name__ == '__main__':
-
-    if len(sys.argv) < 2:
-        print('Usage: python3 %s corpus=corpus_file.txt [num_of_processes]' % sys.argv[0])
-        print('Or:    python3 %s event=event_file.tab.gz [num_of_processes]' % sys.argv[0])
-        sys.exit('Wrong command line option.')
-    modus, filename = sys.argv[1].strip().split("=")
-    path, filename = os.path.split(filename)
-    if not os.path.exists(filename):
-        sys.exit('ERROR: file %s was not found!' % sys.argv[1])
-    try:
-        step = int(sys.argv[2])
-    except IndexError:
-        step = 1
-
-    if modus == 'event':
-        n_events, cues, outcomes = cues_outcomes(os.path.join(path, filename),
-                                                 number_of_processes=step,
-                                                 verbose=True)
-        save_counter(cues, filename + ".cues", header="cues\tfreq\n")
-        save_counter(outcomes, filename + ".outcomes", header="outcomes\tfreq\n")
-
-    elif modus == 'corpus':
-        words, symbols = words_symbols(os.path.join(path, filename),
-                                       number_of_processes=step,
-                                       verbose=True)
-        save_counter(words, filename + ".words", header="words\tfreq\n")
-        save_counter(symbols, filename + ".symbols", header="symbols\tfreq\n")
-
-    else:
-        raise NotImplementedError("modus %s is not defined" % modus)

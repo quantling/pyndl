@@ -14,8 +14,4 @@
 * Step 3
 
 ### System details
-* Operating System:
-* Python Version:
-<!-- run `python --version` for version details -->
-* Installed python packages
-<!-- run `pip freeze` for a list of installed packages -->
+<!-- run `python -c "import pyndl; pyndl.sysinfo()"` and copy the output -->
