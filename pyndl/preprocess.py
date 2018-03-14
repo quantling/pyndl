@@ -342,16 +342,15 @@ def create_event_file(corpus_file,
 
 
 def create_event_data_frame(corpus_file,
-                           event_file,
-                           symbols="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
-                           *,
-                           context_structure="document",
-                           event_structure="consecutive_words",
-                           event_options=(3,),  # number_of_words,
-                           cue_structure="trigrams_to_word",
-                           lower_case=False,
-                           remove_duplicates=True,
-                           verbose=False):
+                            symbols="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                            *,
+                            context_structure="document",
+                            event_structure="consecutive_words",
+                            event_options=(3,),  # number_of_words,
+                            cue_structure="trigrams_to_word",
+                            lower_case=False,
+                            remove_duplicates=True,
+                            verbose=False):
     if '_' in symbols or '#' in symbols or '\t' in symbols:
         raise ValueError('"_", "#", and "\\t" are special symbols and cannot be in symbols string')
 
@@ -431,8 +430,8 @@ def create_event_data_frame(corpus_file,
 
         occurrences = gen_occurrences(words)
         output = process_occurrences_dataFrame(occurrences, output,
-                                      cue_structure=cue_structure,
-                                      remove_duplicates=remove_duplicates)
+                                               cue_structure=cue_structure,
+                                               remove_duplicates=remove_duplicates)
 
     def process_context(line):
         """called when a context boundary is found."""
@@ -488,6 +487,7 @@ def create_event_data_frame(corpus_file,
         if context_structure != 'line':
             process_words(words)
     return output
+
 
 class JobFilter():
     # pylint: disable=E0202,missing-docstring

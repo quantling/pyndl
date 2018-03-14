@@ -46,6 +46,27 @@ def events_from_file(event_path):
             yield (cues, outcomes)
 
 
+def events_from_data_frame(data_frame, *, columns=("cues", "outcomes")):
+    """
+    Yields events for all events in a gzipped event DataFrame.
+
+    Parameters
+    ----------
+    data_frame : pd.DataFrame
+
+    Yields
+    ------
+    cues, outcomes : list, list
+        a tuple of two lists containing cues and outcomes
+
+    """
+    for _, row in data_frame.iterrows():
+        cues, outcomes = row[list(columns)]
+        cues = cues.split('_')
+        outcomes = outcomes.split('_')
+        yield (cues, outcomes)
+
+
 def ndl(events, alpha, betas, lambda_=1.0, *,
         method='openmp', weights=None,
         number_of_threads=8, len_sublists=10, remove_duplicates=None,
@@ -311,7 +332,7 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
 
     Parameters
     ----------
-    events : generator or str
+    events : generator or str or pd.DataFrame
         generates cues, outcomes pairs or the path to the event file
     alphas : dict or float
         a (default)dict having cues as keys and a value below 1 as value
@@ -388,6 +409,8 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
 
     if isinstance(events, str):
         events = events_from_file(events)
+    if isinstance(events, pd.DataFrame):
+        events = events_from_data_frame(events)
     if isinstance(alphas, float):
         alpha = alphas
         alphas = defaultdict(lambda: alpha)

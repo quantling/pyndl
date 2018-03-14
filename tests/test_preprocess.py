@@ -6,12 +6,14 @@ from collections import OrderedDict
 import gzip
 import os
 
+import pandas as pd
 import pytest
 
 from pyndl.preprocess import (create_event_file, filter_event_file,
                               create_binary_event_files, bandsample,
                               event_generator, write_events,
-                              _job_binary_event_file, JobFilter, to_bytes, to_integer, read_binary_file)
+                              _job_binary_event_file, JobFilter, to_bytes, to_integer, read_binary_file,
+                              create_event_data_frame)
 
 from pyndl.count import (cues_outcomes, load_counter, save_counter)
 from pyndl import ndl
@@ -69,7 +71,7 @@ def test_create_event_file_upper_case():
     create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
-                      event_options=(3, ))
+                      event_options=(3,))
     os.remove(event_file)
 
 
@@ -79,7 +81,7 @@ def test_create_event_file_trigrams_to_word():
     create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
-                      event_options=(3, ),
+                      event_options=(3,),
                       cue_structure="trigrams_to_word")
     compare_event_files(event_file, reference_file)
     os.remove(event_file)
@@ -90,7 +92,7 @@ def test_create_event_file_trigrams_to_word_line_based():
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word_line_based.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
-                      event_structure="line", event_options=(3, ),
+                      event_structure="line", event_options=(3,),
                       cue_structure="trigrams_to_word")
     compare_event_files(event_file, reference_file)
     os.remove(event_file)
@@ -102,11 +104,34 @@ def test_create_event_file_bigrams_to_word():
     create_event_file(RESOURCE_FILE, event_file,
                       context_structure="document",
                       event_structure="consecutive_words",
-                      event_options=(3, ),
+                      event_options=(3,),
                       cue_structure="bigrams_to_word",
                       remove_duplicates=True)
     compare_event_files(event_file, reference_file)
     os.remove(event_file)
+
+
+def test_create_event_data_frame_bigrams_to_word():
+    reference_data_frame = pd.read_table(os.path.join(TEST_ROOT, "reference/event_file_bigrams_to_word.tab.gz"))
+    data_frame_output = create_event_data_frame(RESOURCE_FILE,
+                                                context_structure="document",
+                                                event_structure="consecutive_words",
+                                                event_options=(3,),
+                                                cue_structure="bigrams_to_word",
+                                                remove_duplicates=True)
+    # data_frame_output.to_csv(os.path.join(TEST_ROOT, "reference/event_data_frame_bigrams_to_word.csv"), index=False)
+    compare_event_data_frame(reference_data_frame, data_frame_output)
+
+
+def test_create_event_data_frame_trigram_to_word():
+    reference_data_frame = pd.read_table(os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab.gz"))
+    data_frame_output = create_event_data_frame(RESOURCE_FILE,
+                                                context_structure="document",
+                                                event_structure="consecutive_words",
+                                                event_options=(3,),
+                                                cue_structure="trigrams_to_word",
+                                                remove_duplicates=True)
+    compare_event_data_frame(reference_data_frame, data_frame_output)
 
 
 def test_create_event_file_word_to_word():
@@ -135,19 +160,19 @@ def test_job_filter():
     job = JobFilter(keep_cues, keep_outcomes, None, None, None, None)
     line = '#of_alb_NEI_b_of#_XX\tterm_not_of\n'
     new_line = job.job(line)
-    assert(new_line == '#of_of#\tof\n')
+    assert (new_line == '#of_of#\tof\n')
     # no cues
     line = 'alb_NEI_b_XX\tterm_not_of\n'
     new_line = job.job(line)
-    assert(new_line is None)
+    assert (new_line is None)
     # no outcomes
     line = '#of_alb_NEI_b_of#_XX\tterm_not\n'
     new_line = job.job(line)
-    assert(new_line == '#of_of#\t\n')
+    assert (new_line == '#of_of#\t\n')
     # neither cues nor outcomes
     line = '#alb_NEI_b_XX\tterm_not\n'
     new_line = job.job(line)
-    assert(new_line is None)
+    assert (new_line is None)
     with pytest.raises(ValueError):
         bad_line = 'This is a bad line.'
         job.job(bad_line)
@@ -276,7 +301,7 @@ def test_preprocessing():
     create_event_file(corpus_file, event_file, symbols,
                       context_structure="document",
                       event_structure="consecutive_words",
-                      event_options=(3, ),
+                      event_options=(3,),
                       lower_case=True, verbose=True)
 
     # read in cues and outcomes
@@ -333,6 +358,19 @@ def compare_event_files(newfile, oldfile):
         cues = sorted(cues.split('_'))
         outcomes = sorted(outcomes.split('_'))
         ref_cues, ref_outcomes = lines_reference[ii].strip().split('\t')
+        ref_cues = sorted(ref_cues.split('_'))
+        ref_outcomes = sorted(ref_outcomes.split('_'))
+        assert cues == ref_cues
+        assert outcomes == ref_outcomes
+
+
+def compare_event_data_frame(new_data_frame, old_data_frame):
+    assert len(new_data_frame) == len(old_data_frame)
+    for ii in range(len(new_data_frame)):
+        cues, outcomes = new_data_frame.iloc[ii]
+        cues = sorted(cues.split('_'))
+        outcomes = sorted(outcomes.split('_'))
+        ref_cues, ref_outcomes = new_data_frame.iloc[ii]
         ref_cues = sorted(ref_cues.split('_'))
         ref_outcomes = sorted(ref_outcomes.split('_'))
         assert cues == ref_cues

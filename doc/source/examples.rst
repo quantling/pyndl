@@ -166,14 +166,14 @@ methods
     ...
     >>> weights.loc[{'outcomes': 'plural', 'cues': 's#'}]  # doctest: +ELLIPSIS
     <xarray.DataArray ()>
-    array(0.07698822703296752)
+    array(0.076988...)
     Coordinates:
         outcomes  <U6 'plural'
         cues      <U2 's#'
     ...
     >>> weights.loc['plural'].loc['s#']  # doctest: +ELLIPSIS
     <xarray.DataArray ()>
-    array(0.07698822703296752)
+    array(0.076988...)
     Coordinates:
         outcomes  <U6 'plural'
         cues      <U2 's#'
