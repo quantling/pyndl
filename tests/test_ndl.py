@@ -14,7 +14,7 @@ import xarray as xr
 import pandas as pd
 import pytest
 
-from pyndl import ndl, count
+from pyndl import ndl, count, io
 
 slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),  # pylint: disable=invalid-name
                           reason="need --runslow option to run")
@@ -52,7 +52,7 @@ def result_dict_ndl():
 
 @pytest.fixture(scope='module')
 def result_dict_ndl_generator():
-    return ndl.dict_ndl(ndl.events_from_file(FILE_PATH_SIMPLE), ALPHA, BETAS)
+    return ndl.dict_ndl(io.events_from_file(FILE_PATH_SIMPLE), ALPHA, BETAS)
 
 
 @pytest.fixture(scope='module')
@@ -85,16 +85,6 @@ def result_continue_learning():
     result = ndl.ndl(part_path_2, ALPHA, BETAS, weights=result_part)
 
     return result
-
-
-def test_events_from_data_frame():
-    data_frame = pd.read_table(FILE_PATH_SIMPLE)
-    events = ndl.events_from_data_frame(data_frame)
-    ref_events = ndl.events_from_file(FILE_PATH_SIMPLE)
-
-    for (cues, outcomes), (ref_cues, ref_outcomes) in zip(events, ref_events):
-        assert sorted(cues) == sorted(ref_cues)
-        assert sorted(outcomes) == sorted(ref_outcomes)
 
 
 def test_exceptions():

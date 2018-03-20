@@ -8,7 +8,6 @@ pyndl.ndl
 from collections import defaultdict, OrderedDict
 import copy
 import getpass
-import gzip
 import os
 from queue import Queue
 import socket
@@ -26,31 +25,7 @@ from . import __version__
 from . import count
 from . import preprocess
 from . import ndl_parallel
-
-
-def events_from_file(event_path):
-    """
-    Yields events for all events in a gzipped event file.
-
-    Parameters
-    ----------
-    event_path : str
-        path to gzipped event file
-
-    Yields
-    ------
-    cues, outcomes : list, list
-        a tuple of two lists containing cues and outcomes
-
-    """
-    with gzip.open(event_path, 'rt') as event_file:
-        # skip header
-        event_file.readline()
-        for line in event_file:
-            cues, outcomes = line.strip('\n').split('\t')
-            cues = cues.split('_')
-            outcomes = outcomes.split('_')
-            yield (cues, outcomes)
+from . import io
 
 
 def ndl(events, alpha, betas, lambda_=1.0, *,
@@ -407,7 +382,7 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
     all_outcomes = set(weights.keys())
 
     if isinstance(events, str):
-        events = events_from_file(events)
+        events = io.events_from_file(events)
     if isinstance(alphas, float):
         alpha = alphas
         alphas = defaultdict(lambda: alpha)

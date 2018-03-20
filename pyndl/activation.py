@@ -13,7 +13,7 @@ from collections import defaultdict, OrderedDict
 import numpy as np
 import xarray as xr
 
-from . import ndl
+from . import io
 
 
 # pylint: disable=W0621
@@ -59,7 +59,7 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
 
     """
     if isinstance(events, str):
-        events = ndl.events_from_file(events)
+        events = io.events_from_file(events)
 
     events = (cues for cues, outcomes in events)
     if remove_duplicates is None:
