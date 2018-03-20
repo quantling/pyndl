@@ -1,6 +1,11 @@
-import pandas as pd
+#!/usr/bin/env python3
+
+# pylint: disable=C0111
+
 import os
 import gzip
+
+import pandas as pd
 
 from pyndl import io
 

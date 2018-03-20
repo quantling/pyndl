@@ -9,8 +9,9 @@ existing events from a DataFrame or a list to a file.
 """
 
 import gzip
-import pandas as pd
 from collections.abc import Iterator
+
+import pandas as pd
 
 
 def events_from_file(event_path, compression="gzip"):
@@ -24,6 +25,7 @@ def events_from_file(event_path, compression="gzip"):
     compression : str
         Boolean which indicate whether the events should be read from gunzip
         file or not
+
     Yields
     ------
     cues, outcomes : list, list
