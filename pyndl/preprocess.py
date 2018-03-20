@@ -100,9 +100,9 @@ def ngrams_to_word(occurrences, n_chars, outfile, remove_duplicates=True):
         if not ngrams or not occurrence:
             continue
         if remove_duplicates:
-            outfile.write("{}\t{}\n".format("_".join(set(ngrams)), occurrence))
-        else:
-            outfile.write("{}\t{}\n".format("_".join(ngrams), occurrence))
+            ngrams = set(ngrams)
+            occurrence = "_".join(set(occurrence.split("_")))
+        outfile.write("{}\t{}\n".format("_".join(ngrams), occurrence))
 
 
 def process_occurrences(occurrences, outfile, *,
@@ -132,9 +132,9 @@ def process_occurrences(occurrences, outfile, *,
             if not cues:
                 continue
             if remove_duplicates:
-                outfile.write("{}\t{}\n".format("_".join(set(cues.split("_"))), outcomes))
-            else:
-                outfile.write("{}\t{}\n".format(cues, outcomes))
+                cues = "_".join(set(cues.split("_")))
+                outcomes = "_".join(set(outcomes.split("_")))
+            outfile.write("{}\t{}\n".format(cues, outcomes))
     else:
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
@@ -245,19 +245,16 @@ def create_event_file(corpus_file,
         """
         if event_structure == 'consecutive_words':
             occurrences = list()
-            cur_words = list()
-            ii = 0
-            while True:
-                if ii < len(words):
-                    cur_words.append(words[ii])
-                if ii >= len(words) or ii >= number_of_words:
-                    # remove the first word
-                    cur_words = cur_words[1:]
+            # can't have more consecutive words than total words
+            length = min(number_of_words, len(words))
+            # slide window over list of words
+            for ii in range(1 - length, len(words)):
+                # no consecutive words before first word
+                start = max(ii, 0)
+                # no consecutive words after last word
+                end = min(ii + length, len(words))
                 # append (cues, outcomes) with empty outcomes
-                occurrences.append(("_".join(cur_words), ''))
-                ii += 1
-                if not cur_words:
-                    break
+                occurrences.append(("_".join(words[start:end]), ""))
             return occurrences
         # for words = (A, B, C, D); before = 2, after = 1
         # make: (B, A), (A_C, B), (A_B_D, C), (B_C, D)
@@ -274,6 +271,8 @@ def create_event_file(corpus_file,
         elif event_structure == 'line':
             # (cues, outcomes) with empty outcomes
             return [('_'.join(words), ''), ]
+        else:
+            raise ValueError('gen_occurrences should be one of {"consecutive_words", "word_to_word", "line"}')
 
     def process_line(line):
         """processes one line of text."""
