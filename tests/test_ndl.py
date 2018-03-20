@@ -87,6 +87,16 @@ def result_continue_learning():
     return result
 
 
+def test_events_from_data_frame():
+    data_frame = pd.read_table(FILE_PATH_SIMPLE)
+    events = ndl.events_from_data_frame(data_frame)
+    ref_events = ndl.events_from_file(FILE_PATH_SIMPLE)
+
+    for (cues, outcomes), (ref_cues, ref_outcomes) in zip(events, ref_events):
+        assert sorted(cues) == sorted(ref_cues)
+        assert sorted(outcomes) == sorted(ref_outcomes)
+
+
 def test_exceptions():
     with pytest.raises(ValueError) as e_info:
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', weights=1)
