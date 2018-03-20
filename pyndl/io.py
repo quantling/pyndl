@@ -56,7 +56,7 @@ def events_to_file(events, file_path, delimiter="\t", compression="gzip",
 
     Parameters
     ----------
-    events : pandas.DataFrame, list or generator
+    events : pandas.DataFrame or Iterator
         a pandas DataFrame with one event per row and one colum with the cues
         and one column with the outcomes or a list of cues and outcomes as strings
         or a list of a list of cues and a list of outcomes which should be written
@@ -77,7 +77,7 @@ def events_to_file(events, file_path, delimiter="\t", compression="gzip",
     elif isinstance(events, Iterator):
         events = events_from_list(events)
     else:
-        raise ValueError("events should either be a pd.DataFrame or a list.")
+        raise ValueError("events should either be a pd.DataFrame or an Iterator.")
 
     if compression == "gzip":
         out_file = gzip.open(file_path, "wt")
@@ -109,7 +109,7 @@ def events_from_dataframe(df, columns=("cues", "outcomes")):
     df : pandas.DataFrame
         a pandas DataFrame with one event per row and one colum with the cues
         and one column with the outcomes.
-    columns: tuple
+    columns : tuple
         a tuple of column names
 
     Yields
