@@ -15,6 +15,7 @@ import sys
 import tempfile
 import threading
 import time
+import warnings
 
 import cython
 import pandas as pd
@@ -26,6 +27,17 @@ from . import count
 from . import preprocess
 from . import ndl_parallel
 from . import io
+
+
+warnings.simplefilter('always', DeprecationWarning)
+
+
+def events_from_file(event_path):
+    warnings.warn("Usage of pyndl.ndl.events_from_file is depreceated and will "
+                  "be removed in v0.6.0. Please use pyndl.io.events_from_file "
+                  "instead.",
+                  DeprecationWarning, stacklevel=2)
+    return io.events_from_file(event_path)
 
 
 def ndl(events, alpha, betas, lambda_=1.0, *,
