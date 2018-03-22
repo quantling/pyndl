@@ -9,7 +9,7 @@ existing events from a DataFrame or a list to a file.
 """
 
 import gzip
-from collections.abc import Iterator
+from collections import Iterator, Iterable
 
 import pandas as pd
 
@@ -23,8 +23,8 @@ def events_from_file(event_path, compression="gzip"):
     event_path : str
         path to gzipped event file
     compression : str
-        Boolean which indicate whether the events should be read from gunzip
-        file or not
+        indicates whether the events should be read from gunzip
+        file or not can be {"gzip" or None}
 
     Yields
     ------
@@ -34,8 +34,10 @@ def events_from_file(event_path, compression="gzip"):
     """
     if compression == "gzip":
         event_file = gzip.open(event_path, 'rt')
+    elif compression is None:
+        event_file = open(event_path, 'rt')
     else:
-        event_file = open(event_path, 'r')
+        raise ValueError("compression needs to be 'gzip' or None")
 
     try:
         # skip header
@@ -56,7 +58,7 @@ def events_to_file(events, file_path, delimiter="\t", compression="gzip",
 
     Parameters
     ----------
-    events : pandas.DataFrame or Iterator
+    events : pandas.DataFrame or Iterator or Iterable
         a pandas DataFrame with one event per row and one colum with the cues
         and one column with the outcomes or a list of cues and outcomes as strings
         or a list of a list of cues and a list of outcomes which should be written
@@ -65,37 +67,40 @@ def events_to_file(events, file_path, delimiter="\t", compression="gzip",
         path to where the file should be saved
     delimiter: str
         Seperator which should be used. Default ist a tab
-    compression: bool
-        Boolean which indicate whether the events should be stored as a gunzip
-        or not
+    compression : str
+        indicates whether the events should be read from gunzip
+        file or not can be {"gzip" or None}
     columns: tuple
         a tuple of column names
 
     """
     if isinstance(events, pd.DataFrame):
         events = events_from_dataframe(events)
-    elif isinstance(events, Iterator):
+    elif isinstance(events, (Iterator, Iterable)):
         events = events_from_list(events)
     else:
-        raise ValueError("events should either be a pd.DataFrame or an Iterator.")
+        raise ValueError("events should either be a pd.DataFrame or an Iterator or an Iterable.")
 
     if compression == "gzip":
-        out_file = gzip.open(file_path, "wt")
+        out_file = gzip.open(file_path, 'wt')
+    elif compression is None:
+        out_file = open(file_path, 'wt')
     else:
-        out_file = open(file_path, "wt")
+        raise ValueError("compression needs to be 'gzip' or None")
 
     try:
         out_file.write("{}\n".format(delimiter.join(columns)))
 
         for cues, outcomes in events:
             if isinstance(cues, list) and isinstance(outcomes, list):
-                "{}{}{}".format("_".join(cues),
-                                delimiter,
-                                "_".join(outcomes))
+                line = "{}{}{}\n".format("_".join(cues),
+                                         delimiter,
+                                         "_".join(outcomes))
             elif isinstance(cues, str) and isinstance(outcomes, str):
-                "{}{}{}".format(cues, delimiter, outcomes)
+                line = "{}{}{}\n".format(cues, delimiter, outcomes)
             else:
                 raise ValueError("cues and outcomes should either be a list or a string.")
+            out_file.write(line)
     finally:
         out_file.close()
 
