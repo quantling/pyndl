@@ -1,0 +1,18 @@
+# PyUp (https://pyup.io/) configuration file
+#
+# see https://pyup.io/docs/bot/config/ for details
+
+# general
+update: all
+pin: True
+schedule: "every day"
+assignees:
+ - derNarr
+ - Trybnetic
+
+# requirement files
+search: True
+
+# Pull Request handling
+close_prs: True
+label_prs: dependencies
