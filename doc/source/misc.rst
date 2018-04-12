@@ -72,6 +72,49 @@ Further reading:
 - https://stackoverflow.com/questions/44379525/r-reticulate-how-do-i-clear-a-python-object-from-memory
 
 
+Keeping a fork in sync with master
+----------------------------------
+
+If you fork the ``pyndl`` project on github.com you might want to keep it in
+sync with master. In order to do so, you need to setup a remote repository
+within a local ``pyndl`` clone of you fork. This remote repository will point
+to the original ``pyndl`` repository and is usually called ``upstream``. In
+order to do so run with a Terminal within the cloned pyndl folder:
+
+.. code:: bash
+
+    git remote add upstream https://github.com/quantling/pyndl.git
+
+After having set up the ``upstream`` repository you can manually sync your
+local repository by running:
+
+.. code:: bash
+
+    git fetch upstream
+
+In order to sync you ``master`` branch run:
+
+.. code:: bash
+
+    git checkout master
+    git merge upstream/master
+
+If the merge cannot be fast-forward, you should resolve any issue now and
+commit the manually merged files.
+
+After that you should sync you local repository with you github fork by
+running:
+
+.. code:: bash
+
+    git push
+
+Some sources with more explanation:
+
+- https://help.github.com/articles/configuring-a-remote-for-a-fork/
+- https://help.github.com/articles/syncing-a-fork/
+
+
 Local testing with conda
 ------------------------
 
