@@ -35,7 +35,7 @@ ext_modules = [
         "pyndl.ndl_parallel",
         ["pyndl/ndl_parallel.pyx"],
         extra_compile_args=['-fopenmp'],
-        extra_link_args=['-fopenmp'],
+        extra_link_args=['-fopenmp', '-Wl,-rpath,/usr/local/opt/gcc/lib/gcc/7/'],
     )
 ]
 
