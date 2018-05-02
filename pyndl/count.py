@@ -66,14 +66,13 @@ def cues_outcomes(event_file_name,
 
     """
     with multiprocessing.Pool(number_of_processes) as pool:
-        bar = progressbar.ProgressBar(max_value=progressbar.UnknownLength, redirect_stdout=True)
         step = number_of_processes
         results = pool.starmap(_job_cues_outcomes,
                                ((event_file_name,
                                  start,
                                  step,
                                  verbose,
-                                 bar)
+                                 )
                                 for start in range(number_of_processes)))
         n_events = 0
         cues = Counter()
@@ -110,7 +109,6 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
     words = Counter()
     symbols = Counter()
     with open(corpus_file_name, 'r') as dfile:
-        bar = progressbar.ProgressBar(max_value=progressbar.UnknownLength)
         for nn, line in enumerate(itertools.islice(dfile, start, None, step)):
             for word in line.split():  # splits the string on all whitespace
                 word = word.strip()
@@ -125,7 +123,6 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
                 # print('.', end='')
                 # TODO this should be a progress-bar
                 logger.info('.', end='')
-                bar.update(nn)
 
                 sys.stdout.flush()
     return (words, symbols)

@@ -13,9 +13,12 @@ import sys
 import logging
 import multiprocessing as mp
 from pip._vendor import pkg_resources
+from pyndl import log
 
-#configuring Logging
-logging.basicConfig(filename="/home/shadi/PycharmProjects/pyndl/pyndl/logs/init.log",level=logging.DEBUG,format="%(asctime)s %(levelname)s: %(message)s",datefmt='%d %b %Y %H:%M:%S')
+
+# setting up logger name
+logger = log.setup_custom_logger("__init__")
+
 
 
 __author__ = ('Konstantin Sering, Marc Weitz, '
@@ -80,5 +83,5 @@ def sysinfo():
                       for dep in dependencies)
 
     # print(header + general + osinfo + deps)
-    logging.debug(header + general + osinfo + deps)
+    logger.info(header + general + osinfo + deps)
 
