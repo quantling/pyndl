@@ -14,7 +14,7 @@ import xarray as xr
 import pandas as pd
 import pytest
 
-from pyndl import ndl, count
+from pyndl import ndl, count, io
 
 slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),  # pylint: disable=invalid-name
                           reason="need --runslow option to run")
@@ -52,7 +52,7 @@ def result_dict_ndl():
 
 @pytest.fixture(scope='module')
 def result_dict_ndl_generator():
-    return ndl.dict_ndl(ndl.events_from_file(FILE_PATH_SIMPLE), ALPHA, BETAS)
+    return ndl.dict_ndl(io.events_from_file(FILE_PATH_SIMPLE), ALPHA, BETAS)
 
 
 @pytest.fixture(scope='module')

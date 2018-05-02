@@ -14,7 +14,7 @@ from pyndl.preprocess import (create_event_file, filter_event_file,
                               _job_binary_event_file, JobFilter, to_bytes, to_integer, read_binary_file)
 
 from pyndl.count import (cues_outcomes, load_counter, save_counter)
-from pyndl import ndl
+from pyndl import io
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 EVENT_FILE = os.path.join(TEST_ROOT, "temp/events_corpus.tab.gz")
@@ -292,8 +292,8 @@ def test_read_binary_file():
                                               outcome_id_map, overwrite=True, remove_duplicates=False)
 
     bin_events = read_binary_file(abs_binary_file_path)
-    events = ndl.events_from_file(abs_file_path)
-    events_dup = ndl.events_from_file(abs_file_path)
+    events = io.events_from_file(abs_file_path)
+    events_dup = io.events_from_file(abs_file_path)
 
     assert number_events == len(list(events_dup))
 

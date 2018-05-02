@@ -21,6 +21,11 @@ Submodules
     :undoc-members:
     :show-inheritance:
 
+.. automodule:: pyndl.io
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 .. automodule:: pyndl.ndl
     :members:
     :undoc-members:
