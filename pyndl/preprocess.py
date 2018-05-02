@@ -14,6 +14,13 @@ import random
 import re
 import sys
 import time
+import logging
+from pyndl import log
+
+
+# setting up logger name
+logger = log.setup_custom_logger("preprocess")
+
 
 
 def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
@@ -38,7 +45,7 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
 
     step = sum(freq for word, freq in population) / sample_size
     if verbose:
-        print("step %.2f" % step)
+        logger.info("step %.2f" % step)
 
     accumulator = 0
     index = 0
@@ -47,12 +54,12 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
         word, freq = population[index]
         accumulator += freq
         if verbose:
-            print("%s\t%i\t%.2f" % (word, freq, accumulator))
+            logger.info("%s\t%i\t%.2f" % (word, freq, accumulator))
         if accumulator >= step:
             sample.append((word, freq))
             accumulator -= step
             if verbose:
-                print("add\t%s\t%.2f" % (word, accumulator))
+                logger.info("add\t%s\t%.2f" % (word, accumulator))
             del population[index]
             while accumulator >= step and index >= 1:
                 index -= 1
@@ -60,14 +67,14 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
                 accumulator -= step
                 if verbose:
                     word, freq = population[index]
-                    print("  add\t%s\t%.2f" % (word, accumulator))
+                    logger.info("  add\t%s\t%.2f" % (word, accumulator))
                 del population[index]
         else:
             # only add to index if no element was removed
             # if element was removed, index points at next element already
             index += 1
             if verbose and index % 1000 == 0:
-                print(".", end="")
+                logger.info(".", end="")
                 sys.stdout.flush()
     sample = collections.Counter({key: value for key, value in sample})
     return sample
@@ -302,7 +309,8 @@ def create_event_file(corpus_file,
             words = []
             for ii, line in enumerate(corpus):
                 if verbose and ii % 100000 == 0:
-                    print(".", end="")
+                    #print(".", end="")
+                    logger.info(".", end="")
                     sys.stdout.flush()
                     outfile.flush()
                 line = line.strip()
@@ -510,7 +518,8 @@ def filter_event_file(input_event_file, output_event_file, *,
                     if processed_line is not None:
                         outfile.write(processed_line)
                     if verbose and ii % 100000 == 0:
-                        print('.', end='')
+                        #print('.', end='')
+                        logger.info('.', end='')
                         sys.stdout.flush()
 
 
@@ -741,19 +750,22 @@ def create_binary_event_files(event_file,
 
     if not os.path.isdir(path_name):
         if verbose:
-            print("create event file folder '%s'" % path_name)
+            #print("create event file folder '%s'" % path_name)
+            logger.info("create event file folder '%s'" % path_name)
         os.mkdir(path_name, 0o773)
     elif not overwrite:
         raise IOError("folder %s exists and overwrite is False" % path_name)
     else:
         if verbose:
-            print("removing old event files in '%s'" % path_name)
+            #print("removing old event files in '%s'" % path_name)
+            logger.info("removing old event files in '%s'" % path_name)
         for file_name in os.listdir(path_name):
             if "events_0_" in file_name:
                 os.remove(os.path.join(path_name, file_name))
 
     if verbose:
-        print("creating new events files in '{}'".format(path_name))
+        #print("creating new events files in '{}'".format(path_name))
+        logger.info("creating new events files in '{}'".format(path_name))
 
     number_events = 0
 
@@ -773,7 +785,8 @@ def create_binary_event_files(event_file,
             number_events += result
             if verbose:
                 #print("finished job")
-                print('f', end='')
+                #print('f', end='')
+                logger.info('f', end='')
                 sys.stdout.flush()
 
         ii = 0
@@ -795,12 +808,14 @@ def create_binary_event_files(event_file,
                                           error_callback=_error_callback)
                 if verbose:
                     #print("submitted job %i" % ii)
-                    print('s', end='')
+                    #print('s', end='')
+                    logger.info('s', end='')
             except ValueError as error:
                 # someone has closed the pool with the correct error callback
                 if error.args[0] == 'Pool not running':
                     if verbose:
-                        print("reached end of events")
+                        #print("reached end of events")
+                        logger.info("reached end of events")
                     break  # out of while True
                 else:
                     raise error
@@ -812,13 +827,15 @@ def create_binary_event_files(event_file,
                         break
                     time.sleep(1.0)  # check every second
                     if verbose:
-                        print('c', end='')
+                        #print('c', end='')
+                        logger.info('c', end='')
                         sys.stdout.flush()
         # wait until all jobs are done
         pool.close()
         pool.join()
         if verbose:
-            print("finished all jobs.\n")
+            #print("finished all jobs.\n")
+            logger.info("finished all jobs.\n")
     return number_events
 
 # for example code see function test_preprocess in file

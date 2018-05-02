@@ -16,12 +16,16 @@ import itertools
 import multiprocessing
 import os
 import sys
-import logging
+from pyndl import log
 
-#configuring Logging
-logging.basicConfig(filename="/home/shadi/PycharmProjects/pyndl/pyndl/logs/count.log",level=logging.DEBUG,format="%(asctime)s %(levelname)s: %(message)s",datefmt='%d %b %Y %H:%M:%S')
 
-def _job_cues_outcomes(event_file_name, start, step, verbose=False):
+# setting up logger name
+logger = log.setup_custom_logger("count")
+
+
+
+
+def _job_cues_outcomes(event_file_name, start, step, verbose=None, bar=None):
     """
     Counts cues and outcomes for every ``step`` event starting from
     ``start`` event.
@@ -43,11 +47,10 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=False):
                 cues[cue] += 1
             for outcome in outcomes_line.strip().split('_'):
                 outcomes[outcome] += 1
-            if verbose and nn % 100000 == 0:
-                # print('.', end='')
-                logging.debug('.', end='')
-
-            sys.stdout.flush()
+            if verbose and nn % 10000 == 0:
+                bar.update(bar.value + 1)
+        # # TODO make it a progress-bar
+        #     sys.stdout.flush()
     return (nn + 1, cues, outcomes)
 
 
@@ -63,12 +66,14 @@ def cues_outcomes(event_file_name,
 
     """
     with multiprocessing.Pool(number_of_processes) as pool:
+        bar = progressbar.ProgressBar(max_value=progressbar.UnknownLength, redirect_stdout=True)
         step = number_of_processes
         results = pool.starmap(_job_cues_outcomes,
                                ((event_file_name,
                                  start,
                                  step,
-                                 verbose)
+                                 verbose,
+                                 bar)
                                 for start in range(number_of_processes)))
         n_events = 0
         cues = Counter()
@@ -79,8 +84,7 @@ def cues_outcomes(event_file_name,
             outcomes += outcomes_process
 
     if verbose:
-        # print('\n...counting done.')
-          logging.debug('\n...counting done.')
+        logger.info('\n...counting done. WTF')
     return n_events, cues, outcomes
 
 
@@ -106,6 +110,7 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
     words = Counter()
     symbols = Counter()
     with open(corpus_file_name, 'r') as dfile:
+        bar = progressbar.ProgressBar(max_value=progressbar.UnknownLength)
         for nn, line in enumerate(itertools.islice(dfile, start, None, step)):
             for word in line.split():  # splits the string on all whitespace
                 word = word.strip()
@@ -118,7 +123,10 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
                 symbols += Counter(word)
             if verbose and nn % 100000 == 0:
                 # print('.', end='')
-                logging.debug('.', end='')
+                # TODO this should be a progress-bar
+                logger.info('.', end='')
+                bar.update(nn)
+
                 sys.stdout.flush()
     return (words, symbols)
 
@@ -151,7 +159,7 @@ def words_symbols(corpus_file_name,
 
     if verbose:
         # print('\n...counting done.')
-          logging.debug('\n...counting done.')
+        logger.info('\n...counting done.')
     return words, symbols
 
 
@@ -181,3 +189,6 @@ def load_counter(filename):
                 raise ValueError("%s contains two instances (words, symbols, ...) of the same spelling." % filename)
             counter[key] = int(count)
     return counter
+
+if __name__ == '__main__':
+    freq, cues, outcomes = cues_outcomes('/home/shadi/PycharmProjects/pyndl/tests/resources/event_file_trigrams_to_word.tab.gz', number_of_processes=3)

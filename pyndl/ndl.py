@@ -27,7 +27,11 @@ from . import __version__
 from . import count
 from . import preprocess
 from . import ndl_parallel
+from pyndl import log
 
+
+# setting up logger name
+logger = log.setup_custom_logger("ndl")
 
 def events_from_file(event_path):
     """
@@ -111,7 +115,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     # preprocessing
     if verbose:
-        print("Counting number of events and number of unique outcomes and cues.\n"
+        logger.info("Counting number of events and number of unique outcomes and cues.\n"
               "Each dot represents 100,000 events.")
     n_events, cues, outcomes = count.cues_outcomes(events,
                                                    number_of_processes=number_of_threads,
@@ -126,10 +130,10 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     shape = (len(outcome_map), len(cue_map))
 
     if verbose:
-        print("Counted {} events, {} unique outcomes, and {} unique cues.".format(n_events, shape[0], shape[1]))
-        print("Allocating the weights matrix needs {:.3f} MB of memory.".format(shape[0] * shape[1] / 1024 / 1024))
+        logger.info("Counted {} events, {} unique outcomes, and {} unique cues.".format(n_events, shape[0], shape[1]))
+        logger.info("Allocating the weights matrix needs {:.3f} MB of memory.".format(shape[0] * shape[1] / 1024 / 1024))
         mem = psutil.virtual_memory()
-        print("This system seems to have {:.3f} MB of total memory and {:.3f} MB are available.".format(mem.total / 1024 / 1024, mem.available / 1024 / 1024))
+        logger.info("This system seems to have {:.3f} MB of total memory and {:.3f} MB are available.".format(mem.total / 1024 / 1024, mem.available / 1024 / 1024))
 
     # initialize weights
     if weights is None:
@@ -176,7 +180,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                         for binary_file in os.listdir(binary_path)
                         if os.path.isfile(os.path.join(binary_path, binary_file))]
         if verbose:
-            print('start learning...')
+            logger.info('start learning...')
         # learning
         if method == 'openmp':
             ndl_parallel.learn_inplace(binary_files, weights, alpha,
@@ -413,7 +417,7 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
     for cues, outcomes in events:
         number_events += 1
         if verbose and number_events % 1000:
-            print('.', end='')
+            logger.info('.', end='')
             sys.stdout.flush()
         if remove_duplicates is None:
             if (len(cues) != len(set(cues)) or
