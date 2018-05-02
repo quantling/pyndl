@@ -212,7 +212,7 @@ Release Process
 
     twine upload -s dist/*
 
-7. Check if the new version is on pypi (https://pypi.python.org/pypi/pyndl/).
+7. (maintainers only) Check if the new version is on pypi (https://pypi.python.org/pypi/pyndl/).
 
 
 Versioning
@@ -233,16 +233,18 @@ Minor release
 If a merge adds new features or breaks with the existing API a deprecation
 warning has to be supplied which should keep the existing API. The minor
 version is increased by one (``X.Y.Z -> X.Y+1.Z``). Deprecation warnings should
-be kept untill the next major version, therefore they should warn the user that
-this API for one full major version, therefore they should warn the user that
-this API is not available from the ``X+1.0.0`` release onwards.
+be kept until the next major version. They should warn the user that the old
+API is only usable in this major version and will not be available any more
+with the next major ``X+1.0.0`` release onwards. The deprecation warning should
+give the exact version number when the API becomes unavailable and the way of
+achieving the same behaviour.
 
 Major release
 ^^^^^^^^^^^^^
-If enough changes are accumulated to justify a new major realase create a new
+If enough changes are accumulated to justify a new major release, create a new
 pull request which only contains the following two changes:
 
 - the change of the version number from ``X.Y.Z`` to ``X+1.0.0``
-- remove all the API whith deprecation warning introduced in a ``X.Y.Z``
-  release
+- remove all the API with deprecation warning introduced in the current
+  ``X.Y.Z`` release
 
