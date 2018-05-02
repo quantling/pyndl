@@ -1,3 +1,5 @@
+# Global logging with stdout only
+
 import logging
 from sys import stdout
 
