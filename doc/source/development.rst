@@ -188,7 +188,8 @@ Release Process
 
 3. Create a new release on Github of the `master` branch of the form ``vX.Y.Z``
    (where ``X``, ``Y``, and ``Z`` refer to the new version).  Add a description
-   of the new feature or bugfix.
+   of the new feature or bugfix. For details on the version number see
+   Versioning_ below.
 
 4. Pull the repository and checkout the tag and create the distribution files
    using:
