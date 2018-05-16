@@ -1,4 +1,9 @@
-from typing import List, Collection, Dict, Iterator, Optional, Tuple, Union, TypeVar
+from typing import Dict, Iterator, Tuple, TypeVar
+
+try:
+    from typing import Collection
+except ImportError:
+    from collections.abc import Collection
 
 from numpy import ndarray
 from xarray.core.dataarray import DataArray

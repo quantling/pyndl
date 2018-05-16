@@ -184,7 +184,7 @@ def ndl(events: types.Path, alpha: float, betas: Tuple[float, float],
         elif method == 'threading':
             part_lists = slice_list(all_outcome_indices, len_sublists)
 
-            working_queue: Queue = Queue(len(part_lists))
+            working_queue = Queue(len(part_lists))  # type: Queue
             threads = []
             queue_lock = threading.Lock()
 

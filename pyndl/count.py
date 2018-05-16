@@ -66,7 +66,7 @@ def cues_outcomes(event_file_name: str,
                                  verbose)
                                 for start in range(number_of_processes)))
         n_events = 0
-        cues: Counter = Counter()
+        cues = Counter()  # type: Counter
         outcomes: Counter = Counter()
         for nn, cues_process, outcomes_process in results:
             n_events += nn

@@ -123,7 +123,7 @@ def ngrams_to_word(occurrences: Iterator[types.StringEvent],
                      range(len(phrase_string) - n_chars + 1))
         if not ngrams_it or not occurrence:
             continue
-        ngrams: Iterable
+        ngrams = []  # type: Iterable
         if remove_duplicates:
             ngrams = set(ngrams_it)
             occurrence = "_".join(set(occurrence.split("_")))
