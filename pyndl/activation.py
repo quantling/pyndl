@@ -9,15 +9,25 @@ represented as the outcome-cue weights.
 import multiprocessing as mp
 import ctypes
 from collections import defaultdict, OrderedDict
+from typing import Collection, Iterator, List, Dict, Optional, Tuple, Union
 
 import numpy as np
 import xarray as xr
 
+
+from numpy import ndarray
+from xarray.core.dataarray import DataArray
+
 from . import io
+from .types import AnyWeights, CollectionEvent, AnyEvent, Path, CueCollection
 
 
 # pylint: disable=W0621
-def activation(events, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
+def activation(events: Union[Path, Iterator[AnyEvent]],
+               weights: AnyWeights,
+               number_of_threads: int = 1,
+               remove_duplicates: Optional[bool] = None,
+               ignore_missing_cues: bool = False) -> Union[DataArray, Dict[str, ndarray]]:
     """
     Estimate activations for given events in event file and outcome-cue weights.
 
@@ -58,10 +68,13 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
         returned if weights is instance of dict
 
     """
-    if isinstance(events, str):
-        events = io.events_from_file(events)
+    event_list: Iterator[CollectionEvent]
+    if isinstance(events, Path):
+        event_list = io.events_from_file(events)
+    else:
+        event_list = events
 
-    events = (cues for cues, outcomes in events)
+    cues_gen: Iterator[CueCollection] = (cues for cues, outcomes in event_list)
     if remove_duplicates is None:
         def check_no_duplicates(cues):
             if len(cues) != len(set(cues)):
@@ -69,9 +82,9 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
                                  'remove_duplicates=True'.format(' '.join(cues)))
             else:
                 return set(cues)
-        events = (check_no_duplicates(cues) for cues in events)
+        cues_gen = (check_no_duplicates(cues) for cues in cues_gen)
     elif remove_duplicates is True:
-        events = (set(cues) for cues in events)
+        cues_gen = (set(cues) for cues in cues_gen)
 
     if isinstance(weights, xr.DataArray):
         cues = weights.coords["cues"].values.tolist()
@@ -81,10 +94,10 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
         cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
         if ignore_missing_cues:
             event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues if cue in cues)
-                                      for event_cues in events)
+                                      for event_cues in cues_gen)
         else:
             event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues)
-                                      for event_cues in events)
+                                      for event_cues in cues_gen)
         # pylint: disable=W0621
         activations = _activation_matrix(list(event_cue_indices_list),
                                          weights.values, number_of_threads)
@@ -95,14 +108,14 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
                             dims=('outcomes', 'events'))
     elif isinstance(weights, dict):
         assert number_of_threads == 1, "Estimating activations with multiprocessing is not implemented for dicts."
-        activations = defaultdict(lambda: np.zeros(len(events)))
-        events = list(events)
+        cues_list = list(cues_gen)
+        activation_dict: Dict[str, ndarray] = defaultdict(lambda: np.zeros(len(cues_list)))
         for outcome, cue_dict in weights.items():
-            _activations = activations[outcome]
-            for row, cues in enumerate(events):
+            _activations = activation_dict[outcome]
+            for row, cues in enumerate(cues_list):
                 for cue in cues:
-                    _activations[row] += cue_dict[cue]
-        return activations
+                    _activations[row] += cue_dict[cue]  # type: ignore
+        return activation_dict
     else:
         raise ValueError("Weights other than xarray.DataArray or dicts are not supported.")
 
@@ -130,7 +143,8 @@ def _run_mp_activation_matrix(event_index, cue_indices):
     activations[:, event_index] = weights[:, cue_indices].sum(axis=1)
 
 
-def _activation_matrix(indices_list, weights, number_of_threads):
+def _activation_matrix(indices_list: List[Tuple[int, ...]],
+                       weights: ndarray, number_of_threads: int) -> ndarray:
     """
     Estimate activation for indices in weights
 
@@ -160,12 +174,13 @@ def _activation_matrix(indices_list, weights, number_of_threads):
             activations[:, row] = weights[:, event_cues].sum(axis=1)
         return activations
     else:
-        shared_activations = mp.RawArray(ctypes.c_double, int(np.prod(activations_dim)))
+        #  type stubs seem to be incorrect for multiprocessing lib. 2018-05-16
+        shared_activations = mp.RawArray(ctypes.c_double, int(np.prod(activations_dim)))  # type: ignore
         weights = np.ascontiguousarray(weights)
-        shared_weights = mp.sharedctypes.copy(np.ctypeslib.as_ctypes(np.float64(weights)))
+        shared_weights = mp.sharedctypes.copy(np.ctypeslib.as_ctypes(np.float64(weights)))  # type: ignore
         initargs = (shared_weights, weights.shape, shared_activations, activations_dim)
         with mp.Pool(number_of_threads, initializer=_init_mp_activation_matrix, initargs=initargs) as pool:
             pool.starmap(_run_mp_activation_matrix, enumerate(indices_list))
-        activations = np.ctypeslib.as_array(shared_activations)
+        activations = np.ctypeslib.as_array(shared_activations)  # type: ignore
         activations.shape = activations_dim
         return activations

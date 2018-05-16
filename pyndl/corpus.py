@@ -12,6 +12,7 @@ import sys
 import gzip
 import multiprocessing
 import xml.etree.ElementTree
+from typing import Iterator
 
 __version__ = '0.2.0'
 
@@ -19,7 +20,7 @@ FRAMES_PER_SECOND = 30
 PUNCTUATION = tuple(".,:;?!()[]'")
 
 
-def _parse_time_string(time_string):
+def _parse_time_string(time_string: str) -> float:
     """
     parses string and returns time in seconds.
 
@@ -32,7 +33,7 @@ def _parse_time_string(time_string):
             float(frames) / FRAMES_PER_SECOND)
 
 
-def read_clean_gzfile(gz_file_path, *, break_duration=2.0):
+def read_clean_gzfile(gz_file_path: str, *, break_duration=2.0) -> Iterator[str]:
     """
     Generator that opens and reads a gunzipped xml subtitle file, while all
     xml tags and timestamps are removed.
@@ -68,7 +69,7 @@ def read_clean_gzfile(gz_file_path, *, break_duration=2.0):
                 text = word_tag.text
                 if text in PUNCTUATION:
                     words.append(text)
-                else:
+                elif text is not None:
                     words.extend((' ', text))
             result = ''.join(words)
             result = result.strip()
@@ -112,7 +113,7 @@ class JobParseGz():
 
     """
 
-    def __init__(self, break_duration):
+    def __init__(self, break_duration: float) -> None:
         self.break_duration = break_duration
 
     def run(self, filename):
@@ -126,7 +127,7 @@ class JobParseGz():
         return (lines, not_found)
 
 
-def create_corpus_from_gz(directory, outfile, *, n_threads=1, verbose=False):
+def create_corpus_from_gz(directory: str, outfile: str, *, n_threads=1, verbose=False):
     """
     Create a corpus file from a set of gunziped (.gz) files in a directory.
 
