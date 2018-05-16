@@ -333,7 +333,7 @@ def create_event_file(corpus_file: types.Path,
         with gzip.open(event_file, "wt") as outfile:
             outfile.write("cues\toutcomes\n")
 
-            words: List[str] = []
+            words = []  # type: List[str]
             for ii, line in enumerate(corpus):
                 if verbose and ii % 100000 == 0:
                     print(".", end="")

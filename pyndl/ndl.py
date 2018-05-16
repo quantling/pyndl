@@ -301,7 +301,7 @@ class WeightDict(defaultdict):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(lambda: defaultdict(float))
 
-        self._attrs: OrderedDict = OrderedDict()
+        self._attrs = OrderedDict()  # type: OrderedDict
 
         if 'attrs' in kwargs:
             self.attrs = kwargs['attrs']
