@@ -35,7 +35,7 @@ __classifiers__ = [
     'Topic :: Scientific/Engineering',
     'Topic :: Scientific/Engineering :: Artificial Intelligence',
     'Topic :: Scientific/Engineering :: Information Analysis',
-    ]
+]
 
 
 def sysinfo():
@@ -63,8 +63,11 @@ def sysinfo():
     if uname.sysname == "Linux":
         _, *lines = os.popen("free -m").readlines()
         for identifier in ["Mem:", "Swap:"]:
-            memory = [line for line in lines if identifier in line][0]
-            _, total, used, *_ = memory.split()
+            memory = [line for line in lines if identifier in line]
+            if len(memory) > 0:
+                _, total, used, *_ = memory[0].split()
+            else:
+                total, used = '?', '?'
             osinfo += "{} {}MiB/{}MiB\n".format(identifier, used, total)
 
     osinfo += "\n"
