@@ -14,6 +14,7 @@ import random
 import re
 import sys
 import time
+from abc import abstractmethod
 
 
 def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
@@ -351,7 +352,17 @@ def create_event_file(corpus_file,
                 process_words(words)
 
 
-class JobFilter():
+class JobFilterBase():
+    @abstractmethod
+    def process_cues(self, cues):
+        ...
+
+    @abstractmethod
+    def process_outcomes(self, cues):
+        ...
+
+
+class JobFilter(JobFilterBase):
     # pylint: disable=E0202,missing-docstring
 
     """
@@ -391,6 +402,7 @@ class JobFilter():
         else:
             self.keep_cues = keep_cues
             self.process_cues = self.process_cues_keep
+
         if outcome_map is not None:
             self.outcome_map = collections.defaultdict(self.return_empty_string, outcome_map)
             self.process_outcomes = self.process_outcomes_map
@@ -404,9 +416,6 @@ class JobFilter():
             self.keep_outcomes = set(keep_outcomes)
             self.process_outcomes = self.process_outcomes_keep
 
-    def process_cues(self, cues):
-        raise NotImplementedError("Needs to be implemented or assigned by a specific method.")
-
     def process_cues_map(self, cues):
         cues = [self.cue_map[cue] for cue in cues]
         return [cue for cue in cues if cue]
@@ -419,9 +428,6 @@ class JobFilter():
 
     def process_cues_all(self, cues):
         return cues
-
-    def process_outcomes(self, outcomes):
-        raise NotImplementedError("Needs to be implemented or assigned by a specific method.")
 
     def process_outcomes_map(self, outcomes):
         outcomes = [self.outcome_map[outcome] for outcome in outcomes]
