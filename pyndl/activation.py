@@ -9,7 +9,7 @@ represented as the outcome-cue weights.
 import multiprocessing as mp
 import ctypes
 from collections import defaultdict, OrderedDict
-from typing import Collection, Iterator, List, Dict, Optional, Tuple, Union
+from typing import Iterable, List, Dict, Optional, Tuple, Union
 
 import numpy as np
 import xarray as xr
@@ -19,11 +19,11 @@ from numpy import ndarray
 from xarray.core.dataarray import DataArray
 
 from . import io
-from .types import AnyWeights, CollectionEvent, AnyEvent, Path, CueCollection
+from .types import AnyWeights, CollectionEvent, AnyEvent, Path, CueCollection, Collection
 
 
 # pylint: disable=W0621
-def activation(events: Union[Path, Iterator[AnyEvent]],
+def activation(events: Union[Path, Iterable[AnyEvent]],
                weights: AnyWeights,
                number_of_threads: int = 1,
                remove_duplicates: Optional[bool] = None,
@@ -68,13 +68,13 @@ def activation(events: Union[Path, Iterator[AnyEvent]],
         returned if weights is instance of dict
 
     """
-    event_list: Iterator[CollectionEvent]
+    event_list = []  # type: Iterable[CollectionEvent]
     if isinstance(events, Path):
         event_list = io.events_from_file(events)
     else:
         event_list = events
 
-    cues_gen: Iterator[CueCollection] = (cues for cues, outcomes in event_list)
+    cues_gen = (cues for cues, outcomes in event_list)  # type: Iterable[CueCollection]
     if remove_duplicates is None:
         def check_no_duplicates(cues):
             if len(cues) != len(set(cues)):
@@ -109,7 +109,7 @@ def activation(events: Union[Path, Iterator[AnyEvent]],
     elif isinstance(weights, dict):
         assert number_of_threads == 1, "Estimating activations with multiprocessing is not implemented for dicts."
         cues_list = list(cues_gen)
-        activation_dict: Dict[str, ndarray] = defaultdict(lambda: np.zeros(len(cues_list)))
+        activation_dict = defaultdict(lambda: np.zeros(len(cues_list)))  # type: Dict[str, ndarray]
         for outcome, cue_dict in weights.items():
             _activations = activation_dict[outcome]
             for row, cues in enumerate(cues_list):

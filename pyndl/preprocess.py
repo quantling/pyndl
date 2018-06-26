@@ -23,7 +23,6 @@ from collections import (
 
 from typing import (
     Any,
-    Collection,
     Dict,
     Iterable,
     Iterator,
@@ -404,6 +403,8 @@ class JobFilter(JobFilterBase, Generic[KeepCues, KeepOutcomes]):
         Using a closure is not possible as it is not pickable / serializable.
 
     """
+    keep_cues = None  # type: KeepCues
+    keep_outcomes = None  # type: KeepOutcomes
 
     @staticmethod
     def return_empty_string() -> str:
@@ -411,8 +412,8 @@ class JobFilter(JobFilterBase, Generic[KeepCues, KeepOutcomes]):
 
     def __init__(self, keep_cues: KeepCues,
                  keep_outcomes: KeepOutcomes,
-                 remove_cues: Optional[Collection[types.Cue]],
-                 remove_outcomes: Optional[Collection[types.Outcome]],
+                 remove_cues: Optional[types.Collection[types.Cue]],
+                 remove_outcomes: Optional[types.Collection[types.Outcome]],
                  cue_map: Optional[Dict[types.Cue, types.Cue]],
                  outcome_map: Optional[Dict[types.Outcome, types.Outcome]]) -> None:
         if ((cue_map is not None and remove_cues is not None) or
@@ -425,7 +426,6 @@ class JobFilter(JobFilterBase, Generic[KeepCues, KeepOutcomes]):
             raise ValueError('You can either specify keep_outcomes, remove_outcomes, or outcome_map.')
 
         # Type checking cannot handle assign to a method. 2018-05-16
-        self.keep_cues: KeepCues
         if cue_map is not None:
             self.cue_map = collections.defaultdict(self.return_empty_string, cue_map)
             self.process_cues = self.process_cues_map  # type: ignore
@@ -439,7 +439,6 @@ class JobFilter(JobFilterBase, Generic[KeepCues, KeepOutcomes]):
             self.keep_cues = keep_cues
             self.process_cues = self.process_cues_keep  # type: ignore
 
-        self.keep_outcomes: KeepOutcomes
         if outcome_map is not None:
             self.outcome_map = collections.defaultdict(self.return_empty_string, outcome_map)
             self.process_outcomes = self.process_outcomes_map  # type: ignore

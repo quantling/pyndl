@@ -138,8 +138,8 @@ def words_symbols(corpus_file_name: str, *,
                                                      verbose)
                                                     for start in
                                                     range(number_of_processes)))
-        words: Counter = Counter()
-        symbols: Counter = Counter()
+        words = Counter()  # type: Counter
+        symbols = Counter()  # type: Counter
         for words_process, symbols_process in results:
             words += words_process
             symbols += symbols_process
@@ -169,7 +169,7 @@ def load_counter(filename: str) -> Counter:
     with open(filename, 'rt') as dfile:
         # skip header
         dfile.readline()
-        counter: Counter = Counter()
+        counter = Counter()  # type: Counter
         for line in dfile:
             key, count = line.strip().split('\t')
             if key in counter.keys():
