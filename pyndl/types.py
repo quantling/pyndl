@@ -1,9 +1,18 @@
-from typing import Dict, Iterator, Tuple, TypeVar, Collection
+from typing import Dict, Iterator, Tuple, TypeVar
 
 
 from numpy import ndarray
 from xarray.core.dataarray import DataArray
 
+
+try:
+    from typing import Collection
+except ImportError:  # Python 3.5 fallback
+    from typing import Union, Sequence, Set
+    T = TypeVar('T')
+
+    # ignore typing because mypy thinks Collection is already a defined type.
+    Collection = Union[Sequence[T], Set[T]]  # type: ignore
 
 Path = str
 Cue = str
