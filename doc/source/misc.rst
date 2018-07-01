@@ -4,6 +4,7 @@ Miscellaneous
 This is collection of more or less unrelated tips and tricks that can be helpful
 during development and maintanance.
 
+
 Running ``pyndl`` within ``R`` code
 -----------------------------------
 
@@ -141,4 +142,12 @@ Memory profiling
 Sometimes it is useful to monitory the memory footprint of the python process.
 This can be achieved by using ``memory_profiler``
 (https://pypi.python.org/pypi/memory_profiler).
+
+
+CPU profiling of C extensions
+-----------------------------
+
+In order to profile Cython or C extensions that are invoked from python ``yep``
+is a good tool to do that. ``yep`` builds ontop of ``google-perftools``.
+(https://pypi.org/project/yep/)
 
