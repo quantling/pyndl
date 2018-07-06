@@ -16,6 +16,14 @@ import tempfile
 import threading
 import time
 import warnings
+from typing import (
+    Iterator,
+    Dict,
+    List,
+    Optional,
+    Tuple,
+    Union,
+)
 
 import cython
 import pandas as pd
@@ -27,7 +35,7 @@ from . import count
 from . import preprocess
 from . import ndl_parallel
 from . import io
-
+from . import types
 
 warnings.simplefilter('always', DeprecationWarning)
 
@@ -40,11 +48,12 @@ def events_from_file(event_path):
     return io.events_from_file(event_path)
 
 
-def ndl(events, alpha, betas, lambda_=1.0, *,
+def ndl(events: types.Path, alpha: float, betas: Tuple[float, float],
+        lambda_=1.0, *,
         method='openmp', weights=None,
         number_of_threads=8, len_sublists=10, remove_duplicates=None,
         verbose=False, temporary_directory=None,
-        events_per_temporary_file=10000000):
+        events_per_temporary_file=10000000) -> xr.DataArray:
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -103,11 +112,12 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     cpu_time_start = time.process_time()
 
     # preprocessing
-    n_events, cues, outcomes = count.cues_outcomes(events,
-                                                   number_of_processes=number_of_threads,
-                                                   verbose=verbose)
-    cues = list(cues.keys())
-    outcomes = list(outcomes.keys())
+    n_events, cues_counter, outcomes_counter =\
+        count.cues_outcomes(events,
+                            number_of_processes=number_of_threads,
+                            verbose=verbose)
+    cues = list(cues_counter.keys())
+    outcomes = list(outcomes_counter.keys())
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
     outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
 
@@ -173,7 +183,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         elif method == 'threading':
             part_lists = slice_list(all_outcome_indices, len_sublists)
 
-            working_queue = Queue(len(part_lists))
+            working_queue = Queue(len(part_lists))  # type: Queue
             threads = []
             queue_lock = threading.Lock()
 
@@ -219,11 +229,18 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     return weights
 
 
-def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
-                wall_time, function, method=None, attrs=None):
+def _attributes(event_path: types.Path, number_events: int,
+                alpha: Union[float, int, Dict[str, float]], betas: Tuple[float, float],
+                lambda_: float, cpu_time: float, wall_time: float,
+                function: str, method=None, attrs=None) -> Dict[str, str]:
+    if not isinstance(alpha, (float, int)):
+        alpha_str = 'varying'
+    else:
+        alpha_str = str(alpha)
+
     width = max([len(ss) for ss in (event_path,
                                     str(number_events),
-                                    str(alpha),
+                                    alpha_str,
                                     str(betas),
                                     str(lambda_),
                                     function,
@@ -235,13 +252,10 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
     def _format(value):
         return '{0: <{width}}'.format(value, width=width)
 
-    if not isinstance(alpha, (float, int)):
-        alpha = 'varying'
-
     new_attrs = {'date': _format(time.strftime("%Y-%m-%d %H:%M:%S")),
                  'event_path': _format(event_path),
                  'number_events': _format(number_events),
-                 'alpha': _format(str(alpha)),
+                 'alpha': _format(alpha_str),
                  'betas': _format(str(betas)),
                  'lambda': _format(str(lambda_)),
                  'function': _format(function),
@@ -283,10 +297,10 @@ class WeightDict(defaultdict):
     """
 
     # pylint: disable=W0613
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs) -> None:
         super().__init__(lambda: defaultdict(float))
 
-        self._attrs = OrderedDict()
+        self._attrs = OrderedDict()  # type: OrderedDict
 
         if 'attrs' in kwargs:
             self.attrs = kwargs['attrs']
@@ -302,9 +316,11 @@ class WeightDict(defaultdict):
         self._attrs = OrderedDict(attrs)
 
 
-def dict_ndl(events, alphas, betas, lambda_=1.0, *,
+def dict_ndl(events: Union[types.Path, Iterator[types.CollectionEvent]],
+             alphas: Union[float, Dict[str, float]],
+             betas: Tuple[float, float], lambda_=1.0, *,
              weights=None, inplace=False, remove_duplicates=None,
-             make_data_array=False, verbose=False):
+             make_data_array=False, verbose=False) -> Union[xr.DataArray, WeightDict]:
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
@@ -458,7 +474,7 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
     return weights
 
 
-def slice_list(list_, len_sublists):
+def slice_list(list_: List[int], len_sublists: int) -> List[List[int]]:
     r"""
     Slices a list in sublists with the length len_sublists.
 

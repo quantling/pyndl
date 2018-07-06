@@ -14,10 +14,31 @@ import random
 import re
 import sys
 import time
+from abc import abstractmethod
+from io import TextIOWrapper
+from collections import (
+    Counter,
+    OrderedDict,
+)
+
+from typing import (
+    Any,
+    Dict,
+    Iterable,
+    Iterator,
+    List,
+    Optional,
+    Tuple,
+    Union,
+    TypeVar,
+    Generic
+)
+
+from . import types
 
 
-def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
-               verbose=False):
+def bandsample(population: Counter, sample_size=50000, *, cutoff=5, seed=None,
+               verbose=False) -> Counter:
     """
     Creates a sample of size sample_size out of the population using
     band sampling.
@@ -25,26 +46,26 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
     """
     # make a copy of the population
     # filter all words with freq < cutoff
-    population = [(word, freq) for word, freq in population.items() if freq >=
-                  cutoff]
+    population_list = [(word, freq) for word, freq in population.items()
+                       if freq >= cutoff]
 
     if seed is not None:
         raise NotImplementedError("Reproducable bandsamples by seeding are not properly implemented yet.")
 
     # shuffle words with same frequency
     rand = random.Random(seed)
-    rand.shuffle(population)
-    population.sort(key=lambda x: x[1])  # lowest -> highest freq
+    rand.shuffle(population_list)
+    population_list.sort(key=lambda x: x[1])  # lowest -> highest freq
 
-    step = sum(freq for word, freq in population) / sample_size
+    step = sum(freq for word, freq in population_list) / sample_size
     if verbose:
         print("step %.2f" % step)
 
     accumulator = 0
     index = 0
     sample = list()
-    while 0 <= index < len(population):
-        word, freq = population[index]
+    while 0 <= index < len(population_list):
+        word, freq = population_list[index]
         accumulator += freq
         if verbose:
             print("%s\t%i\t%.2f" % (word, freq, accumulator))
@@ -53,15 +74,15 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
             accumulator -= step
             if verbose:
                 print("add\t%s\t%.2f" % (word, accumulator))
-            del population[index]
+            del population_list[index]
             while accumulator >= step and index >= 1:
                 index -= 1
-                sample.append(population[index])
+                sample.append(population_list[index])
                 accumulator -= step
                 if verbose:
-                    word, freq = population[index]
+                    word, freq = population_list[index]
                     print("  add\t%s\t%.2f" % (word, accumulator))
-                del population[index]
+                del population_list[index]
         else:
             # only add to index if no element was removed
             # if element was removed, index points at next element already
@@ -69,11 +90,13 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
             if verbose and index % 1000 == 0:
                 print(".", end="")
                 sys.stdout.flush()
-    sample = collections.Counter({key: value for key, value in sample})
-    return sample
+    sample_counter = collections.Counter({key: value for key, value in sample})
+    return sample_counter
 
 
-def ngrams_to_word(occurrences, n_chars, outfile, remove_duplicates=True):
+def ngrams_to_word(occurrences: Iterator[types.StringEvent],
+                   n_chars: int, outfile: TextIOWrapper,
+                   remove_duplicates=True) -> None:
     """
     Process the occurrences and write them to outfile.
 
@@ -95,18 +118,23 @@ def ngrams_to_word(occurrences, n_chars, outfile, remove_duplicates=True):
         else:  # take either
             occurrence = cues + outcomes
         phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
-        ngrams = (phrase_string[i:(i + n_chars)] for i in
-                  range(len(phrase_string) - n_chars + 1))
-        if not ngrams or not occurrence:
+        ngrams_it = (phrase_string[i:(i + n_chars)] for i in
+                     range(len(phrase_string) - n_chars + 1))
+        if not ngrams_it or not occurrence:
             continue
+        ngrams = []  # type: Iterable
         if remove_duplicates:
-            ngrams = set(ngrams)
+            ngrams = set(ngrams_it)
             occurrence = "_".join(set(occurrence.split("_")))
+        else:
+            ngrams = ngrams_it
         outfile.write("{}\t{}\n".format("_".join(ngrams), occurrence))
 
 
-def process_occurrences(occurrences, outfile, *,
-                        cue_structure="trigrams_to_word", remove_duplicates=True):
+def process_occurrences(occurrences: Iterator[types.StringEvent],
+                        outfile: TextIOWrapper, *,
+                        cue_structure="trigrams_to_word",
+                        remove_duplicates=True) -> None:
     """
     Process the occurrences and write them to outfile.
 
@@ -139,8 +167,8 @@ def process_occurrences(occurrences, outfile, *,
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
 
-def create_event_file(corpus_file,
-                      event_file,
+def create_event_file(corpus_file: types.Path,
+                      event_file: types.Path,
                       symbols="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
                       *,
                       context_structure="document",
@@ -149,7 +177,7 @@ def create_event_file(corpus_file,
                       cue_structure="trigrams_to_word",
                       lower_case=False,
                       remove_duplicates=True,
-                      verbose=False):
+                      verbose=False) -> None:
     """
     Create an text based event file from a corpus file.
 
@@ -304,7 +332,7 @@ def create_event_file(corpus_file,
         with gzip.open(event_file, "wt") as outfile:
             outfile.write("cues\toutcomes\n")
 
-            words = []
+            words = []  # type: List[str]
             for ii, line in enumerate(corpus):
                 if verbose and ii % 100000 == 0:
                     print(".", end="")
@@ -351,7 +379,19 @@ def create_event_file(corpus_file,
                 process_words(words)
 
 
-class JobFilter():
+class JobFilterBase():
+    def process_cues(self, cues):
+        ...
+
+    def process_outcomes(self, cues):
+        ...
+
+
+KeepCues = TypeVar('KeepCues', str, Iterable[types.Cue])
+KeepOutcomes = TypeVar('KeepOutcomes', str, Iterable[types.Outcome])
+
+
+class JobFilter(JobFilterBase, Generic[KeepCues, KeepOutcomes]):
     # pylint: disable=E0202,missing-docstring
 
     """
@@ -363,13 +403,19 @@ class JobFilter():
         Using a closure is not possible as it is not pickable / serializable.
 
     """
+    keep_cues = None  # type: KeepCues
+    keep_outcomes = None  # type: KeepOutcomes
 
     @staticmethod
-    def return_empty_string():
+    def return_empty_string() -> str:
         return ''
 
-    def __init__(self, keep_cues, keep_outcomes, remove_cues, remove_outcomes,
-                 cue_map, outcome_map):
+    def __init__(self, keep_cues: KeepCues,
+                 keep_outcomes: KeepOutcomes,
+                 remove_cues: Optional[types.Collection[types.Cue]],
+                 remove_outcomes: Optional[types.Collection[types.Outcome]],
+                 cue_map: Optional[Dict[types.Cue, types.Cue]],
+                 outcome_map: Optional[Dict[types.Outcome, types.Outcome]]) -> None:
         if ((cue_map is not None and remove_cues is not None) or
                 (cue_map is not None and keep_cues != 'all') or
                 (remove_cues is not None and keep_cues != 'all')):
@@ -379,70 +425,68 @@ class JobFilter():
                 (remove_outcomes is not None and keep_outcomes != 'all')):
             raise ValueError('You can either specify keep_outcomes, remove_outcomes, or outcome_map.')
 
+        # Type checking cannot handle assign to a method. 2018-05-16
         if cue_map is not None:
             self.cue_map = collections.defaultdict(self.return_empty_string, cue_map)
-            self.process_cues = self.process_cues_map
+            self.process_cues = self.process_cues_map  # type: ignore
         elif remove_cues is not None:
             self.remove_cues = set(remove_cues)
-            self.process_cues = self.process_cues_remove
+            self.process_cues = self.process_cues_remove  # type: ignore
         elif keep_cues == 'all':
             self.keep_cues = 'all'
-            self.process_cues = self.process_cues_all
+            self.process_cues = self.process_cues_all  # type: ignore
         else:
             self.keep_cues = keep_cues
-            self.process_cues = self.process_cues_keep
+            self.process_cues = self.process_cues_keep  # type: ignore
+
         if outcome_map is not None:
             self.outcome_map = collections.defaultdict(self.return_empty_string, outcome_map)
-            self.process_outcomes = self.process_outcomes_map
+            self.process_outcomes = self.process_outcomes_map  # type: ignore
         elif remove_outcomes is not None:
             self.remove_outcomes = set(remove_outcomes)
-            self.process_outcomes = self.process_outcomes_remove
+            self.process_outcomes = self.process_outcomes_remove  # type: ignore
         elif keep_outcomes == 'all':
             self.keep_outcomes = 'all'
-            self.process_outcomes = self.process_outcomes_all
+            self.process_outcomes = self.process_outcomes_all  # type: ignore
+        elif isinstance(keep_outcomes, Iterable):
+            self.keep_outcomes = set(keep_outcomes)  # type: ignore
+            self.process_outcomes = self.process_outcomes_keep  # type: ignore
         else:
-            self.keep_outcomes = set(keep_outcomes)
-            self.process_outcomes = self.process_outcomes_keep
+            raise NotImplementedError('Unsupported variable combination.')
 
-    def process_cues(self, cues):
-        raise NotImplementedError("Needs to be implemented or assigned by a specific method.")
-
-    def process_cues_map(self, cues):
+    def process_cues_map(self, cues: types.CueCollection) -> types.CueCollection:
         cues = [self.cue_map[cue] for cue in cues]
         return [cue for cue in cues if cue]
 
-    def process_cues_remove(self, cues):
+    def process_cues_remove(self, cues: types.CueCollection) -> types.CueCollection:
         return [cue for cue in cues if cue not in self.remove_cues]
 
-    def process_cues_keep(self, cues):
+    def process_cues_keep(self, cues: types.CueCollection) -> types.CueCollection:
         return [cue for cue in cues if cue in self.keep_cues]
 
-    def process_cues_all(self, cues):
+    def process_cues_all(self, cues: types.CueCollection) -> types.CueCollection:
         return cues
-
-    def process_outcomes(self, outcomes):
-        raise NotImplementedError("Needs to be implemented or assigned by a specific method.")
 
     def process_outcomes_map(self, outcomes):
         outcomes = [self.outcome_map[outcome] for outcome in outcomes]
         return [outcome for outcome in outcomes if outcome]
 
-    def process_outcomes_remove(self, outcomes):
+    def process_outcomes_remove(self, outcomes: types.OutcomeCollection) -> types.OutcomeCollection:
         return [outcome for outcome in outcomes if outcome not in self.remove_outcomes]
 
-    def process_outcomes_keep(self, outcomes):
+    def process_outcomes_keep(self, outcomes: types.OutcomeCollection) -> types.OutcomeCollection:
         return [outcome for outcome in outcomes if outcome in self.keep_outcomes]
 
-    def process_outcomes_all(self, outcomes):
+    def process_outcomes_all(self, outcomes: types.OutcomeCollection) -> types.OutcomeCollection:
         return outcomes
 
-    def job(self, line):
+    def job(self, line: str) -> Optional[str]:
         try:
-            cues, outcomes = line.strip('\n').split("\t")
+            cues_str, outcomes_str = line.strip('\n').split("\t")
         except ValueError:
             raise ValueError("tabular event file need to have two tab separated columns")
-        cues = cues.split("_")
-        outcomes = outcomes.split("_")
+        cues = cues_str.split("_")
+        outcomes = outcomes_str.split("_")
         cues = self.process_cues(cues)
         outcomes = self.process_outcomes(outcomes)
         # no cues left?
@@ -454,12 +498,13 @@ class JobFilter():
         return processed_line
 
 
-def filter_event_file(input_event_file, output_event_file, *,
+def filter_event_file(input_event_file: types.Path,
+                      output_event_file: types.Path, *,
                       keep_cues="all", keep_outcomes="all",
                       remove_cues=None, remove_outcomes=None,
                       cue_map=None, outcome_map=None,
                       number_of_processes=1, chunksize=100000,
-                      verbose=False):
+                      verbose=False) -> None:
     """
     Filter an event file by a list or a map of cues and outcomes.
 
@@ -528,7 +573,7 @@ CURRENT_VERSION_WITH_FREQ = 215
 CURRENT_VERSION = 2048 + 215
 
 
-def read_binary_file(binary_file_path):
+def read_binary_file(binary_file_path: types.Path) -> Iterator[types.IdCollectionEvent]:
     with open(binary_file_path, "rb") as binary_file:
         magic_number = to_integer(binary_file.read(4))
         if not magic_number == MAGIC_NUMBER:
@@ -550,15 +595,17 @@ def read_binary_file(binary_file_path):
             yield (cue_ids, outcome_ids)
 
 
-def to_bytes(int_):
+def to_bytes(int_: int) -> bytes:
     return int_.to_bytes(4, 'little')
 
 
-def to_integer(byte_):
+def to_integer(byte_: bytes) -> int:
     return int.from_bytes(byte_, "little")
 
 
-def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicates=None):
+def write_events(events: Iterator[types.IdCollectionEvent],
+                 filename: types.Path, *,
+                 start=0, stop=4294967295, remove_duplicates=None) -> int:
     """
     Write out a list of events to a disk file in binary format.
 
@@ -658,7 +705,10 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
     return n_events
 
 
-def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event=False):
+def event_generator(event_file: types.Path,
+                    cue_id_map: Dict[types.Cue, types.Id],
+                    outcome_id_map: Dict[types.Outcome, types.Id], *,
+                    sort_within_event=False) -> Iterator[types.IdCollectionEvent]:
     with gzip.open(event_file, "rt") as in_file:
         # skip header
         in_file.readline()
@@ -683,31 +733,31 @@ def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event
 
 
 def _job_binary_event_file(*,
-                           file_name,
-                           event_file,
-                           cue_id_map,
-                           outcome_id_map,
-                           sort_within_event,
-                           start,
-                           stop,
-                           remove_duplicates):
+                           file_name: types.Path,
+                           event_file: types.Path,
+                           cue_id_map: Dict[types.Cue, types.Id],
+                           outcome_id_map: Dict[types.Outcome, types.Id],
+                           sort_within_event: bool,
+                           start: int,
+                           stop: int,
+                           remove_duplicates: Optional[bool]):
     # create generator which is not pickable
     events = event_generator(event_file, cue_id_map, outcome_id_map, sort_within_event=sort_within_event)
     n_events = write_events(events, file_name, start=start, stop=stop, remove_duplicates=remove_duplicates)
     return n_events
 
 
-def create_binary_event_files(event_file,
-                              path_name,
-                              cue_id_map,
-                              outcome_id_map,
+def create_binary_event_files(event_file: types.Path,
+                              path_name: types.Path,
+                              cue_id_map: Dict[types.Cue, types.Id],
+                              outcome_id_map: Dict[types.Outcome, types.Id],
                               *,
                               sort_within_event=False,
                               number_of_processes=2,
                               events_per_file=10000000,
                               overwrite=False,
-                              remove_duplicates=None,
-                              verbose=False):
+                              remove_duplicates: Optional[bool] = None,
+                              verbose=False) -> int:
     """
     Creates the binary event files for a tabular cue outcome corpus.
 

@@ -9,12 +9,15 @@ existing events from a DataFrame or a list to a file.
 """
 
 import gzip
-from collections import Iterator, Iterable
+from collections import Iterable
+from typing import Iterator, List, Optional, Tuple, Union, cast
 
 import pandas as pd
 
+from .types import CollectionEvent, StringEvent
 
-def events_from_file(event_path, compression="gzip"):
+
+def events_from_file(event_path: str, compression: Optional[str] = "gzip") -> Iterator[Tuple[List[str], List[str]]]:
     """
     Yields events for all events in a gzipped event file.
 
@@ -30,8 +33,8 @@ def events_from_file(event_path, compression="gzip"):
     ------
     cues, outcomes : list, list
         a tuple of two lists containing cues and outcomes
-
     """
+
     if compression == "gzip":
         event_file = gzip.open(event_path, 'rt')
     elif compression is None:
@@ -51,8 +54,11 @@ def events_from_file(event_path, compression="gzip"):
         event_file.close()
 
 
-def events_to_file(events, file_path, delimiter="\t", compression="gzip",
-                   columns=("cues", "outcomes")):
+def events_to_file(events: Union[Iterator[StringEvent], Iterator[CollectionEvent], pd.DataFrame],
+                   file_path: str,
+                   delimiter: str = "\t",
+                   compression: Optional[str] = "gzip",
+                   columns: Tuple[str, str] = ("cues", "outcomes")) -> None:
     """
     Writes events to a file
 
@@ -75,9 +81,11 @@ def events_to_file(events, file_path, delimiter="\t", compression="gzip",
 
     """
     if isinstance(events, pd.DataFrame):
-        events = events_from_dataframe(events)
+        collection_events = events_from_dataframe(events)
     elif isinstance(events, (Iterator, Iterable)):
-        events = events_from_list(events)
+        collection_events = events_from_list(cast(Union[Iterator[StringEvent],
+                                                        Iterator[CollectionEvent]],
+                                                  events))
     else:
         raise ValueError("events should either be a pd.DataFrame or an Iterator or an Iterable.")
 
@@ -91,7 +99,7 @@ def events_to_file(events, file_path, delimiter="\t", compression="gzip",
     try:
         out_file.write("{}\n".format(delimiter.join(columns)))
 
-        for cues, outcomes in events:
+        for cues, outcomes in collection_events:
             if isinstance(cues, list) and isinstance(outcomes, list):
                 line = "{}{}{}\n".format("_".join(cues),
                                          delimiter,
@@ -105,7 +113,8 @@ def events_to_file(events, file_path, delimiter="\t", compression="gzip",
         out_file.close()
 
 
-def events_from_dataframe(df, columns=("cues", "outcomes")):
+def events_from_dataframe(df: pd.DataFrame,
+                          columns: Tuple[str, str] = ("cues", "outcomes")) -> Iterator[CollectionEvent]:
     """
     Yields events for all events in a pandas dataframe.
 
@@ -130,7 +139,7 @@ def events_from_dataframe(df, columns=("cues", "outcomes")):
         yield (cues, outcomes)
 
 
-def events_from_list(lst):
+def events_from_list(lst: Union[Iterator[StringEvent], Iterator[CollectionEvent]]) -> Iterator[CollectionEvent]:
     """
     Yields events for all events in a list.
 

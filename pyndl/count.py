@@ -15,6 +15,7 @@ import gzip
 import itertools
 import multiprocessing
 import sys
+from typing import Tuple
 
 
 def _job_cues_outcomes(event_file_name, start, step, verbose=False):
@@ -45,8 +46,8 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=False):
     return (nn + 1, cues, outcomes)
 
 
-def cues_outcomes(event_file_name,
-                  *, number_of_processes=2, verbose=False):
+def cues_outcomes(event_file_name: str,
+                  *, number_of_processes=2, verbose=False) -> Tuple[int, Counter, Counter]:
     """
     Counts cues and outcomes in event_file_name using number_of_processes
     processes.
@@ -65,8 +66,8 @@ def cues_outcomes(event_file_name,
                                  verbose)
                                 for start in range(number_of_processes)))
         n_events = 0
-        cues = Counter()
-        outcomes = Counter()
+        cues = Counter()  # type: Counter
+        outcomes = Counter()  # type: Counter
         for nn, cues_process, outcomes_process in results:
             n_events += nn
             cues += cues_process
@@ -116,8 +117,9 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
     return (words, symbols)
 
 
-def words_symbols(corpus_file_name,
-                  *, number_of_processes=2, lower_case=False, verbose=False):
+def words_symbols(corpus_file_name: str, *,
+                  number_of_processes=2, lower_case=False,
+                  verbose=False) -> Tuple[Counter, Counter]:
     """
     Counts words and symbols in corpus_file_name using number_of_processes
     processes.
@@ -136,8 +138,8 @@ def words_symbols(corpus_file_name,
                                                      verbose)
                                                     for start in
                                                     range(number_of_processes)))
-        words = Counter()
-        symbols = Counter()
+        words = Counter()  # type: Counter
+        symbols = Counter()  # type: Counter
         for words_process, symbols_process in results:
             words += words_process
             symbols += symbols_process
@@ -148,7 +150,7 @@ def words_symbols(corpus_file_name,
     return words, symbols
 
 
-def save_counter(counter, filename, *, header='key\tfreq\n'):
+def save_counter(counter: Counter, filename: str, *, header='key\tfreq\n') -> None:
     """
     Saves a counter object into a tab delimitered text file.
 
@@ -159,7 +161,7 @@ def save_counter(counter, filename, *, header='key\tfreq\n'):
             dfile.write('{key}\t{count}\n'.format(key=key, count=count))
 
 
-def load_counter(filename):
+def load_counter(filename: str) -> Counter:
     """
     Loads a counter out of a tab delimitered text file.
 
@@ -167,7 +169,7 @@ def load_counter(filename):
     with open(filename, 'rt') as dfile:
         # skip header
         dfile.readline()
-        counter = Counter()
+        counter = Counter()  # type: Counter
         for line in dfile:
             key, count = line.strip().split('\t')
             if key in counter.keys():
