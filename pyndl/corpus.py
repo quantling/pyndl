@@ -71,6 +71,8 @@ def read_clean_gzfile(gz_file_path: str, *, break_duration=2.0) -> Iterator[str]
                     words.append(text)
                 elif text is not None:
                     words.extend((' ', text))
+                else:
+                    raise ValueError("Text content of word tag is None.")
             result = ''.join(words)
             result = result.strip()
 
