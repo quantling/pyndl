@@ -1,9 +1,7 @@
 from typing import Dict, Iterator, Tuple, TypeVar
 
-
 from numpy import ndarray
 from xarray.core.dataarray import DataArray
-
 
 try:
     from typing import Collection

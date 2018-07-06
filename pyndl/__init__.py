@@ -62,7 +62,7 @@ def sysinfo():
 
     if uname.sysname == "Linux":
         _, *lines = os.popen("free -m").readlines()
-        for identifier in ["Mem:", "Swap:"]:
+        for identifier in ("Mem:", "Swap:"):
             memory = [line for line in lines if identifier in line]
             if len(memory) > 0:
                 _, total, used, *_ = memory[0].split()

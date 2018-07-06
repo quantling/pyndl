@@ -29,7 +29,6 @@ import cython
 import pandas as pd
 import numpy as np
 import xarray as xr
-from xarray.core.dataarray import DataArray
 
 from . import __version__
 from . import count
@@ -54,7 +53,7 @@ def ndl(events: types.Path, alpha: float, betas: Tuple[float, float],
         method='openmp', weights=None,
         number_of_threads=8, len_sublists=10, remove_duplicates=None,
         verbose=False, temporary_directory=None,
-        events_per_temporary_file=10000000) -> DataArray:
+        events_per_temporary_file=10000000) -> xr.DataArray:
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -113,10 +112,10 @@ def ndl(events: types.Path, alpha: float, betas: Tuple[float, float],
     cpu_time_start = time.process_time()
 
     # preprocessing
-    n_events, cues_counter, outcomes_counter = count.cues_outcomes(
-        events,
-        number_of_processes=number_of_threads,
-        verbose=verbose)
+    n_events, cues_counter, outcomes_counter =\
+        count.cues_outcomes(events,
+                            number_of_processes=number_of_threads,
+                            verbose=verbose)
     cues = list(cues_counter.keys())
     outcomes = list(outcomes_counter.keys())
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
@@ -321,7 +320,7 @@ def dict_ndl(events: Union[types.Path, Iterator[types.CollectionEvent]],
              alphas: Union[float, Dict[str, float]],
              betas: Tuple[float, float], lambda_=1.0, *,
              weights=None, inplace=False, remove_duplicates=None,
-             make_data_array=False, verbose=False) -> Union[DataArray, WeightDict]:
+             make_data_array=False, verbose=False) -> Union[xr.DataArray, WeightDict]:
     """
     Calculate the weights for all_outcomes over all events in event_file.
 

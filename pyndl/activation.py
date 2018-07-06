@@ -14,10 +14,6 @@ from typing import Iterable, List, Dict, Optional, Tuple, Union
 import numpy as np
 import xarray as xr
 
-
-from numpy import ndarray
-from xarray.core.dataarray import DataArray
-
 from . import io
 from .types import AnyWeights, CollectionEvent, AnyEvent, Path, CueCollection, Collection
 
@@ -27,7 +23,7 @@ def activation(events: Union[Path, Iterable[AnyEvent]],
                weights: AnyWeights,
                number_of_threads: int = 1,
                remove_duplicates: Optional[bool] = None,
-               ignore_missing_cues: bool = False) -> Union[DataArray, Dict[str, ndarray]]:
+               ignore_missing_cues: bool = False) -> Union[xr.DataArray, Dict[str, np.ndarray]]:
     """
     Estimate activations for given events in event file and outcome-cue weights.
 
@@ -109,7 +105,7 @@ def activation(events: Union[Path, Iterable[AnyEvent]],
     elif isinstance(weights, dict):
         assert number_of_threads == 1, "Estimating activations with multiprocessing is not implemented for dicts."
         cues_list = list(cues_gen)
-        activation_dict = defaultdict(lambda: np.zeros(len(cues_list)))  # type: Dict[str, ndarray]
+        activation_dict = defaultdict(lambda: np.zeros(len(cues_list)))  # type: Dict[str, np.ndarray]
         for outcome, cue_dict in weights.items():
             _activations = activation_dict[outcome]
             for row, cues in enumerate(cues_list):
@@ -144,7 +140,7 @@ def _run_mp_activation_matrix(event_index, cue_indices):
 
 
 def _activation_matrix(indices_list: List[Tuple[int, ...]],
-                       weights: ndarray, number_of_threads: int) -> ndarray:
+                       weights: np.ndarray, number_of_threads: int) -> np.ndarray:
     """
     Estimate activation for indices in weights
 

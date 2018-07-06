@@ -13,7 +13,6 @@ from collections import Iterable
 from typing import Iterator, List, Optional, Tuple, Union, cast
 
 import pandas as pd
-from pandas.core.frame import DataFrame
 
 from .types import CollectionEvent, StringEvent
 
@@ -34,7 +33,6 @@ def events_from_file(event_path: str, compression: Optional[str] = "gzip") -> It
     ------
     cues, outcomes : list, list
         a tuple of two lists containing cues and outcomes
-
     """
 
     if compression == "gzip":
@@ -56,7 +54,7 @@ def events_from_file(event_path: str, compression: Optional[str] = "gzip") -> It
         event_file.close()
 
 
-def events_to_file(events: Union[Iterator[StringEvent], Iterator[CollectionEvent], DataFrame],
+def events_to_file(events: Union[Iterator[StringEvent], Iterator[CollectionEvent], pd.DataFrame],
                    file_path: str,
                    delimiter: str = "\t",
                    compression: Optional[str] = "gzip",
@@ -115,7 +113,7 @@ def events_to_file(events: Union[Iterator[StringEvent], Iterator[CollectionEvent
         out_file.close()
 
 
-def events_from_dataframe(df: DataFrame,
+def events_from_dataframe(df: pd.DataFrame,
                           columns: Tuple[str, str] = ("cues", "outcomes")) -> Iterator[CollectionEvent]:
     """
     Yields events for all events in a pandas dataframe.
