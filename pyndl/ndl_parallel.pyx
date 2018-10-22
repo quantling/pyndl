@@ -10,8 +10,21 @@ cdef unsigned int MAGIC_NUMBER = 14159265
 cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215
 cdef unsigned int CURRENT_VERSION = 2048 + 215
 
+# run two sanity checks while loading the extension
+# 1. check
 if sizeof(unsigned int) != 4:
     raise ImportError('unsigned int needs to be 4 bytes not %i bytes' % sizeof(unsigned int))
+
+# 2. check
+# integer overflow in uni-dimensional index
+cdef unsigned long long test_index
+cdef unsigned int test_cue_index, test_mm, test_outcome_index
+test_cue_index = test_mm = test_outcome_index = 4294967295
+
+test_index = test_mm
+test_index *= test_outcome_index
+test_index += test_cue_index
+assert test_index == 18446744069414584320
 
 
 cdef inline void read_next_int(void *data, FILE *binary_file) nogil:
@@ -115,7 +128,8 @@ cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
 
     cdef unsigned int number_of_events, number_of_cues, number_of_outcomes
     cdef dtype_t association_strength, update
-    cdef unsigned int magic_number, version, ii, jj, event, index, appearance
+    cdef unsigned int magic_number, version, ii, jj, event, appearance
+    cdef unsigned long long index
     cdef unsigned int* cue_indices
     cdef unsigned int* outcome_indices
     cdef unsigned int max_number_of_cues = 1024
@@ -162,14 +176,21 @@ cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
         for ii in range(start, end):
             association_strength = 0.0
             for jj in range(number_of_cues):
-              index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              # this overflows:
+              #index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              index = mm  # implicit cast to unsigned long long
+              index *=  all_outcome_indices[ii]  # this can't overflow anymore
+              index += cue_indices[jj]  # this can't overflow anymore
+              # worst case: 4294967295 * 4294967295 + 4294967295 == 18446744069414584320 < 18446744073709551615
               association_strength += weights[index]
             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
               update = beta1 * (lambda_ - association_strength)
             else:
               update = beta2 * (0.0 - association_strength)
             for jj in range(number_of_cues):
-              index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              index = mm  # implicit cast to unsigned long long
+              index *=  all_outcome_indices[ii]  # this can't overflow anymore
+              index += cue_indices[jj]  # this can't overflow anymore
               weights[index] += alpha * update
 
     fclose(binary_file)
