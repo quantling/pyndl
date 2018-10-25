@@ -225,11 +225,6 @@ def test_provide_temporary_directory():
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, temporary_directory=temporary_directory)
 
 
-def test_overflow_in_cython_code():
-    pass
-    # TODO
-
-
 # Test internal consistency
 
 def test_dict_ndl_vs_ndl_threading(result_dict_ndl, result_ndl_threading):
