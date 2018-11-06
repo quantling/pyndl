@@ -226,9 +226,21 @@ def test_provide_temporary_directory():
 
 
 def test_overflow_in_cython_code():
-    pass
-    # TODO
 
+    _, cues, outcomes = count.cues_outcomes(FILE_PATH_SIMPLE)
+    shape = (len(outcomes), 2**32 // len(outcomes) + 1)
+
+    # Populate cues
+    cue_labels = [str(ii) for ii in range(shape[1] - len(cues))]
+    cue_labels.extend(cues.keys())
+
+    # Init empty weight matrix
+    weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
+    weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)])
+
+    result = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, weights=weights)
+
+    assert np.any(weights)
 
 # Test internal consistency
 
