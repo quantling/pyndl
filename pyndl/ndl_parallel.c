@@ -1637,7 +1637,7 @@ static const char __pyx_k_learn_inplace_2[] = "learn_inplace_2";
 static const char __pyx_k_all_outcomes_ptr[] = "all_outcomes_ptr";
 static const char __pyx_k_binary_file_path[] = "binary_file_path";
 static const char __pyx_k_binary_file_paths[] = "binary_file_paths";
-static const char __pyx_k_number_of_threads[] = "number_of_threads";
+static const char __pyx_k_n_jobs[] = "n_jobs";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_pyndl_ndl_parallel[] = "pyndl.ndl_parallel";
 static const char __pyx_k_length_all_outcomes[] = "length_all_outcomes";
@@ -1687,7 +1687,7 @@ static PyObject *__pyx_n_s_mm;
 static PyObject *__pyx_kp_u_ndarray_is_not_C_contiguous;
 static PyObject *__pyx_kp_u_ndarray_is_not_Fortran_contiguou;
 static PyObject *__pyx_n_s_np;
-static PyObject *__pyx_n_s_number_of_threads;
+static PyObject *__pyx_n_s_n_jobs;
 static PyObject *__pyx_n_s_number_parts;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
@@ -1701,7 +1701,7 @@ static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_kp_s_unsigned_int_needs_to_be_4_bytes;
 static PyObject *__pyx_n_s_weights;
 static PyObject *__pyx_n_s_weights_ptr;
-static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes, unsigned int __pyx_v_chunksize, unsigned int __pyx_v_number_of_threads); /* proto */
+static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes, unsigned int __pyx_v_chunksize, unsigned int __pyx_v_n_jobs); /* proto */
 static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes); /* proto */
 static int __pyx_pf_5numpy_7ndarray___getbuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_pf_5numpy_7ndarray_2__releasebuffer__(PyArrayObject *__pyx_v_self, Py_buffer *__pyx_v_info); /* proto */
@@ -1773,12 +1773,12 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_1learn_inplace(PyObject *__pyx_s
   __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_;
   PyArrayObject *__pyx_v_all_outcomes = 0;
   unsigned int __pyx_v_chunksize;
-  unsigned int __pyx_v_number_of_threads;
+  unsigned int __pyx_v_n_jobs;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("learn_inplace (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_binary_file_paths,&__pyx_n_s_weights,&__pyx_n_s_alpha,&__pyx_n_s_beta1,&__pyx_n_s_beta2,&__pyx_n_s_lambda,&__pyx_n_s_all_outcomes,&__pyx_n_s_chunksize,&__pyx_n_s_number_of_threads,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_binary_file_paths,&__pyx_n_s_weights,&__pyx_n_s_alpha,&__pyx_n_s_beta1,&__pyx_n_s_beta2,&__pyx_n_s_lambda,&__pyx_n_s_all_outcomes,&__pyx_n_s_chunksize,&__pyx_n_s_n_jobs,0};
     PyObject* values[9] = {0,0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
@@ -1854,7 +1854,7 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_1learn_inplace(PyObject *__pyx_s
         }
         CYTHON_FALLTHROUGH;
         case  8:
-        if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_number_of_threads)) != 0)) kw_args--;
+        if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_n_jobs)) != 0)) kw_args--;
         else {
           __Pyx_RaiseArgtupleInvalid("learn_inplace", 1, 9, 9, 8); __PYX_ERR(0, 43, __pyx_L3_error)
         }
@@ -1883,7 +1883,7 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_1learn_inplace(PyObject *__pyx_s
     __pyx_v_lambda_ = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_lambda_ == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 45, __pyx_L3_error)
     __pyx_v_all_outcomes = ((PyArrayObject *)values[6]);
     __pyx_v_chunksize = __Pyx_PyInt_As_unsigned_int(values[7]); if (unlikely((__pyx_v_chunksize == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 47, __pyx_L3_error)
-    __pyx_v_number_of_threads = __Pyx_PyInt_As_unsigned_int(values[8]); if (unlikely((__pyx_v_number_of_threads == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L3_error)
+    __pyx_v_n_jobs = __Pyx_PyInt_As_unsigned_int(values[8]); if (unlikely((__pyx_v_n_jobs == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 48, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
@@ -1895,7 +1895,7 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_1learn_inplace(PyObject *__pyx_s
   __pyx_L4_argument_unpacking_done:;
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_weights), __pyx_ptype_5numpy_ndarray, 1, "weights", 0))) __PYX_ERR(0, 43, __pyx_L1_error)
   if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_all_outcomes), __pyx_ptype_5numpy_ndarray, 1, "all_outcomes", 0))) __PYX_ERR(0, 46, __pyx_L1_error)
-  __pyx_r = __pyx_pf_5pyndl_12ndl_parallel_learn_inplace(__pyx_self, __pyx_v_binary_file_paths, __pyx_v_weights, __pyx_v_alpha, __pyx_v_beta1, __pyx_v_beta2, __pyx_v_lambda_, __pyx_v_all_outcomes, __pyx_v_chunksize, __pyx_v_number_of_threads);
+  __pyx_r = __pyx_pf_5pyndl_12ndl_parallel_learn_inplace(__pyx_self, __pyx_v_binary_file_paths, __pyx_v_weights, __pyx_v_alpha, __pyx_v_beta1, __pyx_v_beta2, __pyx_v_lambda_, __pyx_v_all_outcomes, __pyx_v_chunksize, __pyx_v_n_jobs);
 
   /* function exit code */
   goto __pyx_L0;
@@ -1906,7 +1906,7 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_1learn_inplace(PyObject *__pyx_s
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes, unsigned int __pyx_v_chunksize, unsigned int __pyx_v_number_of_threads) {
+static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_binary_file_paths, PyArrayObject *__pyx_v_weights, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_alpha, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta1, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_beta2, __pyx_t_5pyndl_12ndl_parallel_dtype_t __pyx_v_lambda_, PyArrayObject *__pyx_v_all_outcomes, unsigned int __pyx_v_chunksize, unsigned int __pyx_v_n_jobs) {
   unsigned int __pyx_v_mm;
   unsigned int *__pyx_v_all_outcomes_ptr;
   unsigned int __pyx_v_length_all_outcomes;
@@ -1960,7 +1960,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   __pyx_pybuffernd_all_outcomes.diminfo[0].strides = __pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_all_outcomes.diminfo[0].shape = __pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer.shape[0];
 
   /* "pyndl/ndl_parallel.pyx":50
- *                   unsigned int number_of_threads):
+ *                   unsigned int n_jobs):
  * 
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns             # <<<<<<<<<<<<<<
  *     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
@@ -2083,7 +2083,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  * 
  *       number_parts = (length_all_outcomes // chunksize) + 1             # <<<<<<<<<<<<<<
  * 
- *       with nogil, parallel(num_threads=number_of_threads):
+ *       with nogil, parallel(num_threads=n_jobs):
  */
     if (unlikely(__pyx_v_chunksize == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
@@ -2094,7 +2094,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
     /* "pyndl/ndl_parallel.pyx":68
  *       number_parts = (length_all_outcomes // chunksize) + 1
  * 
- *       with nogil, parallel(num_threads=number_of_threads):             # <<<<<<<<<<<<<<
+ *       with nogil, parallel(num_threads=n_jobs):             # <<<<<<<<<<<<<<
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
  *           start_val = ii * chunksize
  */
@@ -2113,13 +2113,13 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
                   #define unlikely(x) (x)
               #endif
               #ifdef _OPENMP
-              #pragma omp parallel  private(__pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_t_7, __pyx_t_8, __pyx_t_9) num_threads(__pyx_v_number_of_threads)
+              #pragma omp parallel  private(__pyx_t_10, __pyx_t_11, __pyx_t_12, __pyx_t_13, __pyx_t_14, __pyx_t_7, __pyx_t_8, __pyx_t_9) num_threads(__pyx_v_n_jobs)
               #endif /* _OPENMP */
               {
 
                   /* "pyndl/ndl_parallel.pyx":69
  * 
- *       with nogil, parallel(num_threads=number_of_threads):
+ *       with nogil, parallel(num_threads=n_jobs):
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):             # <<<<<<<<<<<<<<
  *           start_val = ii * chunksize
  *           end_val = min(start_val + chunksize, length_all_outcomes)
@@ -2150,7 +2150,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
                                   __pyx_v_start_val = ((unsigned int)0xbad0bad0);
 
                                   /* "pyndl/ndl_parallel.pyx":70
- *       with nogil, parallel(num_threads=number_of_threads):
+ *       with nogil, parallel(num_threads=n_jobs):
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
  *           start_val = ii * chunksize             # <<<<<<<<<<<<<<
  *           end_val = min(start_val + chunksize, length_all_outcomes)
@@ -2262,7 +2262,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
         /* "pyndl/ndl_parallel.pyx":68
  *       number_parts = (length_all_outcomes // chunksize) + 1
  * 
- *       with nogil, parallel(num_threads=number_of_threads):             # <<<<<<<<<<<<<<
+ *       with nogil, parallel(num_threads=n_jobs):             # <<<<<<<<<<<<<<
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
  *           start_val = ii * chunksize
  */
@@ -5937,7 +5937,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_u_ndarray_is_not_C_contiguous, __pyx_k_ndarray_is_not_C_contiguous, sizeof(__pyx_k_ndarray_is_not_C_contiguous), 0, 1, 0, 0},
   {&__pyx_kp_u_ndarray_is_not_Fortran_contiguou, __pyx_k_ndarray_is_not_Fortran_contiguou, sizeof(__pyx_k_ndarray_is_not_Fortran_contiguou), 0, 1, 0, 0},
   {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
-  {&__pyx_n_s_number_of_threads, __pyx_k_number_of_threads, sizeof(__pyx_k_number_of_threads), 0, 0, 1, 1},
+  {&__pyx_n_s_n_jobs, __pyx_k_n_jobs, sizeof(__pyx_k_n_jobs), 0, 0, 1, 1},
   {&__pyx_n_s_number_parts, __pyx_k_number_parts, sizeof(__pyx_k_number_parts), 0, 0, 1, 1},
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_kp_s_numpy_core_multiarray_failed_to, __pyx_k_numpy_core_multiarray_failed_to, sizeof(__pyx_k_numpy_core_multiarray_failed_to), 0, 0, 1, 0},
@@ -6094,7 +6094,7 @@ static int __Pyx_InitCachedConstants(void) {
  *                   dtype_t alpha, dtype_t beta1,
  *                   dtype_t beta2, dtype_t lambda_,
  */
-  __pyx_tuple__12 = PyTuple_Pack(21, __pyx_n_s_binary_file_paths, __pyx_n_s_weights, __pyx_n_s_alpha, __pyx_n_s_beta1, __pyx_n_s_beta2, __pyx_n_s_lambda, __pyx_n_s_all_outcomes, __pyx_n_s_chunksize, __pyx_n_s_number_of_threads, __pyx_n_s_mm, __pyx_n_s_all_outcomes_ptr, __pyx_n_s_length_all_outcomes, __pyx_n_s_fname, __pyx_n_s_start_val, __pyx_n_s_end_val, __pyx_n_s_ii, __pyx_n_s_number_parts, __pyx_n_s_error, __pyx_n_s_weights_ptr, __pyx_n_s_binary_file_path, __pyx_n_s_filename_byte_string); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(21, __pyx_n_s_binary_file_paths, __pyx_n_s_weights, __pyx_n_s_alpha, __pyx_n_s_beta1, __pyx_n_s_beta2, __pyx_n_s_lambda, __pyx_n_s_all_outcomes, __pyx_n_s_chunksize, __pyx_n_s_n_jobs, __pyx_n_s_mm, __pyx_n_s_all_outcomes_ptr, __pyx_n_s_length_all_outcomes, __pyx_n_s_fname, __pyx_n_s_start_val, __pyx_n_s_end_val, __pyx_n_s_ii, __pyx_n_s_number_parts, __pyx_n_s_error, __pyx_n_s_weights_ptr, __pyx_n_s_binary_file_path, __pyx_n_s_filename_byte_string); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
   __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(9, 0, 21, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyndl_ndl_parallel_pyx, __pyx_n_s_learn_inplace, 43, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 43, __pyx_L1_error)

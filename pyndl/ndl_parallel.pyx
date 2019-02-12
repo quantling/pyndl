@@ -45,7 +45,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
                   dtype_t beta2, dtype_t lambda_,
                   np.ndarray[unsigned int, ndim=1] all_outcomes,
                   unsigned int chunksize,
-                  unsigned int number_of_threads):
+                  unsigned int n_jobs):
 
     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
@@ -65,7 +65,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
 
       number_parts = (length_all_outcomes // chunksize) + 1
 
-      with nogil, parallel(num_threads=number_of_threads):
+      with nogil, parallel(num_threads=n_jobs):
         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
           start_val = ii * chunksize
           end_val = min(start_val + chunksize, length_all_outcomes)

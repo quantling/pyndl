@@ -413,7 +413,7 @@ def test_compare_time_dict_inplace_parallel_thread():
 
     result_thread_ndl, duration_parallel = clock(ndl.ndl,
                                                  (file_path, ALPHA, BETAS, LAMBDA_),
-                                                 number_of_threads=4, method='threading')
+                                                 n_jobs=4, method='threading')
 
     assert len(result_dict_ndl) == len(result_thread_ndl)
 
