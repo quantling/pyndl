@@ -104,7 +104,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     # preprocessing
     n_events, cues, outcomes = count.cues_outcomes(events,
-                                                   number_of_processes=n_jobs,
+                                                   n_jobs=n_jobs,
                                                    verbose=verbose)
     cues = list(cues.keys())
     outcomes = list(outcomes.keys())
@@ -152,7 +152,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
         number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
                                                              outcome_map, overwrite=True,
-                                                             number_of_processes=n_jobs,
+                                                             n_jobs=n_jobs,
                                                              events_per_file=events_per_temporary_file,
                                                              remove_duplicates=remove_duplicates,
                                                              verbose=verbose)

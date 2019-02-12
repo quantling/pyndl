@@ -46,9 +46,9 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=False):
 
 
 def cues_outcomes(event_file_name,
-                  *, number_of_processes=2, verbose=False):
+                  *, n_jobs=2, verbose=False):
     """
-    Counts cues and outcomes in event_file_name using number_of_processes
+    Counts cues and outcomes in event_file_name using n_jobs
     processes.
 
     Returns
@@ -56,14 +56,14 @@ def cues_outcomes(event_file_name,
     (n_events, cues, outcomes) : (int, collections.Counter, collections.Counter)
 
     """
-    with multiprocessing.Pool(number_of_processes) as pool:
-        step = number_of_processes
+    with multiprocessing.Pool(n_jobs) as pool:
+        step = n_jobs
         results = pool.starmap(_job_cues_outcomes,
                                ((event_file_name,
                                  start,
                                  step,
                                  verbose)
-                                for start in range(number_of_processes)))
+                                for start in range(n_jobs)))
         n_events = 0
         cues = Counter()
         outcomes = Counter()
@@ -117,9 +117,9 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
 
 
 def words_symbols(corpus_file_name,
-                  *, number_of_processes=2, lower_case=False, verbose=False):
+                  *, n_jobs=2, lower_case=False, verbose=False):
     """
-    Counts words and symbols in corpus_file_name using number_of_processes
+    Counts words and symbols in corpus_file_name using n_jobs
     processes.
 
     Returns
@@ -127,15 +127,15 @@ def words_symbols(corpus_file_name,
     (words, symbols) : (collections.Counter, collections.Counter)
 
     """
-    with multiprocessing.Pool(number_of_processes) as pool:
-        step = number_of_processes
+    with multiprocessing.Pool(n_jobs) as pool:
+        step = n_jobs
         results = pool.starmap(_job_words_symbols, ((corpus_file_name,
                                                      start,
                                                      step,
                                                      lower_case,
                                                      verbose)
                                                     for start in
-                                                    range(number_of_processes)))
+                                                    range(n_jobs)))
         words = Counter()
         symbols = Counter()
         for words_process, symbols_process in results:
