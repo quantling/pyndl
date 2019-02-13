@@ -438,24 +438,62 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
                         __name__ + "." + dict_ndl.__name__, attrs=attrs_to_update)
 
     if make_data_array:
-        outcomes = list(weights.keys())
-        cues = set()
-        for outcome in outcomes:
-            cues.update(set(weights[outcome].keys()))
-
-        cues = list(cues)
-
-        weights_dict = weights
-        shape = (len(outcomes), len(cues))
-        weights = xr.DataArray(np.zeros(shape), attrs=attrs,
-                               coords={'outcomes': outcomes, 'cues': cues},
-                               dims=('outcomes', 'cues'))
-
-        for outcome in outcomes:
-            for cue in cues:
-                weights.loc[{"outcomes": outcome, "cues": cue}] = weights_dict[outcome][cue]
+        weights = data_array(weights, attrs=attrs)
     else:
         weights.attrs = attrs
+
+    return weights
+
+
+def data_array(weights, *, attrs=None):
+    """
+    Calculate the weights for all_outcomes over all events in event_file.
+
+    Parameters
+    ----------
+    weights : dict of dicts of floats or WeightDict
+        the first dict has outcomes as keys and dicts as values
+        the second dict has cues as keys and weights as values
+        weights[outcome][cue] gives the weight between outcome and cue.
+        If a dict of dicts is given, attrs is required. If a WeightDict is
+        given, attrs is optional
+    attrs : dict
+        A dictionary of attributes
+
+    Returns
+    -------
+    weights : xarray.DataArray
+        with dimensions 'outcomes' and 'cues'. You can lookup the weights
+        between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
+        'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
+    """
+
+    if isinstance(weights, xr.DataArray) and weights.dims == ('outcomes', 'cues'):
+        return weights
+
+    if attrs is None:
+        try:
+            attrs = weigths.attrs
+        except:
+            raise ValueError("weights does not have attributes and no attrs "
+                             "argument is given.")
+
+    outcomes = list(weights.keys())
+    cues = set()
+    for outcome in outcomes:
+        cues.update(set(weights[outcome].keys()))
+
+    cues = list(cues)
+
+    weights_dict = weights
+    shape = (len(outcomes), len(cues))
+    weights = xr.DataArray(np.zeros(shape), attrs=attrs,
+                           coords={'outcomes': outcomes, 'cues': cues},
+                           dims=('outcomes', 'cues'))
+
+    for outcome in outcomes:
+        for cue in cues:
+            weights.loc[{"outcomes": outcome, "cues": cue}] = weights_dict[outcome][cue]
 
     return weights
 

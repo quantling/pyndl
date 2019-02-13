@@ -127,6 +127,16 @@ def test_exceptions():
     with pytest.raises(ValueError, match="events_per_file has to be larger than 1") as e_info:
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, events_per_temporary_file=1)
 
+    with pytest.raises(ValueError, match="weights does not have attributes "
+                       "and no attrs argument is given.") as e_info:
+        ndl.data_array(dict())
+
+
+def test_data_array_cast():
+    result_ndl = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading')
+    casted_result = ndl.data_array(result_ndl)
+    assert isinstance(casted_result, xr.DataArray) and (result_ndl == casted_result).all()
+
 
 def test_continue_learning_dict():
     events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
