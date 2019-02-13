@@ -10,7 +10,7 @@ pyndl.count
 """
 # pylint: disable=redefined-outer-name, invalid-name
 
-from collections import Counter
+from collections import Counter, namedtuple
 import gzip
 import itertools
 import multiprocessing
@@ -75,7 +75,8 @@ def cues_outcomes(event_file_name,
     if verbose:
         print('\n...counting done.')
 
-    return n_events, cues, outcomes
+    cuesOutcomes = namedtuple('cuesOutcomes', 'n_events, cues, outcomes')
+    return cuesOutcomes(n_events, cues, outcomes)
 
 
 def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
@@ -145,7 +146,8 @@ def words_symbols(corpus_file_name,
     if verbose:
         print('\n...counting done.')
 
-    return words, symbols
+    wordsSymbols = namedtuple('wordsSymbols', 'words, symbols')
+    return wordsSymbols(words, symbols)
 
 
 def save_counter(counter, filename, *, header='key\tfreq\n'):
