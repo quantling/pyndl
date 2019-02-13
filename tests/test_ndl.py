@@ -132,6 +132,19 @@ def test_exceptions():
         ndl.data_array(dict())
 
 
+def test_generator_learning():
+    events = io.events_from_file(FILE_PATH_SIMPLE)
+    result_ndl_gen = ndl.ndl(events, ALPHA, BETAS, method='threading')
+    result_ndl = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading')
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE,
+                                            result_ndl_gen,
+                                            result_ndl)
+    print(result_ndl_gen)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+
 def test_data_array_cast():
     result_ndl = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading')
     casted_result = ndl.data_array(result_ndl)

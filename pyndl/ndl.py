@@ -16,6 +16,7 @@ import tempfile
 import threading
 import time
 import warnings
+import types
 
 import cython
 import pandas as pd
@@ -54,8 +55,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     Parameters
     ----------
-    events : str
-        path to the event file
+    events : generator or str
+        generates cues, outcomes pairs or the path to the event file
     alpha : float
         saliency of all cues
     betas : (float, float)
@@ -92,6 +93,13 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
 
     """
+
+    # Create temporary file if events is a generator
+    if isinstance(events, types.GeneratorType):
+        file_path = tempfile.NamedTemporaryFile().name
+        io.events_to_file(events, file_path)
+        events = file_path
+        del file_path
 
     if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
         raise ValueError("remove_duplicates must be None, True or False")
