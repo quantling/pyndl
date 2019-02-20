@@ -13,9 +13,6 @@ python:
 
 matrix:
   include:
-  - os: linux
-    python: 3.7
-    install: pip install tox-travis
   - os: osx
     language: sh
     before_install: brew install llvm
@@ -25,6 +22,8 @@ matrix:
     before_install:
     - choco install python3
     - export PATH="/c/Python37:/c/Python37/Scripts:$PATH"
+
+install: pip install tox-travis
 
 script:
   - tox -e travis
