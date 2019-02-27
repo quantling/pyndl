@@ -221,6 +221,11 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
 def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
                 wall_time, function, method=None, attrs=None):
+    if not isinstance(alpha, (float, int)):
+        alpha_str = 'varying'
+    else:
+        alpha_str = str(alpha)
+
     width = max([len(ss) for ss in (event_path,
                                     str(number_events),
                                     str(alpha),
@@ -235,13 +240,10 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
     def _format(value):
         return '{0: <{width}}'.format(value, width=width)
 
-    if not isinstance(alpha, (float, int)):
-        alpha = 'varying'
-
     new_attrs = {'date': _format(time.strftime("%Y-%m-%d %H:%M:%S")),
                  'event_path': _format(event_path),
                  'number_events': _format(number_events),
-                 'alpha': _format(str(alpha)),
+                 'alpha': _format(alpha_str),
                  'betas': _format(str(betas)),
                  'lambda': _format(str(lambda_)),
                  'function': _format(function),
