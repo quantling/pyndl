@@ -6,9 +6,11 @@ from cython.parallel cimport parallel, prange
 from libc.stdlib cimport abort, malloc, free
 from libc.stdio cimport fopen, fread, fclose, FILE
 
+
 cdef unsigned int MAGIC_NUMBER = 14159265
 cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215
 cdef unsigned int CURRENT_VERSION = 2048 + 215
+
 
 if sizeof(unsigned int) != 4:
     raise ImportError('unsigned int needs to be 4 bytes not %i bytes' % sizeof(unsigned int))
@@ -32,7 +34,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
                   dtype_t beta2, dtype_t lambda_,
                   np.ndarray[unsigned int, ndim=1] all_outcomes,
                   unsigned int chunksize,
-                  unsigned int number_of_threads):
+                  unsigned int n_jobs):
 
     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
@@ -52,7 +54,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
 
       number_parts = (length_all_outcomes // chunksize) + 1
 
-      with nogil, parallel(num_threads=number_of_threads):
+      with nogil, parallel(num_threads=n_jobs):
         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
           start_val = ii * chunksize
           end_val = min(start_val + chunksize, length_all_outcomes)
@@ -115,7 +117,8 @@ cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
 
     cdef unsigned int number_of_events, number_of_cues, number_of_outcomes
     cdef dtype_t association_strength, update
-    cdef unsigned int magic_number, version, ii, jj, event, index, appearance
+    cdef unsigned int magic_number, version, ii, jj, event, appearance
+    cdef unsigned long long index
     cdef unsigned int* cue_indices
     cdef unsigned int* outcome_indices
     cdef unsigned int max_number_of_cues = 1024
@@ -162,14 +165,21 @@ cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
         for ii in range(start, end):
             association_strength = 0.0
             for jj in range(number_of_cues):
-              index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              # this overflows:
+              #index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              index = mm  # implicit cast to unsigned long long
+              index *=  all_outcome_indices[ii]  # this can't overflow anymore
+              index += cue_indices[jj]  # this can't overflow anymore
+              # worst case: 4294967295 * 4294967295 + 4294967295 == 18446744069414584320 < 18446744073709551615
               association_strength += weights[index]
             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
               update = beta1 * (lambda_ - association_strength)
             else:
               update = beta2 * (0.0 - association_strength)
             for jj in range(number_of_cues):
-              index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              index = mm  # implicit cast to unsigned long long
+              index *=  all_outcome_indices[ii]  # this can't overflow anymore
+              index += cue_indices[jj]  # this can't overflow anymore
               weights[index] += alpha * update
 
     fclose(binary_file)

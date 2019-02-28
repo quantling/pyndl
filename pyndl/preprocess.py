@@ -458,7 +458,7 @@ def filter_event_file(input_event_file, output_event_file, *,
                       keep_cues="all", keep_outcomes="all",
                       remove_cues=None, remove_outcomes=None,
                       cue_map=None, outcome_map=None,
-                      number_of_processes=1, chunksize=100000,
+                      n_jobs=1, chunksize=100000,
                       verbose=False):
     """
     Filter an event file by a list or a map of cues and outcomes.
@@ -487,7 +487,7 @@ def filter_event_file(input_event_file, output_event_file, *,
         maps every outcome as key to the value. Removes all outcome that do not have a
         key. This can be used to map several different outcomes to the same
         outcome or to rename outcomes.
-    number_of_processes : int
+    n_jobs : int
         number of threads to use
     chunksize : int
         number of chunks per submitted job, should be around 100000
@@ -505,7 +505,7 @@ def filter_event_file(input_event_file, output_event_file, *,
     job = JobFilter(keep_cues, keep_outcomes, remove_cues, remove_outcomes,
                     cue_map, outcome_map)
 
-    with multiprocessing.Pool(number_of_processes) as pool:
+    with multiprocessing.Pool(n_jobs) as pool:
         with gzip.open(input_event_file, "rt") as infile:
             with gzip.open(output_event_file, "wt") as outfile:
                 # copy header
@@ -703,7 +703,7 @@ def create_binary_event_files(event_file,
                               outcome_id_map,
                               *,
                               sort_within_event=False,
-                              number_of_processes=2,
+                              n_jobs=2,
                               events_per_file=10000000,
                               overwrite=False,
                               remove_duplicates=None,
@@ -724,7 +724,7 @@ def create_binary_event_files(event_file,
         outcome to id map
     sort_within_event : bool
         should we sort the cues and outcomes within the event
-    number_of_processes : int
+    n_jobs : int
         number of threads to use
     events_per_file : int
         Number of events in each binary file. Has to be larger than 1
@@ -762,7 +762,7 @@ def create_binary_event_files(event_file,
 
     number_events = 0
 
-    with multiprocessing.Pool(number_of_processes) as pool:
+    with multiprocessing.Pool(n_jobs) as pool:
 
         def _error_callback(error):
             if isinstance(error, StopIteration):
@@ -808,8 +808,8 @@ def create_binary_event_files(event_file,
                 else:
                     raise error
             ii += 1
-            # only start jobs in chunks of 4*number_of_processes
-            if ii % (number_of_processes*4) == 0:
+            # only start jobs in chunks of 4*n_jobs
+            if ii % (n_jobs*4) == 0:
                 while True:
                     if result.ready():
                         break

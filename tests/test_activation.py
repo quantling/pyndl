@@ -15,8 +15,6 @@ import pytest
 from pyndl import ndl
 from pyndl.activation import activation
 
-slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),  # pylint: disable=invalid-name
-                          reason="need --runslow option to run")
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab.gz")
@@ -53,10 +51,10 @@ def test_activation_matrix():
     reference_activations = np.array([[1, 0, 1, 0], [1, 1, 0, 1]])
 
     with pytest.raises(ValueError):
-        activations = activation(events, weights, number_of_threads=1)
+        activations = activation(events, weights, n_jobs=1)
 
-    activations = activation(events, weights, number_of_threads=1, remove_duplicates=True)
-    activations_mp = activation(events, weights, number_of_threads=3, remove_duplicates=True)
+    activations = activation(events, weights, n_jobs=1, remove_duplicates=True)
+    activations_mp = activation(events, weights, n_jobs=3, remove_duplicates=True)
 
     assert np.allclose(reference_activations, activations)
     assert np.allclose(reference_activations, activations_mp)
@@ -77,12 +75,12 @@ def test_ignore_missing_cues():
     reference_activations = np.array([[1, 0, 1, 0], [1, 1, 0, 1]])
 
     with pytest.raises(KeyError):
-        activations = activation(events, weights, number_of_threads=1,
+        activations = activation(events, weights, n_jobs=1,
                                  remove_duplicates=True)
 
-    activations = activation(events, weights, number_of_threads=1,
+    activations = activation(events, weights, n_jobs=1,
                              remove_duplicates=True, ignore_missing_cues=True)
-    activations_mp = activation(events, weights, number_of_threads=3,
+    activations_mp = activation(events, weights, n_jobs=3,
                                 remove_duplicates=True, ignore_missing_cues=True)
 
     assert np.allclose(reference_activations, activations)
@@ -107,9 +105,9 @@ def test_activation_dict():
     }
 
     with pytest.raises(ValueError):
-        activations = activation(events, weights, number_of_threads=1)
+        activations = activation(events, weights, n_jobs=1)
 
-    activations = activation(events, weights, number_of_threads=1, remove_duplicates=True)
+    activations = activation(events, weights, n_jobs=1, remove_duplicates=True)
     for outcome, activation_list in activations.items():
         assert np.allclose(reference_activations[outcome], activation_list)
 
@@ -132,15 +130,15 @@ def test_ignore_missing_cues_dict():
     }
 
     with pytest.raises(ValueError):
-        activations = activation(events, weights, number_of_threads=1)
+        activations = activation(events, weights, n_jobs=1)
 
-    activations = activation(events, weights, number_of_threads=1,
+    activations = activation(events, weights, n_jobs=1,
                              remove_duplicates=True, ignore_missing_cues=True)
     for outcome, activation_list in activations.items():
         assert np.allclose(reference_activations[outcome], activation_list)
 
 
-@slow
+@pytest.mark.runslow
 def test_activation_matrix_large():
     """
     Test with a lot of data. Better run only with at least 12GB free RAM.
@@ -178,10 +176,10 @@ def test_activation_matrix_large():
     print("")
     gc.collect()
     asp = (time_test(activation, of="single threaded")
-           (events, weights, number_of_threads=1, remove_duplicates=True))
+           (events, weights, n_jobs=1, remove_duplicates=True))
     gc.collect()
     amp = (time_test(activation, of="multi threaded (up to 8 threads)")
-           (events, weights, number_of_threads=8, remove_duplicates=True))
+           (events, weights, n_jobs=8, remove_duplicates=True))
     del weights
     del events
     gc.collect()

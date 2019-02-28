@@ -16,9 +16,6 @@ import pytest
 
 from pyndl import ndl, count, io
 
-slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),  # pylint: disable=invalid-name
-                          reason="need --runslow option to run")
-
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab.gz")
 FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab.gz")
@@ -126,6 +123,36 @@ def test_exceptions():
 
     with pytest.raises(ValueError, match="events_per_file has to be larger than 1") as e_info:
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, events_per_temporary_file=1)
+
+    with pytest.raises(AttributeError, match="weights does not have attributes "
+                       "and no attrs argument is given.") as e_info:
+        ndl.data_array(dict())
+
+#    # Test usually exeeds memory limit; It demands ~32GB of RAM.
+#    with pytest.raises(ValueError, match="Neither number of cues nor outcomes "
+#                       "shall exceed 4294967295 for now. See "
+#                       "https://github.com/quantling/pyndl/issues/169") as e_info:
+#        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS,
+#                weights=xr.DataArray(np.zeros(shape=(4294967295 + 1, 1))))
+
+
+def test_generator_learning():
+    events = io.events_from_file(FILE_PATH_SIMPLE)
+    result_ndl_gen = ndl.ndl(events, ALPHA, BETAS, method='threading')
+    result_ndl = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading')
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE,
+                                            result_ndl_gen,
+                                            result_ndl)
+    print(result_ndl_gen)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+
+def test_data_array_cast():
+    result_ndl = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading')
+    casted_result = ndl.data_array(result_ndl)
+    assert isinstance(casted_result, xr.DataArray) and (result_ndl == casted_result).all()
 
 
 def test_continue_learning_dict():
@@ -405,7 +432,7 @@ def test_compare_weights_rescorla_vs_ndl2():
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
-@slow
+@pytest.mark.runslow
 def test_compare_time_dict_inplace_parallel_thread():
     file_path = os.path.join(TEST_ROOT, 'resources/event_file_many_cues.tab.gz')
 
@@ -413,7 +440,7 @@ def test_compare_time_dict_inplace_parallel_thread():
 
     result_thread_ndl, duration_parallel = clock(ndl.ndl,
                                                  (file_path, ALPHA, BETAS, LAMBDA_),
-                                                 number_of_threads=4, method='threading')
+                                                 n_jobs=4, method='threading')
 
     assert len(result_dict_ndl) == len(result_thread_ndl)
 

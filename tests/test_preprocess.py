@@ -24,7 +24,7 @@ RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 def test_bandsample():
     resource_file = os.path.join(TEST_ROOT, "resources/event_file_trigrams_to_word.tab.gz")
     _, _, outcome_freq_map = cues_outcomes(resource_file,
-                                           number_of_processes=2)
+                                           n_jobs=2)
     outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=None, verbose=False)
     assert len(outcome_freq_map_filtered) == 50
 
@@ -210,7 +210,7 @@ def test_filter_event_file():
     filter_event_file(input_event_file, output_event_file,
                       keep_cues=cues,
                       keep_outcomes=outcomes,
-                      number_of_processes=2,
+                      n_jobs=2,
                       verbose=True)
     _, cue_freq_map, outcome_freq_map = cues_outcomes(output_event_file)
     cues_new = list(cue_freq_map)
@@ -328,7 +328,7 @@ def test_preprocessing():
                       lower_case=True, verbose=True)
 
     # read in outcomes
-    _, _, outcome_freq_map = cues_outcomes(event_file, number_of_processes=2)
+    _, _, outcome_freq_map = cues_outcomes(event_file, n_jobs=2)
 
     # reduce number of outcomes through bandsampling
     outcome_freq_map_filtered = bandsample(outcome_freq_map, 50, cutoff=1, seed=None)
