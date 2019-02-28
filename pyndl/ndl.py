@@ -187,6 +187,10 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     else:
         raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
 
+    if any(length > 4294967295 for length in weights.shape):
+        raise ValueError("Neither number of cues nor outcomes shall exceed 4294967295 "
+                         "for now. See https://github.com/quantling/pyndl/issues/169")
+
     beta1, beta2 = betas
 
     with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:

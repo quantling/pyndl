@@ -128,6 +128,13 @@ def test_exceptions():
                        "and no attrs argument is given.") as e_info:
         ndl.data_array(dict())
 
+#    # Test usually exeeds memory limit; It demands ~32GB of RAM.
+#    with pytest.raises(ValueError, match="Neither number of cues nor outcomes "
+#                       "shall exceed 4294967295 for now. See "
+#                       "https://github.com/quantling/pyndl/issues/169") as e_info:
+#        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS,
+#                weights=xr.DataArray(np.zeros(shape=(4294967295 + 1, 1))))
+
 
 def test_generator_learning():
     events = io.events_from_file(FILE_PATH_SIMPLE)

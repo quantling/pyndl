@@ -6,25 +6,14 @@ from cython.parallel cimport parallel, prange
 from libc.stdlib cimport abort, malloc, free
 from libc.stdio cimport fopen, fread, fclose, FILE
 
+
 cdef unsigned int MAGIC_NUMBER = 14159265
 cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215
 cdef unsigned int CURRENT_VERSION = 2048 + 215
 
-# run two sanity checks while loading the extension
-# 1. check
+
 if sizeof(unsigned int) != 4:
     raise ImportError('unsigned int needs to be 4 bytes not %i bytes' % sizeof(unsigned int))
-
-# 2. check
-# integer overflow in uni-dimensional index
-cdef unsigned long long test_index
-cdef unsigned int test_cue_index, test_mm, test_outcome_index
-test_cue_index = test_mm = test_outcome_index = 4294967295
-
-test_index = test_mm
-test_index *= test_outcome_index
-test_index += test_cue_index
-assert test_index == 18446744069414584320
 
 
 cdef inline void read_next_int(void *data, FILE *binary_file) nogil:
