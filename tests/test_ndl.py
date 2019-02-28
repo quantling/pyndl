@@ -127,7 +127,7 @@ def test_exceptions():
     with pytest.raises(ValueError, match="events_per_file has to be larger than 1") as e_info:
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, events_per_temporary_file=1)
 
-    with pytest.raises(ValueError, match="weights does not have attributes "
+    with pytest.raises(AttributeError, match="weights does not have attributes "
                        "and no attrs argument is given.") as e_info:
         ndl.data_array(dict())
 

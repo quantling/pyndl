@@ -17,6 +17,10 @@ import multiprocessing
 import sys
 
 
+CuesOutcomes = namedtuple('CuesOutcomes', 'n_events, cues, outcomes')
+WordsSymbols = namedtuple('WordsSymbols', 'words, symbols')
+
+
 def _job_cues_outcomes(event_file_name, start, step, verbose=False):
     """
     Counts cues and outcomes for every ``step`` event starting from
@@ -75,8 +79,7 @@ def cues_outcomes(event_file_name,
     if verbose:
         print('\n...counting done.')
 
-    cuesOutcomes = namedtuple('cuesOutcomes', 'n_events, cues, outcomes')
-    return cuesOutcomes(n_events, cues, outcomes)
+    return CuesOutcomes(n_events, cues, outcomes)
 
 
 def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
@@ -146,8 +149,7 @@ def words_symbols(corpus_file_name,
     if verbose:
         print('\n...counting done.')
 
-    wordsSymbols = namedtuple('wordsSymbols', 'words, symbols')
-    return wordsSymbols(words, symbols)
+    return WordsSymbols(words, symbols)
 
 
 def save_counter(counter, filename, *, header='key\tfreq\n'):

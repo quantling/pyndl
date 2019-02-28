@@ -33,6 +33,38 @@ from . import io
 warnings.simplefilter('always', DeprecationWarning)
 
 
+class WeightDict(defaultdict):
+    # pylint: disable=missing-docstring
+
+    """
+    Subclass of defaultdict to represent outcome-cue weights.
+
+    Notes
+    -----
+    Weight for each outcome-cue combination is 0 per default.
+
+    """
+
+    # pylint: disable=W0613
+    def __init__(self, *args, **kwargs):
+        super().__init__(lambda: defaultdict(float))
+
+        self._attrs = OrderedDict()
+
+        if 'attrs' in kwargs:
+            self.attrs = kwargs['attrs']
+        else:
+            self.attrs = {}
+
+    @property
+    def attrs(self):
+        return self._attrs
+
+    @attrs.setter
+    def attrs(self, attrs):
+        self._attrs = OrderedDict(attrs)
+
+
 def events_from_file(event_path):
     warnings.warn("Usage of pyndl.ndl.events_from_file is depreceated and will "
                   "be removed in v0.6.0. Please use pyndl.io.events_from_file "
@@ -280,38 +312,6 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
     return new_attrs
 
 
-class WeightDict(defaultdict):
-    # pylint: disable=missing-docstring
-
-    """
-    Subclass of defaultdict to represent outcome-cue weights.
-
-    Notes
-    -----
-    Weight for each outcome-cue combination is 0 per default.
-
-    """
-
-    # pylint: disable=W0613
-    def __init__(self, *args, **kwargs):
-        super().__init__(lambda: defaultdict(float))
-
-        self._attrs = OrderedDict()
-
-        if 'attrs' in kwargs:
-            self.attrs = kwargs['attrs']
-        else:
-            self.attrs = {}
-
-    @property
-    def attrs(self):
-        return self._attrs
-
-    @attrs.setter
-    def attrs(self, attrs):
-        self._attrs = OrderedDict(attrs)
-
-
 def dict_ndl(events, alphas, betas, lambda_=1.0, *,
              weights=None, inplace=False, remove_duplicates=None,
              make_data_array=False, verbose=False):
@@ -481,10 +481,10 @@ def data_array(weights, *, attrs=None):
 
     if attrs is None:
         try:
-            attrs = weigths.attrs
-        except:
-            raise ValueError("weights does not have attributes and no attrs "
-                             "argument is given.")
+            attrs = weights.attrs
+        except AttributeError:
+            raise AttributeError("weights does not have attributes and no attrs "
+                                 "argument is given.")
 
     outcomes = list(weights.keys())
     cues = set()
