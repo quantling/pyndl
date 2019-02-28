@@ -16,7 +16,7 @@ TMP_SAVE_PATH_UNCOMPRESSED = os.path.join(TEST_ROOT, "temp/event_file_simple_cop
 
 
 def test_uncompressed():
-    data_frame = pd.read_table(FILE_PATH_SIMPLE)
+    data_frame = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
     ref_events = list(io.events_from_dataframe(data_frame))
     io.events_to_file(ref_events, TMP_SAVE_PATH_UNCOMPRESSED, compression=None)
     events = io.events_from_file(TMP_SAVE_PATH_UNCOMPRESSED, compression=None)
@@ -30,7 +30,7 @@ def test_uncompressed():
 
 
 def test_events_from_dataframe():
-    data_frame = pd.read_table(FILE_PATH_SIMPLE)
+    data_frame = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
     events = io.events_from_dataframe(data_frame)
     ref_events = io.events_from_file(FILE_PATH_SIMPLE)
 
@@ -41,7 +41,7 @@ def test_events_from_dataframe():
 
 
 def test_events_from_list():
-    data_frame = pd.read_table(FILE_PATH_SIMPLE)
+    data_frame = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
     event_list = [(cues, outcomes) for cues, outcomes in zip(data_frame['cues'],
                                                              data_frame['outcomes'])]
 
@@ -56,7 +56,7 @@ def test_events_from_list():
 
 
 def test_events_to_file():
-    data_frame = pd.read_table(FILE_PATH_SIMPLE)
+    data_frame = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
     io.events_to_file(data_frame, TMP_SAVE_PATH)
 
     with gzip.open(FILE_PATH_SIMPLE, 'rt') as ref_file:
