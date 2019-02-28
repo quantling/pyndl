@@ -138,7 +138,7 @@ def test_ignore_missing_cues_dict():
         assert np.allclose(reference_activations[outcome], activation_list)
 
 
-@pytest.mark.slow
+@pytest.mark.runslow
 def test_activation_matrix_large():
     """
     Test with a lot of data. Better run only with at least 12GB free RAM.
