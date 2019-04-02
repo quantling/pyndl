@@ -45,7 +45,7 @@ setup(
     version=version,
     license='MIT',
     description=description,
-    long_description=open('README.rst').read(),
+    long_description=open('README.rst', encoding="utf-8").read(),
     author=author,
     author_email=email,
     url='https://github.com/quantling/pyndl',
