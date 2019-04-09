@@ -36,7 +36,14 @@ ext_modules = [
         ["pyndl/ndl_parallel.pyx"],
         extra_compile_args=['-fopenmp'],
         extra_link_args=['-fopenmp'],
+    ),
+    Extension(
+        "pyndl.wh_parallel",
+        ["pyndl/wh_parallel.pyx"],
+        extra_compile_args=['-fopenmp'],
+        extra_link_args=['-fopenmp'],
     )
+
 ]
 
 
