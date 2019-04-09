@@ -44,7 +44,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         method='openmp', weights=None,
         number_of_threads=8, len_sublists=10, remove_duplicates=None,
         verbose=False, temporary_directory=None,
-        events_per_temporary_file=10000000):
+        events_per_temporary_file=10000000, mask=False):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -83,6 +83,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         be used (/tmp on unix)
     events_per_temporary_file: int
         Number of events in each temporary binary file. Has to be larger than 1
+    mask: bool
+        does not use a cue in the update, if it is the same as the outcome.
 
     Returns
     -------
@@ -108,6 +110,11 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                                                    verbose=verbose)
     cues = list(cues.keys())
     outcomes = list(outcomes.keys())
+    if mask:
+        # make sure that same cues and outcomes have the same index
+        cues = outcomes + sorted(list(set(cues) - set(outcomes)))
+        # This way the first len(outcomes) elements of cues are the same as the
+        # outcomes
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
     outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
 
@@ -119,6 +126,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     if weights is None:
         weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
     elif isinstance(weights, xr.DataArray):
+        if mask:
+            raise NotImplementedError("This is not implemented yet")
         old_cues = weights.coords["cues"].values.tolist()
         new_cues = list(set(cues) - set(old_cues))
         old_outcomes = weights.coords["outcomes"].values.tolist()
@@ -169,8 +178,10 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
             ndl_parallel.learn_inplace(binary_files, weights, alpha,
                                        beta1, beta2, lambda_,
                                        np.array(all_outcome_indices, dtype=np.uint32),
-                                       len_sublists, number_of_threads)
+                                       len_sublists, number_of_threads, mask=mask)
         elif method == 'threading':
+            if mask:
+                raise NotImplementedError('not implemented for masking yet, use method=openmp')
             part_lists = slice_list(all_outcome_indices, len_sublists)
 
             working_queue = Queue(len(part_lists))

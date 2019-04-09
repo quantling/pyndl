@@ -45,7 +45,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
                   dtype_t beta2, dtype_t lambda_,
                   np.ndarray[unsigned int, ndim=1] all_outcomes,
                   unsigned int chunksize,
-                  unsigned int number_of_threads):
+                  unsigned int number_of_threads, unsigned int mask):
 
     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
@@ -53,6 +53,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
     cdef char* fname
     cdef unsigned int start_val, end_val, ii, number_parts
     cdef int error = 4
+    print(mask)
 
   #  cdef String
     # weights muss contigousarray sein und mode=c, siehe:
@@ -72,7 +73,12 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
           if start_val == length_all_outcomes:
             break
           error = 0
-          error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
+          if mask == 1:
+            error = learn_inplace_mask_ptr(fname, weights_ptr, mm, alpha, beta1,
+                            beta2, lambda_, all_outcomes_ptr, start_val,
+                            end_val)
+          else:
+            error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
                             beta2, lambda_, all_outcomes_ptr, start_val,
                             end_val)
     if (error != 0):
@@ -188,6 +194,95 @@ cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
             else:
               update = beta2 * (0.0 - association_strength)
             for jj in range(number_of_cues):
+              index = mm  # implicit cast to unsigned long long
+              index *=  all_outcome_indices[ii]  # this can't overflow anymore
+              index += cue_indices[jj]  # this can't overflow anymore
+              weights[index] += alpha * update
+
+    fclose(binary_file)
+    free(cue_indices)
+    free(outcome_indices)
+    return 0
+
+
+# ggf exception zurückgeben
+cdef int learn_inplace_mask_ptr(char* binary_file_path, dtype_t* weights,
+                        unsigned int mm,
+                        dtype_t alpha, dtype_t beta1,
+                        dtype_t beta2, dtype_t lambda_,
+                        unsigned int* all_outcome_indices,
+                        unsigned int start,
+                        unsigned int end) nogil:
+
+
+    cdef unsigned int number_of_events, number_of_cues, number_of_outcomes
+    cdef dtype_t association_strength, update
+    cdef unsigned int magic_number, version, ii, jj, event, appearance
+    cdef unsigned long long index
+    cdef unsigned int* cue_indices
+    cdef unsigned int* outcome_indices
+    cdef unsigned int max_number_of_cues = 1024
+    cdef unsigned int max_number_of_outcomes = 1024
+
+    cdef FILE* binary_file
+    binary_file = fopen(binary_file_path, "rb")
+
+    read_next_int(&magic_number, binary_file)
+    if not magic_number == MAGIC_NUMBER:
+        fclose(binary_file)
+        return 1
+    read_next_int(&version, binary_file)
+    if version == CURRENT_VERSION:
+        pass
+    else:
+        fclose(binary_file)
+        return 2
+
+    # preallocate memory
+    cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
+    outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
+
+    read_next_int(&number_of_events, binary_file)
+
+    for event in range(number_of_events):
+        # cues
+        read_next_int(&number_of_cues, binary_file)
+        if number_of_cues > max_number_of_cues:
+            max_number_of_cues = number_of_cues
+            free(cue_indices)
+            cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
+        fread(cue_indices, 4, number_of_cues, binary_file)
+
+        # outcomes
+        read_next_int(&number_of_outcomes, binary_file)
+        if number_of_outcomes > max_number_of_outcomes:
+            max_number_of_outcomes = number_of_outcomes
+            free(outcome_indices)
+            outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
+        fread(outcome_indices, 4, number_of_outcomes, binary_file)
+
+        # learn
+        for ii in range(start, end):
+            association_strength = 0.0
+            for jj in range(number_of_cues):
+              # mask same indices
+              if cue_indices[jj] == all_outcome_indices[ii]:
+                  continue
+              # this overflows:
+              #index = cue_indices[jj] + mm * all_outcome_indices[ii]
+              index = mm  # implicit cast to unsigned long long
+              index *=  all_outcome_indices[ii]  # this can't overflow anymore
+              index += cue_indices[jj]  # this can't overflow anymore
+              # worst case: 4294967295 * 4294967295 + 4294967295 == 18446744069414584320 < 18446744073709551615
+              association_strength += weights[index]
+            if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
+              update = beta1 * (lambda_ - association_strength)
+            else:
+              update = beta2 * (0.0 - association_strength)
+            for jj in range(number_of_cues):
+              # mask same indices
+              if cue_indices[jj] == all_outcome_indices[ii]:
+                  continue
               index = mm  # implicit cast to unsigned long long
               index *=  all_outcome_indices[ii]  # this can't overflow anymore
               index += cue_indices[jj]  # this can't overflow anymore
