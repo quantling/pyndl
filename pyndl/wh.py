@@ -111,7 +111,7 @@ def wh(events, eta, outcome_vectors, *,
 
     all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
 
-    shape = (len(outcome_map), len(cue_map))
+    shape = (outcome_vectors.shape[1], len(cue_map))
 
     # initialize weights
     if weights is None:
@@ -213,7 +213,7 @@ def wh(events, eta, outcome_vectors, *,
                         __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
-    weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)],
+    weights = xr.DataArray(weights, [('vector_dimensions', outcome_vectors.coords['vector_dimensions']), ('cues', cues)],
                            attrs=attrs)
     return weights
 
