@@ -1477,13 +1477,6 @@ typedef struct {
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_unsigned_PY_LONG_LONG(unsigned PY_LONG_LONG value);
 
-/* Print.proto */
-static int __Pyx_Print(PyObject*, PyObject *, int);
-#if CYTHON_COMPILING_IN_PYPY || PY_MAJOR_VERSION >= 3
-static PyObject* __pyx_print = 0;
-static PyObject* __pyx_print_kwargs = 0;
-#endif
-
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 
@@ -1594,9 +1587,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_enum__NPY_TYPES(enum NPY_TYPES v
 /* CIntFromPy.proto */
 static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *);
 
-/* PrintOne.proto */
-static int __Pyx_PrintOne(PyObject* stream, PyObject *o);
-
 /* CIntFromPy.proto */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
@@ -1684,9 +1674,7 @@ static PyObject *__pyx_builtin_RuntimeError;
 static const char __pyx_k_ii[] = "ii";
 static const char __pyx_k_mm[] = "mm";
 static const char __pyx_k_np[] = "np";
-static const char __pyx_k_end[] = "end";
 static const char __pyx_k_eta[] = "eta";
-static const char __pyx_k_file[] = "file";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_name[] = "__name__";
 static const char __pyx_k_test[] = "__test__";
@@ -1694,7 +1682,6 @@ static const char __pyx_k_UTF_8[] = "UTF-8";
 static const char __pyx_k_error[] = "error";
 static const char __pyx_k_fname[] = "fname";
 static const char __pyx_k_numpy[] = "numpy";
-static const char __pyx_k_print[] = "print";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_encode[] = "encode";
 static const char __pyx_k_import[] = "__import__";
@@ -1748,11 +1735,9 @@ static PyObject *__pyx_kp_s_binary_files_does_not_have_prope;
 static PyObject *__pyx_n_s_chunksize;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_encode;
-static PyObject *__pyx_n_s_end;
 static PyObject *__pyx_n_s_end_val;
 static PyObject *__pyx_n_s_error;
 static PyObject *__pyx_n_s_eta;
-static PyObject *__pyx_n_s_file;
 static PyObject *__pyx_n_s_filename_byte_string;
 static PyObject *__pyx_n_s_fname;
 static PyObject *__pyx_n_s_ii;
@@ -1773,7 +1758,6 @@ static PyObject *__pyx_kp_s_numpy_core_multiarray_failed_to;
 static PyObject *__pyx_kp_s_numpy_core_umath_failed_to_impor;
 static PyObject *__pyx_n_s_outcome_vectors;
 static PyObject *__pyx_n_s_outcome_vectors_ptr;
-static PyObject *__pyx_n_s_print;
 static PyObject *__pyx_n_s_pyndl_wh_parallel;
 static PyObject *__pyx_kp_s_pyndl_wh_parallel_pyx;
 static PyObject *__pyx_n_s_range;
@@ -1969,7 +1953,7 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
   unsigned int __pyx_v_start_val;
   unsigned int __pyx_v_end_val;
   unsigned int __pyx_v_ii;
-  CYTHON_UNUSED unsigned int __pyx_v_number_parts;
+  unsigned int __pyx_v_number_parts;
   int __pyx_v_error;
   __pyx_t_5pyndl_11wh_parallel_dtype_t *__pyx_v_weights_ptr;
   __pyx_t_5pyndl_11wh_parallel_dtype_t *__pyx_v_outcome_vectors_ptr;
@@ -1990,14 +1974,14 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
   PyObject *__pyx_t_5 = NULL;
   PyObject *__pyx_t_6 = NULL;
   char *__pyx_t_7;
-  unsigned int __pyx_t_8;
+  int __pyx_t_8;
   unsigned int __pyx_t_9;
   unsigned int __pyx_t_10;
-  int __pyx_t_11;
-  unsigned int __pyx_t_12;
+  unsigned int __pyx_t_11;
+  int __pyx_t_12;
   unsigned int __pyx_t_13;
   unsigned int __pyx_t_14;
-  int __pyx_t_15;
+  unsigned int __pyx_t_15;
   __Pyx_RefNannySetupContext("learn_inplace", 0);
   __pyx_pybuffer_outcome_vectors.pybuffer.buf = NULL;
   __pyx_pybuffer_outcome_vectors.refcount = 0;
@@ -2144,7 +2128,7 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")             # <<<<<<<<<<<<<<
  *       fname = filename_byte_string
- *       print(fname)
+ * 
  */
     __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_binary_file_path, __pyx_n_s_encode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 67, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
@@ -2170,39 +2154,59 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")
  *       fname = filename_byte_string             # <<<<<<<<<<<<<<
- *       print(fname)
  * 
+ *       number_parts = (n_vector_dimensions // chunksize)
  */
     __pyx_t_7 = __Pyx_PyObject_AsWritableString(__pyx_v_filename_byte_string); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 68, __pyx_L1_error)
     __pyx_v_fname = __pyx_t_7;
 
-    /* "pyndl/wh_parallel.pyx":69
- *       filename_byte_string = binary_file_path.encode("UTF-8")
+    /* "pyndl/wh_parallel.pyx":70
  *       fname = filename_byte_string
- *       print(fname)             # <<<<<<<<<<<<<<
  * 
- *       # This code looks wrong in the case of chunksize is a multiple of n_outcome_dimensions
- */
-    __pyx_t_4 = __Pyx_PyBytes_FromString(__pyx_v_fname); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    if (__Pyx_PrintOne(0, __pyx_t_4) < 0) __PYX_ERR(0, 69, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-
-    /* "pyndl/wh_parallel.pyx":72
- * 
- *       # This code looks wrong in the case of chunksize is a multiple of n_outcome_dimensions
- *       number_parts = (n_vector_dimensions // chunksize) + 1             # <<<<<<<<<<<<<<
- * 
- *       with nogil, parallel(num_threads=number_of_threads):
+ *       number_parts = (n_vector_dimensions // chunksize)             # <<<<<<<<<<<<<<
+ *       if n_vector_dimensions % chunksize != 0:
+ *           number_parts += 1
  */
     if (unlikely(__pyx_v_chunksize == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 72, __pyx_L1_error)
+      __PYX_ERR(0, 70, __pyx_L1_error)
     }
-    __pyx_v_number_parts = ((__pyx_v_n_vector_dimensions / __pyx_v_chunksize) + 1);
+    __pyx_v_number_parts = (__pyx_v_n_vector_dimensions / __pyx_v_chunksize);
+
+    /* "pyndl/wh_parallel.pyx":71
+ * 
+ *       number_parts = (n_vector_dimensions // chunksize)
+ *       if n_vector_dimensions % chunksize != 0:             # <<<<<<<<<<<<<<
+ *           number_parts += 1
+ * 
+ */
+    if (unlikely(__pyx_v_chunksize == 0)) {
+      PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
+      __PYX_ERR(0, 71, __pyx_L1_error)
+    }
+    __pyx_t_8 = (((__pyx_v_n_vector_dimensions % __pyx_v_chunksize) != 0) != 0);
+    if (__pyx_t_8) {
+
+      /* "pyndl/wh_parallel.pyx":72
+ *       number_parts = (n_vector_dimensions // chunksize)
+ *       if n_vector_dimensions % chunksize != 0:
+ *           number_parts += 1             # <<<<<<<<<<<<<<
+ * 
+ *       with nogil, parallel(num_threads=number_of_threads):
+ */
+      __pyx_v_number_parts = (__pyx_v_number_parts + 1);
+
+      /* "pyndl/wh_parallel.pyx":71
+ * 
+ *       number_parts = (n_vector_dimensions // chunksize)
+ *       if n_vector_dimensions % chunksize != 0:             # <<<<<<<<<<<<<<
+ *           number_parts += 1
+ * 
+ */
+    }
 
     /* "pyndl/wh_parallel.pyx":74
- *       number_parts = (n_vector_dimensions // chunksize) + 1
+ *           number_parts += 1
  * 
  *       with nogil, parallel(num_threads=number_of_threads):             # <<<<<<<<<<<<<<
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
@@ -2234,7 +2238,7 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
  *           start_val = ii * chunksize
  *           end_val = min(start_val + chunksize, n_vector_dimensions)
  */
-                  __pyx_t_8 = __pyx_v_number_parts;
+                  __pyx_t_9 = __pyx_v_number_parts;
                   if (1 == 0) abort();
                   {
                       unsigned int __pyx_parallel_temp0 = ((unsigned int)0xbad0bad0);
@@ -2243,17 +2247,17 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
                       unsigned int __pyx_parallel_temp3 = ((unsigned int)0xbad0bad0);
                       int __pyx_parallel_why;
                       __pyx_parallel_why = 0;
-                      __pyx_t_11 = 1;
-                      __pyx_t_10 = (__pyx_t_8 - 0 + 1 - 1/abs(1)) / 1;
-                      if (__pyx_t_10 > 0)
+                      __pyx_t_12 = 1;
+                      __pyx_t_11 = (__pyx_t_9 - 0 + 1 - 1/abs(1)) / 1;
+                      if (__pyx_t_11 > 0)
                       {
                           #ifdef _OPENMP
-                          #pragma omp for lastprivate(__pyx_v_end_val) lastprivate(__pyx_v_error) firstprivate(__pyx_v_ii) lastprivate(__pyx_v_ii) lastprivate(__pyx_v_start_val) schedule(dynamic, __pyx_t_11)
+                          #pragma omp for lastprivate(__pyx_v_end_val) lastprivate(__pyx_v_error) firstprivate(__pyx_v_ii) lastprivate(__pyx_v_ii) lastprivate(__pyx_v_start_val) schedule(dynamic, __pyx_t_12)
                           #endif /* _OPENMP */
-                          for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_10; __pyx_t_9++){
+                          for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_11; __pyx_t_10++){
                               if (__pyx_parallel_why < 2)
                               {
-                                  __pyx_v_ii = (unsigned int)(0 + 1 * __pyx_t_9);
+                                  __pyx_v_ii = (unsigned int)(0 + 1 * __pyx_t_10);
                                   /* Initialize private variables to invalid values */
                                   __pyx_v_end_val = ((unsigned int)0xbad0bad0);
                                   __pyx_v_error = ((int)0xbad0bad0);
@@ -2275,14 +2279,14 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
  *           if start_val == n_vector_dimensions:
  *             break
  */
-                                  __pyx_t_12 = __pyx_v_n_vector_dimensions;
-                                  __pyx_t_13 = (__pyx_v_start_val + __pyx_v_chunksize);
-                                  if (((__pyx_t_12 < __pyx_t_13) != 0)) {
-                                    __pyx_t_14 = __pyx_t_12;
+                                  __pyx_t_13 = __pyx_v_n_vector_dimensions;
+                                  __pyx_t_14 = (__pyx_v_start_val + __pyx_v_chunksize);
+                                  if (((__pyx_t_13 < __pyx_t_14) != 0)) {
+                                    __pyx_t_15 = __pyx_t_13;
                                   } else {
-                                    __pyx_t_14 = __pyx_t_13;
+                                    __pyx_t_15 = __pyx_t_14;
                                   }
-                                  __pyx_v_end_val = __pyx_t_14;
+                                  __pyx_v_end_val = __pyx_t_15;
 
                                   /* "pyndl/wh_parallel.pyx":78
  *           start_val = ii * chunksize
@@ -2291,8 +2295,8 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
  *             break
  *           error = 0
  */
-                                  __pyx_t_15 = ((__pyx_v_start_val == __pyx_v_n_vector_dimensions) != 0);
-                                  if (__pyx_t_15) {
+                                  __pyx_t_8 = ((__pyx_v_start_val == __pyx_v_n_vector_dimensions) != 0);
+                                  if (__pyx_t_8) {
 
                                     /* "pyndl/wh_parallel.pyx":79
  *           end_val = min(start_val + chunksize, n_vector_dimensions)
@@ -2301,7 +2305,7 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
  *           error = 0
  *           error = learn_inplace_ptr(fname, outcome_vectors_ptr, eta, weights_ptr, mm, n_vector_dimensions,
  */
-                                    goto __pyx_L15_break;
+                                    goto __pyx_L16_break;
 
                                     /* "pyndl/wh_parallel.pyx":78
  *           start_val = ii * chunksize
@@ -2329,11 +2333,11 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
  *     #raise IOError("23")
  */
                                   __pyx_v_error = __pyx_f_5pyndl_11wh_parallel_learn_inplace_ptr(__pyx_v_fname, __pyx_v_outcome_vectors_ptr, __pyx_v_eta, __pyx_v_weights_ptr, __pyx_v_mm, __pyx_v_n_vector_dimensions, __pyx_v_all_outcomes_ptr, __pyx_v_start_val, __pyx_v_end_val);
-                                  goto __pyx_L20;
-                                  __pyx_L15_break:;
+                                  goto __pyx_L21;
+                                  __pyx_L16_break:;
                                   __pyx_parallel_why = 2;
-                                  goto __pyx_L19;
-                                  __pyx_L19:;
+                                  goto __pyx_L20;
+                                  __pyx_L20:;
                                   #ifdef _OPENMP
                                   #pragma omp critical(__pyx_parallel_lastprivates0)
                                   #endif /* _OPENMP */
@@ -2343,7 +2347,7 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
                                       __pyx_parallel_temp2 = __pyx_v_ii;
                                       __pyx_parallel_temp3 = __pyx_v_start_val;
                                   }
-                                  __pyx_L20:;
+                                  __pyx_L21:;
                                   #ifdef _OPENMP
                                   #pragma omp flush(__pyx_parallel_why)
                                   #endif /* _OPENMP */
@@ -2370,7 +2374,7 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
         }
 
         /* "pyndl/wh_parallel.pyx":74
- *       number_parts = (n_vector_dimensions // chunksize) + 1
+ *           number_parts += 1
  * 
  *       with nogil, parallel(num_threads=number_of_threads):             # <<<<<<<<<<<<<<
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
@@ -2382,9 +2386,9 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
             __Pyx_FastGIL_Forget();
             Py_BLOCK_THREADS
             #endif
-            goto __pyx_L9;
+            goto __pyx_L10;
           }
-          __pyx_L9:;
+          __pyx_L10:;
         }
     }
 
@@ -2405,8 +2409,8 @@ static PyObject *__pyx_pf_5pyndl_11wh_parallel_learn_inplace(CYTHON_UNUSED PyObj
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
  */
-  __pyx_t_15 = ((__pyx_v_error != 0) != 0);
-  if (unlikely(__pyx_t_15)) {
+  __pyx_t_8 = ((__pyx_v_error != 0) != 0);
+  if (unlikely(__pyx_t_8)) {
 
     /* "pyndl/wh_parallel.pyx":85
  *     #raise IOError("23")
@@ -5474,11 +5478,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_chunksize, __pyx_k_chunksize, sizeof(__pyx_k_chunksize), 0, 0, 1, 1},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
-  {&__pyx_n_s_end, __pyx_k_end, sizeof(__pyx_k_end), 0, 0, 1, 1},
   {&__pyx_n_s_end_val, __pyx_k_end_val, sizeof(__pyx_k_end_val), 0, 0, 1, 1},
   {&__pyx_n_s_error, __pyx_k_error, sizeof(__pyx_k_error), 0, 0, 1, 1},
   {&__pyx_n_s_eta, __pyx_k_eta, sizeof(__pyx_k_eta), 0, 0, 1, 1},
-  {&__pyx_n_s_file, __pyx_k_file, sizeof(__pyx_k_file), 0, 0, 1, 1},
   {&__pyx_n_s_filename_byte_string, __pyx_k_filename_byte_string, sizeof(__pyx_k_filename_byte_string), 0, 0, 1, 1},
   {&__pyx_n_s_fname, __pyx_k_fname, sizeof(__pyx_k_fname), 0, 0, 1, 1},
   {&__pyx_n_s_ii, __pyx_k_ii, sizeof(__pyx_k_ii), 0, 0, 1, 1},
@@ -5499,7 +5501,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_numpy_core_umath_failed_to_impor, __pyx_k_numpy_core_umath_failed_to_impor, sizeof(__pyx_k_numpy_core_umath_failed_to_impor), 0, 0, 1, 0},
   {&__pyx_n_s_outcome_vectors, __pyx_k_outcome_vectors, sizeof(__pyx_k_outcome_vectors), 0, 0, 1, 1},
   {&__pyx_n_s_outcome_vectors_ptr, __pyx_k_outcome_vectors_ptr, sizeof(__pyx_k_outcome_vectors_ptr), 0, 0, 1, 1},
-  {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
   {&__pyx_n_s_pyndl_wh_parallel, __pyx_k_pyndl_wh_parallel, sizeof(__pyx_k_pyndl_wh_parallel), 0, 0, 1, 1},
   {&__pyx_kp_s_pyndl_wh_parallel_pyx, __pyx_k_pyndl_wh_parallel_pyx, sizeof(__pyx_k_pyndl_wh_parallel_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
@@ -7940,112 +7941,6 @@ static void __Pyx_ReleaseBuffer(Py_buffer *view) {
         return (target_type) value;\
     }
 
-/* Print */
-  #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
-static PyObject *__Pyx_GetStdout(void) {
-    PyObject *f = PySys_GetObject((char *)"stdout");
-    if (!f) {
-        PyErr_SetString(PyExc_RuntimeError, "lost sys.stdout");
-    }
-    return f;
-}
-static int __Pyx_Print(PyObject* f, PyObject *arg_tuple, int newline) {
-    int i;
-    if (!f) {
-        if (!(f = __Pyx_GetStdout()))
-            return -1;
-    }
-    Py_INCREF(f);
-    for (i=0; i < PyTuple_GET_SIZE(arg_tuple); i++) {
-        PyObject* v;
-        if (PyFile_SoftSpace(f, 1)) {
-            if (PyFile_WriteString(" ", f) < 0)
-                goto error;
-        }
-        v = PyTuple_GET_ITEM(arg_tuple, i);
-        if (PyFile_WriteObject(v, f, Py_PRINT_RAW) < 0)
-            goto error;
-        if (PyString_Check(v)) {
-            char *s = PyString_AsString(v);
-            Py_ssize_t len = PyString_Size(v);
-            if (len > 0) {
-                switch (s[len-1]) {
-                    case ' ': break;
-                    case '\f': case '\r': case '\n': case '\t': case '\v':
-                        PyFile_SoftSpace(f, 0);
-                        break;
-                    default:  break;
-                }
-            }
-        }
-    }
-    if (newline) {
-        if (PyFile_WriteString("\n", f) < 0)
-            goto error;
-        PyFile_SoftSpace(f, 0);
-    }
-    Py_DECREF(f);
-    return 0;
-error:
-    Py_DECREF(f);
-    return -1;
-}
-#else
-static int __Pyx_Print(PyObject* stream, PyObject *arg_tuple, int newline) {
-    PyObject* kwargs = 0;
-    PyObject* result = 0;
-    PyObject* end_string;
-    if (unlikely(!__pyx_print)) {
-        __pyx_print = PyObject_GetAttr(__pyx_b, __pyx_n_s_print);
-        if (!__pyx_print)
-            return -1;
-    }
-    if (stream) {
-        kwargs = PyDict_New();
-        if (unlikely(!kwargs))
-            return -1;
-        if (unlikely(PyDict_SetItem(kwargs, __pyx_n_s_file, stream) < 0))
-            goto bad;
-        if (!newline) {
-            end_string = PyUnicode_FromStringAndSize(" ", 1);
-            if (unlikely(!end_string))
-                goto bad;
-            if (PyDict_SetItem(kwargs, __pyx_n_s_end, end_string) < 0) {
-                Py_DECREF(end_string);
-                goto bad;
-            }
-            Py_DECREF(end_string);
-        }
-    } else if (!newline) {
-        if (unlikely(!__pyx_print_kwargs)) {
-            __pyx_print_kwargs = PyDict_New();
-            if (unlikely(!__pyx_print_kwargs))
-                return -1;
-            end_string = PyUnicode_FromStringAndSize(" ", 1);
-            if (unlikely(!end_string))
-                return -1;
-            if (PyDict_SetItem(__pyx_print_kwargs, __pyx_n_s_end, end_string) < 0) {
-                Py_DECREF(end_string);
-                return -1;
-            }
-            Py_DECREF(end_string);
-        }
-        kwargs = __pyx_print_kwargs;
-    }
-    result = PyObject_Call(__pyx_print, arg_tuple, kwargs);
-    if (unlikely(kwargs) && (kwargs != __pyx_print_kwargs))
-        Py_DECREF(kwargs);
-    if (!result)
-        return -1;
-    Py_DECREF(result);
-    return 0;
-bad:
-    if (kwargs != __pyx_print_kwargs)
-        Py_XDECREF(kwargs);
-    return -1;
-}
-#endif
-
 /* CIntToPy */
   static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
     const int neg_one = (int) ((int) 0 - (int) 1), const_zero = (int) 0;
@@ -8637,43 +8532,6 @@ raise_neg_overflow:
         "can't convert negative value to unsigned int");
     return (unsigned int) -1;
 }
-
-/* PrintOne */
-  #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION < 3
-static int __Pyx_PrintOne(PyObject* f, PyObject *o) {
-    if (!f) {
-        if (!(f = __Pyx_GetStdout()))
-            return -1;
-    }
-    Py_INCREF(f);
-    if (PyFile_SoftSpace(f, 0)) {
-        if (PyFile_WriteString(" ", f) < 0)
-            goto error;
-    }
-    if (PyFile_WriteObject(o, f, Py_PRINT_RAW) < 0)
-        goto error;
-    if (PyFile_WriteString("\n", f) < 0)
-        goto error;
-    Py_DECREF(f);
-    return 0;
-error:
-    Py_DECREF(f);
-    return -1;
-    /* the line below is just to avoid C compiler
-     * warnings about unused functions */
-    return __Pyx_Print(f, NULL, 0);
-}
-#else
-static int __Pyx_PrintOne(PyObject* stream, PyObject *o) {
-    int res;
-    PyObject* arg_tuple = PyTuple_Pack(1, o);
-    if (unlikely(!arg_tuple))
-        return -1;
-    res = __Pyx_Print(stream, arg_tuple, 1);
-    Py_DECREF(arg_tuple);
-    return res;
-}
-#endif
 
 /* CIntFromPy */
   static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *x) {

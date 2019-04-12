@@ -66,10 +66,10 @@ def learn_inplace(binary_file_paths,
     for binary_file_path in binary_file_paths: #
       filename_byte_string = binary_file_path.encode("UTF-8")
       fname = filename_byte_string
-      print(fname)
 
-      # This code looks wrong in the case of chunksize is a multiple of n_outcome_dimensions
-      number_parts = (n_vector_dimensions // chunksize) + 1
+      number_parts = (n_vector_dimensions // chunksize)
+      if n_vector_dimensions % chunksize != 0:
+          number_parts += 1
 
       with nogil, parallel(num_threads=number_of_threads):
         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
