@@ -2055,13 +2055,13 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   /* "pyndl/ndl_parallel.pyx":55
  *     cdef char* fname
  *     cdef unsigned int start_val, end_val, ii, number_parts
- *     cdef int error = 4             # <<<<<<<<<<<<<<
- * 
- *   #  cdef String
+ *     cdef int error = 3             # <<<<<<<<<<<<<<
+ *     # error codes:
+ *     #  0: no error
  */
-  __pyx_v_error = 4;
+  __pyx_v_error = 3;
 
-  /* "pyndl/ndl_parallel.pyx":60
+  /* "pyndl/ndl_parallel.pyx":66
  *     # weights muss contigousarray sein und mode=c, siehe:
  *     #cdef np.ndarray[np.uint32_t, ndim=3, mode = 'c'] np_buff = np.ascontiguousarray(im, dtype = np.uint32)
  *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *             # <<<<<<<<<<<<<<
@@ -2070,7 +2070,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
   __pyx_v_weights_ptr = ((__pyx_t_5pyndl_12ndl_parallel_dtype_t *)__pyx_v_weights->data);
 
-  /* "pyndl/ndl_parallel.pyx":62
+  /* "pyndl/ndl_parallel.pyx":68
  *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
  * 
  *     for binary_file_path in binary_file_paths: #             # <<<<<<<<<<<<<<
@@ -2081,26 +2081,26 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
     __pyx_t_1 = __pyx_v_binary_file_paths; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_binary_file_paths); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_binary_file_paths); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 68, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 62, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 68, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 62, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 68, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 62, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 68, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -2110,7 +2110,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 62, __pyx_L1_error)
+          else __PYX_ERR(0, 68, __pyx_L1_error)
         }
         break;
       }
@@ -2119,14 +2119,14 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
     __Pyx_XDECREF_SET(__pyx_v_binary_file_path, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "pyndl/ndl_parallel.pyx":63
+    /* "pyndl/ndl_parallel.pyx":69
  * 
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")             # <<<<<<<<<<<<<<
  *       fname = filename_byte_string
  * 
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_binary_file_path, __pyx_n_s_encode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_binary_file_path, __pyx_n_s_encode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 69, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
@@ -2140,23 +2140,23 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
     }
     __pyx_t_4 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_6, __pyx_kp_s_UTF_8) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_kp_s_UTF_8);
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 63, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 69, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_XDECREF_SET(__pyx_v_filename_byte_string, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "pyndl/ndl_parallel.pyx":64
+    /* "pyndl/ndl_parallel.pyx":70
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")
  *       fname = filename_byte_string             # <<<<<<<<<<<<<<
  * 
  *       number_parts = (length_all_outcomes // chunksize)
  */
-    __pyx_t_7 = __Pyx_PyObject_AsWritableString(__pyx_v_filename_byte_string); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_AsWritableString(__pyx_v_filename_byte_string); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 70, __pyx_L1_error)
     __pyx_v_fname = __pyx_t_7;
 
-    /* "pyndl/ndl_parallel.pyx":66
+    /* "pyndl/ndl_parallel.pyx":72
  *       fname = filename_byte_string
  * 
  *       number_parts = (length_all_outcomes // chunksize)             # <<<<<<<<<<<<<<
@@ -2165,11 +2165,11 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
     if (unlikely(__pyx_v_chunksize == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 66, __pyx_L1_error)
+      __PYX_ERR(0, 72, __pyx_L1_error)
     }
     __pyx_v_number_parts = (__pyx_v_length_all_outcomes / __pyx_v_chunksize);
 
-    /* "pyndl/ndl_parallel.pyx":67
+    /* "pyndl/ndl_parallel.pyx":73
  * 
  *       number_parts = (length_all_outcomes // chunksize)
  *       if length_all_outcomes % chunksize != 0:             # <<<<<<<<<<<<<<
@@ -2178,12 +2178,12 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
     if (unlikely(__pyx_v_chunksize == 0)) {
       PyErr_SetString(PyExc_ZeroDivisionError, "integer division or modulo by zero");
-      __PYX_ERR(0, 67, __pyx_L1_error)
+      __PYX_ERR(0, 73, __pyx_L1_error)
     }
     __pyx_t_8 = (((__pyx_v_length_all_outcomes % __pyx_v_chunksize) != 0) != 0);
     if (__pyx_t_8) {
 
-      /* "pyndl/ndl_parallel.pyx":68
+      /* "pyndl/ndl_parallel.pyx":74
  *       number_parts = (length_all_outcomes // chunksize)
  *       if length_all_outcomes % chunksize != 0:
  *           number_parts += 1             # <<<<<<<<<<<<<<
@@ -2192,7 +2192,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
       __pyx_v_number_parts = (__pyx_v_number_parts + 1);
 
-      /* "pyndl/ndl_parallel.pyx":67
+      /* "pyndl/ndl_parallel.pyx":73
  * 
  *       number_parts = (length_all_outcomes // chunksize)
  *       if length_all_outcomes % chunksize != 0:             # <<<<<<<<<<<<<<
@@ -2201,7 +2201,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
     }
 
-    /* "pyndl/ndl_parallel.pyx":70
+    /* "pyndl/ndl_parallel.pyx":76
  *           number_parts += 1
  * 
  *       with nogil, parallel(num_threads=number_of_threads):             # <<<<<<<<<<<<<<
@@ -2227,7 +2227,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
               #endif /* _OPENMP */
               {
 
-                  /* "pyndl/ndl_parallel.pyx":71
+                  /* "pyndl/ndl_parallel.pyx":77
  * 
  *       with nogil, parallel(num_threads=number_of_threads):
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):             # <<<<<<<<<<<<<<
@@ -2259,7 +2259,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
                                   __pyx_v_error = ((int)0xbad0bad0);
                                   __pyx_v_start_val = ((unsigned int)0xbad0bad0);
 
-                                  /* "pyndl/ndl_parallel.pyx":72
+                                  /* "pyndl/ndl_parallel.pyx":78
  *       with nogil, parallel(num_threads=number_of_threads):
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
  *           start_val = ii * chunksize             # <<<<<<<<<<<<<<
@@ -2268,7 +2268,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
  */
                                   __pyx_v_start_val = (__pyx_v_ii * __pyx_v_chunksize);
 
-                                  /* "pyndl/ndl_parallel.pyx":73
+                                  /* "pyndl/ndl_parallel.pyx":79
  *         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
  *           start_val = ii * chunksize
  *           end_val = min(start_val + chunksize, length_all_outcomes)             # <<<<<<<<<<<<<<
@@ -2284,56 +2284,75 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
                                   }
                                   __pyx_v_end_val = __pyx_t_15;
 
-                                  /* "pyndl/ndl_parallel.pyx":74
+                                  /* "pyndl/ndl_parallel.pyx":80
  *           start_val = ii * chunksize
  *           end_val = min(start_val + chunksize, length_all_outcomes)
  *           if start_val == length_all_outcomes:             # <<<<<<<<<<<<<<
  *             break
- *           error = 0
+ *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
  */
                                   __pyx_t_8 = ((__pyx_v_start_val == __pyx_v_length_all_outcomes) != 0);
                                   if (__pyx_t_8) {
 
-                                    /* "pyndl/ndl_parallel.pyx":75
+                                    /* "pyndl/ndl_parallel.pyx":81
  *           end_val = min(start_val + chunksize, length_all_outcomes)
  *           if start_val == length_all_outcomes:
  *             break             # <<<<<<<<<<<<<<
- *           error = 0
  *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
+ *                             beta2, lambda_, all_outcomes_ptr, start_val,
  */
                                     goto __pyx_L16_break;
 
-                                    /* "pyndl/ndl_parallel.pyx":74
+                                    /* "pyndl/ndl_parallel.pyx":80
  *           start_val = ii * chunksize
  *           end_val = min(start_val + chunksize, length_all_outcomes)
  *           if start_val == length_all_outcomes:             # <<<<<<<<<<<<<<
  *             break
- *           error = 0
+ *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
  */
                                   }
 
-                                  /* "pyndl/ndl_parallel.pyx":76
+                                  /* "pyndl/ndl_parallel.pyx":82
  *           if start_val == length_all_outcomes:
  *             break
- *           error = 0             # <<<<<<<<<<<<<<
- *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
- *                             beta2, lambda_, all_outcomes_ptr, start_val,
- */
-                                  __pyx_v_error = 0;
-
-                                  /* "pyndl/ndl_parallel.pyx":77
- *             break
- *           error = 0
  *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,             # <<<<<<<<<<<<<<
  *                             beta2, lambda_, all_outcomes_ptr, start_val,
  *                             end_val)
  */
                                   __pyx_v_error = __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(__pyx_v_fname, __pyx_v_weights_ptr, __pyx_v_mm, __pyx_v_alpha, __pyx_v_beta1, __pyx_v_beta2, __pyx_v_lambda_, __pyx_v_all_outcomes_ptr, __pyx_v_start_val, __pyx_v_end_val);
-                                  goto __pyx_L21;
+
+                                  /* "pyndl/ndl_parallel.pyx":85
+ *                             beta2, lambda_, all_outcomes_ptr, start_val,
+ *                             end_val)
+ *           if error != 0:             # <<<<<<<<<<<<<<
+ *               break
+ * 
+ */
+                                  __pyx_t_8 = ((__pyx_v_error != 0) != 0);
+                                  if (__pyx_t_8) {
+
+                                    /* "pyndl/ndl_parallel.pyx":86
+ *                             end_val)
+ *           if error != 0:
+ *               break             # <<<<<<<<<<<<<<
+ * 
+ *     if (error != 0):
+ */
+                                    goto __pyx_L16_break;
+
+                                    /* "pyndl/ndl_parallel.pyx":85
+ *                             beta2, lambda_, all_outcomes_ptr, start_val,
+ *                             end_val)
+ *           if error != 0:             # <<<<<<<<<<<<<<
+ *               break
+ * 
+ */
+                                  }
+                                  goto __pyx_L22;
                                   __pyx_L16_break:;
                                   __pyx_parallel_why = 2;
-                                  goto __pyx_L20;
-                                  __pyx_L20:;
+                                  goto __pyx_L21;
+                                  __pyx_L21:;
                                   #ifdef _OPENMP
                                   #pragma omp critical(__pyx_parallel_lastprivates0)
                                   #endif /* _OPENMP */
@@ -2343,7 +2362,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
                                       __pyx_parallel_temp2 = __pyx_v_ii;
                                       __pyx_parallel_temp3 = __pyx_v_start_val;
                                   }
-                                  __pyx_L21:;
+                                  __pyx_L22:;
                                   #ifdef _OPENMP
                                   #pragma omp flush(__pyx_parallel_why)
                                   #endif /* _OPENMP */
@@ -2369,7 +2388,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
           #endif
         }
 
-        /* "pyndl/ndl_parallel.pyx":70
+        /* "pyndl/ndl_parallel.pyx":76
  *           number_parts += 1
  * 
  *       with nogil, parallel(num_threads=number_of_threads):             # <<<<<<<<<<<<<<
@@ -2388,7 +2407,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
         }
     }
 
-    /* "pyndl/ndl_parallel.pyx":62
+    /* "pyndl/ndl_parallel.pyx":68
  *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
  * 
  *     for binary_file_path in binary_file_paths: #             # <<<<<<<<<<<<<<
@@ -2398,9 +2417,9 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyndl/ndl_parallel.pyx":80
- *                             beta2, lambda_, all_outcomes_ptr, start_val,
- *                             end_val)
+  /* "pyndl/ndl_parallel.pyx":88
+ *               break
+ * 
  *     if (error != 0):             # <<<<<<<<<<<<<<
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
@@ -2408,28 +2427,28 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   __pyx_t_8 = ((__pyx_v_error != 0) != 0);
   if (unlikely(__pyx_t_8)) {
 
-    /* "pyndl/ndl_parallel.pyx":81
- *                             end_val)
+    /* "pyndl/ndl_parallel.pyx":89
+ * 
  *     if (error != 0):
  *         raise IOError('binary files does not have proper format, error code %i' % error)             # <<<<<<<<<<<<<<
  * 
  * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
  */
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_binary_files_does_not_have_prope, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_binary_files_does_not_have_prope, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 89, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_IOError, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_IOError, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 89, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 81, __pyx_L1_error)
+    __PYX_ERR(0, 89, __pyx_L1_error)
 
-    /* "pyndl/ndl_parallel.pyx":80
- *                             beta2, lambda_, all_outcomes_ptr, start_val,
- *                             end_val)
+    /* "pyndl/ndl_parallel.pyx":88
+ *               break
+ * 
  *     if (error != 0):             # <<<<<<<<<<<<<<
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
@@ -2473,7 +2492,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_learn_inplace(CYTHON_UNUSED PyOb
   return __pyx_r;
 }
 
-/* "pyndl/ndl_parallel.pyx":83
+/* "pyndl/ndl_parallel.pyx":91
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
  * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
@@ -2528,41 +2547,41 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_3learn_inplace_2(PyObject *__pyx
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_weights)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 1); __PYX_ERR(0, 83, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 1); __PYX_ERR(0, 91, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_alpha)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 2); __PYX_ERR(0, 83, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 2); __PYX_ERR(0, 91, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_beta1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 3); __PYX_ERR(0, 83, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 3); __PYX_ERR(0, 91, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_beta2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 4); __PYX_ERR(0, 83, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 4); __PYX_ERR(0, 91, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_lambda)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 5); __PYX_ERR(0, 83, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 5); __PYX_ERR(0, 91, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_all_outcomes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 6); __PYX_ERR(0, 83, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, 6); __PYX_ERR(0, 91, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "learn_inplace_2") < 0)) __PYX_ERR(0, 83, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "learn_inplace_2") < 0)) __PYX_ERR(0, 91, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
@@ -2577,22 +2596,22 @@ static PyObject *__pyx_pw_5pyndl_12ndl_parallel_3learn_inplace_2(PyObject *__pyx
     }
     __pyx_v_binary_file_paths = values[0];
     __pyx_v_weights = ((PyArrayObject *)values[1]);
-    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_alpha == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 84, __pyx_L3_error)
-    __pyx_v_beta1 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_beta1 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 84, __pyx_L3_error)
-    __pyx_v_beta2 = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_beta2 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 85, __pyx_L3_error)
-    __pyx_v_lambda_ = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_lambda_ == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 85, __pyx_L3_error)
+    __pyx_v_alpha = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_alpha == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 92, __pyx_L3_error)
+    __pyx_v_beta1 = __pyx_PyFloat_AsDouble(values[3]); if (unlikely((__pyx_v_beta1 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 92, __pyx_L3_error)
+    __pyx_v_beta2 = __pyx_PyFloat_AsDouble(values[4]); if (unlikely((__pyx_v_beta2 == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 93, __pyx_L3_error)
+    __pyx_v_lambda_ = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_lambda_ == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 93, __pyx_L3_error)
     __pyx_v_all_outcomes = ((PyArrayObject *)values[6]);
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 83, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("learn_inplace_2", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 91, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("pyndl.ndl_parallel.learn_inplace_2", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_weights), __pyx_ptype_5numpy_ndarray, 1, "weights", 0))) __PYX_ERR(0, 83, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_all_outcomes), __pyx_ptype_5numpy_ndarray, 1, "all_outcomes", 0))) __PYX_ERR(0, 86, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_weights), __pyx_ptype_5numpy_ndarray, 1, "weights", 0))) __PYX_ERR(0, 91, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_all_outcomes), __pyx_ptype_5numpy_ndarray, 1, "all_outcomes", 0))) __PYX_ERR(0, 94, __pyx_L1_error)
   __pyx_r = __pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(__pyx_self, __pyx_v_binary_file_paths, __pyx_v_weights, __pyx_v_alpha, __pyx_v_beta1, __pyx_v_beta2, __pyx_v_lambda_, __pyx_v_all_outcomes);
 
   /* function exit code */
@@ -2638,16 +2657,16 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
   __pyx_pybuffernd_all_outcomes.rcbuffer = &__pyx_pybuffer_all_outcomes;
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_nn___pyx_t_5pyndl_12ndl_parallel_dtype_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 83, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_weights.rcbuffer->pybuffer, (PyObject*)__pyx_v_weights, &__Pyx_TypeInfo_nn___pyx_t_5pyndl_12ndl_parallel_dtype_t, PyBUF_FORMAT| PyBUF_STRIDES, 2, 0, __pyx_stack) == -1)) __PYX_ERR(0, 91, __pyx_L1_error)
   }
   __pyx_pybuffernd_weights.diminfo[0].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_weights.diminfo[0].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[0]; __pyx_pybuffernd_weights.diminfo[1].strides = __pyx_pybuffernd_weights.rcbuffer->pybuffer.strides[1]; __pyx_pybuffernd_weights.diminfo[1].shape = __pyx_pybuffernd_weights.rcbuffer->pybuffer.shape[1];
   {
     __Pyx_BufFmt_StackElem __pyx_stack[1];
-    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer, (PyObject*)__pyx_v_all_outcomes, &__Pyx_TypeInfo_unsigned_int, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 83, __pyx_L1_error)
+    if (unlikely(__Pyx_GetBufferAndValidate(&__pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer, (PyObject*)__pyx_v_all_outcomes, &__Pyx_TypeInfo_unsigned_int, PyBUF_FORMAT| PyBUF_STRIDES, 1, 0, __pyx_stack) == -1)) __PYX_ERR(0, 91, __pyx_L1_error)
   }
   __pyx_pybuffernd_all_outcomes.diminfo[0].strides = __pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer.strides[0]; __pyx_pybuffernd_all_outcomes.diminfo[0].shape = __pyx_pybuffernd_all_outcomes.rcbuffer->pybuffer.shape[0];
 
-  /* "pyndl/ndl_parallel.pyx":88
+  /* "pyndl/ndl_parallel.pyx":96
  *                   np.ndarray[unsigned int, ndim=1] all_outcomes):
  * 
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns             # <<<<<<<<<<<<<<
@@ -2656,7 +2675,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
   __pyx_v_mm = (__pyx_v_weights->dimensions[1]);
 
-  /* "pyndl/ndl_parallel.pyx":89
+  /* "pyndl/ndl_parallel.pyx":97
  * 
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
  *     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data             # <<<<<<<<<<<<<<
@@ -2665,7 +2684,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
   __pyx_v_all_outcomes_ptr = ((unsigned int *)__pyx_v_all_outcomes->data);
 
-  /* "pyndl/ndl_parallel.pyx":90
+  /* "pyndl/ndl_parallel.pyx":98
  *     cdef unsigned int mm = weights.shape[1]  # number of cues == columns
  *     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
  *     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]             # <<<<<<<<<<<<<<
@@ -2674,16 +2693,16 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
   __pyx_v_length_all_outcomes = (__pyx_v_all_outcomes->dimensions[0]);
 
-  /* "pyndl/ndl_parallel.pyx":93
+  /* "pyndl/ndl_parallel.pyx":101
  *     cdef char* fname
  *     cdef unsigned int start_val, end_val
- *     cdef int error = 4             # <<<<<<<<<<<<<<
+ *     cdef int error = 3             # <<<<<<<<<<<<<<
  * 
  *   #  cdef String
  */
-  __pyx_v_error = 4;
+  __pyx_v_error = 3;
 
-  /* "pyndl/ndl_parallel.pyx":98
+  /* "pyndl/ndl_parallel.pyx":106
  *     # weights muss contigousarray sein und mode=c, siehe:
  *     #cdef np.ndarray[np.uint32_t, ndim=3, mode = 'c'] np_buff = np.ascontiguousarray(im, dtype = np.uint32)
  *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *             # <<<<<<<<<<<<<<
@@ -2692,7 +2711,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  */
   __pyx_v_weights_ptr = ((__pyx_t_5pyndl_12ndl_parallel_dtype_t *)__pyx_v_weights->data);
 
-  /* "pyndl/ndl_parallel.pyx":100
+  /* "pyndl/ndl_parallel.pyx":108
  *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
  * 
  *     for binary_file_path in binary_file_paths: #             # <<<<<<<<<<<<<<
@@ -2703,26 +2722,26 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
     __pyx_t_1 = __pyx_v_binary_file_paths; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_binary_file_paths); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 100, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_binary_file_paths); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 108, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 100, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 100, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 108, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 100, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 108, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 100, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 108, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 100, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 108, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -2732,7 +2751,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 100, __pyx_L1_error)
+          else __PYX_ERR(0, 108, __pyx_L1_error)
         }
         break;
       }
@@ -2741,14 +2760,14 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
     __Pyx_XDECREF_SET(__pyx_v_binary_file_path, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "pyndl/ndl_parallel.pyx":101
+    /* "pyndl/ndl_parallel.pyx":109
  * 
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")             # <<<<<<<<<<<<<<
  *       fname = filename_byte_string
  * 
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_binary_file_path, __pyx_n_s_encode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 101, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_binary_file_path, __pyx_n_s_encode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 109, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
@@ -2762,28 +2781,28 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
     }
     __pyx_t_4 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_6, __pyx_kp_s_UTF_8) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_kp_s_UTF_8);
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 101, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 109, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_XDECREF_SET(__pyx_v_filename_byte_string, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "pyndl/ndl_parallel.pyx":102
+    /* "pyndl/ndl_parallel.pyx":110
  *     for binary_file_path in binary_file_paths: #
  *       filename_byte_string = binary_file_path.encode("UTF-8")
  *       fname = filename_byte_string             # <<<<<<<<<<<<<<
  * 
  *       with nogil:
  */
-    __pyx_t_7 = __Pyx_PyObject_AsWritableString(__pyx_v_filename_byte_string); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 102, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_AsWritableString(__pyx_v_filename_byte_string); if (unlikely((!__pyx_t_7) && PyErr_Occurred())) __PYX_ERR(0, 110, __pyx_L1_error)
     __pyx_v_fname = __pyx_t_7;
 
-    /* "pyndl/ndl_parallel.pyx":104
+    /* "pyndl/ndl_parallel.pyx":112
  *       fname = filename_byte_string
  * 
  *       with nogil:             # <<<<<<<<<<<<<<
- *           error = 0
  *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
+ *                             beta2, lambda_, all_outcomes_ptr, 0,
  */
     {
         #ifdef WITH_THREAD
@@ -2793,31 +2812,50 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
         #endif
         /*try:*/ {
 
-          /* "pyndl/ndl_parallel.pyx":105
+          /* "pyndl/ndl_parallel.pyx":113
  * 
  *       with nogil:
- *           error = 0             # <<<<<<<<<<<<<<
- *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
- *                             beta2, lambda_, all_outcomes_ptr, 0,
- */
-          __pyx_v_error = 0;
-
-          /* "pyndl/ndl_parallel.pyx":106
- *       with nogil:
- *           error = 0
  *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,             # <<<<<<<<<<<<<<
  *                             beta2, lambda_, all_outcomes_ptr, 0,
  *                             length_all_outcomes)
  */
           __pyx_v_error = __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(__pyx_v_fname, __pyx_v_weights_ptr, __pyx_v_mm, __pyx_v_alpha, __pyx_v_beta1, __pyx_v_beta2, __pyx_v_lambda_, __pyx_v_all_outcomes_ptr, 0, __pyx_v_length_all_outcomes);
+
+          /* "pyndl/ndl_parallel.pyx":116
+ *                             beta2, lambda_, all_outcomes_ptr, 0,
+ *                             length_all_outcomes)
+ *           if error != 0:             # <<<<<<<<<<<<<<
+ *               break
+ * 
+ */
+          __pyx_t_8 = ((__pyx_v_error != 0) != 0);
+          if (__pyx_t_8) {
+
+            /* "pyndl/ndl_parallel.pyx":117
+ *                             length_all_outcomes)
+ *           if error != 0:
+ *               break             # <<<<<<<<<<<<<<
+ * 
+ *     if (error != 0):
+ */
+            goto __pyx_L6_break;
+
+            /* "pyndl/ndl_parallel.pyx":116
+ *                             beta2, lambda_, all_outcomes_ptr, 0,
+ *                             length_all_outcomes)
+ *           if error != 0:             # <<<<<<<<<<<<<<
+ *               break
+ * 
+ */
+          }
         }
 
-        /* "pyndl/ndl_parallel.pyx":104
+        /* "pyndl/ndl_parallel.pyx":112
  *       fname = filename_byte_string
  * 
  *       with nogil:             # <<<<<<<<<<<<<<
- *           error = 0
  *           error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
+ *                             beta2, lambda_, all_outcomes_ptr, 0,
  */
         /*finally:*/ {
           /*normal exit:*/{
@@ -2827,11 +2865,18 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
             #endif
             goto __pyx_L9;
           }
+          __pyx_L6_break: {
+            #ifdef WITH_THREAD
+            __Pyx_FastGIL_Forget();
+            Py_BLOCK_THREADS
+            #endif
+            goto __pyx_L4_break;
+          }
           __pyx_L9:;
         }
     }
 
-    /* "pyndl/ndl_parallel.pyx":100
+    /* "pyndl/ndl_parallel.pyx":108
  *     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
  * 
  *     for binary_file_path in binary_file_paths: #             # <<<<<<<<<<<<<<
@@ -2839,11 +2884,12 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
  *       fname = filename_byte_string
  */
   }
+  __pyx_L4_break:;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyndl/ndl_parallel.pyx":109
- *                             beta2, lambda_, all_outcomes_ptr, 0,
- *                             length_all_outcomes)
+  /* "pyndl/ndl_parallel.pyx":119
+ *               break
+ * 
  *     if (error != 0):             # <<<<<<<<<<<<<<
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
@@ -2851,35 +2897,35 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
   __pyx_t_8 = ((__pyx_v_error != 0) != 0);
   if (unlikely(__pyx_t_8)) {
 
-    /* "pyndl/ndl_parallel.pyx":110
- *                             length_all_outcomes)
+    /* "pyndl/ndl_parallel.pyx":120
+ * 
  *     if (error != 0):
  *         raise IOError('binary files does not have proper format, error code %i' % error)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_binary_files_does_not_have_prope, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyString_Format(__pyx_kp_s_binary_files_does_not_have_prope, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 120, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_IOError, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 110, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_IOError, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 120, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 110, __pyx_L1_error)
+    __PYX_ERR(0, 120, __pyx_L1_error)
 
-    /* "pyndl/ndl_parallel.pyx":109
- *                             beta2, lambda_, all_outcomes_ptr, 0,
- *                             length_all_outcomes)
+    /* "pyndl/ndl_parallel.pyx":119
+ *               break
+ * 
  *     if (error != 0):             # <<<<<<<<<<<<<<
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
  */
   }
 
-  /* "pyndl/ndl_parallel.pyx":83
+  /* "pyndl/ndl_parallel.pyx":91
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
  * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
@@ -2916,7 +2962,7 @@ static PyObject *__pyx_pf_5pyndl_12ndl_parallel_2learn_inplace_2(CYTHON_UNUSED P
   return __pyx_r;
 }
 
-/* "pyndl/ndl_parallel.pyx":113
+/* "pyndl/ndl_parallel.pyx":123
  * 
  * 
  * cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:             # <<<<<<<<<<<<<<
@@ -2932,7 +2978,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
   unsigned int __pyx_t_3;
   int __pyx_t_4;
 
-  /* "pyndl/ndl_parallel.pyx":115
+  /* "pyndl/ndl_parallel.pyx":125
  * cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:
  *     cdef unsigned int ii
  *     for ii in range(size):             # <<<<<<<<<<<<<<
@@ -2944,7 +2990,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ii = __pyx_t_3;
 
-    /* "pyndl/ndl_parallel.pyx":116
+    /* "pyndl/ndl_parallel.pyx":126
  *     cdef unsigned int ii
  *     for ii in range(size):
  *       if arr[ii] == elem:             # <<<<<<<<<<<<<<
@@ -2954,7 +3000,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
     __pyx_t_4 = (((__pyx_v_arr[__pyx_v_ii]) == __pyx_v_elem) != 0);
     if (__pyx_t_4) {
 
-      /* "pyndl/ndl_parallel.pyx":117
+      /* "pyndl/ndl_parallel.pyx":127
  *     for ii in range(size):
  *       if arr[ii] == elem:
  *         return True             # <<<<<<<<<<<<<<
@@ -2964,7 +3010,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
       __pyx_r = 1;
       goto __pyx_L0;
 
-      /* "pyndl/ndl_parallel.pyx":116
+      /* "pyndl/ndl_parallel.pyx":126
  *     cdef unsigned int ii
  *     for ii in range(size):
  *       if arr[ii] == elem:             # <<<<<<<<<<<<<<
@@ -2974,7 +3020,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
     }
   }
 
-  /* "pyndl/ndl_parallel.pyx":118
+  /* "pyndl/ndl_parallel.pyx":128
  *       if arr[ii] == elem:
  *         return True
  *     return False             # <<<<<<<<<<<<<<
@@ -2984,7 +3030,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "pyndl/ndl_parallel.pyx":113
+  /* "pyndl/ndl_parallel.pyx":123
  * 
  * 
  * cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:             # <<<<<<<<<<<<<<
@@ -2997,7 +3043,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_is_element_of(unsigned int __pyx_v_elem
   return __pyx_r;
 }
 
-/* "pyndl/ndl_parallel.pyx":122
+/* "pyndl/ndl_parallel.pyx":132
  * 
  * # ggf exception zurckgeben
  * cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,             # <<<<<<<<<<<<<<
@@ -3035,7 +3081,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   unsigned int __pyx_t_10;
   unsigned PY_LONG_LONG __pyx_t_11;
 
-  /* "pyndl/ndl_parallel.pyx":137
+  /* "pyndl/ndl_parallel.pyx":147
  *     cdef unsigned int* cue_indices
  *     cdef unsigned int* outcome_indices
  *     cdef unsigned int max_number_of_cues = 1024             # <<<<<<<<<<<<<<
@@ -3044,7 +3090,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_v_max_number_of_cues = 0x400;
 
-  /* "pyndl/ndl_parallel.pyx":138
+  /* "pyndl/ndl_parallel.pyx":148
  *     cdef unsigned int* outcome_indices
  *     cdef unsigned int max_number_of_cues = 1024
  *     cdef unsigned int max_number_of_outcomes = 1024             # <<<<<<<<<<<<<<
@@ -3053,7 +3099,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_v_max_number_of_outcomes = 0x400;
 
-  /* "pyndl/ndl_parallel.pyx":141
+  /* "pyndl/ndl_parallel.pyx":151
  * 
  *     cdef FILE* binary_file
  *     binary_file = fopen(binary_file_path, "rb")             # <<<<<<<<<<<<<<
@@ -3062,7 +3108,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_v_binary_file = fopen(__pyx_v_binary_file_path, ((char const *)"rb"));
 
-  /* "pyndl/ndl_parallel.pyx":143
+  /* "pyndl/ndl_parallel.pyx":153
  *     binary_file = fopen(binary_file_path, "rb")
  * 
  *     read_next_int(&magic_number, binary_file)             # <<<<<<<<<<<<<<
@@ -3071,7 +3117,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_magic_number), __pyx_v_binary_file);
 
-  /* "pyndl/ndl_parallel.pyx":144
+  /* "pyndl/ndl_parallel.pyx":154
  * 
  *     read_next_int(&magic_number, binary_file)
  *     if not magic_number == MAGIC_NUMBER:             # <<<<<<<<<<<<<<
@@ -3081,7 +3127,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   __pyx_t_1 = ((!((__pyx_v_magic_number == __pyx_v_5pyndl_12ndl_parallel_MAGIC_NUMBER) != 0)) != 0);
   if (__pyx_t_1) {
 
-    /* "pyndl/ndl_parallel.pyx":145
+    /* "pyndl/ndl_parallel.pyx":155
  *     read_next_int(&magic_number, binary_file)
  *     if not magic_number == MAGIC_NUMBER:
  *         fclose(binary_file)             # <<<<<<<<<<<<<<
@@ -3090,7 +3136,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     (void)(fclose(__pyx_v_binary_file));
 
-    /* "pyndl/ndl_parallel.pyx":146
+    /* "pyndl/ndl_parallel.pyx":156
  *     if not magic_number == MAGIC_NUMBER:
  *         fclose(binary_file)
  *         return 1             # <<<<<<<<<<<<<<
@@ -3100,7 +3146,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "pyndl/ndl_parallel.pyx":144
+    /* "pyndl/ndl_parallel.pyx":154
  * 
  *     read_next_int(&magic_number, binary_file)
  *     if not magic_number == MAGIC_NUMBER:             # <<<<<<<<<<<<<<
@@ -3109,7 +3155,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   }
 
-  /* "pyndl/ndl_parallel.pyx":147
+  /* "pyndl/ndl_parallel.pyx":157
  *         fclose(binary_file)
  *         return 1
  *     read_next_int(&version, binary_file)             # <<<<<<<<<<<<<<
@@ -3118,7 +3164,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_version), __pyx_v_binary_file);
 
-  /* "pyndl/ndl_parallel.pyx":148
+  /* "pyndl/ndl_parallel.pyx":158
  *         return 1
  *     read_next_int(&version, binary_file)
  *     if version == CURRENT_VERSION:             # <<<<<<<<<<<<<<
@@ -3130,7 +3176,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     goto __pyx_L4;
   }
 
-  /* "pyndl/ndl_parallel.pyx":151
+  /* "pyndl/ndl_parallel.pyx":161
  *         pass
  *     else:
  *         fclose(binary_file)             # <<<<<<<<<<<<<<
@@ -3140,7 +3186,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   /*else*/ {
     (void)(fclose(__pyx_v_binary_file));
 
-    /* "pyndl/ndl_parallel.pyx":152
+    /* "pyndl/ndl_parallel.pyx":162
  *     else:
  *         fclose(binary_file)
  *         return 2             # <<<<<<<<<<<<<<
@@ -3152,7 +3198,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   }
   __pyx_L4:;
 
-  /* "pyndl/ndl_parallel.pyx":155
+  /* "pyndl/ndl_parallel.pyx":165
  * 
  *     # preallocate memory
  *     cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)             # <<<<<<<<<<<<<<
@@ -3161,7 +3207,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_v_cue_indices = ((unsigned int *)malloc(((sizeof(unsigned int)) * __pyx_v_max_number_of_cues)));
 
-  /* "pyndl/ndl_parallel.pyx":156
+  /* "pyndl/ndl_parallel.pyx":166
  *     # preallocate memory
  *     cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
  *     outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)             # <<<<<<<<<<<<<<
@@ -3170,7 +3216,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_v_outcome_indices = ((unsigned int *)malloc(((sizeof(unsigned int)) * __pyx_v_max_number_of_outcomes)));
 
-  /* "pyndl/ndl_parallel.pyx":158
+  /* "pyndl/ndl_parallel.pyx":168
  *     outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
  * 
  *     read_next_int(&number_of_events, binary_file)             # <<<<<<<<<<<<<<
@@ -3179,7 +3225,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_number_of_events), __pyx_v_binary_file);
 
-  /* "pyndl/ndl_parallel.pyx":160
+  /* "pyndl/ndl_parallel.pyx":170
  *     read_next_int(&number_of_events, binary_file)
  * 
  *     for event in range(number_of_events):             # <<<<<<<<<<<<<<
@@ -3191,7 +3237,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_event = __pyx_t_4;
 
-    /* "pyndl/ndl_parallel.pyx":162
+    /* "pyndl/ndl_parallel.pyx":172
  *     for event in range(number_of_events):
  *         # cues
  *         read_next_int(&number_of_cues, binary_file)             # <<<<<<<<<<<<<<
@@ -3200,7 +3246,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_number_of_cues), __pyx_v_binary_file);
 
-    /* "pyndl/ndl_parallel.pyx":163
+    /* "pyndl/ndl_parallel.pyx":173
  *         # cues
  *         read_next_int(&number_of_cues, binary_file)
  *         if number_of_cues > max_number_of_cues:             # <<<<<<<<<<<<<<
@@ -3210,7 +3256,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     __pyx_t_1 = ((__pyx_v_number_of_cues > __pyx_v_max_number_of_cues) != 0);
     if (__pyx_t_1) {
 
-      /* "pyndl/ndl_parallel.pyx":164
+      /* "pyndl/ndl_parallel.pyx":174
  *         read_next_int(&number_of_cues, binary_file)
  *         if number_of_cues > max_number_of_cues:
  *             max_number_of_cues = number_of_cues             # <<<<<<<<<<<<<<
@@ -3219,7 +3265,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       __pyx_v_max_number_of_cues = __pyx_v_number_of_cues;
 
-      /* "pyndl/ndl_parallel.pyx":165
+      /* "pyndl/ndl_parallel.pyx":175
  *         if number_of_cues > max_number_of_cues:
  *             max_number_of_cues = number_of_cues
  *             free(cue_indices)             # <<<<<<<<<<<<<<
@@ -3228,7 +3274,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       free(__pyx_v_cue_indices);
 
-      /* "pyndl/ndl_parallel.pyx":166
+      /* "pyndl/ndl_parallel.pyx":176
  *             max_number_of_cues = number_of_cues
  *             free(cue_indices)
  *             cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)             # <<<<<<<<<<<<<<
@@ -3237,7 +3283,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       __pyx_v_cue_indices = ((unsigned int *)malloc(((sizeof(unsigned int)) * __pyx_v_max_number_of_cues)));
 
-      /* "pyndl/ndl_parallel.pyx":163
+      /* "pyndl/ndl_parallel.pyx":173
  *         # cues
  *         read_next_int(&number_of_cues, binary_file)
  *         if number_of_cues > max_number_of_cues:             # <<<<<<<<<<<<<<
@@ -3246,7 +3292,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     }
 
-    /* "pyndl/ndl_parallel.pyx":167
+    /* "pyndl/ndl_parallel.pyx":177
  *             free(cue_indices)
  *             cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
  *         fread(cue_indices, 4, number_of_cues, binary_file)             # <<<<<<<<<<<<<<
@@ -3255,7 +3301,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     (void)(fread(__pyx_v_cue_indices, 4, __pyx_v_number_of_cues, __pyx_v_binary_file));
 
-    /* "pyndl/ndl_parallel.pyx":170
+    /* "pyndl/ndl_parallel.pyx":180
  * 
  *         # outcomes
  *         read_next_int(&number_of_outcomes, binary_file)             # <<<<<<<<<<<<<<
@@ -3264,7 +3310,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     __pyx_f_5pyndl_12ndl_parallel_read_next_int((&__pyx_v_number_of_outcomes), __pyx_v_binary_file);
 
-    /* "pyndl/ndl_parallel.pyx":171
+    /* "pyndl/ndl_parallel.pyx":181
  *         # outcomes
  *         read_next_int(&number_of_outcomes, binary_file)
  *         if number_of_outcomes > max_number_of_outcomes:             # <<<<<<<<<<<<<<
@@ -3274,7 +3320,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     __pyx_t_1 = ((__pyx_v_number_of_outcomes > __pyx_v_max_number_of_outcomes) != 0);
     if (__pyx_t_1) {
 
-      /* "pyndl/ndl_parallel.pyx":172
+      /* "pyndl/ndl_parallel.pyx":182
  *         read_next_int(&number_of_outcomes, binary_file)
  *         if number_of_outcomes > max_number_of_outcomes:
  *             max_number_of_outcomes = number_of_outcomes             # <<<<<<<<<<<<<<
@@ -3283,7 +3329,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       __pyx_v_max_number_of_outcomes = __pyx_v_number_of_outcomes;
 
-      /* "pyndl/ndl_parallel.pyx":173
+      /* "pyndl/ndl_parallel.pyx":183
  *         if number_of_outcomes > max_number_of_outcomes:
  *             max_number_of_outcomes = number_of_outcomes
  *             free(outcome_indices)             # <<<<<<<<<<<<<<
@@ -3292,7 +3338,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       free(__pyx_v_outcome_indices);
 
-      /* "pyndl/ndl_parallel.pyx":174
+      /* "pyndl/ndl_parallel.pyx":184
  *             max_number_of_outcomes = number_of_outcomes
  *             free(outcome_indices)
  *             outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)             # <<<<<<<<<<<<<<
@@ -3301,7 +3347,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       __pyx_v_outcome_indices = ((unsigned int *)malloc(((sizeof(unsigned int)) * __pyx_v_max_number_of_outcomes)));
 
-      /* "pyndl/ndl_parallel.pyx":171
+      /* "pyndl/ndl_parallel.pyx":181
  *         # outcomes
  *         read_next_int(&number_of_outcomes, binary_file)
  *         if number_of_outcomes > max_number_of_outcomes:             # <<<<<<<<<<<<<<
@@ -3310,7 +3356,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     }
 
-    /* "pyndl/ndl_parallel.pyx":175
+    /* "pyndl/ndl_parallel.pyx":185
  *             free(outcome_indices)
  *             outcome_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_outcomes)
  *         fread(outcome_indices, 4, number_of_outcomes, binary_file)             # <<<<<<<<<<<<<<
@@ -3319,7 +3365,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
     (void)(fread(__pyx_v_outcome_indices, 4, __pyx_v_number_of_outcomes, __pyx_v_binary_file));
 
-    /* "pyndl/ndl_parallel.pyx":178
+    /* "pyndl/ndl_parallel.pyx":188
  * 
  *         # learn
  *         for ii in range(start, end):             # <<<<<<<<<<<<<<
@@ -3331,7 +3377,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     for (__pyx_t_7 = __pyx_v_start; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_ii = __pyx_t_7;
 
-      /* "pyndl/ndl_parallel.pyx":179
+      /* "pyndl/ndl_parallel.pyx":189
  *         # learn
  *         for ii in range(start, end):
  *             association_strength = 0.0             # <<<<<<<<<<<<<<
@@ -3340,7 +3386,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
       __pyx_v_association_strength = 0.0;
 
-      /* "pyndl/ndl_parallel.pyx":180
+      /* "pyndl/ndl_parallel.pyx":190
  *         for ii in range(start, end):
  *             association_strength = 0.0
  *             for jj in range(number_of_cues):             # <<<<<<<<<<<<<<
@@ -3352,7 +3398,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
       for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
         __pyx_v_jj = __pyx_t_10;
 
-        /* "pyndl/ndl_parallel.pyx":183
+        /* "pyndl/ndl_parallel.pyx":193
  *               # this overflows:
  *               #index = cue_indices[jj] + mm * all_outcome_indices[ii]
  *               index = mm  # implicit cast to unsigned long long             # <<<<<<<<<<<<<<
@@ -3361,7 +3407,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_index = __pyx_v_mm;
 
-        /* "pyndl/ndl_parallel.pyx":184
+        /* "pyndl/ndl_parallel.pyx":194
  *               #index = cue_indices[jj] + mm * all_outcome_indices[ii]
  *               index = mm  # implicit cast to unsigned long long
  *               index *=  all_outcome_indices[ii]  # this can't overflow anymore             # <<<<<<<<<<<<<<
@@ -3370,7 +3416,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_index = (__pyx_v_index * (__pyx_v_all_outcome_indices[__pyx_v_ii]));
 
-        /* "pyndl/ndl_parallel.pyx":185
+        /* "pyndl/ndl_parallel.pyx":195
  *               index = mm  # implicit cast to unsigned long long
  *               index *=  all_outcome_indices[ii]  # this can't overflow anymore
  *               index += cue_indices[jj]  # this can't overflow anymore             # <<<<<<<<<<<<<<
@@ -3379,7 +3425,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_index = (__pyx_v_index + (__pyx_v_cue_indices[__pyx_v_jj]));
 
-        /* "pyndl/ndl_parallel.pyx":187
+        /* "pyndl/ndl_parallel.pyx":197
  *               index += cue_indices[jj]  # this can't overflow anymore
  *               # worst case: 4294967295 * 4294967295 + 4294967295 == 18446744069414584320 < 18446744073709551615
  *               association_strength += weights[index]             # <<<<<<<<<<<<<<
@@ -3389,7 +3435,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
         __pyx_v_association_strength = (__pyx_v_association_strength + (__pyx_v_weights[__pyx_v_index]));
       }
 
-      /* "pyndl/ndl_parallel.pyx":188
+      /* "pyndl/ndl_parallel.pyx":198
  *               # worst case: 4294967295 * 4294967295 + 4294967295 == 18446744069414584320 < 18446744073709551615
  *               association_strength += weights[index]
  *             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):             # <<<<<<<<<<<<<<
@@ -3399,7 +3445,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
       __pyx_t_1 = (__pyx_f_5pyndl_12ndl_parallel_is_element_of((__pyx_v_all_outcome_indices[__pyx_v_ii]), __pyx_v_outcome_indices, __pyx_v_number_of_outcomes) != 0);
       if (__pyx_t_1) {
 
-        /* "pyndl/ndl_parallel.pyx":189
+        /* "pyndl/ndl_parallel.pyx":199
  *               association_strength += weights[index]
  *             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
  *               update = beta1 * (lambda_ - association_strength)             # <<<<<<<<<<<<<<
@@ -3408,7 +3454,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_update = (__pyx_v_beta1 * (__pyx_v_lambda_ - __pyx_v_association_strength));
 
-        /* "pyndl/ndl_parallel.pyx":188
+        /* "pyndl/ndl_parallel.pyx":198
  *               # worst case: 4294967295 * 4294967295 + 4294967295 == 18446744069414584320 < 18446744073709551615
  *               association_strength += weights[index]
  *             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):             # <<<<<<<<<<<<<<
@@ -3418,7 +3464,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
         goto __pyx_L13;
       }
 
-      /* "pyndl/ndl_parallel.pyx":191
+      /* "pyndl/ndl_parallel.pyx":201
  *               update = beta1 * (lambda_ - association_strength)
  *             else:
  *               update = beta2 * (0.0 - association_strength)             # <<<<<<<<<<<<<<
@@ -3430,7 +3476,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
       }
       __pyx_L13:;
 
-      /* "pyndl/ndl_parallel.pyx":192
+      /* "pyndl/ndl_parallel.pyx":202
  *             else:
  *               update = beta2 * (0.0 - association_strength)
  *             for jj in range(number_of_cues):             # <<<<<<<<<<<<<<
@@ -3442,7 +3488,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
       for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
         __pyx_v_jj = __pyx_t_10;
 
-        /* "pyndl/ndl_parallel.pyx":193
+        /* "pyndl/ndl_parallel.pyx":203
  *               update = beta2 * (0.0 - association_strength)
  *             for jj in range(number_of_cues):
  *               index = mm  # implicit cast to unsigned long long             # <<<<<<<<<<<<<<
@@ -3451,7 +3497,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_index = __pyx_v_mm;
 
-        /* "pyndl/ndl_parallel.pyx":194
+        /* "pyndl/ndl_parallel.pyx":204
  *             for jj in range(number_of_cues):
  *               index = mm  # implicit cast to unsigned long long
  *               index *=  all_outcome_indices[ii]  # this can't overflow anymore             # <<<<<<<<<<<<<<
@@ -3460,7 +3506,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_index = (__pyx_v_index * (__pyx_v_all_outcome_indices[__pyx_v_ii]));
 
-        /* "pyndl/ndl_parallel.pyx":195
+        /* "pyndl/ndl_parallel.pyx":205
  *               index = mm  # implicit cast to unsigned long long
  *               index *=  all_outcome_indices[ii]  # this can't overflow anymore
  *               index += cue_indices[jj]  # this can't overflow anymore             # <<<<<<<<<<<<<<
@@ -3469,7 +3515,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
         __pyx_v_index = (__pyx_v_index + (__pyx_v_cue_indices[__pyx_v_jj]));
 
-        /* "pyndl/ndl_parallel.pyx":196
+        /* "pyndl/ndl_parallel.pyx":206
  *               index *=  all_outcome_indices[ii]  # this can't overflow anymore
  *               index += cue_indices[jj]  # this can't overflow anymore
  *               weights[index] += alpha * update             # <<<<<<<<<<<<<<
@@ -3482,7 +3528,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
     }
   }
 
-  /* "pyndl/ndl_parallel.pyx":198
+  /* "pyndl/ndl_parallel.pyx":208
  *               weights[index] += alpha * update
  * 
  *     fclose(binary_file)             # <<<<<<<<<<<<<<
@@ -3491,7 +3537,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   (void)(fclose(__pyx_v_binary_file));
 
-  /* "pyndl/ndl_parallel.pyx":199
+  /* "pyndl/ndl_parallel.pyx":209
  * 
  *     fclose(binary_file)
  *     free(cue_indices)             # <<<<<<<<<<<<<<
@@ -3500,7 +3546,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   free(__pyx_v_cue_indices);
 
-  /* "pyndl/ndl_parallel.pyx":200
+  /* "pyndl/ndl_parallel.pyx":210
  *     fclose(binary_file)
  *     free(cue_indices)
  *     free(outcome_indices)             # <<<<<<<<<<<<<<
@@ -3508,7 +3554,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
  */
   free(__pyx_v_outcome_indices);
 
-  /* "pyndl/ndl_parallel.pyx":201
+  /* "pyndl/ndl_parallel.pyx":211
  *     free(cue_indices)
  *     free(outcome_indices)
  *     return 0             # <<<<<<<<<<<<<<
@@ -3516,7 +3562,7 @@ static int __pyx_f_5pyndl_12ndl_parallel_learn_inplace_ptr(char *__pyx_v_binary_
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "pyndl/ndl_parallel.pyx":122
+  /* "pyndl/ndl_parallel.pyx":132
  * 
  * # ggf exception zurckgeben
  * cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,             # <<<<<<<<<<<<<<
@@ -6046,8 +6092,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(0, 16, __pyx_L1_error)
-  __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) __PYX_ERR(0, 81, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_builtin_IOError = __Pyx_GetBuiltinName(__pyx_n_s_IOError); if (!__pyx_builtin_IOError) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 125, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 272, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 856, __pyx_L1_error)
   return 0;
@@ -6148,17 +6194,17 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__8);
   __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(9, 0, 21, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyndl_ndl_parallel_pyx, __pyx_n_s_learn_inplace, 43, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 43, __pyx_L1_error)
 
-  /* "pyndl/ndl_parallel.pyx":83
+  /* "pyndl/ndl_parallel.pyx":91
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
  * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
  *                   dtype_t alpha, dtype_t beta1,
  *                   dtype_t beta2, dtype_t lambda_,
  */
-  __pyx_tuple__10 = PyTuple_Pack(17, __pyx_n_s_binary_file_paths, __pyx_n_s_weights, __pyx_n_s_alpha, __pyx_n_s_beta1, __pyx_n_s_beta2, __pyx_n_s_lambda, __pyx_n_s_all_outcomes, __pyx_n_s_mm, __pyx_n_s_all_outcomes_ptr, __pyx_n_s_length_all_outcomes, __pyx_n_s_fname, __pyx_n_s_start_val, __pyx_n_s_end_val, __pyx_n_s_error, __pyx_n_s_weights_ptr, __pyx_n_s_binary_file_path, __pyx_n_s_filename_byte_string); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_tuple__10 = PyTuple_Pack(17, __pyx_n_s_binary_file_paths, __pyx_n_s_weights, __pyx_n_s_alpha, __pyx_n_s_beta1, __pyx_n_s_beta2, __pyx_n_s_lambda, __pyx_n_s_all_outcomes, __pyx_n_s_mm, __pyx_n_s_all_outcomes_ptr, __pyx_n_s_length_all_outcomes, __pyx_n_s_fname, __pyx_n_s_start_val, __pyx_n_s_end_val, __pyx_n_s_error, __pyx_n_s_weights_ptr, __pyx_n_s_binary_file_path, __pyx_n_s_filename_byte_string); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__10);
   __Pyx_GIVEREF(__pyx_tuple__10);
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(7, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyndl_ndl_parallel_pyx, __pyx_n_s_learn_inplace_2, 83, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(7, 0, 17, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_pyndl_ndl_parallel_pyx, __pyx_n_s_learn_inplace_2, 91, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -6621,16 +6667,16 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_learn_inplace, __pyx_t_3) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pyndl/ndl_parallel.pyx":83
+  /* "pyndl/ndl_parallel.pyx":91
  *         raise IOError('binary files does not have proper format, error code %i' % error)
  * 
  * def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,             # <<<<<<<<<<<<<<
  *                   dtype_t alpha, dtype_t beta1,
  *                   dtype_t beta2, dtype_t lambda_,
  */
-  __pyx_t_3 = PyCFunction_NewEx(&__pyx_mdef_5pyndl_12ndl_parallel_3learn_inplace_2, NULL, __pyx_n_s_pyndl_ndl_parallel); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_3 = PyCFunction_NewEx(&__pyx_mdef_5pyndl_12ndl_parallel_3learn_inplace_2, NULL, __pyx_n_s_pyndl_ndl_parallel); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_learn_inplace_2, __pyx_t_3) < 0) __PYX_ERR(0, 83, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_learn_inplace_2, __pyx_t_3) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
   /* "pyndl/ndl_parallel.pyx":1
