@@ -1,4 +1,5 @@
 import numpy as np
+import math
 cimport numpy as np
 ctypedef np.float64_t dtype_t
 cimport cython
@@ -52,7 +53,13 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]
     cdef char* fname
     cdef unsigned int start_val, end_val, ii, number_parts
-    cdef int error = 4
+    cdef int error = 3
+    # error codes:
+    #  0: no error
+    #  1: magic number does not match
+    #  2: version number does not match
+    #  3: error is never written
+
 
   #  cdef String
     # weights muss contigousarray sein und mode=c, siehe:
@@ -60,21 +67,23 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
 
     for binary_file_path in binary_file_paths: #
-      filename_byte_string = binary_file_path.encode("UTF-8")
-      fname = filename_byte_string
+        filename_byte_string = binary_file_path.encode("UTF-8")
+        fname = filename_byte_string
 
-      number_parts = (length_all_outcomes // chunksize) + 1
+        number_parts = math.ceil(length_all_outcomes / chunksize)
 
-      with nogil, parallel(num_threads=number_of_threads):
-        for ii in prange(number_parts, schedule="dynamic", chunksize=1):
-          start_val = ii * chunksize
-          end_val = min(start_val + chunksize, length_all_outcomes)
-          if start_val == length_all_outcomes:
-            break
-          error = 0
-          error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
-                            beta2, lambda_, all_outcomes_ptr, start_val,
-                            end_val)
+        with nogil, parallel(num_threads=number_of_threads):
+            for ii in prange(number_parts, schedule="dynamic", chunksize=1):
+                start_val = ii * chunksize
+                end_val = min(start_val + chunksize, length_all_outcomes)
+                if start_val == length_all_outcomes:
+                    break
+                error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
+                                  beta2, lambda_, all_outcomes_ptr, start_val,
+                                  end_val)
+                if error != 0:
+                    break
+
     if (error != 0):
         raise IOError('binary files does not have proper format, error code %i' % error)
 
@@ -88,7 +97,7 @@ def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]
     cdef char* fname
     cdef unsigned int start_val, end_val
-    cdef int error = 4
+    cdef int error = 3
 
   #  cdef String
     # weights muss contigousarray sein und mode=c, siehe:
@@ -96,14 +105,16 @@ def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
     cdef dtype_t* weights_ptr = <dtype_t *> weights.data # ueberlegen ob [][] oder ** oder [] oder *
 
     for binary_file_path in binary_file_paths: #
-      filename_byte_string = binary_file_path.encode("UTF-8")
-      fname = filename_byte_string
+        filename_byte_string = binary_file_path.encode("UTF-8")
+        fname = filename_byte_string
 
-      with nogil:
-          error = 0
-          error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
-                            beta2, lambda_, all_outcomes_ptr, 0,
-                            length_all_outcomes)
+        with nogil:
+            error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
+                              beta2, lambda_, all_outcomes_ptr, 0,
+                              length_all_outcomes)
+            if error != 0:
+                break
+
     if (error != 0):
         raise IOError('binary files does not have proper format, error code %i' % error)
 
@@ -111,8 +122,8 @@ def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
 cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:
     cdef unsigned int ii
     for ii in range(size):
-      if arr[ii] == elem:
-        return True
+        if arr[ii] == elem:
+            return True
     return False
 
 
@@ -176,22 +187,22 @@ cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
         for ii in range(start, end):
             association_strength = 0.0
             for jj in range(number_of_cues):
-              # this overflows:
-              #index = cue_indices[jj] + mm * all_outcome_indices[ii]
-              index = mm  # implicit cast to unsigned long long
-              index *=  all_outcome_indices[ii]  # this can't overflow anymore
-              index += cue_indices[jj]  # this can't overflow anymore
-              # worst case: 4294967295 * 4294967295 + 4294967295 == 18446744069414584320 < 18446744073709551615
-              association_strength += weights[index]
+                # this overflows:
+                #index = cue_indices[jj] + mm * all_outcome_indices[ii]
+                index = mm  # implicit cast to unsigned long long
+                index *=  all_outcome_indices[ii]  # this can't overflow anymore
+                index += cue_indices[jj]  # this can't overflow anymore
+                # worst case: 4294967295 * 4294967295 + 4294967295 == 18446744069414584320 < 18446744073709551615
+                association_strength += weights[index]
             if is_element_of(all_outcome_indices[ii], outcome_indices, number_of_outcomes):
-              update = beta1 * (lambda_ - association_strength)
+                update = beta1 * (lambda_ - association_strength)
             else:
-              update = beta2 * (0.0 - association_strength)
+                update = beta2 * (0.0 - association_strength)
             for jj in range(number_of_cues):
-              index = mm  # implicit cast to unsigned long long
-              index *=  all_outcome_indices[ii]  # this can't overflow anymore
-              index += cue_indices[jj]  # this can't overflow anymore
-              weights[index] += alpha * update
+                index = mm  # implicit cast to unsigned long long
+                index *=  all_outcome_indices[ii]  # this can't overflow anymore
+                index += cue_indices[jj]  # this can't overflow anymore
+                weights[index] += alpha * update
 
     fclose(binary_file)
     free(cue_indices)
