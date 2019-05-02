@@ -1,4 +1,5 @@
 import numpy as np
+import math
 cimport numpy as np
 ctypedef np.float64_t dtype_t
 cimport cython
@@ -70,7 +71,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
         filename_byte_string = binary_file_path.encode("UTF-8")
         fname = filename_byte_string
 
-        number_parts = (length_all_outcomes // chunksize) + 1
+        number_parts = math.ceil(<double> length_all_outcomes / chunksize)
 
         with nogil, parallel(num_threads=number_of_threads):
             for ii in prange(number_parts, schedule="dynamic", chunksize=1):
