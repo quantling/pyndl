@@ -59,7 +59,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]
     cdef char* fname
     cdef unsigned int start_val, end_val, ii, number_parts
-    cdef ErrorCode error = NO_ERROR
+    cdef ErrorCode error = INITIAL_ERROR_CODE
 
 
   #  cdef String
