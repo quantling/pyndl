@@ -2,8 +2,8 @@
 Pyndl - Naive Discriminative Learning in Python
 ===============================================
 
-.. image:: https://travis-ci.org/quantling/pyndl.svg?branch=master
-    :target: https://travis-ci.org/quantling/pyndl?branch=master
+.. image:: https://travis-ci.com/quantling/pyndl.svg?branch=master
+    :target: https://travis-ci.com/quantling/pyndl
 
 .. image:: https://landscape.io/github/quantling/pyndl/master/landscape.svg?style=flat
     :target: https://landscape.io/github/quantling/pyndl/master
