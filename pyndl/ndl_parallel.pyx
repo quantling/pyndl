@@ -33,6 +33,12 @@ cdef enum ErrorCode:
     VERSION_NUMBER_DOES_NOT_MATCH = 2
     INITIAL_ERROR_CODE = 3
 
+ERROR_CODES = """
+    NO_ERROR = 0
+    MAGIC_NUMBER_DOES_NOT_MATCH = 1
+    VERSION_NUMBER_DOES_NOT_MATCH = 2
+    INITIAL_ERROR_CODE = 3
+    """
 
 cdef inline void read_next_int(void *data, FILE *binary_file) nogil:
     fread(data, 4, 1, binary_file) # little endian
@@ -86,7 +92,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
                     break
 
     if (error != NO_ERROR):
-        raise IOError('binary files does not have proper format, error code %i' % error)
+        raise IOError(f'binary files does not have proper format, error code {error}\n{ERROR_CODES}')
 
 def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
                   dtype_t alpha, dtype_t beta1,
@@ -117,7 +123,7 @@ def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
                 break
 
     if (error != NO_ERROR):
-        raise IOError('binary files does not have proper format, error code %i' % error)
+        raise IOError(f'binary files does not have proper format, error code {error}\n{ERROR_CODES}')
 
 
 cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:
