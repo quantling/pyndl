@@ -27,6 +27,18 @@ test_index *= test_outcome_index
 test_index += test_cue_index
 assert test_index == 18446744069414584320
 
+cdef enum ErrorCode:
+    NO_ERROR = 0
+    MAGIC_NUMBER_DOES_NOT_MATCH = 1
+    VERSION_NUMBER_DOES_NOT_MATCH = 2
+    INITIAL_ERROR_CODE = 3
+
+ERROR_CODES = """
+    NO_ERROR = 0
+    MAGIC_NUMBER_DOES_NOT_MATCH = 1
+    VERSION_NUMBER_DOES_NOT_MATCH = 2
+    INITIAL_ERROR_CODE = 3
+    """
 
 cdef inline void read_next_int(void *data, FILE *binary_file) nogil:
     fread(data, 4, 1, binary_file) # little endian
@@ -53,12 +65,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]
     cdef char* fname
     cdef unsigned int start_val, end_val, ii, number_parts
-    cdef int error = 3
-    # error codes:
-    #  0: no error
-    #  1: magic number does not match
-    #  2: version number does not match
-    #  3: error is never written
+    cdef ErrorCode error = INITIAL_ERROR_CODE
 
 
   #  cdef String
@@ -70,7 +77,7 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
         filename_byte_string = binary_file_path.encode("UTF-8")
         fname = filename_byte_string
 
-        number_parts = math.ceil(length_all_outcomes / chunksize)
+        number_parts = math.ceil(<double> length_all_outcomes / chunksize)
 
         with nogil, parallel(num_threads=number_of_threads):
             for ii in prange(number_parts, schedule="dynamic", chunksize=1):
@@ -81,11 +88,11 @@ def learn_inplace(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
                 error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
                                   beta2, lambda_, all_outcomes_ptr, start_val,
                                   end_val)
-                if error != 0:
+                if error != NO_ERROR:
                     break
 
-    if (error != 0):
-        raise IOError('binary files does not have proper format, error code %i' % error)
+    if (error != NO_ERROR):
+        raise IOError(f'binary files does not have proper format, error code {error}\n{ERROR_CODES}')
 
 def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
                   dtype_t alpha, dtype_t beta1,
@@ -97,7 +104,7 @@ def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
     cdef unsigned int length_all_outcomes = all_outcomes.shape[0]
     cdef char* fname
     cdef unsigned int start_val, end_val
-    cdef int error = 3
+    cdef ErrorCode error = INITIAL_ERROR_CODE
 
   #  cdef String
     # weights muss contigousarray sein und mode=c, siehe:
@@ -112,11 +119,11 @@ def learn_inplace_2(binary_file_paths, np.ndarray[dtype_t, ndim=2] weights,
             error = learn_inplace_ptr(fname, weights_ptr, mm, alpha, beta1,
                               beta2, lambda_, all_outcomes_ptr, 0,
                               length_all_outcomes)
-            if error != 0:
+            if error != NO_ERROR:
                 break
 
-    if (error != 0):
-        raise IOError('binary files does not have proper format, error code %i' % error)
+    if (error != NO_ERROR):
+        raise IOError(f'binary files does not have proper format, error code {error}\n{ERROR_CODES}')
 
 
 cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:
@@ -128,7 +135,7 @@ cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) 
 
 
 # ggf exception zurückgeben
-cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
+cdef ErrorCode learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
                         unsigned int mm,
                         dtype_t alpha, dtype_t beta1,
                         dtype_t beta2, dtype_t lambda_,
@@ -152,13 +159,13 @@ cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
     read_next_int(&magic_number, binary_file)
     if not magic_number == MAGIC_NUMBER:
         fclose(binary_file)
-        return 1
+        return MAGIC_NUMBER_DOES_NOT_MATCH
     read_next_int(&version, binary_file)
     if version == CURRENT_VERSION:
         pass
     else:
         fclose(binary_file)
-        return 2
+        return VERSION_NUMBER_DOES_NOT_MATCH
 
     # preallocate memory
     cue_indices = <unsigned int *> malloc(sizeof(unsigned int) * max_number_of_cues)
@@ -207,4 +214,4 @@ cdef int learn_inplace_ptr(char* binary_file_path, dtype_t* weights,
     fclose(binary_file)
     free(cue_indices)
     free(outcome_indices)
-    return 0
+    return NO_ERROR
