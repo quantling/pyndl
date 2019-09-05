@@ -75,9 +75,9 @@ def wh(events, eta, outcome_vectors, *,
     Returns
     -------
     weights : xarray.DataArray
-        with dimensions 'outcomes' and 'cues'. You can lookup the weights
-        between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
-        'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
+        with dimensions 'vector dimensions' and 'cues'. You can lookup the weights
+        between a vector dimension and a cue with ``weights.loc[{'vector_dimensions': vector_dimension,
+        'cues': cue}]`` or ``weights.loc[vector_dimension].loc[cue]``.
 
     """
 
@@ -94,6 +94,11 @@ def wh(events, eta, outcome_vectors, *,
     n_events, cues, outcomes_from_events = count.cues_outcomes(events,
                                                    number_of_processes=n_jobs,
                                                    verbose=verbose)
+
+    # TODO: check for having exactly one legal outcome in each event
+    # for now: crudely, just check the number of events and number of outcomes are equal
+    assert n_events == sum(outcomes_from_events.values()), "there should be exactly one outcome per event"
+
     cues = list(cues.keys())
     outcomes_from_events = list(outcomes_from_events.keys())
     outcomes = list(outcome_vectors.coords['outcomes'].data)
@@ -104,10 +109,8 @@ def wh(events, eta, outcome_vectors, *,
     if set(outcomes_from_events) - set(outcomes):
         raise ValueError("all outcomes in events need to be specified as rows in outcome_vectors")
 
-    if weights is not None and weights.shape[1] != outcome_vectors.shape[1]:
+    if weights is not None and weights.shape[0] != outcome_vectors.shape[1]:
         raise ValueError("outcome dimensions in weights need to match dimensions in outcome_vectors")
-
-    # TODO: check for having exactly one legal outcome in each event
 
     all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
 
@@ -117,34 +120,38 @@ def wh(events, eta, outcome_vectors, *,
     if weights is None:
         weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
     elif isinstance(weights, xr.DataArray):
-        raise NotImplementedError("This needs some more refinement.")
-        #old_cues = weights.coords["cues"].values.tolist()
-        #new_cues = list(set(cues) - set(old_cues))
-        #old_vector_dimensions = weights.coords["outcomes"].values.tolist()
-        #new_vector_dimensions = outcome_vectors.coords["vector_dimensions"].values.tolist()
+        # raise NotImplementedError("This needs some more refinement.")
+        old_cues = weights.coords["cues"].values.tolist()
+        new_cues = list(set(cues) - set(old_cues))
+        old_vector_dimensions = weights.coords["vector_dimensions"].values.tolist()
+        new_vector_dimensions = outcome_vectors.coords["vector_dimensions"].values.tolist()
 
-        #cues = old_cues + new_cues
-        #
-        #if old_vector_dimensions != new_vector_dimensions:
-        #    raise ValueError("Vector dimensions need to match in continued learning!")
+        cues = old_cues + new_cues
 
-        #cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
-        #outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcome_vectors.coords['outcomes'].data)))
+        if old_vector_dimensions != new_vector_dimensions:
+            raise ValueError("Vector dimensions need to match in continued learning!")
 
-        #all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
+        vector_dimensions = new_vector_dimensions
 
-        #weights_tmp = np.concatenate((weights.values,
-        #                              np.zeros((len(new_outcomes), len(old_cues)),
-        #                                       dtype=np.float64, order='C')),
-        #                             axis=0)
-        #weights_tmp = np.concatenate((weights_tmp,
-        #                              np.zeros((len(outcomes), len(new_cues)),
-        #                                       dtype=np.float64, order='C')),
-        #                             axis=1)
+        cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
 
-        #weights = np.ascontiguousarray(weights_tmp)
+        # weights_tmp = np.concatenate((weights.values,
+        #                               np.zeros((len(new_outcomes), len(old_cues)),
+        #                                        dtype=np.float64, order='C')),
+        #                              axis=0)
+        # weights_tmp = np.concatenate((weights_tmp,
+        #                               np.zeros((len(outcomes), len(new_cues)),
+        #                                        dtype=np.float64, order='C')),
+        #                              axis=1)
 
-        #del weights_tmp, old_cues, new_cues, old_outcomes, new_outcomes
+        weights_tmp = np.concatenate((weights.values,
+                                      np.zeros((len(vector_dimensions), len(new_cues)),
+                                               dtype=np.float64, order='C')),
+                                     axis=1)
+
+        weights = np.ascontiguousarray(weights_tmp)
+
+        del weights_tmp, old_cues, new_cues, old_vector_dimensions, new_vector_dimensions
     else:
         raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
 

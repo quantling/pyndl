@@ -32,6 +32,12 @@ def load_requirements(fn):
 # automagically
 ext_modules = [
     Extension(
+        "pyndl.corr_parallel",
+        ["pyndl/corr_parallel.pyx"],
+        extra_compile_args=['-fopenmp'],
+        extra_link_args=['-fopenmp'],
+    ),
+    Extension(
         "pyndl.ndl_parallel",
         ["pyndl/ndl_parallel.pyx"],
         extra_compile_args=['-fopenmp'],
@@ -43,7 +49,6 @@ ext_modules = [
         extra_compile_args=['-fopenmp'],
         extra_link_args=['-fopenmp'],
     )
-
 ]
 
 

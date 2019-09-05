@@ -81,7 +81,9 @@ def learn_inplace(binary_file_paths,
           error = learn_inplace_ptr(fname, outcome_vectors_ptr, eta, weights_ptr, mm, n_vector_dimensions,
                                     all_outcomes_ptr, start_val, end_val)
     #raise IOError("23")
-    if (error != 0):
+    if (error == 7):
+        raise ValueError('error code %i, legal number of outcomes per event is exactly 1')
+    if (error == 1 or error == 2):
         raise IOError('binary files does not have proper format, error code %i' % error)
 
 
