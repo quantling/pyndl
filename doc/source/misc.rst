@@ -76,6 +76,12 @@ Further reading:
 Keeping a fork in sync with master
 ----------------------------------
 
+.. note::
+
+    If you have questions regarding ``git`` it is mostly a good start to read
+    up on it on github help pages, i. e.
+    https://help.github.com/articles/working-with-forks/ .
+
 If you fork the ``pyndl`` project on github.com you might want to keep it in
 sync with master. In order to do so, you need to setup a remote repository
 within a local ``pyndl`` clone of you fork. This remote repository will point
