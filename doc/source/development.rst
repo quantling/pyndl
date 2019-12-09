@@ -3,10 +3,6 @@ Development
 .. image:: https://travis-ci.org/quantling/pyndl.svg?branch=master
     :target: https://travis-ci.org/quantling/pyndl?branch=master
 
-.. image:: https://landscape.io/github/quantling/pyndl/master/landscape.svg?style=flat
-    :target: https://landscape.io/github/quantling/pyndl/master
-    :alt: Code Health
-
 .. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
 
@@ -151,21 +147,15 @@ Service      Status       Config file        Description
 ===========  ===========  =================  ===========================
 Travis CI    |travis|     `.travis.yml`_     Automated testing
 Coveralls    |coveralls|                     Monitoring of test coverage
-Landscape    |landscape|  `.landscape.yml`_  Monitoring of code quality
 ===========  ===========  =================  ===========================
 
 .. |travis| image:: https://travis-ci.org/quantling/pyndl.svg?branch=master
     :target: https://travis-ci.org/quantling/pyndl?branch=master
 
-.. |landscape| image:: https://landscape.io/github/quantling/pyndl/master/landscape.svg?style=flat
-    :target: https://landscape.io/github/quantling/pyndl/master
-
 .. |coveralls| image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
 
 .. _.travis.yml: https://github.com/quantling/pyndl/blob/master/.travis.yml
-
-.. _.landscape.yml: https://github.com/quantling/pyndl/blob/master/.landscape.yml
 
 
 Licensing
