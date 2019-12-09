@@ -208,8 +208,8 @@ moment of your calculations:
 
 .. code-block:: python
 
-   >>> weights2.attrs  # doctest: +ELLIPSIS
-   OrderedDict(...)
+   >>> print('Attributes: ' + str(weights2.attrs))  # doctest: +ELLIPSIS
+   Attributes: ...
 
 
 pyndl.ndl.dict_ndl
