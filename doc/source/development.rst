@@ -1,7 +1,7 @@
 Development
 ===========
-.. image:: https://travis-ci.org/quantling/pyndl.svg?branch=master
-    :target: https://travis-ci.org/quantling/pyndl?branch=master
+.. image:: https://travis-ci.com/quantling/pyndl.svg?branch=master
+    :target: https://travis-ci.com/quantling/pyndl?branch=master
 
 .. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
@@ -149,8 +149,8 @@ Travis CI    |travis|     `.travis.yml`_     Automated testing
 Coveralls    |coveralls|                     Monitoring of test coverage
 ===========  ===========  =================  ===========================
 
-.. |travis| image:: https://travis-ci.org/quantling/pyndl.svg?branch=master
-    :target: https://travis-ci.org/quantling/pyndl?branch=master
+.. |travis| image:: https://travis-ci.com/quantling/pyndl.svg?branch=master
+    :target: https://travis-ci.com/quantling/pyndl?branch=master
 
 .. |coveralls| image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
