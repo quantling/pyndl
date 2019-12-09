@@ -9,7 +9,7 @@ existing events from a DataFrame or a list to a file.
 """
 
 import gzip
-from collections import Iterator, Iterable
+from collections.abc import Iterator, Iterable
 
 import pandas as pd
 

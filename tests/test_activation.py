@@ -15,9 +15,6 @@ import pytest
 from pyndl import ndl
 from pyndl.activation import activation
 
-slow = pytest.mark.skipif(not pytest.config.getoption("--runslow"),  # pylint: disable=invalid-name
-                          reason="need --runslow option to run")
-
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab.gz")
 FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab.gz")
@@ -140,7 +137,7 @@ def test_ignore_missing_cues_dict():
         assert np.allclose(reference_activations[outcome], activation_list)
 
 
-@slow
+@pytest.mark.runslow
 def test_activation_matrix_large():
     """
     Test with a lot of data. Better run only with at least 12GB free RAM.
