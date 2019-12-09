@@ -209,7 +209,7 @@ moment of your calculations:
 .. code-block:: python
 
    >>> weights2.attrs  # doctest: +ELLIPSIS
-   OrderedDict(...)
+   ...
 
 
 pyndl.ndl.dict_ndl
