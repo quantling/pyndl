@@ -28,6 +28,9 @@ from . import preprocess
 from . import ndl_parallel
 from . import io
 
+if not sys.platform.startswith('darwin'):
+    from . import ndl_openmp
+
 
 warnings.simplefilter('always', DeprecationWarning)
 
@@ -166,10 +169,13 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
             print('start learning...')
         # learning
         if method == 'openmp':
-            ndl_parallel.learn_inplace(binary_files, weights, alpha,
-                                       beta1, beta2, lambda_,
-                                       np.array(all_outcome_indices, dtype=np.uint32),
-                                       len_sublists, number_of_threads)
+            if sys.platform.startswith('darwin'):
+                raise NotImplementedError("OpenMP does not work under MacOs yet."
+                                          "Use method='threading' instead.")
+            ndl_openmp.learn_inplace(binary_files, weights, alpha,
+                                     beta1, beta2, lambda_,
+                                     np.array(all_outcome_indices, dtype=np.uint32),
+                                     len_sublists, number_of_threads)
         elif method == 'threading':
             part_lists = slice_list(all_outcome_indices, len_sublists)
 
@@ -183,8 +189,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                         if working_queue.empty():
                             break
                         data = working_queue.get()
-                    ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
-                                                 beta1, beta2, lambda_, data)
+                    ndl_parallel.learn_inplace(binary_files, weights, alpha,
+                                               beta1, beta2, lambda_, data)
 
             with queue_lock:
                 for partlist in part_lists:
