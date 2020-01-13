@@ -28,6 +28,9 @@ from . import preprocess
 from . import ndl_parallel
 from . import io
 
+if not sys.platform.startswith('darwin'):
+    from . import ndl_openmp
+
 
 warnings.simplefilter('always', DeprecationWarning)
 
@@ -166,10 +169,13 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
             print('start learning...')
         # learning
         if method == 'openmp':
-            ndl_parallel.learn_inplace(binary_files, weights, alpha,
-                                       beta1, beta2, lambda_,
-                                       np.array(all_outcome_indices, dtype=np.uint32),
-                                       len_sublists, number_of_threads)
+            if sys.platform.startswith('darwin'):
+                raise NotImplementedError("OpenMP does not work under MacOs yet."
+                                          "Use method='threading' instead.")
+            ndl_openmp.learn_inplace(binary_files, weights, alpha,
+                                     beta1, beta2, lambda_,
+                                     np.array(all_outcome_indices, dtype=np.uint32),
+                                     len_sublists, number_of_threads)
         elif method == 'threading':
             part_lists = slice_list(all_outcome_indices, len_sublists)
 
@@ -183,8 +189,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                         if working_queue.empty():
                             break
                         data = working_queue.get()
-                    ndl_parallel.learn_inplace_2(binary_files, weights, alpha,
-                                                 beta1, beta2, lambda_, data)
+                    ndl_parallel.learn_inplace(binary_files, weights, alpha,
+                                               beta1, beta2, lambda_, data)
 
             with queue_lock:
                 for partlist in part_lists:
@@ -221,6 +227,11 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
 def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
                 wall_time, function, method=None, attrs=None):
+    if not isinstance(alpha, (float, int)):
+        alpha_str = 'varying'
+    else:
+        alpha_str = str(alpha)
+
     width = max([len(ss) for ss in (event_path,
                                     str(number_events),
                                     str(alpha),
@@ -235,13 +246,10 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
     def _format(value):
         return '{0: <{width}}'.format(value, width=width)
 
-    if not isinstance(alpha, (float, int)):
-        alpha = 'varying'
-
     new_attrs = {'date': _format(time.strftime("%Y-%m-%d %H:%M:%S")),
                  'event_path': _format(event_path),
                  'number_events': _format(number_events),
-                 'alpha': _format(str(alpha)),
+                 'alpha': _format(alpha_str),
                  'betas': _format(str(betas)),
                  'lambda': _format(str(lambda_)),
                  'function': _format(function),
