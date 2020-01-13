@@ -1,11 +1,9 @@
 import numpy as np
 import math
-cimport numpy as np
-ctypedef np.float64_t dtype_t
-cimport cython
-from cython.parallel cimport parallel, prange
 from libc.stdlib cimport abort, malloc, free
 from libc.stdio cimport fopen, fread, fclose, FILE
+
+from error_codes cimport ErrorCode, NO_ERROR, MAGIC_NUMBER_DOES_NOT_MATCH, VERSION_NUMBER_DOES_NOT_MATCH, INITIAL_ERROR_CODE, ERROR_CODES
 
 cdef unsigned int MAGIC_NUMBER = 14159265
 cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215
@@ -27,18 +25,6 @@ test_index *= test_outcome_index
 test_index += test_cue_index
 assert test_index == 18446744069414584320
 
-cdef enum ErrorCode:
-    NO_ERROR = 0
-    MAGIC_NUMBER_DOES_NOT_MATCH = 1
-    VERSION_NUMBER_DOES_NOT_MATCH = 2
-    INITIAL_ERROR_CODE = 3
-
-ERROR_CODES = """
-    NO_ERROR = 0
-    MAGIC_NUMBER_DOES_NOT_MATCH = 1
-    VERSION_NUMBER_DOES_NOT_MATCH = 2
-    INITIAL_ERROR_CODE = 3
-    """
 
 cdef inline void read_next_int(void *data, FILE *binary_file) nogil:
     fread(data, 4, 1, binary_file) # little endian
