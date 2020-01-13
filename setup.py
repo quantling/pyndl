@@ -1,5 +1,7 @@
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext as _build_ext
+import sys
+
 
 # bootstrap numpy
 # https://stackoverflow.com/questions/19919905/how-to-bootstrap-numpy-installation-in-setup-py
@@ -28,16 +30,19 @@ def load_requirements(fn):
         return [x.rstrip() for x in list(f) if x and not x.startswith('#')]
 
 
+ndl_parallel = Extension("pyndl.ndl_parallel", ["pyndl/ndl_parallel.pyx"])
+ndl_openmp = Extension("pyndl.ndl_openmp", ["pyndl/ndl_openmp.pyx"],
+                       extra_compile_args=['-fopenmp'], extra_link_args=['-fopenmp'])
+
 # by giving ``cython`` as ``install_requires`` this will be ``cythonized``
 # automagically
-ext_modules = [
-    Extension(
-        "pyndl.ndl_parallel",
-        ["pyndl/ndl_parallel.pyx"],
-        extra_compile_args=['-fopenmp'],
-        extra_link_args=['-fopenmp'],
-    )
-]
+ext_modules = []
+if sys.platform.startswith('linux'):
+    ext_modules = [ndl_parallel, ndl_openmp]
+elif sys.platform.startswith('win32'):
+    ext_modules = [ndl_parallel, ndl_openmp]
+elif sys.platform.startswith('darwin'):
+    ext_modules = [ndl_parallel]  # skip openmp installation on macos for now
 
 
 setup(
