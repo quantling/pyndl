@@ -8,6 +8,7 @@ import os
 import time
 import tempfile
 import copy
+import sys
 
 import numpy as np
 import xarray as xr
@@ -39,7 +40,13 @@ def result_ndl_threading():
 
 @pytest.fixture(scope='module')
 def result_ndl_openmp():
-    return ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp')
+    if sys.platform.startswith('darwin'):
+        with pytest.raises(NotImplementedError) as e_info:
+            ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp')
+            assert e_info == 'weights need to be None or xarray.DataArray with method=threading'
+    else:
+        return ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp')
+
 
 
 @pytest.fixture(scope='module')
@@ -78,8 +85,12 @@ def result_continue_learning():
 
     del events_simple, part_1, part_2
 
-    result_part = ndl.ndl(part_path_1, ALPHA, BETAS)
-    result = ndl.ndl(part_path_2, ALPHA, BETAS, weights=result_part)
+    if sys.platform.startswith('darwin'):
+        result_part = ndl.ndl(part_path_1, ALPHA, BETAS, method="threading")
+        result = ndl.ndl(part_path_2, ALPHA, BETAS, weights=result_part, method="threading")
+    else:
+        result_part = ndl.ndl(part_path_1, ALPHA, BETAS)
+        result = ndl.ndl(part_path_2, ALPHA, BETAS, weights=result_part)
 
     return result
 
@@ -199,7 +210,10 @@ def test_save_to_netcdf4(result_ndl_openmp):
     # does not preserves the order of the OrderedDict
     for key, value in weights.attrs.items():
         assert value == weights_read.attrs[key]
-    weights_continued = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp', weights=weights)
+    if sys.platform.startswith('darwin'):
+        weights_continued = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', weights=weights)
+    else:
+        weights_continued = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp', weights=weights)
     path_continued = os.path.join(TMP_PATH, "weights_continued.nc")
     weights_continued.to_netcdf(path_continued)
     weights_continued_read = xr.open_dataarray(path_continued)
