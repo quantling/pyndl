@@ -30,8 +30,7 @@ matrix:
       install:
         - python -m pip install --upgrade pip
         - pip install --upgrade pytest
-        - ls
-        - python quantling/pyndl/setup.py develop
+        - python setup.py develop
       script: py.test -m "not nolinux"
 
 env:
