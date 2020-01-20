@@ -12,23 +12,18 @@ python:
   - 3.6
   - 3.5
 
+script:
+  - tox -e travis
+
 matrix:
   include:
   - os: osx
     language: sh
-  - os: windows
-    language: sh
-    before_install:
-      - choco install python --version 3.8.0
-      - python -m pip install --upgrade pip
-    env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
-  
+    script: tox -e nolinux
+
 install:
   - pip3 install --upgrade pip  # all three OSes agree about 'pip3'
   - pip3 install tox-travis
-
-script:
-  - tox -e travis
 
 env:
   OMP_NUM_THREADS: 4

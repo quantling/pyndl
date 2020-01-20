@@ -40,13 +40,7 @@ def result_ndl_threading():
 
 @pytest.fixture(scope='module')
 def result_ndl_openmp():
-    if sys.platform.startswith('darwin'):
-        with pytest.raises(NotImplementedError) as e_info:
-            ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp')
-            assert e_info == 'weights need to be None or xarray.DataArray with method=threading'
-    else:
-        return ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp')
-
+    return ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp')
 
 
 @pytest.fixture(scope='module')
@@ -85,12 +79,8 @@ def result_continue_learning():
 
     del events_simple, part_1, part_2
 
-    if sys.platform.startswith('darwin'):
-        result_part = ndl.ndl(part_path_1, ALPHA, BETAS, method="threading")
-        result = ndl.ndl(part_path_2, ALPHA, BETAS, weights=result_part, method="threading")
-    else:
-        result_part = ndl.ndl(part_path_1, ALPHA, BETAS)
-        result = ndl.ndl(part_path_2, ALPHA, BETAS, weights=result_part)
+    result_part = ndl.ndl(part_path_1, ALPHA, BETAS)
+    result = ndl.ndl(part_path_2, ALPHA, BETAS, weights=result_part)
 
     return result
 
@@ -126,14 +116,14 @@ def test_exceptions():
         assert e_info == "remove_duplicates must be None, True or False"
 
     with pytest.raises(ValueError) as e_info:
-        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, remove_duplicates="magic")
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', remove_duplicates="magic")
         assert e_info == "remove_duplicates must be None, True or False"
 
     with pytest.raises(FileNotFoundError, match="No such file or directory") as e_info:
-        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, temporary_directory="./magic")
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', temporary_directory="./magic")
 
     with pytest.raises(ValueError, match="events_per_file has to be larger than 1") as e_info:
-        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, events_per_temporary_file=1)
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', events_per_temporary_file=1)
 
 
 def test_continue_learning_dict():
@@ -188,6 +178,7 @@ def test_continue_learning_dict_ndl_data_array(result_dict_ndl, result_dict_ndl_
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+@pytest.mark.nolinux
 def test_continue_learning(result_continue_learning, result_ndl_openmp):
     assert result_continue_learning.shape == result_ndl_openmp.shape
 
@@ -202,6 +193,7 @@ def test_continue_learning(result_continue_learning, result_ndl_openmp):
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+@pytest.mark.nolinux
 def test_save_to_netcdf4(result_ndl_openmp):
     weights = result_ndl_openmp.copy()  # avoids changing shared test data
     path = os.path.join(TMP_PATH, "weights.nc")
@@ -210,10 +202,7 @@ def test_save_to_netcdf4(result_ndl_openmp):
     # does not preserves the order of the OrderedDict
     for key, value in weights.attrs.items():
         assert value == weights_read.attrs[key]
-    if sys.platform.startswith('darwin'):
-        weights_continued = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', weights=weights)
-    else:
-        weights_continued = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp', weights=weights)
+    weights_continued = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='openmp', weights=weights)
     path_continued = os.path.join(TMP_PATH, "weights_continued.nc")
     weights_continued.to_netcdf(path_continued)
     weights_continued_read = xr.open_dataarray(path_continued)
@@ -221,6 +210,7 @@ def test_save_to_netcdf4(result_ndl_openmp):
         assert value == weights_continued_read.attrs[key]
 
 
+@pytest.mark.nolinux
 def test_return_values(result_dict_ndl, result_dict_ndl_data_array, result_ndl_threading, result_ndl_openmp):
     # dict_ndl
     assert isinstance(result_dict_ndl, defaultdict)
@@ -281,6 +271,7 @@ def test_multiple_cues_dict_ndl_vs_ndl_threading():
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+@pytest.mark.nolinux
 def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
     result_dict_ndl = ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS)
     unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE, result_dict_ndl,
@@ -289,6 +280,7 @@ def test_dict_ndl_vs_ndl_openmp(result_dict_ndl, result_ndl_openmp):
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+@pytest.mark.nolinux
 def test_meta_data(result_dict_ndl, result_dict_ndl_data_array, result_ndl_openmp, result_ndl_threading):
     attributes = {'cython', 'cpu_time', 'hostname', 'xarray', 'wall_time',
                   'event_path', 'number_events', 'username', 'method', 'date', 'numpy',
