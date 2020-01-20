@@ -21,20 +21,16 @@ script: tox -e travis
 # Macos Testing
 matrix:
   include:
-    - name: "Python: 3.8"
+    - name: "MacOS"
       os: osx
-      osx_image: xcode11.3
       language: sh
       script: tox -e nolinux
-    - name: "Python: 3.7"
-      os: osx
-      osx_image: xcode10.2
+    - name: "Windows"
+      os: windows
       language: sh
-      script: tox -e nolinux
-    - name: "Python: 3.6"
-      os: osx
-      osx_image: xcode9.4
-      language: sh
+      env: >-
+        PATH=/c/Python38:/c/Python38/Scripts:$PATH
+      before_install: choco install python
       script: tox -e nolinux
 
 env:
