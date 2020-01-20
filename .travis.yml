@@ -16,12 +16,24 @@ install:
   - pip3 install --upgrade pip  # all three OSes agree about 'pip3'
   - pip3 install tox-travis
 
+script: tox -e travis
+
+# Macos Testing
 matrix:
   include:
-    - name: "Linux"
-      script: tox -e travis
-    - name: "MacOS"
+    - name: "Python: 3.8"
       os: osx
+      osx_image: xcode11.3
+      language: sh
+      script: tox -e nolinux
+    - name: "Python: 3.7"
+      os: osx
+      osx_image: xcode10.2
+      language: sh
+      script: tox -e nolinux
+    - name: "Python: 3.6"
+      os: osx
+      osx_image: xcode9.4
       language: sh
       script: tox -e nolinux
 
