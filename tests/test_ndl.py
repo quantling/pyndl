@@ -221,6 +221,7 @@ def test_return_values(result_dict_ndl, result_dict_ndl_data_array, result_ndl_t
     assert isinstance(result_ndl_threading, xr.DataArray)
 
 
+@pytest.mark.nolinux
 def test_provide_temporary_directory():
     with tempfile.TemporaryDirectory(dir=TMP_PATH) as temporary_directory:
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, temporary_directory=temporary_directory)
