@@ -10,8 +10,8 @@ python:
   - 3.8
 
 install:
-  - pip3 install --upgrade --user pip  # all three OSes agree about 'pip3'
-  - pip3 install --user tox-travis
+  - pip3 install --upgrade pip  # all three OSes agree about 'pip3'
+  - pip3 install tox-travis
 
 script: tox -e travis
 
@@ -25,10 +25,12 @@ matrix:
     - name: "Windows"
       os: windows
       language: sh
-      env: >-
-        PATH=/c/Python38:/c/Python38/Scripts:$PATH
+      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
       before_install: choco install python
-      script: tox -e nolinux
+      install:
+        - python -m pip install --upgrade pip
+        - pip3 install --upgrade pytest
+      script: py.test -m "not nolinux"
 
 env:
   OMP_NUM_THREADS: 4
