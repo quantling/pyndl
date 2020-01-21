@@ -8,7 +8,6 @@ import os
 import time
 import tempfile
 import copy
-import sys
 
 import numpy as np
 import xarray as xr
