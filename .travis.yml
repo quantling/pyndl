@@ -22,17 +22,6 @@ matrix:
       os: osx
       language: sh
       script: tox -e nolinux
-    - name: "Windows"
-      os: windows
-      language: sh
-      env: PATH=/c/Python38:/c/Python38/Scripts:$PATH
-      before_install: choco install python
-      install:
-        - python -m pip install --upgrade pip
-        - pip install --upgrade pytest
-        - pip install Cython --install-option="--no-cython-compile"
-        - python setup.py develop
-      script: py.test -m "not nolinux"
 
 env:
   OMP_NUM_THREADS: 4
