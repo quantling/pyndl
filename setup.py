@@ -40,7 +40,7 @@ ext_modules = []
 if sys.platform.startswith('linux'):
     ext_modules = [ndl_parallel, ndl_openmp]
 elif sys.platform.startswith('win32'):
-    ext_modules = [ndl_parallel]
+    ext_modules = [ndl_parallel] # skip openmp installation on windows for now
 elif sys.platform.startswith('darwin'):
     ext_modules = [ndl_parallel]  # skip openmp installation on macos for now
 
