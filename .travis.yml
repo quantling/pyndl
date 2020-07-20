@@ -1,15 +1,30 @@
 language: python
+group: travis_latest
 dist: xenial
 
+git:
+  depth: 3
+  quiet: true
+
 python:
-    - 3.5
-    - 3.6
-    - 3.7
+  - 3.8
+  - 3.7
+  - 3.6
+  - 3.5
 
-install: pip install tox-travis
+install:
+  - pip3 install --upgrade pip  # all three OSes agree about 'pip3'
+  - pip3 install tox-travis
 
-script:
-  - tox -e travis
+script: tox -e travis
+
+# Macos Testing
+matrix:
+  include:
+    - name: "MacOS"
+      os: osx
+      language: sh
+      script: tox -e nolinux
 
 env:
   OMP_NUM_THREADS: 4
