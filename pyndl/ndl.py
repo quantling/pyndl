@@ -43,11 +43,43 @@ def events_from_file(event_path):
     return io.events_from_file(event_path)
 
 
+def _create_cue_outcome_map(cues, outcomes, cues_to_mask, old_cues=frozenset(), old_outcomes=frozenset()):
+    """This function returns a cue_map and an outcome_map with the cues_to_mask
+    placed in the first mask_up_to_excluding index."""
+
+    cues = set(cues) | set(old_cues)
+    outcomes = set(outcomes) | set(old_outcomes)
+
+    # cues to mask have to come in the beginning of the cue_map and we need the
+    # same amount of indices in the outcome_map
+    if cues_to_mask == 'all':
+        cues_to_mask = set(cues)
+    elif cues_to_mask is None:
+        cues_to_mask = set()
+    mask_up_to_excluding = len(cues_to_mask)  # the highest index that should be masked (excluding)
+    cues_not_to_mask = set(cues) - cues_to_mask
+    outcomes_not_to_mask = set(outcomes) - cues_to_mask
+
+    # fix order of sets
+    cues_to_mask = list(cues_to_mask)
+    cues_not_to_mask = list(cues_not_to_mask)
+    outcomes_not_to_mask = list(outcomes_not_to_mask)
+
+    # reassamble cues and outcomes with specific ordering now
+    cues = cues_to_mask + cues_not_to_mask
+    outcomes = cues_to_mask + outcomes_not_to_mask
+
+    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
+    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
+
+    return mask_up_to_excluding, cue_map, outcome_map
+
+
 def ndl(events, alpha, betas, lambda_=1.0, *,
         method='openmp', weights=None,
         number_of_threads=8, len_sublists=10, remove_duplicates=None,
         verbose=False, temporary_directory=None,
-        events_per_temporary_file=10000000):
+        events_per_temporary_file=10000000, cues_to_mask=None):
     """
     Calculate the weights for all_outcomes over all events in event_file
     given by the files path.
@@ -85,7 +117,11 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         if none is provided, the operating system's default will
         be used (/tmp on unix)
     events_per_temporary_file: int
-        Number of events in each temporary binary file. Has to be larger than 1
+        number of events in each temporary binary file. Has to be larger than 1
+    cues_to_mask: set of cues or None or 'all'
+        if None no masking is applied, otherwise all cues are masked from
+        themselfes if they appear as outcomes as well in the learning events,
+        'all' indicates that all cues should be masked
 
     Returns
     -------
@@ -111,29 +147,32 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                                                    verbose=verbose)
     cues = list(cues.keys())
     outcomes = list(outcomes.keys())
-    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
-    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
-
-    all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
-
-    shape = (len(outcome_map), len(cue_map))
 
     # initialize weights
     if weights is None:
+        mask_up_to_excluding, cue_map, outcome_map = _create_cue_outcome_map(cues, outcomes, cues_to_mask)
+        shape = (len(outcome_map), len(cue_map))
         weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
     elif isinstance(weights, xr.DataArray):
         old_cues = weights.coords["cues"].values.tolist()
-        new_cues = list(set(cues) - set(old_cues))
         old_outcomes = weights.coords["outcomes"].values.tolist()
-        new_outcomes = list(set(outcomes) - set(old_outcomes))
 
+        if cues_to_mask is None:
+            mask_up_to_excluding = 0
+        else:
+            mask_up_to_excluding, cue_map, outcome_map = _create_cue_outcome_map(cues, outcomes,
+                    cues_to_mask, old_cues, old_outcomes)
+            # TODO: allocate weights and copy them cell wise from the old
+            # weights to the new weights
+            raise NotImplementedError('continue learning is not implemented for masking right now')
+
+        new_cues = list(set(cues) - set(old_cues))
+        new_outcomes = list(set(outcomes) - set(old_outcomes))
         cues = old_cues + new_cues
         outcomes = old_outcomes + new_outcomes
 
         cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
         outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
-
-        all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
 
         weights_tmp = np.concatenate((weights.values,
                                       np.zeros((len(new_outcomes), len(old_cues)),
@@ -168,16 +207,25 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         if verbose:
             print('start learning...')
         # learning
+        all_outcome_indices_masked = list(range(mask_up_to_excluding))
+        all_outcome_indices_normal = list(range(mask_up_to_excluding, len(outcome_map)))
         if method == 'openmp':
             if sys.platform.startswith('darwin'):
                 raise NotImplementedError("OpenMP does not work under MacOs yet."
                                           "Use method='threading' instead.")
+            # 1. learn masked indices
+            ndl_openmp.learn_inplace_masked(binary_files, weights, alpha,
+                                            beta1, beta2, lambda_,
+                                            np.array(all_outcome_indices_masked, dtype=np.uint32),
+                                            len_sublists, number_of_threads)
+            # 2. learn normal
             ndl_openmp.learn_inplace(binary_files, weights, alpha,
                                      beta1, beta2, lambda_,
-                                     np.array(all_outcome_indices, dtype=np.uint32),
+                                     np.array(all_outcome_indices_normal, dtype=np.uint32),
                                      len_sublists, number_of_threads)
         elif method == 'threading':
-            part_lists = slice_list(all_outcome_indices, len_sublists)
+            # 1. learn all masked indices
+            part_lists = slice_list(all_outcome_indices_masked, len_sublists)
 
             working_queue = Queue(len(part_lists))
             threads = []
@@ -189,7 +237,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                         if working_queue.empty():
                             break
                         data = working_queue.get()
-                    ndl_parallel.learn_inplace(binary_files, weights, alpha,
+                    ndl_parallel.learn_inplace_masked(binary_files, weights, alpha,
                                                beta1, beta2, lambda_, data)
 
             with queue_lock:
@@ -203,6 +251,36 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
             for thread in threads:
                 thread.join()
+
+            # 2. learn all normal
+            part_lists = slice_list(all_outcome_indices_normal, len_sublists)
+
+            working_queue = Queue(len(part_lists))
+            threads = []
+            queue_lock = threading.Lock()
+
+            def worker():
+                while True:
+                    with queue_lock:
+                        if working_queue.empty():
+                            break
+                        data = working_queue.get()
+                    ndl_parallel.learn_inplace(binary_files, weights,
+                                                      alpha, beta1, beta2,
+                                                      lambda_, data)
+
+            with queue_lock:
+                for partlist in part_lists:
+                    working_queue.put(np.array(partlist, dtype=np.uint32))
+
+            for _ in range(number_of_threads):
+                thread = threading.Thread(target=worker)
+                thread.start()
+                threads.append(thread)
+
+            for thread in threads:
+                thread.join()
+
         else:
             raise ValueError('method needs to be either "threading" or "openmp"')
 
@@ -220,6 +298,9 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                         __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
+    # we have to extract the right ordering
+    cues = list(cue_map.keys())
+    outcomes = list(outcome_map.keys())
     weights = xr.DataArray(weights, [('outcomes', outcomes), ('cues', cues)],
                            attrs=attrs)
     return weights
@@ -312,7 +393,7 @@ class WeightDict(defaultdict):
 
 def dict_ndl(events, alphas, betas, lambda_=1.0, *,
              weights=None, inplace=False, remove_duplicates=None,
-             make_data_array=False, verbose=False):
+             make_data_array=False, verbose=False, cues_to_mask=None):
     """
     Calculate the weights for all_outcomes over all events in event_file.
 
@@ -347,6 +428,10 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
         if True makes a xarray.DataArray out of the dict of dicts.
     verbose : bool
         print some output if True.
+    cues_to_mask: set of cues or None or 'all'
+        if None no masking is applied, otherwise all cues are masked from
+        themselfes if they appear as outcomes as well in the learning events,
+        'all' indicates that all cues should be masked
 
     Returns
     -------
@@ -369,6 +454,9 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
 
     if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
         raise ValueError("remove_duplicates must be None, True or False")
+
+    if cues_to_mask is None:
+        cues_to_mask = set()
 
     wall_time_start = time.perf_counter()
     cpu_time_start = time.process_time()
@@ -434,6 +522,9 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
             else:
                 update = beta2 * (0 - association_strength)
             for cue in cues:
+                if cues_to_mask == 'all' or cue in cues_to_mask:
+                    if cue == outcome:
+                        continue
                 weights[outcome][cue] += alphas[cue] * update
 
     cpu_time_stop = time.process_time()

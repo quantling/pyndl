@@ -19,6 +19,7 @@ from pyndl import ndl, count, io
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 FILE_PATH_SIMPLE = os.path.join(TEST_ROOT, "resources/event_file_simple.tab.gz")
 FILE_PATH_MULTIPLE_CUES = os.path.join(TEST_ROOT, "resources/event_file_multiple_cues.tab.gz")
+FILE_PATH_MASKING = os.path.join(TEST_ROOT, "resources/event_file_masking.tab.gz")
 REFERENCE_PATH = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple.csv')
 REFERENCE_PATH_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_simple_ndl2.csv')
 REFERENCE_PATH_MULTIPLE_CUES_NDL2 = os.path.join(TEST_ROOT, 'reference/weights_event_file_multiple_cues_ndl2.csv')
@@ -55,6 +56,36 @@ def result_dict_ndl_generator():
 @pytest.fixture(scope='module')
 def result_dict_ndl_data_array():
     return ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array=True)
+
+
+@pytest.fixture(scope='module')
+def result_dict_ndl_mask_all():
+    return ndl.dict_ndl(FILE_PATH_MASKING, ALPHA, BETAS, cues_to_mask='all')
+
+
+@pytest.fixture(scope='module')
+def result_dict_ndl_mask_ab():
+    return ndl.dict_ndl(FILE_PATH_MASKING, ALPHA, BETAS, cues_to_mask={'a', 'b'})
+
+
+@pytest.fixture(scope='module')
+def result_ndl_threading_mask_all():
+    return ndl.ndl(FILE_PATH_MASKING, ALPHA, BETAS, method='threading', cues_to_mask='all')
+
+
+@pytest.fixture(scope='module')
+def result_ndl_threading_mask_ab():
+    return ndl.ndl(FILE_PATH_MASKING, ALPHA, BETAS, method='threading', cues_to_mask={'a', 'b'})
+
+
+@pytest.fixture(scope='module')
+def result_ndl_openmp_mask_all():
+    return ndl.ndl(FILE_PATH_MASKING, ALPHA, BETAS, method='openmp', cues_to_mask='all')
+
+
+@pytest.fixture(scope='module')
+def result_ndl_openmp_mask_ab():
+    return ndl.ndl(FILE_PATH_MASKING, ALPHA, BETAS, method='openmp', cues_to_mask={'a', 'b'})
 
 
 @pytest.fixture(scope='module')
@@ -175,6 +206,29 @@ def test_continue_learning_dict_ndl_data_array(result_dict_ndl, result_dict_ndl_
     print(continue_from_data_array)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+
+def test_masking_all(result_dict_ndl_mask_all, result_ndl_threading_mask_all, result_ndl_openmp_mask_all):
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_MASKING, result_dict_ndl_mask_all,
+                                            result_ndl_threading_mask_all)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_MASKING, result_dict_ndl_mask_all,
+                                            result_ndl_openmp_mask_all)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+
+def test_masking_ab(result_dict_ndl_mask_ab, result_ndl_threading_mask_ab, result_ndl_openmp_mask_ab):
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_MASKING, result_dict_ndl_mask_ab,
+                                            result_ndl_threading_mask_ab)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_MASKING, result_dict_ndl_mask_ab,
+                                            result_ndl_openmp_mask_ab)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
 
 
 @pytest.mark.nolinux
@@ -450,7 +504,6 @@ def clock(func, args, **kwargs):
 
 def compare_arrays(file_path, arr1, arr2):
     _, cues, outcomes = count.cues_outcomes(file_path)
-    cue_map, outcome_map, _ = generate_mapping(file_path)
 
     unequal = list()
 
@@ -458,11 +511,7 @@ def compare_arrays(file_path, arr1, arr2):
         for cue in cues:
             values = list()
             for array in (arr1, arr2):
-                if isinstance(array, np.ndarray):
-                    outcome_index = outcome_map[outcome]
-                    cue_index = cue_map[cue]
-                    values.append(array[outcome_index][cue_index])
-                elif isinstance(array, xr.DataArray):
+                if isinstance(array, xr.DataArray):
                     values.append(array.loc[{'outcomes': outcome, 'cues': cue}].values)
                 elif isinstance(array, pd.DataFrame):
                     values.append(array.loc[outcome][cue])
@@ -475,13 +524,3 @@ def compare_arrays(file_path, arr1, arr2):
 
     unequal_ratio = len(unequal) / (len(outcomes) * len(cues))
     return (unequal, unequal_ratio)
-
-
-def generate_mapping(event_path):
-    _, cues, outcomes = count.cues_outcomes(event_path)
-    all_cues = list(cues.keys())
-    all_outcomes = list(outcomes.keys())
-    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(all_cues)))
-    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(all_outcomes)))
-
-    return (cue_map, outcome_map, all_outcomes)
