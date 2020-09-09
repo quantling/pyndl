@@ -28,6 +28,8 @@ from . import wh_parallel
 from . import io
 from . import ndl
 
+WeightDict = ndl.WeightDict
+
 
 def wh(events, eta, outcome_vectors, *,
         method='openmp', weights=None,
@@ -89,6 +91,10 @@ def wh(events, eta, outcome_vectors, *,
     weights_ini = weights
     wall_time_start = time.perf_counter()
     cpu_time_start = time.process_time()
+
+    if type(outcome_vectors) == dict:
+        # TODO: convert dict to xarray here
+        raise NotImplementedError('dicts are not supported yet.')
 
     # preprocessing
     n_events, cues, outcomes_from_events = count.cues_outcomes(events,
@@ -222,6 +228,166 @@ def wh(events, eta, outcome_vectors, *,
     # post-processing
     weights = xr.DataArray(weights, [('vector_dimensions', outcome_vectors.coords['vector_dimensions']), ('cues', cues)],
                            attrs=attrs)
+    return weights
+
+
+def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
+            weights=None, inplace=False, remove_duplicates=None,
+            make_data_array=False, verbose=False):
+    """
+    Calculate the weights for all_outcomes over all events in events.
+
+    This is a pure python implementation using dicts.
+
+    Notes
+    -----
+    The metadata will only be stored when `make_data_array` is True and then
+    `dict_ndl` cannot be used to continue learning. At the moment there is no
+    proper way to automatically store the meta data into the default dict.
+
+    Parameters
+    ----------
+    events : generator or str
+        generates cues, outcomes pairs or the path to the event file
+    eta : float
+        learning rate
+    cue_vectors : xarray.DataArray
+        matrix that contains the cue vectors for each cue
+    outcome_vectors : xarray.DataArray
+        matrix that contains the target vectors for each outcome
+    weights : dict of dicts or xarray.DataArray or None
+        initial weights
+    inplace: {True, False}
+        if True calculates the weightmatrix inplace
+        if False creates a new weightmatrix to learn on
+    remove_duplicates : {None, True, False}
+        if None though a ValueError when the same cue is present multiple times
+        in the same event; True make cues and outcomes unique per event; False
+        keep multiple instances of the same cue or outcome (this is usually not
+        preferred!)
+    make_data_array : {False, True}
+        if True makes a xarray.DataArray out of the dict of dicts.
+    verbose : bool
+        print some output if True.
+
+    Returns
+    -------
+    weights : dict of dicts of floats
+        the first dict has outcomes as keys and dicts as values
+        the second dict has cues as keys and weights as values
+        weights[outcome][cue] gives the weight between outcome and cue.
+
+    or
+
+    weights : xarray.DataArray
+        with dimensions 'outcomes' and 'cues'. You can lookup the weights
+        between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
+        'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
+
+    """
+
+    if not isinstance(make_data_array, bool):
+        raise ValueError("make_data_array must be True or False")
+
+    if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
+        raise ValueError("remove_duplicates must be None, True or False")
+
+    wall_time_start = time.perf_counter()
+    cpu_time_start = time.process_time()
+    if isinstance(events, str):
+        event_path = events
+    else:
+        event_path = ""
+    attrs_to_update = None
+
+    # weights can be seen as an infinite outcome by cue matrix
+    # weights[outcome][cue]
+    if weights is None:
+        weights = WeightDict()
+    elif isinstance(weights, WeightDict):
+        attrs_to_update = weights.attrs
+    elif isinstance(weights, xr.DataArray):
+        raise NotImplementedError('initilizing with a xr.DataArray is not supported yet.')
+        weights_ini = weights
+        attrs_to_update = weights_ini.attrs
+        coords = weights_ini.coords
+        weights = WeightDict()
+        for outcome_index, outcome in enumerate(coords['outcomes'].values):
+            for cue_index, cue in enumerate(coords['cues'].values):
+                weights[outcome][cue] = weights_ini.item((outcome_index, cue_index))
+    elif not isinstance(weights, defaultdict):
+        raise ValueError('weights needs to be either defaultdict or None')
+
+    if not inplace:
+        weights = copy.deepcopy(weights)
+
+    if outcome_vectors is None:
+        all_outcomes = set(weights.keys())
+
+    if isinstance(events, str):
+        events = io.events_from_file(events)
+    number_events = 0
+
+    for cues, outcomes in events:
+        number_events += 1
+        if verbose and number_events % 1000:
+            print('.', end='')
+            sys.stdout.flush()
+        if remove_duplicates is None:
+            if (len(cues) != len(set(cues)) or
+                    len(outcomes) != len(set(outcomes))):
+                raise ValueError('cues or outcomes needs to be unique: cues '
+                                 '"%s"; outcomes "%s"; use '
+                                 'remove_duplicates=True' %
+                                 (' '.join(cues), ' '.join(outcomes)))
+        elif remove_duplicates:
+            cues = set(cues)
+            outcomes = set(outcomes)
+        else:
+            pass
+
+        assert len(outcomes) == 1, 'for real_wh only one outcome is allowed per event'
+        assert len(cues) == 1, 'for real_wh only one cue is allowed per event'
+
+        cue_vec = cue_vectors.loc[cues[0]]
+        outcome_vec = outcome_vectors.loc[outcomes[0]]
+
+        for outcome_index in range(len(outcome_vec)):
+            prediction_strength = 0
+            for cue_index in range(len(cue_vec)):
+                prediction_strength += float(cue_vec[cue_index] * weights[outcome_index][cue_index])
+            error = float(outcome_vec[outcome_index] - prediction_strength)
+
+            for cue_index in range(len(cue_vec)):
+                weights[outcome_index][cue_index] += float(eta * error * cue_vec[cue_index])
+
+    cpu_time_stop = time.process_time()
+    wall_time_stop = time.perf_counter()
+    cpu_time = cpu_time_stop - cpu_time_start
+    wall_time = wall_time_stop - wall_time_start
+    attrs = _attributes(event_path, number_events, eta, cpu_time, wall_time,
+                        __name__ + "." + dict_wh.__name__, attrs=attrs_to_update)
+
+    if make_data_array:
+        outcome_dims = list(weights.keys())
+        cue_dims = set()
+        for outcome_dim in outcome_dims:
+            cue_dims.update(set(weights[outcome_dim].keys()))
+
+        cue_dims = list(cue_dims)
+
+        weights_dict = weights
+        shape = (len(outcome_dims), len(cue_dims))
+        weights = xr.DataArray(np.zeros(shape), attrs=attrs,
+                               coords={'outcome_dims': outcome_dims, 'cue_dims': cue_dims},
+                               dims=('outcome_dims', 'cue_dims'))
+
+        for outcome_dim in outcome_dims:
+            for cue_dim in cue_dims:
+                weights.loc[{"outcome_dims": outcome_dim, "cue_dims": cue_dim}] = weights_dict[outcome_dim][cue_dim]
+    else:
+        weights.attrs = attrs
+
     return weights
 
 
