@@ -39,28 +39,41 @@ def test_discrete_wh():
 
 def test_dict_wh():
     events = FILE_PATH_REAL_WH
+    #events = 'tests/resources/event_file_real_wh.tab.gz'
+    #ETA = 0.01
 
     import xarray as xr
     import numpy as np
-    from pyndl.wh import dict_wh
+    from pyndl.wh import dict_wh, continuous_wh
 
 
     cue_vectors = xr.DataArray(np.array([[0.2, 0.11, 0.5, 0, 0], [0, 0, 0.5, 0.11, 0.2], [0.2, 0, 0 , 0, 0.2]]), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4', 'dim5']})
     outcome_vectors = xr.DataArray(np.array([[0.2, 1.], [0.5, 0], [0, 0.5], [1., 0.2]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['o_dim1', 'o_dim2']})
-    events = 'tests/resources/event_file_real_wh.tab.gz'
 
     weights = dict_wh(events, ETA, cue_vectors, outcome_vectors)
+    weights = dict_wh(events, ETA, cue_vectors, outcome_vectors, make_data_array=True)
+
+    weights_np = continuous_wh(events, ETA, cue_vectors, outcome_vectors)
+    assert np.all(weights == weights_np)
 
 
     cue_vectors = xr.DataArray(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]]), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['dim1', 'dim2', 'dim3']})
     outcome_vectors = xr.DataArray(np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4']})
-    events = 'tests/resources/event_file_real_wh.tab.gz'
+
 
     from collections import defaultdict
     from pyndl.ndl import dict_ndl
     weights_wh = dict_wh(events, ETA, cue_vectors, outcome_vectors, make_data_array=True)
-    weights_wh_wd = dict_wh(events, ETA, cue_vectors, outcome_vectors, make_data_array=False)
     weights_ndl = dict_ndl(events, alphas=defaultdict(lambda: 1), betas=(ETA, ETA), make_data_array=True) 
+
+    weights_wh = weights_wh.loc[{'outcome_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4'], 'cue_vector_dimensions': ['dim1', 'dim2', 'dim3']}]
+    weights_wh.coords['outcome_vector_dimensions'] = ['A', 'B', 'C', 'D']
+    weights_wh.coords['cue_vector_dimensions'] = ['a', 'b', 'c']
+    weights_wh = weights_wh.rename({'outcome_vector_dimensions': 'outcomes', 'cue_vector_dimensions': 'cues'})
+    unequal, unequal_ratio = compare_arrays(events, weights_wh, weights_ndl)
+    print(unequal)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 # TODO (look at the tests below and put everything in, which should go into
 # testing coverage of wh code
@@ -481,41 +494,41 @@ def test_dict_wh():
 #
 #    return result, duration
 #
-#
-#def compare_arrays(file_path, arr1, arr2):
-#    _, cues, outcomes = count.cues_outcomes(file_path)
-#    cue_map, outcome_map, _ = generate_mapping(file_path)
-#
-#    unequal = list()
-#
-#    for outcome in outcomes:
-#        for cue in cues:
-#            values = list()
-#            for array in (arr1, arr2):
-#                if isinstance(array, np.ndarray):
-#                    outcome_index = outcome_map[outcome]
-#                    cue_index = cue_map[cue]
-#                    values.append(array[outcome_index][cue_index])
-#                elif isinstance(array, xr.DataArray):
-#                    values.append(array.loc[{'outcomes': outcome, 'cues': cue}].values)
-#                elif isinstance(array, pd.DataFrame):
-#                    values.append(array.loc[outcome][cue])
-#                else:
-#                    values.append(array[outcome][cue])
-#
-#            value1, value2 = values  # pylint: disable=unbalanced-tuple-unpacking
-#            if not np.isclose(value1, value2, rtol=1e-02, atol=1e-05):
-#                unequal.append((outcome, cue, value1, value2))
-#
-#    unequal_ratio = len(unequal) / (len(outcomes) * len(cues))
-#    return (unequal, unequal_ratio)
-#
-#
-#def generate_mapping(event_path):
-#    _, cues, outcomes = count.cues_outcomes(event_path)
-#    all_cues = list(cues.keys())
-#    all_outcomes = list(outcomes.keys())
-#    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(all_cues)))
-#    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(all_outcomes)))
-#
-#    return (cue_map, outcome_map, all_outcomes)
+
+def compare_arrays(file_path, arr1, arr2):
+    _, cues, outcomes = count.cues_outcomes(file_path)
+    cue_map, outcome_map, _ = generate_mapping(file_path)
+
+    unequal = list()
+
+    for outcome in outcomes:
+        for cue in cues:
+            values = list()
+            for array in (arr1, arr2):
+                if isinstance(array, np.ndarray):
+                    outcome_index = outcome_map[outcome]
+                    cue_index = cue_map[cue]
+                    values.append(array[outcome_index][cue_index])
+                elif isinstance(array, xr.DataArray):
+                    values.append(array.loc[{'outcomes': outcome, 'cues': cue}].values)
+                elif isinstance(array, pd.DataFrame):
+                    values.append(array.loc[outcome][cue])
+                else:
+                    values.append(array[outcome][cue])
+
+            value1, value2 = values  # pylint: disable=unbalanced-tuple-unpacking
+            if not np.isclose(value1, value2, rtol=1e-02, atol=1e-05):
+                unequal.append((outcome, cue, value1, value2))
+
+    unequal_ratio = len(unequal) / (len(outcomes) * len(cues))
+    return (unequal, unequal_ratio)
+
+
+def generate_mapping(event_path):
+    _, cues, outcomes = count.cues_outcomes(event_path)
+    all_cues = list(cues.keys())
+    all_outcomes = list(outcomes.keys())
+    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(all_cues)))
+    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(all_outcomes)))
+
+    return (cue_map, outcome_map, all_outcomes)

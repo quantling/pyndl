@@ -352,14 +352,17 @@ def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
         cue_vec = cue_vectors.loc[cues[0]]
         outcome_vec = outcome_vectors.loc[outcomes[0]]
 
-        for outcome_index in range(len(outcome_vec)):
+        for outcome_index in outcome_vec.coords['outcome_vector_dimensions']:
+            outcome_index = str(outcome_index.values)
             prediction_strength = 0
-            for cue_index in range(len(cue_vec)):
-                prediction_strength += float(cue_vec[cue_index] * weights[outcome_index][cue_index])
-            error = float(outcome_vec[outcome_index] - prediction_strength)
+            for cue_index in cue_vec.coords['cue_vector_dimensions']:
+                cue_index = str(cue_index.values)
+                prediction_strength += float(cue_vec.loc[cue_index] * weights[outcome_index][cue_index])
+            error = float(outcome_vec.loc[outcome_index] - prediction_strength)
 
-            for cue_index in range(len(cue_vec)):
-                weights[outcome_index][cue_index] += float(eta * error * cue_vec[cue_index])
+            for cue_index in cue_vec.coords['cue_vector_dimensions']:
+                cue_index = str(cue_index.values)
+                weights[outcome_index][cue_index] += float(eta * error * cue_vec.loc[cue_index])
 
     cpu_time_stop = time.process_time()
     wall_time_stop = time.perf_counter()
@@ -379,15 +382,202 @@ def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
         weights_dict = weights
         shape = (len(outcome_dims), len(cue_dims))
         weights = xr.DataArray(np.zeros(shape), attrs=attrs,
-                               coords={'outcome_dims': outcome_dims, 'cue_dims': cue_dims},
-                               dims=('outcome_dims', 'cue_dims'))
+                               coords={'outcome_vector_dimensions': outcome_dims, 'cue_vector_dimensions': cue_dims},
+                               dims=('outcome_vector_dimensions', 'cue_vector_dimensions'))
 
         for outcome_dim in outcome_dims:
             for cue_dim in cue_dims:
-                weights.loc[{"outcome_dims": outcome_dim, "cue_dims": cue_dim}] = weights_dict[outcome_dim][cue_dim]
+                weights.loc[{"outcome_vector_dimensions": outcome_dim, "cue_vector_dimensions": cue_dim}] = weights_dict[outcome_dim][cue_dim]
     else:
         weights.attrs = attrs
 
+    return weights
+
+
+def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
+        method='numpy', weights=None,
+        n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
+        verbose=False, temporary_directory=None,
+        events_per_temporary_file=10000000):
+    """
+    Calculate the weights for all events using the Widrow-Hoff learning rule
+    and training as outcomes on sematic vectors in semantics.
+
+    This is a parallel python implementation using numpy, multithreading and
+    the binary format defined in preprocess.py.
+
+    Parameters
+    ----------
+    events : str
+        path to the event file
+    eta : float
+        learning rate
+    cue_vectors : xarray.DataArray
+        matrix that contains the cue vectors for each cue
+    outcome_vectors : xarray.DataArray
+        matrix that contains the target vectors for each outcome
+
+    method : {'openmp', 'threading', 'numpy'}
+    weights : None or xarray.DataArray
+        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+    n_jobs : int
+        an integer giving the number of threads in which the job should be
+        executed
+    n_outcomes_per_job : int
+        an integer giving the number of outcomes that are processed in one job
+    remove_duplicates : {None, True, False}
+        if None though a ValueError when the same cue is present multiple times
+        in the same event; True make cues and outcomes unique per event; False
+        keep multiple instances of the same cue or outcome (this is usually not
+        preferred!)
+    verbose : bool
+        print some output if True.
+    temporary_directory : str
+        path to directory to use for storing temporary files created;
+        if none is provided, the operating system's default will
+        be used (/tmp on unix)
+    events_per_temporary_file: int
+        Number of events in each temporary binary file. Has to be larger than 1
+
+    Returns
+    -------
+    weights : xarray.DataArray
+        with dimensions 'vector dimensions' and 'cues'. You can lookup the weights
+        between a vector dimension and a cue with ``weights.loc[{'vector_dimensions': vector_dimension,
+        'cues': cue}]`` or ``weights.loc[vector_dimension].loc[cue]``.
+
+    """
+
+    if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
+        raise ValueError("remove_duplicates must be None, True or False")
+    if not isinstance(events, str):
+        raise ValueError("'events' need to be the path to a gzipped event file not {}".format(type(events)))
+
+    weights_ini = weights
+    wall_time_start = time.perf_counter()
+    cpu_time_start = time.process_time()
+
+    if type(cue_vectors) == dict:
+        # TODO: convert dict to xarray here
+        raise NotImplementedError('dicts are not supported yet.')
+
+    if type(outcome_vectors) == dict:
+        # TODO: convert dict to xarray here
+        raise NotImplementedError('dicts are not supported yet.')
+
+    # preprocessing
+    n_events, cues_from_events, outcomes_from_events = count.cues_outcomes(events,
+                                                   number_of_processes=n_jobs,
+                                                   verbose=verbose)
+
+    # TODO: check for having exactly one legal outcome in each event
+    # for now: crudely, just check the number of events and number of outcomes are equal
+    assert n_events == sum(outcomes_from_events.values()), "there should be exactly one outcome per event"
+    assert n_events == sum(cues_from_events.values()), "there should be exactly one outcome per event"
+
+    cues_from_events = list(cues_from_events.keys())
+    cues = list(cue_vectors.coords['cues'].data)
+    outcomes_from_events = list(outcomes_from_events.keys())
+    outcomes = list(outcome_vectors.coords['outcomes'].data)
+    # TODO: check if we can delete cue_map and outcome_map
+    #cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
+    #outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
+
+    # check for unseen outcomes in events
+    if set(outcomes_from_events) - set(outcomes):
+        raise ValueError("all outcomes in events need to be specified as rows in outcome_vectors")
+    if set(cues_from_events) - set(cues):
+        raise ValueError("all cues in events need to be specified as rows in cue_vectors")
+
+    #all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
+
+    del outcomes_from_events, cues_from_events
+
+    shape = (outcome_vectors.shape[1], cue_vectors.shape[1])
+
+    if not outcome_vectors.dims[1] == 'outcome_vector_dimensions':
+        raise ValueError("The second dimension of the 'outcome_vectors' has to be named 'outcome_vector_dimensions'.")
+    if not cue_vectors.dims[1] == 'cue_vector_dimensions':
+        raise ValueError("The second dimension of the 'cue_vectors' has to be named 'cue_vector_dimensions'.")
+
+    cue_dims = cue_vectors['cue_vector_dimensions']
+    outcome_dims = outcome_vectors['outcome_vector_dimensions']
+
+    # initialize weights
+    if weights is None:
+        weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
+        weights = xr.DataArray(weights, coords={'outcome_vector_dimensions':
+            outcome_dims, 'cue_vector_dimensions': cue_dims},
+            dims=('outcome_vector_dimensions', 'cue_vector_dimensions'))
+        del cue_dims, outcome_dims
+    elif isinstance(weights, xr.DataArray):
+        if not weights.shape == shape:
+            raise ValueError("Vector dimensions need to match in continued learning!")
+        if not all(outcome_dims == weights['outcome_vector_dimensions']):
+            raise ValueError("Outcome vector dimensions names do not match in weights and outcome_vectors")
+        if not all(cue_dims == weights['cue_vector_dimensions']):
+            raise ValueError("Cue vector dimensions names do not match in weights and cue_vectors")
+        # align the cue and outcome vector dimension names between the old weights
+        # and the cue_vectors / outcome_vectors
+        weights = weights.loc[{'outcome_vector_dimensions': outcome_dims, 'cue_vector_dimensions': cue_dims}]
+        weights = weights.copy()
+    else:
+        raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
+    del shape
+
+    if method == 'numpy':
+        event_generator = io.events_from_file(events)
+        number_events = 0
+
+        if verbose:
+            print('start learning...')
+        for cues, outcomes in event_generator:
+            number_events += 1
+            if verbose and number_events % 1000:
+                print('.', end='')
+                sys.stdout.flush()
+            if remove_duplicates is None:
+                if (len(cues) != len(set(cues)) or
+                        len(outcomes) != len(set(outcomes))):
+                    raise ValueError('cues or outcomes needs to be unique: cues '
+                                     '"%s"; outcomes "%s"; use '
+                                     'remove_duplicates=True' %
+                                     (' '.join(cues), ' '.join(outcomes)))
+            elif remove_duplicates:
+                cues = set(cues)
+                outcomes = set(outcomes)
+            else:
+                pass
+
+            assert len(outcomes) == 1, 'for real_wh only one outcome is allowed per event'
+            assert len(cues) == 1, 'for real_wh only one cue is allowed per event'
+
+            cue_vec = cue_vectors.loc[cues[0]]
+            outcome_vec = outcome_vectors.loc[outcomes[0]]
+
+            prediction_vec = weights.dot(cue_vec)  # why is the @ not working?
+            error = outcome_vec - prediction_vec
+            weights += eta * error * cue_vec  # broadcasted array multiplication
+
+        weights = weights.reset_coords(drop=True)
+    else:
+        raise ValueError('method needs to be "numpy"')
+
+    cpu_time_stop = time.process_time()
+    wall_time_stop = time.perf_counter()
+    cpu_time = cpu_time_stop - cpu_time_start
+    wall_time = wall_time_stop - wall_time_start
+
+    if weights_ini is not None:
+        attrs_to_be_updated = weights_ini.attrs
+    else:
+        attrs_to_be_updated = None
+
+    attrs = _attributes(events, number_events, eta, cpu_time, wall_time,
+                        __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
+
+    # post-processing
+    weights.attrs = attrs
     return weights
 
 
