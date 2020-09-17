@@ -78,8 +78,8 @@ def wh(events, eta, outcome_vectors, *,
     -------
     weights : xarray.DataArray
         with dimensions 'vector dimensions' and 'cues'. You can lookup the weights
-        between a vector dimension and a cue with ``weights.loc[{'vector_dimensions': vector_dimension,
-        'cues': cue}]`` or ``weights.loc[vector_dimension].loc[cue]``.
+        between a vector dimension and a cue with ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
+        'cues': cue}]`` or ``weights.loc[outcome_vector_dimension].loc[cue]``.
 
     """
 
@@ -129,8 +129,8 @@ def wh(events, eta, outcome_vectors, *,
         # raise NotImplementedError("This needs some more refinement.")
         old_cues = weights.coords["cues"].values.tolist()
         new_cues = list(set(cues) - set(old_cues))
-        old_vector_dimensions = weights.coords["vector_dimensions"].values.tolist()
-        new_vector_dimensions = outcome_vectors.coords["vector_dimensions"].values.tolist()
+        old_vector_dimensions = weights.coords["outcome_vector_dimensions"].values.tolist()
+        new_vector_dimensions = outcome_vectors.coords["outcome_vector_dimensions"].values.tolist()
 
         cues = old_cues + new_cues
 
@@ -226,7 +226,7 @@ def wh(events, eta, outcome_vectors, *,
                         __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
-    weights = xr.DataArray(weights, [('vector_dimensions', outcome_vectors.coords['vector_dimensions']), ('cues', cues)],
+    weights = xr.DataArray(weights, [('outcome_vector_dimensions', outcome_vectors.coords['outcome_vector_dimensions']), ('cues', cues)],
                            attrs=attrs)
     return weights
 
@@ -443,7 +443,7 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
     -------
     weights : xarray.DataArray
         with dimensions 'vector dimensions' and 'cues'. You can lookup the weights
-        between a vector dimension and a cue with ``weights.loc[{'vector_dimensions': vector_dimension,
+        between a vector dimension and a cue with ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
         'cues': cue}]`` or ``weights.loc[vector_dimension].loc[cue]``.
 
     """
@@ -480,8 +480,8 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
     outcomes_from_events = list(outcomes_from_events.keys())
     outcomes = list(outcome_vectors.coords['outcomes'].data)
     # TODO: check if we can delete cue_map and outcome_map
-    #cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
-    #outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
+    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
+    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
 
     # check for unseen outcomes in events
     if set(outcomes_from_events) - set(outcomes):
@@ -489,7 +489,8 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
     if set(cues_from_events) - set(cues):
         raise ValueError("all cues in events need to be specified as rows in cue_vectors")
 
-    #all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
+    all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
+    all_cue_indices = [cue_map[cue] for cue in cues]
 
     del outcomes_from_events, cues_from_events
 
@@ -558,6 +559,36 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
             prediction_vec = weights.dot(cue_vec)  # why is the @ not working?
             error = outcome_vec - prediction_vec
             weights += eta * error * cue_vec  # broadcasted array multiplication
+            # TODO: we could calculate the same weights first on the first half
+            # of the outcome vector dimensions and then on the second half and
+            # row bind both in the end. Do we?
+    elif method in ('openmp', 'threading'):
+      with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
+        number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
+                                                             outcome_map, overwrite=True,
+                                                             number_of_processes=n_jobs,
+                                                             events_per_file=events_per_temporary_file,
+                                                             remove_duplicates=remove_duplicates,
+                                                             verbose=verbose)
+        assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
+        binary_files = [os.path.join(binary_path, binary_file)
+                        for binary_file in os.listdir(binary_path)
+                        if os.path.isfile(os.path.join(binary_path, binary_file))]
+        # sort binary files as they were created
+        binary_files.sort(key=lambda filename: int(os.path.basename(filename)[9:-4]))
+        if verbose:
+            print('start learning...')
+        # learning
+        if method == 'openmp':
+            wh_parallel.learn_inplace_real_to_real(binary_files,
+                                      eta,
+                                      cue_vectors.data,
+                                      outcome_vectors.data,
+                                      np.array(all_cue_indices, dtype=np.uint32),
+                                      np.array(all_outcome_indices, dtype=np.uint32),
+                                      weights.data,
+                                      n_outcomes_per_job,
+                                      n_jobs)
 
         weights = weights.reset_coords(drop=True)
     else:

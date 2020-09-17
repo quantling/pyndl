@@ -39,8 +39,8 @@ def test_discrete_wh():
 
 def test_dict_wh():
     events = FILE_PATH_REAL_WH
-    #events = 'tests/resources/event_file_real_wh.tab.gz'
-    #ETA = 0.01
+    events = 'tests/resources/event_file_real_wh.tab.gz'
+    ETA = 0.01
 
     import xarray as xr
     import numpy as np
@@ -54,7 +54,9 @@ def test_dict_wh():
     weights = dict_wh(events, ETA, cue_vectors, outcome_vectors, make_data_array=True)
 
     weights_np = continuous_wh(events, ETA, cue_vectors, outcome_vectors)
+    weights_openmp = continuous_wh(events, ETA, cue_vectors, outcome_vectors, method='openmp')
     assert np.all(weights == weights_np)
+    assert np.all(weights == weights_openmp)
 
 
     cue_vectors = xr.DataArray(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]]), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['dim1', 'dim2', 'dim3']})
@@ -74,6 +76,24 @@ def test_dict_wh():
     print(unequal)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+
+def test_binary_to_real_wh():
+    from pyndl import wh
+    outcome_vectors = xr.DataArray(np.array([[0.2, 1.], [0.5, 0], [0, 0.5], [1., 0.2]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['o_dim1', 'o_dim2']})
+
+    weights = wh.wh(FILE_PATH_REAL_WH, ETA, outcome_vectors)
+    # weights.to_netcdf('tests/reference/binary_to_real_weights.nc')
+    reference_weights = xr.open_dataarray('tests/reference/binary_to_real_weights.nc')
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_REAL_WH, weights, reference_weights)
+    print(unequal)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+
+
+
 
 # TODO (look at the tests below and put everything in, which should go into
 # testing coverage of wh code
@@ -501,6 +521,14 @@ def compare_arrays(file_path, arr1, arr2):
 
     unequal = list()
 
+    if isinstance(arr1, xr.DataArray):
+        outcome_dim_name, cue_dim_name = arr1.dims
+
+    if outcome_dim_name == 'outcome_vector_dimensions':
+        outcomes = list(arr1[outcome_dim_name].data)
+    if cue_dim_name == 'cue_vector_dimensions':
+        cues = list(arr1[cue_dim_name].data)
+
     for outcome in outcomes:
         for cue in cues:
             values = list()
@@ -510,7 +538,7 @@ def compare_arrays(file_path, arr1, arr2):
                     cue_index = cue_map[cue]
                     values.append(array[outcome_index][cue_index])
                 elif isinstance(array, xr.DataArray):
-                    values.append(array.loc[{'outcomes': outcome, 'cues': cue}].values)
+                    values.append(array.loc[{outcome_dim_name: outcome, cue_dim_name: cue}].values)
                 elif isinstance(array, pd.DataFrame):
                     values.append(array.loc[outcome][cue])
                 else:
