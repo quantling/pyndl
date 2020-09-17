@@ -96,8 +96,6 @@ def learn_inplace_real_to_real(binary_file_paths,
                   dtype_t eta,
                   np.ndarray[dtype_t, ndim=2] cue_vectors,
                   np.ndarray[dtype_t, ndim=2] outcome_vectors,
-                  np.ndarray[unsigned int, ndim=1] all_cues,
-                  np.ndarray[unsigned int, ndim=1] all_outcomes,
                   np.ndarray[dtype_t, ndim=2] weights,
                   unsigned int chunksize,
                   unsigned int number_of_threads):
@@ -105,8 +103,6 @@ def learn_inplace_real_to_real(binary_file_paths,
     assert weights.shape[1] == cue_vectors.shape[1]
     assert weights.shape[0] == outcome_vectors.shape[1]
 
-    cdef unsigned int* all_cues_ptr = <unsigned int *> all_cues.data
-    cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
     cdef unsigned int n_cue_vector_dimensions = cue_vectors.shape[1]
     cdef unsigned int n_outcome_vector_dimensions = outcome_vectors.shape[1]
     cdef char* fname
@@ -142,8 +138,6 @@ def learn_inplace_real_to_real(binary_file_paths,
                                                  weights_ptr,
                                                  n_cue_vector_dimensions,
                                                  n_outcome_vector_dimensions,
-                                                 all_cues_ptr,
-                                                 all_outcomes_ptr,
                                                  start_val,
                                                  end_val)
     if (error == 7):
@@ -279,8 +273,6 @@ cdef int learn_inplace_real_to_real_ptr(char* binary_file_path,
                         dtype_t* weights,
                         unsigned int n_cue_vector_dimensions,
                         unsigned int n_outcome_vector_dimensions,
-                        unsigned int* all_cue_indices,
-                        unsigned int* all_outcome_indices,
                         unsigned int start,
                         unsigned int end) nogil:
 
@@ -351,7 +343,7 @@ cdef int learn_inplace_real_to_real_ptr(char* binary_file_path,
                 summed_cue_vector_value = 0.0
                 for jj in range(number_of_cues):
                     index_cue = n_cue_vector_dimensions
-                    index_cue *= all_cue_indices[jj]
+                    index_cue *= cue_indices[jj]
                     index_cue += kk
                     summed_cue_vector_value += cue_vectors[index_cue] 
                 index_weight = n_cue_vector_dimensions
@@ -362,7 +354,7 @@ cdef int learn_inplace_real_to_real_ptr(char* binary_file_path,
             summed_outcome_vector_value = 0.0
             for jj in range(number_of_outcomes):
                 index = n_outcome_vector_dimensions
-                index *= all_outcome_indices[jj]
+                index *= outcome_indices[jj]
                 index += outcome_vec_dim_ii
                 summed_outcome_vector_value += outcome_vectors[index]
             # update = prediction error in learning * learning rate
@@ -372,7 +364,7 @@ cdef int learn_inplace_real_to_real_ptr(char* binary_file_path,
                 summed_cue_vector_value = 0.0
                 for jj in range(number_of_cues):
                     index_cue = n_cue_vector_dimensions
-                    index_cue *= all_cue_indices[jj]
+                    index_cue *= cue_indices[jj]
                     index_cue += kk
                     summed_cue_vector_value += cue_vectors[index_cue] 
                 index_weight = n_cue_vector_dimensions

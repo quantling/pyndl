@@ -489,9 +489,6 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
     if set(cues_from_events) - set(cues):
         raise ValueError("all cues in events need to be specified as rows in cue_vectors")
 
-    all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
-    all_cue_indices = [cue_map[cue] for cue in cues]
-
     del outcomes_from_events, cues_from_events
 
     shape = (outcome_vectors.shape[1], cue_vectors.shape[1])
@@ -584,8 +581,6 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
                                       eta,
                                       cue_vectors.data,
                                       outcome_vectors.data,
-                                      np.array(all_cue_indices, dtype=np.uint32),
-                                      np.array(all_outcome_indices, dtype=np.uint32),
                                       weights.data,
                                       n_outcomes_per_job,
                                       n_jobs)

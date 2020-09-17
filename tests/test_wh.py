@@ -78,6 +78,27 @@ def test_dict_wh():
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+@pytest.mark.runslow
+def test_real_to_real_wh_large():
+    events = 'tests/resources/event_file_real_wh_5000.tab.gz'
+    ETA = 0.001
+
+    import xarray as xr
+    import numpy as np
+    from pyndl.wh import dict_wh, continuous_wh
+
+    n_cue_vec_dims = 1000
+    n_outcome_vec_dims = 4000
+    cue_vectors = xr.DataArray(np.random.random((3, n_cue_vec_dims)), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': [f'c_dim{ii}' for ii in range(n_cue_vec_dims)]})
+    outcome_vectors = xr.DataArray(np.random.random((4, n_outcome_vec_dims)), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': [f'o_dim{ii}' for ii in range(n_outcome_vec_dims)]})
+
+    # 1 min 41 sec
+    weights_np = continuous_wh(events, ETA, cue_vectors, outcome_vectors)
+    # 18 sec
+    weights_openmp = continuous_wh(events, ETA, cue_vectors, outcome_vectors, method='openmp')
+    assert np.allclose(weights_openmp.data, weights_np.data)
+
+
 def test_binary_to_real_wh():
     from pyndl import wh
     outcome_vectors = xr.DataArray(np.array([[0.2, 1.], [0.5, 0], [0, 0.5], [1., 0.2]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['o_dim1', 'o_dim2']})
