@@ -14,10 +14,10 @@ import xarray as xr
 import pandas as pd
 import pytest
 
-from pyndl import ndl, count, io
+from pyndl import ndl, count, io, wh
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
-FILE_PATH_REAL_WH = os.path.join(TEST_ROOT, "resources/event_file_real_wh.tab.gz")
+FILE_PATH_WH = os.path.join(TEST_ROOT, "resources/event_file_wh.tab.gz")
 
 TMP_PATH = tempfile.mkdtemp()
 
@@ -37,36 +37,25 @@ def test_discrete_wh():
     #    events_per_temporary_file=10000000)
 
 
-def test_dict_wh():
-    events = FILE_PATH_REAL_WH
-    events = 'tests/resources/event_file_real_wh.tab.gz'
-    ETA = 0.01
-
-    import xarray as xr
-    import numpy as np
-    from pyndl.wh import dict_wh, continuous_wh
-
+def test_consistency_wh():
+    events = FILE_PATH_WH
 
     cue_vectors = xr.DataArray(np.array([[0.2, 0.11, 0.5, 0, 0], [0, 0, 0.5, 0.11, 0.2], [0.2, 0, 0 , 0, 0.2]]), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4', 'dim5']})
     outcome_vectors = xr.DataArray(np.array([[0.2, 1.], [0.5, 0], [0, 0.5], [1., 0.2]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['o_dim1', 'o_dim2']})
 
-    weights = dict_wh(events, ETA, cue_vectors, outcome_vectors)
-    weights = dict_wh(events, ETA, cue_vectors, outcome_vectors, make_data_array=True)
+    weights = wh.dict_wh(events, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors)
+    weights = wh.dict_wh(events, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, make_data_array=True, verbose=True)
 
-    weights_np = continuous_wh(events, ETA, cue_vectors, outcome_vectors)
-    weights_openmp = continuous_wh(events, ETA, cue_vectors, outcome_vectors, method='openmp')
+    weights_np = wh.wh(events, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, method='numpy', verbose=True)
+    weights_openmp = wh.wh(events, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, method='openmp', verbose=True)
     assert np.all(weights == weights_np)
     assert np.all(weights == weights_openmp)
-
 
     cue_vectors = xr.DataArray(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]]), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['dim1', 'dim2', 'dim3']})
     outcome_vectors = xr.DataArray(np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4']})
 
-
-    from collections import defaultdict
-    from pyndl.ndl import dict_ndl
-    weights_wh = dict_wh(events, ETA, cue_vectors, outcome_vectors, make_data_array=True)
-    weights_ndl = dict_ndl(events, alphas=defaultdict(lambda: 1), betas=(ETA, ETA), make_data_array=True) 
+    weights_wh = wh.dict_wh(events, ETA, cue_vectors, outcome_vectors, make_data_array=True)
+    weights_ndl = ndl.dict_ndl(events, alphas=defaultdict(lambda: 1), betas=(ETA, ETA), make_data_array=True) 
 
     weights_wh = weights_wh.loc[{'outcome_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4'], 'cue_vector_dimensions': ['dim1', 'dim2', 'dim3']}]
     weights_wh.coords['outcome_vector_dimensions'] = ['A', 'B', 'C', 'D']
@@ -80,12 +69,8 @@ def test_dict_wh():
 
 @pytest.mark.runslow
 def test_real_to_real_wh_large():
-    events = 'tests/resources/event_file_real_wh_5000.tab.gz'
-    ETA = 0.001
-
-    import xarray as xr
-    import numpy as np
-    from pyndl.wh import dict_wh, continuous_wh
+    events = FILE_PATH_WH
+    eta = 0.001
 
     n_cue_vec_dims = 1000
     n_outcome_vec_dims = 4000
@@ -93,26 +78,77 @@ def test_real_to_real_wh_large():
     outcome_vectors = xr.DataArray(np.random.random((4, n_outcome_vec_dims)), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': [f'o_dim{ii}' for ii in range(n_outcome_vec_dims)]})
 
     # 1 min 41 sec
-    weights_np = continuous_wh(events, ETA, cue_vectors, outcome_vectors)
+    weights_np = wh(events, eta, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, method='numpy')
     # 18 sec
-    weights_openmp = continuous_wh(events, ETA, cue_vectors, outcome_vectors, method='openmp')
+    weights_openmp = wh(events, eta, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, method='openmp')
     assert np.allclose(weights_openmp.data, weights_np.data)
 
 
 def test_binary_to_real_wh():
-    from pyndl import wh
+    cue_vectors = xr.DataArray(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['c_dim1', 'c_dim2', 'c_dim3']})
     outcome_vectors = xr.DataArray(np.array([[0.2, 1.], [0.5, 0], [0, 0.5], [1., 0.2]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['o_dim1', 'o_dim2']})
 
-    weights = wh.wh(FILE_PATH_REAL_WH, ETA, outcome_vectors)
-    # weights.to_netcdf('tests/reference/binary_to_real_weights.nc')
-    reference_weights = xr.open_dataarray('tests/reference/binary_to_real_weights.nc')
+    weights = wh.wh(FILE_PATH_WH, ETA, outcome_vectors=outcome_vectors, verbose=True)
+    #weights.to_netcdf(os.path.join(TEST_ROOT, 'reference/binary_to_real_weights.nc'))
+    reference_weights = xr.open_dataarray(os.path.join(TEST_ROOT, 'reference/binary_to_real_weights.nc'))
 
-    unequal, unequal_ratio = compare_arrays(FILE_PATH_REAL_WH, weights, reference_weights)
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_WH, weights, reference_weights)
+    print(unequal)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+    weights_real_to_real = wh.wh(FILE_PATH_WH, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors)
+
+    weights_real_to_real.coords['cue_vector_dimensions'] = ['a', 'b', 'c']
+    weights_real_to_real = weights_real_to_real.rename({'cue_vector_dimensions': 'cues'})
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_WH, weights, weights_real_to_real)
     print(unequal)
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+def test_real_to_binary_wh():
+    cue_vectors = xr.DataArray(np.array([[0.2, 0.11, 0.5, 0, 0], [0, 0, 0.5, 0.11, 0.2], [0.2, 0, 0 , 0, 0.2]]), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['c_dim1', 'c_dim2', 'c_dim3', 'c_dim4', 'c_dim5']})
+    outcome_vectors = xr.DataArray(np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], dtype=float), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4']})
+
+    weights = wh.wh(FILE_PATH_WH, ETA, cue_vectors=cue_vectors, verbose=True)
+    weights.to_netcdf(os.path.join(TEST_ROOT, 'reference/real_to_binary_weights.nc'))
+    reference_weights = xr.open_dataarray(os.path.join(TEST_ROOT, 'reference/real_to_binary_weights.nc'))
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_WH, weights, reference_weights)
+    print(unequal)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+    weights_real_to_real = wh.wh(FILE_PATH_WH, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors)
+
+    weights_real_to_real.coords['outcome_vector_dimensions'] = ['A', 'B', 'C', 'D']
+    weights_real_to_real = weights_real_to_real.rename({'outcome_vector_dimensions': 'outcomes'})
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_WH, weights, weights_real_to_real)
+    print(unequal)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+
+def test_continue_learning_wh():
+    events = FILE_PATH_WH
+
+    cue_vectors = xr.DataArray(np.array([[0.2, 0.11, 0.5, 0, 0], [0, 0, 0.5, 0.11, 0.2], [0.2, 0, 0 , 0, 0.2]]), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4', 'dim5']})
+    outcome_vectors = xr.DataArray(np.array([[0.2, 1.], [0.5, 0], [0, 0.5], [1., 0.2]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['o_dim1', 'o_dim2']})
+
+    weights = wh.wh(events, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors)
+    weights = wh.wh(events, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, weights=weights)
+    # TODO: insert assert
+
+    weights = wh.wh(events, ETA, outcome_vectors=outcome_vectors)
+    weights = wh.wh(events, ETA, outcome_vectors=outcome_vectors, weights=weights)
+    # TODO: insert assert
+
+    weights = wh.wh(events, ETA, cue_vectors=cue_vectors)
+    weights = wh.wh(events, ETA, cue_vectors=cue_vectors, weights=weights)
+    # TODO: insert assert
 
 
 

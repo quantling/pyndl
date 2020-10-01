@@ -31,7 +31,7 @@ from . import ndl
 WeightDict = ndl.WeightDict
 
 
-def wh(events, eta, outcome_vectors, *,
+def wh(events, eta, *, cue_vectors=None, outcome_vectors=None,
         method='openmp', weights=None,
         n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
         verbose=False, temporary_directory=None,
@@ -49,10 +49,12 @@ def wh(events, eta, outcome_vectors, *,
         path to the event file
     eta : float
         learning rate
+    cue_vectors : xarray.DataArray
+        matrix that contains the cue vectors for each cue
     outcome_vectors : xarray.DataArray
         matrix that contains the target vectors for each outcome
-
-    method : {'openmp', 'threading'}
+    method : {'openmp', 'threading', 'numpy'}
+        'numpy' works only for real to real Widrow-Hoff.
     weights : None or xarray.DataArray
         the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
     n_jobs : int
@@ -77,158 +79,47 @@ def wh(events, eta, outcome_vectors, *,
     Returns
     -------
     weights : xarray.DataArray
-        with dimensions 'vector dimensions' and 'cues'. You can lookup the weights
+        the dimensions of the weights reflect the type of Widrow-Hoff that was
+        run (real to real, binary to real, real to binary or binary to binary). The dimension names reflect this in the weights. They are a combination of 'outcomes' x 'outcome_vector_dimensions' and 'cues' x 'cue_vector_dimensions'
+        with dimensions 'outcome_vector dimensions' and 'cue_vector_dimensions'. You can lookup the weights
         between a vector dimension and a cue with ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
-        'cues': cue}]`` or ``weights.loc[outcome_vector_dimension].loc[cue]``.
+        'cue_vector_dimensions': cue_vector_dimension}]`` or ``weights.loc[vector_dimension].loc[cue_vector_dimension]``.
 
     """
-
-    if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
-        raise ValueError("remove_duplicates must be None, True or False")
-    if not isinstance(events, str):
-        raise ValueError("'events' need to be the path to a gzipped event file not {}".format(type(events)))
-
-    weights_ini = weights
-    wall_time_start = time.perf_counter()
-    cpu_time_start = time.process_time()
-
-    if type(outcome_vectors) == dict:
-        # TODO: convert dict to xarray here
-        raise NotImplementedError('dicts are not supported yet.')
-
-    # preprocessing
-    n_events, cues, outcomes_from_events = count.cues_outcomes(events,
-                                                   number_of_processes=n_jobs,
-                                                   verbose=verbose)
-
-    # TODO: check for having exactly one legal outcome in each event
-    # for now: crudely, just check the number of events and number of outcomes are equal
-    assert n_events == sum(outcomes_from_events.values()), "there should be exactly one outcome per event"
-
-    cues = list(cues.keys())
-    outcomes_from_events = list(outcomes_from_events.keys())
-    outcomes = list(outcome_vectors.coords['outcomes'].data)
-    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
-    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
-
-    # check for unseen outcomes in events
-    if set(outcomes_from_events) - set(outcomes):
-        raise ValueError("all outcomes in events need to be specified as rows in outcome_vectors")
-
-    if weights is not None and weights.shape[0] != outcome_vectors.shape[1]:
-        raise ValueError("outcome dimensions in weights need to match dimensions in outcome_vectors")
-
-    all_outcome_indices = [outcome_map[outcome] for outcome in outcomes]
-
-    shape = (outcome_vectors.shape[1], len(cue_map))
-
-    # initialize weights
-    if weights is None:
-        weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
-    elif isinstance(weights, xr.DataArray):
-        # raise NotImplementedError("This needs some more refinement.")
-        old_cues = weights.coords["cues"].values.tolist()
-        new_cues = list(set(cues) - set(old_cues))
-        old_vector_dimensions = weights.coords["outcome_vector_dimensions"].values.tolist()
-        new_vector_dimensions = outcome_vectors.coords["outcome_vector_dimensions"].values.tolist()
-
-        cues = old_cues + new_cues
-
-        if old_vector_dimensions != new_vector_dimensions:
-            raise ValueError("Vector dimensions need to match in continued learning!")
-
-        vector_dimensions = new_vector_dimensions
-
-        cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
-
-        # weights_tmp = np.concatenate((weights.values,
-        #                               np.zeros((len(new_outcomes), len(old_cues)),
-        #                                        dtype=np.float64, order='C')),
-        #                              axis=0)
-        # weights_tmp = np.concatenate((weights_tmp,
-        #                               np.zeros((len(outcomes), len(new_cues)),
-        #                                        dtype=np.float64, order='C')),
-        #                              axis=1)
-
-        weights_tmp = np.concatenate((weights.values,
-                                      np.zeros((len(vector_dimensions), len(new_cues)),
-                                               dtype=np.float64, order='C')),
-                                     axis=1)
-
-        weights = np.ascontiguousarray(weights_tmp)
-
-        del weights_tmp, old_cues, new_cues, old_vector_dimensions, new_vector_dimensions
-    else:
-        raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
-
-    with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
-        number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
-                                                             outcome_map, overwrite=True,
-                                                             number_of_processes=n_jobs,
-                                                             events_per_file=events_per_temporary_file,
-                                                             remove_duplicates=remove_duplicates,
-                                                             verbose=verbose)
-        assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
-        binary_files = [os.path.join(binary_path, binary_file)
-                        for binary_file in os.listdir(binary_path)
-                        if os.path.isfile(os.path.join(binary_path, binary_file))]
-        # sort binary files as they were created
-        binary_files.sort(key=lambda filename: int(os.path.basename(filename)[9:-4]))
-        if verbose:
-            print('start learning...')
-        # learning
-        if method == 'openmp':
-            wh_parallel.learn_inplace(binary_files, outcome_vectors.data, eta,
-                                      np.array(all_outcome_indices, dtype=np.uint32),
-                                      weights, 
-                                      n_outcomes_per_job, n_jobs)
-        #elif method == 'threading':
-        #    part_lists = ndl.slice_list(all_outcome_indices, n_outcomes_per_job)
-
-        #    working_queue = Queue(len(part_lists))
-        #    threads = []
-        #    queue_lock = threading.Lock()
-
-        #    def worker():
-        #        while True:
-        #            with queue_lock:
-        #                if working_queue.empty():
-        #                    break
-        #                data = working_queue.get()
-        #            ndl_parallel.learn_inplace_2(binary_files, outcome_vectors,
-        #                                         eta, weights, data)
-
-        #    with queue_lock:
-        #        for partlist in part_lists:
-        #            working_queue.put(np.array(partlist, dtype=np.uint32))
-
-        #    for _ in range(number_of_threads):
-        #        thread = threading.Thread(target=worker)
-        #        thread.start()
-        #        threads.append(thread)
-
-        #    for thread in threads:
-        #        thread.join()
-        else:
-            raise ValueError('method needs to be either "threading" or "openmp"')
-
-    cpu_time_stop = time.process_time()
-    wall_time_stop = time.perf_counter()
-    cpu_time = cpu_time_stop - cpu_time_start
-    wall_time = wall_time_stop - wall_time_start
-
-    if weights_ini is not None:
-        attrs_to_be_updated = weights_ini.attrs
-    else:
-        attrs_to_be_updated = None
-
-    attrs = _attributes(events, number_events, eta, cpu_time, wall_time,
-                        __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
-
-    # post-processing
-    weights = xr.DataArray(weights, [('outcome_vector_dimensions', outcome_vectors.coords['outcome_vector_dimensions']), ('cues', cues)],
-                           attrs=attrs)
-    return weights
+    if cue_vectors is None and outcome_vectors is None:
+        lambda_ = 1.0
+        alpha = 1.0
+        betas = (eta, eta)
+        return ndl.ndl(events, alpha, betas, lambda_,
+                       method=method, weights=weights, n_jobs=n_jobs,
+                       n_outcomes_per_job=n_outcomes_per_job,
+                       remove_duplicates=remove_duplicates, verbose=verbose,
+                       temporary_directory=temporary_directory,
+                       events_per_temporary_file=events_per_temporary_file)
+    elif cue_vectors is not None and outcome_vectors is not None:
+        return _wh_real_to_real(events, eta, cue_vectors, outcome_vectors,
+                         method=method, weights=weights, n_jobs=n_jobs,
+                         n_outcomes_per_job=n_outcomes_per_job,
+                         remove_duplicates=remove_duplicates, verbose=verbose,
+                         temporary_directory=temporary_directory,
+                         events_per_temporary_file=events_per_temporary_file)
+    elif cue_vectors is not None and outcome_vectors is None:
+        lambda_ = 1.0
+        betas = (eta, eta)
+        return _wh_real_to_binary(events, betas, lambda_, cue_vectors,
+                         method=method, weights=weights, n_jobs=n_jobs,
+                         n_outcomes_per_job=n_outcomes_per_job,
+                         remove_duplicates=remove_duplicates, verbose=verbose,
+                         temporary_directory=temporary_directory,
+                         events_per_temporary_file=events_per_temporary_file)
+    elif cue_vectors is None and outcome_vectors is not None:
+        return _wh_binary_to_real(events, eta, outcome_vectors,
+                         method=method, weights=weights, n_jobs=n_jobs,
+                         n_outcomes_per_job=n_outcomes_per_job,
+                         remove_duplicates=remove_duplicates, verbose=verbose,
+                         temporary_directory=temporary_directory,
+                         events_per_temporary_file=events_per_temporary_file)
+    # The if statements above are covering all cases.
 
 
 def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
@@ -394,8 +285,8 @@ def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
     return weights
 
 
-def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
-        method='numpy', weights=None,
+def _wh_binary_to_real(events, eta, outcome_vectors, *,
+        method='openmp', weights=None,
         n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
         verbose=False, temporary_directory=None,
         events_per_temporary_file=10000000):
@@ -412,12 +303,10 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
         path to the event file
     eta : float
         learning rate
-    cue_vectors : xarray.DataArray
-        matrix that contains the cue vectors for each cue
     outcome_vectors : xarray.DataArray
         matrix that contains the target vectors for each outcome
 
-    method : {'openmp', 'threading', 'numpy'}
+    method : {'openmp', 'threading'}
     weights : None or xarray.DataArray
         the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
     n_jobs : int
@@ -444,7 +333,355 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
     weights : xarray.DataArray
         with dimensions 'vector dimensions' and 'cues'. You can lookup the weights
         between a vector dimension and a cue with ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
-        'cues': cue}]`` or ``weights.loc[vector_dimension].loc[cue]``.
+        'cues': cue}]`` or ``weights.loc[outcome_vector_dimension].loc[cue]``.
+
+    """
+
+    if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
+        raise ValueError("remove_duplicates must be None, True or False")
+    if not isinstance(events, str):
+        raise ValueError("'events' need to be the path to a gzipped event file not {}".format(type(events)))
+
+    weights_ini = weights
+    wall_time_start = time.perf_counter()
+    cpu_time_start = time.process_time()
+
+    if type(outcome_vectors) == dict:
+        # TODO: convert dict to xarray here
+        raise NotImplementedError('dicts are not supported yet.')
+
+    # preprocessing
+    n_events, cues, outcomes_from_events = count.cues_outcomes(events,
+                                                   number_of_processes=n_jobs,
+                                                   verbose=verbose)
+
+    # TODO: check for having exactly one legal outcome in each event
+    # for now: crudely, just check the number of events and number of outcomes are equal
+    assert n_events == sum(outcomes_from_events.values()), "there should be exactly one outcome per event"
+
+    cues = list(cues.keys())
+    outcomes_from_events = list(outcomes_from_events.keys())
+    outcomes = list(outcome_vectors.coords['outcomes'].data)
+    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
+    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
+
+    # check for unseen outcomes in events
+    if set(outcomes_from_events) - set(outcomes):
+        raise ValueError("all outcomes in events need to be specified as rows in outcome_vectors")
+
+    if weights is not None and weights.shape[0] != outcome_vectors.shape[1]:
+        raise ValueError("outcome dimensions in weights need to match dimensions in outcome_vectors")
+
+    shape = (outcome_vectors.shape[1], len(cue_map))
+
+    # initialize weights
+    if weights is None:
+        weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
+    elif isinstance(weights, xr.DataArray):
+        outcome_vector_dimensions = outcome_vectors.coords["outcome_vector_dimensions"].values.tolist()
+        if not outcome_vector_dimensions == weights.coords["outcome_vector_dimensions"].values.tolist():
+            raise ValueError('Outcome vector dimensions in weights and outcome_vectors do not match!')
+
+        old_cues = weights.coords["cues"].values.tolist()
+        new_cues = list(set(cues) - set(old_cues))
+        cues = old_cues + new_cues
+        cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
+
+        weights_tmp = np.concatenate((weights.values,
+                                      np.zeros((len(outcome_vector_dimensions), len(new_cues)),
+                                               dtype=np.float64, order='C')),
+                                     axis=1)
+        weights = np.ascontiguousarray(weights_tmp)
+
+        del weights_tmp, old_cues, new_cues, outcome_vector_dimensions
+    else:
+        raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
+
+    with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
+        number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
+                                                             outcome_map, overwrite=True,
+                                                             number_of_processes=n_jobs,
+                                                             events_per_file=events_per_temporary_file,
+                                                             remove_duplicates=remove_duplicates,
+                                                             verbose=verbose)
+        assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
+        binary_files = [os.path.join(binary_path, binary_file)
+                        for binary_file in os.listdir(binary_path)
+                        if os.path.isfile(os.path.join(binary_path, binary_file))]
+        # sort binary files as they were created
+        binary_files.sort(key=lambda filename: int(os.path.basename(filename)[9:-4]))
+        if verbose:
+            print('start learning...')
+        # learning
+        if method == 'openmp':
+            wh_parallel.learn_inplace_binary_to_real(binary_files,
+                                                     eta,
+                                                     outcome_vectors.data,
+                                                     weights,
+                                                     n_outcomes_per_job,
+                                                     n_jobs)
+        #elif method == 'threading':
+        #    part_lists = ndl.slice_list(all_outcome_indices, n_outcomes_per_job)
+
+        #    working_queue = Queue(len(part_lists))
+        #    threads = []
+        #    queue_lock = threading.Lock()
+
+        #    def worker():
+        #        while True:
+        #            with queue_lock:
+        #                if working_queue.empty():
+        #                    break
+        #                data = working_queue.get()
+        #            ndl_parallel.learn_inplace_2(binary_files, outcome_vectors,
+        #                                         eta, weights, data)
+
+        #    with queue_lock:
+        #        for partlist in part_lists:
+        #            working_queue.put(np.array(partlist, dtype=np.uint32))
+
+        #    for _ in range(number_of_threads):
+        #        thread = threading.Thread(target=worker)
+        #        thread.start()
+        #        threads.append(thread)
+
+        #    for thread in threads:
+        #        thread.join()
+        else:
+            raise ValueError('method needs to be either "threading" or "openmp"')
+
+    cpu_time_stop = time.process_time()
+    wall_time_stop = time.perf_counter()
+    cpu_time = cpu_time_stop - cpu_time_start
+    wall_time = wall_time_stop - wall_time_start
+
+    if weights_ini is not None:
+        attrs_to_be_updated = weights_ini.attrs
+    else:
+        attrs_to_be_updated = None
+
+    attrs = _attributes(events, number_events, eta, cpu_time, wall_time,
+                        __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
+
+    # post-processing
+    weights = xr.DataArray(weights, [('outcome_vector_dimensions', outcome_vectors.coords['outcome_vector_dimensions']), ('cues', cues)],
+                           attrs=attrs)
+    return weights
+
+
+def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
+        method='openmp', weights=None,
+        n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
+        verbose=False, temporary_directory=None,
+        events_per_temporary_file=10000000):
+    """
+    Calculate the weights for all events using the Widrow-Hoff learning rule
+    and training as cue_vectors on outcomes.
+
+    This is a parallel python implementation using numpy, multithreading and
+    the binary format defined in preprocess.py.
+
+    Parameters
+    ----------
+    events : str
+        path to the event file
+    betas : (float, float)
+        one value for successful prediction (reward) one for punishment
+    lambda\\_ : float
+    cue_vectors : xarray.DataArray
+        matrix that contains the cue vectors for each cue
+    method : {'openmp', 'threading'}
+    weights : None or xarray.DataArray
+        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+    n_jobs : int
+        an integer giving the number of threads in which the job should be
+        executed
+    n_outcomes_per_job : int
+        an integer giving the number of outcomes that are processed in one job
+    remove_duplicates : {None, True, False}
+        if None though a ValueError when the same cue is present multiple times
+        in the same event; True make cues and outcomes unique per event; False
+        keep multiple instances of the same cue or outcome (this is usually not
+        preferred!)
+    verbose : bool
+        print some output if True.
+    temporary_directory : str
+        path to directory to use for storing temporary files created;
+        if none is provided, the operating system's default will
+        be used (/tmp on unix)
+    events_per_temporary_file: int
+        Number of events in each temporary binary file. Has to be larger than 1
+
+    Returns
+    -------
+    weights : xarray.DataArray
+        with dimensions outcomes and cue_vector_dimensions. You can lookup the
+        weights between an outcome and a cue_vector_dimension with
+        ``weights.loc[{'outcome': outcome, 'cue_vector_dimensions':
+        cue_vector_dimension}]`` or
+        ``weights.loc[outcome].loc[cue_vector_dimension]``.
+
+    """
+    if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
+        raise ValueError("remove_duplicates must be None, True or False")
+    if not isinstance(events, str):
+        raise ValueError("'events' need to be the path to a gzipped event file not {}".format(type(events)))
+
+    weights_ini = weights
+    wall_time_start = time.perf_counter()
+    cpu_time_start = time.process_time()
+
+    # preprocessing
+    n_events, cues_from_events, outcomes_from_events = count.cues_outcomes(events,
+                                                   number_of_processes=n_jobs,
+                                                   verbose=verbose)
+
+    cues_from_events = list(cues_from_events.keys())
+    cues = list(cue_vectors.coords['cues'].data)
+    outcomes = list(outcomes_from_events.keys())
+
+    cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
+    outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
+
+    if set(cues_from_events) - set(cues):
+        raise ValueError("all cues in events need to be specified as rows in cue_vectors")
+
+    del outcomes_from_events, cues_from_events
+
+    shape = (len(outcomes), cue_vectors.shape[1])
+
+    if not cue_vectors.dims[1] == 'cue_vector_dimensions':
+        raise ValueError("The second dimension of the 'cue_vectors' has to be named 'cue_vector_dimensions'.")
+
+    cue_vector_dimensions = cue_vectors['cue_vector_dimensions']
+
+    # initialize weights
+    if weights is None:
+        weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
+    elif isinstance(weights, xr.DataArray):
+        if not all(cue_vector_dimensions == weights['cue_vector_dimensions']):
+            raise ValueError("Cue vector dimensions names do not match in weights and cue_vectors")
+
+        old_outcomes = weights.coords["outcomes"].values.tolist()
+        new_outcomes = list(set(outcomes) - set(old_outcomes))
+        outcomes = old_outcomes + new_outcomes
+
+        outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
+        weights_tmp = np.concatenate((weights.values,
+                                      np.zeros((len(new_outcomes), len(cue_vector_dimensions)),
+                                               dtype=np.float64, order='C')),
+                                     axis=0)
+        weights = np.ascontiguousarray(weights_tmp)
+        del weights_tmp, old_outcomes, new_outcomes
+    else:
+        raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
+
+    weights = xr.DataArray(weights, coords={'outcomes': outcomes,
+        'cue_vector_dimensions': cue_vector_dimensions},
+        dims=('outcomes', 'cue_vector_dimensions'))
+    del shape, cue_vector_dimensions
+
+    with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
+        number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
+                                                             outcome_map, overwrite=True,
+                                                             number_of_processes=n_jobs,
+                                                             events_per_file=events_per_temporary_file,
+                                                             remove_duplicates=remove_duplicates,
+                                                             verbose=verbose)
+        assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
+        binary_files = [os.path.join(binary_path, binary_file)
+                        for binary_file in os.listdir(binary_path)
+                        if os.path.isfile(os.path.join(binary_path, binary_file))]
+        # sort binary files as they were created
+        binary_files.sort(key=lambda filename: int(os.path.basename(filename)[9:-4]))
+        if verbose:
+            print('start learning...')
+        # learning
+        if method == 'openmp':
+            beta1, beta2 = betas
+            wh_parallel.learn_inplace_real_to_binary(binary_files,
+                                      beta1,
+                                      beta2,
+                                      lambda_,
+                                      cue_vectors.data,
+                                      weights.data,
+                                      n_outcomes_per_job,
+                                      n_jobs)
+
+        weights = weights.reset_coords(drop=True)
+
+    cpu_time_stop = time.process_time()
+    wall_time_stop = time.perf_counter()
+    cpu_time = cpu_time_stop - cpu_time_start
+    wall_time = wall_time_stop - wall_time_start
+
+    if weights_ini is not None:
+        attrs_to_be_updated = weights_ini.attrs
+    else:
+        attrs_to_be_updated = None
+
+    attrs = ndl._attributes(events, number_events, 'cue_vectors', betas, lambda_, cpu_time, wall_time,
+                        __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
+
+    # post-processing
+    weights.attrs = attrs
+    return weights
+
+
+
+def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
+        method='openmp', weights=None,
+        n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
+        verbose=False, temporary_directory=None,
+        events_per_temporary_file=10000000):
+    """
+    Calculate the weights for all events using the Widrow-Hoff learning rule
+    and training as outcomes on sematic vectors in semantics.
+
+    This is a parallel python implementation using numpy, multithreading and
+    the binary format defined in preprocess.py.
+
+    Parameters
+    ----------
+    events : str
+        path to the event file
+    eta : float
+        learning rate
+    cue_vectors : xarray.DataArray
+        matrix that contains the cue vectors for each cue
+    outcome_vectors : xarray.DataArray
+        matrix that contains the target vectors for each outcome
+    method : {'openmp', 'threading', 'numpy'}
+    weights : None or xarray.DataArray
+        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+    n_jobs : int
+        an integer giving the number of threads in which the job should be
+        executed
+    n_outcomes_per_job : int
+        an integer giving the number of outcomes that are processed in one job
+    remove_duplicates : {None, True, False}
+        if None though a ValueError when the same cue is present multiple times
+        in the same event; True make cues and outcomes unique per event; False
+        keep multiple instances of the same cue or outcome (this is usually not
+        preferred!)
+    verbose : bool
+        print some output if True.
+    temporary_directory : str
+        path to directory to use for storing temporary files created;
+        if none is provided, the operating system's default will
+        be used (/tmp on unix)
+    events_per_temporary_file: int
+        Number of events in each temporary binary file. Has to be larger than 1
+
+    Returns
+    -------
+    weights : xarray.DataArray
+        with dimensions 'outcome_vector_dimensions' and
+        'cue_vector_dimensions'. You can lookup the weights between a
+        outcome_vector_dimension and a cue_vector_dimension with
+        ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
+            'cue_vector_dimensions': cue_vector_dimension}]`` or
+        ``weights.loc[outcome_vector_dimension].loc[cue_vector_dimension]``.
 
     """
 
@@ -470,16 +707,10 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
                                                    number_of_processes=n_jobs,
                                                    verbose=verbose)
 
-    # TODO: check for having exactly one legal outcome in each event
-    # for now: crudely, just check the number of events and number of outcomes are equal
-    assert n_events == sum(outcomes_from_events.values()), "there should be exactly one outcome per event"
-    assert n_events == sum(cues_from_events.values()), "there should be exactly one outcome per event"
-
     cues_from_events = list(cues_from_events.keys())
     cues = list(cue_vectors.coords['cues'].data)
     outcomes_from_events = list(outcomes_from_events.keys())
     outcomes = list(outcome_vectors.coords['outcomes'].data)
-    # TODO: check if we can delete cue_map and outcome_map
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
     outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
 
@@ -547,8 +778,9 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
             else:
                 pass
 
-            assert len(outcomes) == 1, 'for real_wh only one outcome is allowed per event'
-            assert len(cues) == 1, 'for real_wh only one cue is allowed per event'
+            # TODO: implement multiple cues / outcomes in numpy
+            assert len(outcomes) == 1, 'for method=numpy only one outcome is allowed per event'
+            assert len(cues) == 1, 'for method_numpy only one cue is allowed per event'
 
             cue_vec = cue_vectors.loc[cues[0]]
             outcome_vec = outcome_vectors.loc[outcomes[0]]
@@ -556,9 +788,10 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
             prediction_vec = weights.dot(cue_vec)  # why is the @ not working?
             error = outcome_vec - prediction_vec
             weights += eta * error * cue_vec  # broadcasted array multiplication
-            # TODO: we could calculate the same weights first on the first half
+            # NOTE: we could calculate the same weights first on the first half
             # of the outcome vector dimensions and then on the second half and
-            # row bind both in the end. Do we?
+            # row bind both in the end. Do we? Yes, and we can use this to
+            # multiprocess the numpy computation.
     elif method in ('openmp', 'threading'):
       with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
         number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
@@ -584,10 +817,13 @@ def continuous_wh(events, eta, cue_vectors, outcome_vectors, *,
                                       weights.data,
                                       n_outcomes_per_job,
                                       n_jobs)
+        else:
+            # TODO: implement threading
+            raise ValueError('method needs to be "numpy" or "openmp"')
 
         weights = weights.reset_coords(drop=True)
     else:
-        raise ValueError('method needs to be "numpy"')
+        raise ValueError('method needs to be "numpy" or "openmp"')
 
     cpu_time_stop = time.process_time()
     wall_time_stop = time.perf_counter()
