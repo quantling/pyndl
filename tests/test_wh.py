@@ -86,7 +86,7 @@ def test_real_to_real_wh_large():
 
 def test_binary_to_real_wh():
     cue_vectors = xr.DataArray(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['c_dim1', 'c_dim2', 'c_dim3']})
-    outcome_vectors = xr.DataArray(np.array([[0.2, 1.], [0.5, 0], [0, 0.5], [1., 0.2]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['o_dim1', 'o_dim2']})
+    outcome_vectors = xr.DataArray(np.array([[0.2, 1., 0.7, -0.2], [0.5, 0, 0.1, 0.0], [0, 0.5, 0.0, 0.1], [1., 0.2, -0.8, 0.11]]), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['o_dim1', 'o_dim2', 'o_dim3', 'o_dim4']})
 
     weights = wh.wh(FILE_PATH_WH, ETA, outcome_vectors=outcome_vectors, verbose=True)
     #weights.to_netcdf(os.path.join(TEST_ROOT, 'reference/binary_to_real_weights.nc'))
@@ -107,13 +107,29 @@ def test_binary_to_real_wh():
     print('%.2f ratio unequal' % unequal_ratio)
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
+    weights_split = wh.wh(FILE_PATH_WH, ETA, outcome_vectors=outcome_vectors, verbose=True, n_outcomes_per_job=2)
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_WH, weights, weights_split)
+    print(unequal)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+    for _ in range(1):
+        weights_split = wh.wh(FILE_PATH_WH, ETA, weights=weights_split, outcome_vectors=outcome_vectors, verbose=True, n_outcomes_per_job=2)
+        weights = wh.wh(FILE_PATH_WH, ETA, weights=weights, outcome_vectors=outcome_vectors, verbose=True)
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_WH, weights, weights_split)
+    print(unequal)
+    print('%.2f ratio unequal' % unequal_ratio)
+    print(weights_split)
+    print(weights)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
 
 def test_real_to_binary_wh():
     cue_vectors = xr.DataArray(np.array([[0.2, 0.11, 0.5, 0, 0], [0, 0, 0.5, 0.11, 0.2], [0.2, 0, 0 , 0, 0.2]]), dims=('cues', 'cue_vector_dimensions'), coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['c_dim1', 'c_dim2', 'c_dim3', 'c_dim4', 'c_dim5']})
     outcome_vectors = xr.DataArray(np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], dtype=float), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4']})
 
     weights = wh.wh(FILE_PATH_WH, ETA, cue_vectors=cue_vectors, verbose=True)
-    weights.to_netcdf(os.path.join(TEST_ROOT, 'reference/real_to_binary_weights.nc'))
+    #weights.to_netcdf(os.path.join(TEST_ROOT, 'reference/real_to_binary_weights.nc'))
     reference_weights = xr.open_dataarray(os.path.join(TEST_ROOT, 'reference/real_to_binary_weights.nc'))
 
     unequal, unequal_ratio = compare_arrays(FILE_PATH_WH, weights, reference_weights)
