@@ -76,3 +76,11 @@ contributers have a look at `Github's Contributor summary
 
 Currently, it is maintained by `Konstantin Sering <https://github.com/derNarr>`_
 and `Marc Weitz <https://github.com/trybnetic>`_.
+
+
+Acknowledgments
+===============
+This research was supported by an ERC advanced Grant (no. 742545) and by the
+Alexander von Humboldt Professorship awarded to R. H. Baayen and by the
+University of Tübingen.
+
