@@ -14,8 +14,8 @@ Pyndl - Naive Discriminative Learning in Python
 .. image:: https://img.shields.io/github/license/quantling/pyndl.svg
     :target: https://github.com/quantling/pyndl/blob/master/LICENSE.txt
 
-.. image:: https://zenodo.org/badge/80022085.svg
-    :target: https://zenodo.org/badge/latestdoi/80022085
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.4192336.svg
+   :target: https://doi.org/10.5281/zenodo.4192336
 
 *pyndl* is an implementation of Naive Discriminative Learning in Python. It was
 created to analyse huge amounts of text file corpora. Especially, it allows to
