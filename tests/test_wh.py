@@ -78,10 +78,16 @@ def test_real_to_real_wh_large():
     outcome_vectors = xr.DataArray(np.random.random((4, n_outcome_vec_dims)), dims=('outcomes', 'outcome_vector_dimensions'), coords={'outcomes': ['A', 'B', 'C', 'D'], 'outcome_vector_dimensions': [f'o_dim{ii}' for ii in range(n_outcome_vec_dims)]})
 
     # 1 min 41 sec
-    weights_np = wh(events, eta, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, method='numpy')
+    weights_np = wh.wh(events, eta, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, method='numpy')
     # 18 sec
-    weights_openmp = wh(events, eta, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, method='openmp')
+    weights_openmp = wh.wh(events, eta, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, method='openmp')
     assert np.allclose(weights_openmp.data, weights_np.data)
+
+    # 1 min 41 sec
+    weights_split_small = wh.wh(events, eta, outcome_vectors=outcome_vectors, n_outcomes_per_job=100)
+    # 18 sec
+    weights_openmp = wh.wh(events, eta, outcome_vectors=outcome_vectors, method='openmp')
+    assert np.allclose(weights_openmp.data, weights_split_small.data)
 
 
 def test_binary_to_real_wh():
