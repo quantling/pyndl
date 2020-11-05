@@ -17,7 +17,7 @@ from pip._vendor import pkg_resources
 __author__ = ('Konstantin Sering, Marc Weitz, '
               'David-Elias Künstle, Lennard Schneider')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.6.4'
+__version__ = '0.7.1'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '
@@ -28,6 +28,7 @@ __classifiers__ = [
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: MIT License',
     'Operating System :: POSIX :: Linux',
+    'Operating System :: MacOS',
     'Programming Language :: Python',
     'Programming Language :: Python :: 3.5',
     'Programming Language :: Python :: 3.6',
