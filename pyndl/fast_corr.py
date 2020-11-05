@@ -44,7 +44,8 @@ def reference_corr(semantics, activations):
     ...
 
     """
-    assert semantics.shape[0] == activations.shape[0], "number of vector dimensions in semantics and activations need to be the same"
+    assert semantics.shape[0] == activations.shape[0], ("number of vector dimensions in semantics and activations"
+                                                        " need to be the same")
     n_outcomes = semantics.shape[1]
     n_events = activations.shape[1]
 
@@ -53,7 +54,7 @@ def reference_corr(semantics, activations):
     start_time = time.time()
     for ii in range(n_events):
         for jj in range(n_outcomes):
-            correlations[jj, ii], _ = stats.pearsonr(semantics[:,jj], activations[:, ii])
+            correlations[jj, ii], _ = stats.pearsonr(semantics[:, jj], activations[:, ii])
     print(f"time needed for correlations:  {time.time() - start_time}")
 
     return correlations
@@ -78,11 +79,11 @@ def manual_corr(semantics, activations):
     ...
 
     """
-    assert semantics.shape[0] == activations.shape[0], "number of vector dimensions in semantics and activations need to be the same"
+    assert semantics.shape[0] == activations.shape[0], ("number of vector dimensions in semantics and activations"
+                                                        "need to be the same")
     n_outcomes = semantics.shape[1]
     n_vec_dims, n_events = activations.shape
 
-   
     semantics_means = np.zeros((n_outcomes,))
     semantics_stds = np.zeros((n_outcomes,))
     activations_means = np.zeros((n_events,))
@@ -92,15 +93,15 @@ def manual_corr(semantics, activations):
     for jj in range(n_outcomes):
         semantics_means[jj] = np.mean(semantics[:, jj])
         semantics_stds[jj] = np.std(semantics[:, jj], ddof=1)
-    
+
     for ii in range(n_events):
         activations_means[ii] = np.mean(activations[:, ii])
         activations_stds[ii] = np.std(activations[:, ii], ddof=1)
     print(f"time needed for stds and means:  {time.time() - start_time}")
-    
+
     start_time = time.time()
     correlations = corr_parallel.low_level_corr(semantics, activations, semantics_means,
-            semantics_stds, activations_means, activations_stds)
+                                                semantics_stds, activations_means, activations_stds)
     print(f"time needed for correlations:  {time.time() - start_time}")
 
     return correlations
@@ -109,13 +110,13 @@ def manual_corr(semantics, activations):
 #     reference_corr(semantics, activations)
 #     manual_corr(semantics, activations)
 
-#@jit(nopython=True)
+# @jit(nopython=True)
 
 # %time X2 = reference_corr(semantics, activations)
 # CPU times: user 1min 11s, sys: 0 ns, total: 1min 11s
 # Wall time: 1min 11s
 
-## without numba jit
+# without numba jit
 # %time X = manual_corr(semantics, activations)
 # time needed for stds and means:  0.5793533325195312
 # time needed for correlations:  19.464678525924683

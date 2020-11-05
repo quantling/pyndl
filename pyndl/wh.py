@@ -80,10 +80,16 @@ def wh(events, eta, *, cue_vectors=None, outcome_vectors=None,
     -------
     weights : xarray.DataArray
         the dimensions of the weights reflect the type of Widrow-Hoff that was
-        run (real to real, binary to real, real to binary or binary to binary). The dimension names reflect this in the weights. They are a combination of 'outcomes' x 'outcome_vector_dimensions' and 'cues' x 'cue_vector_dimensions'
-        with dimensions 'outcome_vector dimensions' and 'cue_vector_dimensions'. You can lookup the weights
-        between a vector dimension and a cue with ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
-        'cue_vector_dimensions': cue_vector_dimension}]`` or ``weights.loc[vector_dimension].loc[cue_vector_dimension]``.
+        run (real to real, binary to real, real to binary or binary to binary).
+        The dimension names reflect this in the weights. They are a combination
+        of 'outcomes' x 'outcome_vector_dimensions' and 'cues' x
+        'cue_vector_dimensions'
+        with dimensions 'outcome_vector dimensions' and
+        'cue_vector_dimensions'. You can lookup the weights
+        between a vector dimension and a cue with
+        ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
+        'cue_vector_dimensions': cue_vector_dimension}]`` or
+        ``weights.loc[vector_dimension].loc[cue_vector_dimension]``.
 
     """
     if cue_vectors is None and outcome_vectors is None:
@@ -98,27 +104,27 @@ def wh(events, eta, *, cue_vectors=None, outcome_vectors=None,
                        events_per_temporary_file=events_per_temporary_file)
     elif cue_vectors is not None and outcome_vectors is not None:
         return _wh_real_to_real(events, eta, cue_vectors, outcome_vectors,
-                         method=method, weights=weights, n_jobs=n_jobs,
-                         n_outcomes_per_job=n_outcomes_per_job,
-                         remove_duplicates=remove_duplicates, verbose=verbose,
-                         temporary_directory=temporary_directory,
-                         events_per_temporary_file=events_per_temporary_file)
+                                method=method, weights=weights, n_jobs=n_jobs,
+                                n_outcomes_per_job=n_outcomes_per_job,
+                                remove_duplicates=remove_duplicates, verbose=verbose,
+                                temporary_directory=temporary_directory,
+                                events_per_temporary_file=events_per_temporary_file)
     elif cue_vectors is not None and outcome_vectors is None:
         lambda_ = 1.0
         betas = (eta, eta)
         return _wh_real_to_binary(events, betas, lambda_, cue_vectors,
-                         method=method, weights=weights, n_jobs=n_jobs,
-                         n_outcomes_per_job=n_outcomes_per_job,
-                         remove_duplicates=remove_duplicates, verbose=verbose,
-                         temporary_directory=temporary_directory,
-                         events_per_temporary_file=events_per_temporary_file)
+                                  method=method, weights=weights, n_jobs=n_jobs,
+                                  n_outcomes_per_job=n_outcomes_per_job,
+                                  remove_duplicates=remove_duplicates, verbose=verbose,
+                                  temporary_directory=temporary_directory,
+                                  events_per_temporary_file=events_per_temporary_file)
     elif cue_vectors is None and outcome_vectors is not None:
         return _wh_binary_to_real(events, eta, outcome_vectors,
-                         method=method, weights=weights, n_jobs=n_jobs,
-                         n_outcomes_per_job=n_outcomes_per_job,
-                         remove_duplicates=remove_duplicates, verbose=verbose,
-                         temporary_directory=temporary_directory,
-                         events_per_temporary_file=events_per_temporary_file)
+                                  method=method, weights=weights, n_jobs=n_jobs,
+                                  n_outcomes_per_job=n_outcomes_per_job,
+                                  remove_duplicates=remove_duplicates, verbose=verbose,
+                                  temporary_directory=temporary_directory,
+                                  events_per_temporary_file=events_per_temporary_file)
     # The if statements above are covering all cases.
 
 
@@ -273,12 +279,14 @@ def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
         weights_dict = weights
         shape = (len(outcome_dims), len(cue_dims))
         weights = xr.DataArray(np.zeros(shape), attrs=attrs,
-                               coords={'outcome_vector_dimensions': outcome_dims, 'cue_vector_dimensions': cue_dims},
+                               coords={'outcome_vector_dimensions': outcome_dims,
+                                       'cue_vector_dimensions': cue_dims},
                                dims=('outcome_vector_dimensions', 'cue_vector_dimensions'))
 
         for outcome_dim in outcome_dims:
             for cue_dim in cue_dims:
-                weights.loc[{"outcome_vector_dimensions": outcome_dim, "cue_vector_dimensions": cue_dim}] = weights_dict[outcome_dim][cue_dim]
+                weights.loc[{"outcome_vector_dimensions": outcome_dim,
+                             "cue_vector_dimensions": cue_dim}] = weights_dict[outcome_dim][cue_dim]
     else:
         weights.attrs = attrs
 
@@ -286,10 +294,10 @@ def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
 
 
 def _wh_binary_to_real(events, eta, outcome_vectors, *,
-        method='openmp', weights=None,
-        n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
-        verbose=False, temporary_directory=None,
-        events_per_temporary_file=10000000):
+                       method='openmp', weights=None,
+                       n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
+                       verbose=False, temporary_directory=None,
+                       events_per_temporary_file=10000000):
     """
     Calculate the weights for all events using the Widrow-Hoff learning rule
     and training as outcomes on sematic vectors in semantics.
@@ -352,16 +360,11 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
 
     # preprocessing
     n_events, cues, outcomes_from_events = count.cues_outcomes(events,
-                                                   number_of_processes=n_jobs,
-                                                   verbose=verbose)
-
-    # TODO: check for having exactly one legal outcome in each event
-    # for now: crudely, just check the number of events and number of outcomes are equal
-    assert n_events == sum(outcomes_from_events.values()), "there should be exactly one outcome per event"
-
+                                                               number_of_processes=n_jobs,
+                                                               verbose=verbose)
     cues = list(cues.keys())
     outcomes_from_events = list(outcomes_from_events.keys())
-    outcomes = list(outcome_vectors.coords['outcomes'].data)
+    outcomes = outcome_vectors.coords['outcomes'].values.tolist()
     cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
     outcome_map = OrderedDict(((outcome, ii) for ii, outcome in enumerate(outcomes)))
 
@@ -420,7 +423,7 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
                                                      weights,
                                                      n_outcomes_per_job,
                                                      n_jobs)
-        #elif method == 'threading':
+        # elif method == 'threading':
         #    part_lists = ndl.slice_list(all_outcome_indices, n_outcomes_per_job)
 
         #    working_queue = Queue(len(part_lists))
@@ -464,16 +467,16 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
                         __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
-    weights = xr.DataArray(weights, [('outcome_vector_dimensions', outcome_vectors.coords['outcome_vector_dimensions']), ('cues', cues)],
-                           attrs=attrs)
+    weights = xr.DataArray(weights, [('outcome_vector_dimensions', outcome_vectors.coords['outcome_vector_dimensions']),
+                                     ('cues', cues)], attrs=attrs)
     return weights
 
 
 def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
-        method='openmp', weights=None,
-        n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
-        verbose=False, temporary_directory=None,
-        events_per_temporary_file=10000000):
+                       method='openmp', weights=None,
+                       n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
+                       verbose=False, temporary_directory=None,
+                       events_per_temporary_file=10000000):
     """
     Calculate the weights for all events using the Widrow-Hoff learning rule
     and training as cue_vectors on outcomes.
@@ -533,8 +536,8 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
 
     # preprocessing
     n_events, cues_from_events, outcomes_from_events = count.cues_outcomes(events,
-                                                   number_of_processes=n_jobs,
-                                                   verbose=verbose)
+                                                                           number_of_processes=n_jobs,
+                                                                           verbose=verbose)
 
     cues_from_events = list(cues_from_events.keys())
     cues = list(cue_vectors.coords['cues'].data)
@@ -576,9 +579,9 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
     else:
         raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
 
-    weights = xr.DataArray(weights, coords={'outcomes': outcomes,
-        'cue_vector_dimensions': cue_vector_dimensions},
-        dims=('outcomes', 'cue_vector_dimensions'))
+    weights = xr.DataArray(weights,
+                           coords={'outcomes': outcomes, 'cue_vector_dimensions': cue_vector_dimensions},
+                           dims=('outcomes', 'cue_vector_dimensions'))
     del shape, cue_vector_dimensions
 
     with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
@@ -600,13 +603,13 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
         if method == 'openmp':
             beta1, beta2 = betas
             wh_parallel.learn_inplace_real_to_binary(binary_files,
-                                      beta1,
-                                      beta2,
-                                      lambda_,
-                                      cue_vectors.data,
-                                      weights.data,
-                                      n_outcomes_per_job,
-                                      n_jobs)
+                                                     beta1,
+                                                     beta2,
+                                                     lambda_,
+                                                     cue_vectors.data,
+                                                     weights.data,
+                                                     n_outcomes_per_job,
+                                                     n_jobs)
 
         weights = weights.reset_coords(drop=True)
 
@@ -621,19 +624,18 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
         attrs_to_be_updated = None
 
     attrs = ndl._attributes(events, number_events, 'cue_vectors', betas, lambda_, cpu_time, wall_time,
-                        __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
+                            __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
     weights.attrs = attrs
     return weights
 
 
-
 def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
-        method='openmp', weights=None,
-        n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
-        verbose=False, temporary_directory=None,
-        events_per_temporary_file=10000000):
+                     method='openmp', weights=None,
+                     n_jobs=8, n_outcomes_per_job=10, remove_duplicates=None,
+                     verbose=False, temporary_directory=None,
+                     events_per_temporary_file=10000000):
     """
     Calculate the weights for all events using the Widrow-Hoff learning rule
     and training as outcomes on sematic vectors in semantics.
@@ -704,8 +706,8 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
 
     # preprocessing
     n_events, cues_from_events, outcomes_from_events = count.cues_outcomes(events,
-                                                   number_of_processes=n_jobs,
-                                                   verbose=verbose)
+                                                                           number_of_processes=n_jobs,
+                                                                           verbose=verbose)
 
     cues_from_events = list(cues_from_events.keys())
     cues = list(cue_vectors.coords['cues'].data)
@@ -735,9 +737,9 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
     # initialize weights
     if weights is None:
         weights = np.ascontiguousarray(np.zeros(shape, dtype=np.float64, order='C'))
-        weights = xr.DataArray(weights, coords={'outcome_vector_dimensions':
-            outcome_dims, 'cue_vector_dimensions': cue_dims},
-            dims=('outcome_vector_dimensions', 'cue_vector_dimensions'))
+        weights = xr.DataArray(weights,
+                               coords={'outcome_vector_dimensions': outcome_dims, 'cue_vector_dimensions': cue_dims},
+                               dims=('outcome_vector_dimensions', 'cue_vector_dimensions'))
         del cue_dims, outcome_dims
     elif isinstance(weights, xr.DataArray):
         if not weights.shape == shape:
@@ -793,35 +795,35 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
             # row bind both in the end. Do we? Yes, and we can use this to
             # multiprocess the numpy computation.
     elif method in ('openmp', 'threading'):
-      with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
-        number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
-                                                             outcome_map, overwrite=True,
-                                                             number_of_processes=n_jobs,
-                                                             events_per_file=events_per_temporary_file,
-                                                             remove_duplicates=remove_duplicates,
-                                                             verbose=verbose)
-        assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
-        binary_files = [os.path.join(binary_path, binary_file)
-                        for binary_file in os.listdir(binary_path)
-                        if os.path.isfile(os.path.join(binary_path, binary_file))]
-        # sort binary files as they were created
-        binary_files.sort(key=lambda filename: int(os.path.basename(filename)[9:-4]))
-        if verbose:
-            print('start learning...')
-        # learning
-        if method == 'openmp':
-            wh_parallel.learn_inplace_real_to_real(binary_files,
-                                      eta,
-                                      cue_vectors.data,
-                                      outcome_vectors.data,
-                                      weights.data,
-                                      n_outcomes_per_job,
-                                      n_jobs)
-        else:
-            # TODO: implement threading
-            raise ValueError('method needs to be "numpy" or "openmp"')
+        with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
+            number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
+                                                                 outcome_map, overwrite=True,
+                                                                 number_of_processes=n_jobs,
+                                                                 events_per_file=events_per_temporary_file,
+                                                                 remove_duplicates=remove_duplicates,
+                                                                 verbose=verbose)
+            assert n_events == number_events, (str(n_events) + ' ' + str(number_events))
+            binary_files = [os.path.join(binary_path, binary_file)
+                            for binary_file in os.listdir(binary_path)
+                            if os.path.isfile(os.path.join(binary_path, binary_file))]
+            # sort binary files as they were created
+            binary_files.sort(key=lambda filename: int(os.path.basename(filename)[9:-4]))
+            if verbose:
+                print('start learning...')
+            # learning
+            if method == 'openmp':
+                wh_parallel.learn_inplace_real_to_real(binary_files,
+                                                       eta,
+                                                       cue_vectors.data,
+                                                       outcome_vectors.data,
+                                                       weights.data,
+                                                       n_outcomes_per_job,
+                                                       n_jobs)
+            else:
+                # TODO: implement threading
+                raise ValueError('method needs to be "numpy" or "openmp"')
 
-        weights = weights.reset_coords(drop=True)
+            weights = weights.reset_coords(drop=True)
     else:
         raise ValueError('method needs to be "numpy" or "openmp"')
 
