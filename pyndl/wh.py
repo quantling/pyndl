@@ -9,7 +9,7 @@ from collections import defaultdict, OrderedDict
 import copy
 import getpass
 import os
-from queue import Queue
+# from queue import Queue
 import socket
 import sys
 import tempfile
