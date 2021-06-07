@@ -25,6 +25,7 @@ ETA = 0.01
 
 CONTINUE_SPLIT_POINT = 3
 
+
 @pytest.mark.nolinux
 def test_consistency_wh():
     events = FILE_PATH_WH

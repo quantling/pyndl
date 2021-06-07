@@ -5,8 +5,14 @@ import numpy as np
 from scipy import stats
 # from numba import jit
 
-# from corr_parallel import low_level_corr
-from . import corr_parallel
+# from corr_parallel import low_level_corr on linux
+if sys.platform.startswith('linux'):
+    from . import corr_parallel
+elif sys.platform.startswith('win32'):
+    pass
+elif sys.platform.startswith('darwin'):
+    pass
+
 
 # np.random.seed(20190507)
 
@@ -79,6 +85,9 @@ def manual_corr(semantics, activations):
     ...
 
     """
+    if not sys.platform.startswith('linux'):
+        raise NotImplementedError("OpenMP is linux only at the moment.")
+
     assert semantics.shape[0] == activations.shape[0], ("number of vector dimensions in semantics and activations"
                                                         "need to be the same")
     n_outcomes = semantics.shape[1]
