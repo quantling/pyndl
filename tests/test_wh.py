@@ -25,7 +25,7 @@ ETA = 0.01
 
 CONTINUE_SPLIT_POINT = 3
 
-
+@pytest.mark.nolinux
 def test_consistency_wh():
     events = FILE_PATH_WH
 
@@ -71,6 +71,7 @@ def test_consistency_wh():
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+@pytest.mark.nolinux
 @pytest.mark.runslow
 def test_real_to_real_wh_large():
     events = FILE_PATH_WH
@@ -103,6 +104,7 @@ def test_real_to_real_wh_large():
     assert np.allclose(weights_openmp.data, weights_split_small.data)
 
 
+@pytest.mark.nolinux
 @pytest.mark.runslow
 def test_binary_to_real_wh_continue_learning():
     cue_vectors = xr.DataArray(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float),
@@ -137,6 +139,7 @@ def test_binary_to_real_wh_continue_learning():
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+@pytest.mark.nolinux
 def test_binary_to_real_wh():
     cue_vectors = xr.DataArray(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float),
                                dims=('cues', 'cue_vector_dimensions'),
@@ -187,6 +190,7 @@ def test_binary_to_real_wh():
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+@pytest.mark.nolinux
 def test_real_to_binary_wh():
     cue_vectors = xr.DataArray(np.array([[0.2, 0.11, 0.5, 0, 0], [0, 0, 0.5, 0.11, 0.2], [0.2, 0, 0, 0, 0.2]]),
                                dims=('cues', 'cue_vector_dimensions'),
@@ -217,6 +221,7 @@ def test_real_to_binary_wh():
     assert len(unequal) == 0  # pylint: disable=len-as-condition
 
 
+@pytest.mark.nolinux
 def test_continue_learning_wh():
     events = FILE_PATH_WH
 
