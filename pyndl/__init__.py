@@ -15,9 +15,10 @@ from pip._vendor import pkg_resources
 
 
 __author__ = ('Konstantin Sering, Marc Weitz, '
-              'David-Elias Künstle, Lennard Schneider')
+              'David-Elias Künstle, Lennard Schneider, '
+              'Elnaz Shafaei-Bajestan')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.8.1'
+__version__ = '0.8.2'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '

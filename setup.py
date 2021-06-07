@@ -36,14 +36,12 @@ ndl_openmp = Extension("pyndl.ndl_openmp", ["pyndl/ndl_openmp.pyx"],
 # TODO: create versions that do not depend on openmp for corr, wh
 corr_parallel = Extension("pyndl.corr_parallel", ["pyndl/corr_parallel.pyx"],
                        extra_compile_args=['-fopenmp'], extra_link_args=['-fopenmp'])
-wh_parallel = Extension("pyndl.wh_parallel", ["pyndl/wh_parallel.pyx"],
-                       extra_compile_args=['-fopenmp'], extra_link_args=['-fopenmp'])
 # by giving ``cython`` as ``install_requires`` this will be ``cythonized``
 # automagically
 
 ext_modules = []
 if sys.platform.startswith('linux'):
-    ext_modules = [ndl_parallel, ndl_openmp, corr_parallel, wh_parallel]
+    ext_modules = [ndl_parallel, ndl_openmp, corr_parallel]
 elif sys.platform.startswith('win32'):
     ext_modules = [ndl_parallel] # skip openmp installation on windows for now
 elif sys.platform.startswith('darwin'):

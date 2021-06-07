@@ -24,9 +24,17 @@ import xarray as xr
 from . import __version__
 from . import count
 from . import preprocess
-from . import wh_parallel
 from . import io
 from . import ndl
+
+# conditional import as openmp is only compiled for linux
+if sys.platform.startswith('linux'):
+    from . import ndl_openmp
+elif sys.platform.startswith('win32'):
+    pass
+elif sys.platform.startswith('darwin'):
+    pass
+
 
 WeightDict = ndl.WeightDict
 
@@ -417,12 +425,15 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
             print('start learning...')
         # learning
         if method == 'openmp':
-            wh_parallel.learn_inplace_binary_to_real(binary_files,
-                                                     eta,
-                                                     outcome_vectors.data,
-                                                     weights,
-                                                     n_outcomes_per_job,
-                                                     n_jobs)
+            if not sys.platform.startswith('linux'):
+                raise NotImplementedError("OpenMP is linux only at the moment."
+                                          "Use method='threading' instead.")
+            ndl_openmp.learn_inplace_binary_to_real(binary_files,
+                                                    eta,
+                                                    outcome_vectors.data,
+                                                    weights,
+                                                    n_outcomes_per_job,
+                                                    n_jobs)
         # elif method == 'threading':
         #    part_lists = ndl.slice_list(all_outcome_indices, n_outcomes_per_job)
 
@@ -601,15 +612,18 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
             print('start learning...')
         # learning
         if method == 'openmp':
+            if not sys.platform.startswith('linux'):
+                raise NotImplementedError("OpenMP is linux only at the moment."
+                                          "Use method='threading' instead.")
             beta1, beta2 = betas
-            wh_parallel.learn_inplace_real_to_binary(binary_files,
-                                                     beta1,
-                                                     beta2,
-                                                     lambda_,
-                                                     cue_vectors.data,
-                                                     weights.data,
-                                                     n_outcomes_per_job,
-                                                     n_jobs)
+            ndl_openmp.learn_inplace_real_to_binary(binary_files,
+                                                    beta1,
+                                                    beta2,
+                                                    lambda_,
+                                                    cue_vectors.data,
+                                                    weights.data,
+                                                    n_outcomes_per_job,
+                                                    n_jobs)
 
         weights = weights.reset_coords(drop=True)
 
@@ -812,16 +826,19 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
                 print('start learning...')
             # learning
             if method == 'openmp':
-                wh_parallel.learn_inplace_real_to_real(binary_files,
-                                                       eta,
-                                                       cue_vectors.data,
-                                                       outcome_vectors.data,
-                                                       weights.data,
-                                                       n_outcomes_per_job,
-                                                       n_jobs)
+                if not sys.platform.startswith('linux'):
+                    raise NotImplementedError("OpenMP is linux only at the moment."
+                                              "Use method='threading' instead.")
+                ndl_openmp.learn_inplace_real_to_real(binary_files,
+                                                      eta,
+                                                      cue_vectors.data,
+                                                      outcome_vectors.data,
+                                                      weights.data,
+                                                      n_outcomes_per_job,
+                                                      n_jobs)
             else:
                 # TODO: implement threading
-                raise ValueError('method needs to be "numpy" or "openmp"')
+                raise ValueError('TODO: for now: method needs to be "numpy" or "openmp"')
 
             weights = weights.reset_coords(drop=True)
     else:
