@@ -9,15 +9,15 @@ from cython.parallel cimport parallel, prange
 @cython.cdivision(True)
 @cython.boundscheck(False) # turn off bounds-checking for entire function
 @cython.wraparound(False)  # turn off negative index wrapping for entire function
-def low_level_corr(semantics_py,
-                   activations_py,
-                   np.ndarray[dtype_t, ndim=1] semantics_means,
-                   np.ndarray[dtype_t, ndim=1] semantics_stds,
-                   np.ndarray[dtype_t, ndim=1] activations_means,
-                   np.ndarray[dtype_t, ndim=1] activations_stds,
-                   *,
-                   unsigned int n_jobs=30,
-                   unsigned int chunksize=10):
+def correlation(semantics_py,
+                activations_py,
+                np.ndarray[dtype_t, ndim=1] semantics_means,
+                np.ndarray[dtype_t, ndim=1] semantics_stds,
+                np.ndarray[dtype_t, ndim=1] activations_means,
+                np.ndarray[dtype_t, ndim=1] activations_stds,
+                *,
+                unsigned int n_jobs=30,
+                unsigned int chunksize=10):
     """
     The following formula is implemented here.
 
