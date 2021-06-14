@@ -110,4 +110,3 @@ def correlation(semantics, activations, *, verbose=False, allow_nan=False):
         print(f"time needed for correlations:  {time.time() - start_time}")
 
     return correlations
-
