@@ -2,6 +2,7 @@
 
 # pylint: disable=C0111
 
+import pytest
 import numpy as np
 
 from pyndl import correlation
