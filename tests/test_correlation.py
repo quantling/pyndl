@@ -6,6 +6,8 @@ import numpy as np
 
 from pyndl import correlation
 
+
+@pytest.mark.nolinux
 def test_correlation():
     np.random.seed(20190507)
 
