@@ -9,9 +9,9 @@ from pyndl import correlation
 def test_correlation():
     np.random.seed(20190507)
 
-    n_vec_dims = 400
-    n_outcomes = 500
-    n_cues = 200
+    n_vec_dims = 40
+    n_outcomes = 50
+    n_cues = 20
     n_events = 120
 
     semantics = np.asfortranarray(np.random.random((n_vec_dims, n_outcomes)))

@@ -34,7 +34,7 @@ ndl_parallel = Extension("pyndl.ndl_parallel", ["pyndl/ndl_parallel.pyx"])
 ndl_openmp = Extension("pyndl.ndl_openmp", ["pyndl/ndl_openmp.pyx"],
                        extra_compile_args=['-fopenmp'], extra_link_args=['-fopenmp'])
 # TODO: create versions that do not depend on openmp for corr, wh
-corr_parallel = Extension("pyndl.corr_parallel", ["pyndl/corr_parallel.pyx"],
+corr_parallel = Extension("pyndl.correlation_openmp", ["pyndl/correlation_openmp.pyx"],
                        extra_compile_args=['-fopenmp'], extra_link_args=['-fopenmp'])
 # by giving ``cython`` as ``install_requires`` this will be ``cythonized``
 # automagically

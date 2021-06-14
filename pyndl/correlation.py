@@ -1,3 +1,4 @@
+import sys
 import time
 
 import numpy as np
@@ -5,7 +6,7 @@ import numpy as np
 from scipy import stats
 
 if sys.platform.startswith('linux'):
-    from . import correlaiton_openmp
+    from . import correlation_openmp
 elif sys.platform.startswith('win32'):
     pass
 elif sys.platform.startswith('darwin'):
@@ -95,9 +96,9 @@ def correlation(semantics, activations, *, verbose=False, allow_nan=False):
         print(f"time needed for stds and means:  {time.time() - start_time}")
 
     if not allow_nan:
-        if np.any(semantics_stds == 0) or np.any(np.isna(semantics_stds)):
+        if np.any(semantics_stds == 0) or np.any(np.isnan(semantics_stds)):
             raise ValueError('Standard deviations of semantics are not different to zero or nan.')
-        if np.any(activations_stds == 0) or np.any(np.isna(activations_stds)):
+        if np.any(activations_stds == 0) or np.any(np.isnan(activations_stds)):
             raise ValueError('Standard deviations of activations are not different to zero or nan.')
 
     if verbose:
