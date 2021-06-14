@@ -5,16 +5,14 @@
 
 from collections import defaultdict, OrderedDict
 import os
-import time
 import tempfile
-import copy
 
 import numpy as np
 import xarray as xr
 import pandas as pd
 import pytest
 
-from pyndl import ndl, count, io, wh
+from pyndl import ndl, count, wh
 
 TEST_ROOT = os.path.join(os.path.pardir, os.path.dirname(__file__))
 FILE_PATH_WH = os.path.join(TEST_ROOT, "resources/event_file_wh.tab.gz")
@@ -39,7 +37,7 @@ def test_consistency_wh():
                                    coords={'outcomes': ['A', 'B', 'C', 'D'],
                                            'outcome_vector_dimensions': ['o_dim1', 'o_dim2']})
 
-    weights_dict = wh.dict_wh(events, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors)
+    _ = wh.dict_wh(events, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors)
     weights = wh.dict_wh(events, ETA, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors,
                          make_data_array=True, verbose=True)
 

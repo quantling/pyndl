@@ -13,7 +13,7 @@ import os
 import socket
 import sys
 import tempfile
-import threading
+# import threading
 import time
 
 import cython
@@ -213,21 +213,18 @@ def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
         attrs_to_update = weights.attrs
     elif isinstance(weights, xr.DataArray):
         raise NotImplementedError('initilizing with a xr.DataArray is not supported yet.')
-        weights_ini = weights
-        attrs_to_update = weights_ini.attrs
-        coords = weights_ini.coords
-        weights = WeightDict()
-        for outcome_index, outcome in enumerate(coords['outcomes'].values):
-            for cue_index, cue in enumerate(coords['cues'].values):
-                weights[outcome][cue] = weights_ini.item((outcome_index, cue_index))
+        #weights_ini = weights
+        #attrs_to_update = weights_ini.attrs
+        #coords = weights_ini.coords
+        #weights = WeightDict()
+        #for outcome_index, outcome in enumerate(coords['outcomes'].values):
+        #    for cue_index, cue in enumerate(coords['cues'].values):
+        #        weights[outcome][cue] = weights_ini.item((outcome_index, cue_index))
     elif not isinstance(weights, defaultdict):
         raise ValueError('weights needs to be either defaultdict or None')
 
     if not inplace:
         weights = copy.deepcopy(weights)
-
-    if outcome_vectors is None:
-        all_outcomes = set(weights.keys())
 
     if isinstance(events, str):
         events = io.events_from_file(events)
