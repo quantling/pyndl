@@ -15,6 +15,7 @@ import gzip
 import itertools
 import multiprocessing
 import sys
+import warnings
 
 
 CuesOutcomes = namedtuple('CuesOutcomes', 'n_events, cues, outcomes')
@@ -50,7 +51,7 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=False):
 
 
 def cues_outcomes(event_file_name,
-                  *, n_jobs=2, verbose=False):
+                  *, n_jobs=2, number_of_processes=None, verbose=False):
     """
     Counts cues and outcomes in event_file_name using n_jobs
     processes.
@@ -60,6 +61,11 @@ def cues_outcomes(event_file_name,
     (n_events, cues, outcomes) : (int, collections.Counter, collections.Counter)
 
     """
+    if number_of_processes is not None:
+        warnings.warn("Parameter `number_of_processes` is renamed to `n_jobs`. The old name "
+                      "will stop working with v0.9.0.",
+                      DeprecationWarning, stacklevel=2)
+        n_jobs = number_of_processes
     with multiprocessing.Pool(n_jobs) as pool:
         step = n_jobs
         results = pool.starmap(_job_cues_outcomes,
@@ -121,7 +127,7 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
 
 
 def words_symbols(corpus_file_name,
-                  *, n_jobs=2, lower_case=False, verbose=False):
+                  *, n_jobs=2, number_of_processes=None, lower_case=False, verbose=False):
     """
     Counts words and symbols in corpus_file_name using n_jobs
     processes.
@@ -131,6 +137,11 @@ def words_symbols(corpus_file_name,
     (words, symbols) : (collections.Counter, collections.Counter)
 
     """
+    if number_of_processes is not None:
+        warnings.warn("Parameter `number_of_processes` is renamed to `n_jobs`. The old name "
+                      "will stop working with v0.9.0.",
+                      DeprecationWarning, stacklevel=2)
+        n_jobs = number_of_processes
     with multiprocessing.Pool(n_jobs) as pool:
         step = n_jobs
         results = pool.starmap(_job_words_symbols, ((corpus_file_name,

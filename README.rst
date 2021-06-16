@@ -2,12 +2,8 @@
 Pyndl - Naive Discriminative Learning in Python
 ===============================================
 
-.. image:: https://travis-ci.org/quantling/pyndl.svg?branch=master
-    :target: https://travis-ci.org/quantling/pyndl?branch=master
-
-.. image:: https://landscape.io/github/quantling/pyndl/master/landscape.svg?style=flat
-    :target: https://landscape.io/github/quantling/pyndl/master
-    :alt: Code Health
+.. image:: https://travis-ci.com/quantling/pyndl.svg?branch=master
+    :target: https://travis-ci.com/quantling/pyndl
 
 .. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
@@ -18,8 +14,8 @@ Pyndl - Naive Discriminative Learning in Python
 .. image:: https://img.shields.io/github/license/quantling/pyndl.svg
     :target: https://github.com/quantling/pyndl/blob/master/LICENSE.txt
 
-.. image:: https://zenodo.org/badge/80022085.svg
-    :target: https://zenodo.org/badge/latestdoi/80022085
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.597964.svg
+   :target: https://doi.org/10.5281/zenodo.597964
 
 *pyndl* is an implementation of Naive Discriminative Learning in Python. It was
 created to analyse huge amounts of text file corpora. Especially, it allows to
@@ -80,3 +76,11 @@ contributers have a look at `Github's Contributor summary
 
 Currently, it is maintained by `Konstantin Sering <https://github.com/derNarr>`_
 and `Marc Weitz <https://github.com/trybnetic>`_.
+
+
+Acknowledgments
+===============
+This research was supported by an ERC advanced Grant (no. 742545) and by the
+Alexander von Humboldt Professorship awarded to R. H. Baayen and by the
+University of Tübingen.
+

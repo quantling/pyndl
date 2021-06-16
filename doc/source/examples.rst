@@ -198,7 +198,7 @@ weight matrix by specifying the ``weight`` argument:
     Coordinates:
       * outcomes  (outcomes) <U6 ...
       * cues      (cues) <U2 ...
-    Attributes:
+    Attributes: ...
     ...
 
 As you may have noticed already, :py:mod:`pyndl.ndl.ndl` provides you with meta
@@ -208,8 +208,8 @@ moment of your calculations:
 
 .. code-block:: python
 
-   >>> weights2.attrs  # doctest: +ELLIPSIS
-   OrderedDict(...)
+   >>> print('Attributes: ' + str(weights2.attrs))  # doctest: +ELLIPSIS
+   Attributes: ...
 
 
 pyndl.ndl.dict_ndl
