@@ -7,9 +7,9 @@ git:
   quiet: true
 
 python:
+  - 3.9
   - 3.8
   - 3.7
-  - 3.6
 
 install:
   - pip3 install --upgrade pip  # all three OSes agree about 'pip3'

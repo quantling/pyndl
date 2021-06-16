@@ -103,8 +103,8 @@ def test_exceptions():
 
     with pytest.raises(ValueError) as e_info:
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading',
-                len_sublists=-1)
-        assert e_info == "'len_sublists' must be larger then one"
+                n_outcomes_per_job=-1)
+        assert e_info == "'n_outcomes_per_job' must be larger then one"
 
     with pytest.raises(ValueError) as e_info:
         ndl.dict_ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, make_data_array="magic")
@@ -416,7 +416,7 @@ def test_compare_time_dict_inplace_parallel_thread():
 
     result_thread_ndl, duration_parallel = clock(ndl.ndl,
                                                  (file_path, ALPHA, BETAS, LAMBDA_),
-                                                 number_of_threads=4, method='threading')
+                                                 n_jobs=4, method='threading')
 
     assert len(result_dict_ndl) == len(result_thread_ndl)
 

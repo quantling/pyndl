@@ -1,6 +1,8 @@
 others_code/
 pyndl/ndl_parallel.c
 pyndl/ndl_openmp.c
+pyndl/corr_parallel.c
+pyndl/wh_parallel.c
 latex/
 *.pyc
 __pycache__/
