@@ -28,8 +28,13 @@ from . import preprocess
 from . import ndl_parallel
 from . import io
 
-if not sys.platform.startswith('darwin'):
+# conditional import as openmp is only compiled for linux
+if sys.platform.startswith('linux'):
     from . import ndl_openmp
+elif sys.platform.startswith('win32'):
+    pass
+elif sys.platform.startswith('darwin'):
+    pass
 
 
 warnings.simplefilter('always', DeprecationWarning)
@@ -45,7 +50,8 @@ def events_from_file(event_path):
 
 def ndl(events, alpha, betas, lambda_=1.0, *,
         method='openmp', weights=None,
-        number_of_threads=8, len_sublists=10, remove_duplicates=None,
+        number_of_threads=None, n_jobs=8, len_sublists=None, n_outcomes_per_job=10,
+        remove_duplicates=None,
         verbose=False, temporary_directory=None,
         events_per_temporary_file=10000000):
     """
@@ -68,10 +74,10 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     method : {'openmp', 'threading'}
     weights : None or xarray.DataArray
         the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
-    number_of_threads : int
+    n_jobs : int
         a integer giving the number of threads in which the job should
         executed
-    len_sublists : int
+    n_outcomes_per_job : int
         a integer giving the length of sublists generated from all outcomes
     remove_duplicates : {None, True, False}
         if None though a ValueError when the same cue is present multiple times
@@ -96,6 +102,17 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     """
 
+    if number_of_threads is not None:
+        warnings.warn("Parameter `number_of_threads` is renamed to `n_jobs`. The old name "
+                      "will stop working with v0.9.0.",
+                      DeprecationWarning, stacklevel=2)
+        n_jobs = number_of_threads
+    if len_sublists is not None:
+        warnings.warn("Parameter `len_sublists` is renamed to `n_outcomes_per_job`. The old name "
+                      "will stop working with v0.9.0.",
+                      DeprecationWarning, stacklevel=2)
+        n_outcomes_per_job = len_sublists
+
     if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
         raise ValueError("remove_duplicates must be None, True or False")
     if not isinstance(events, str):
@@ -107,7 +124,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     # preprocessing
     n_events, cues, outcomes = count.cues_outcomes(events,
-                                                   number_of_processes=number_of_threads,
+                                                   number_of_processes=n_jobs,
                                                    verbose=verbose)
     cues = list(cues.keys())
     outcomes = list(outcomes.keys())
@@ -155,7 +172,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
         number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
                                                              outcome_map, overwrite=True,
-                                                             number_of_processes=number_of_threads,
+                                                             number_of_processes=n_jobs,
                                                              events_per_file=events_per_temporary_file,
                                                              remove_duplicates=remove_duplicates,
                                                              verbose=verbose)
@@ -169,15 +186,21 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
             print('start learning...')
         # learning
         if method == 'openmp':
-            if sys.platform.startswith('darwin'):
-                raise NotImplementedError("OpenMP does not work under MacOs yet."
+            if not sys.platform.startswith('linux'):
+                raise NotImplementedError("OpenMP is linux only at the moment."
                                           "Use method='threading' instead.")
-            ndl_openmp.learn_inplace(binary_files, weights, alpha,
-                                     beta1, beta2, lambda_,
-                                     np.array(all_outcome_indices, dtype=np.uint32),
-                                     len_sublists, number_of_threads)
+            ndl_openmp.learn_inplace_binary_to_binary(binary_files,
+                                                      alpha,
+                                                      beta1,
+                                                      beta2,
+                                                      lambda_,
+                                                      weights,
+                                                      np.array(all_outcome_indices,
+                                                               dtype=np.uint32),
+                                                      n_outcomes_per_job,
+                                                      n_jobs)
         elif method == 'threading':
-            part_lists = slice_list(all_outcome_indices, len_sublists)
+            part_lists = slice_list(all_outcome_indices, n_outcomes_per_job)
 
             working_queue = Queue(len(part_lists))
             threads = []
@@ -189,14 +212,19 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
                         if working_queue.empty():
                             break
                         data = working_queue.get()
-                    ndl_parallel.learn_inplace(binary_files, weights, alpha,
-                                               beta1, beta2, lambda_, data)
+                    ndl_parallel.learn_inplace_binary_to_binary(binary_files,
+                                                                alpha,
+                                                                beta1,
+                                                                beta2,
+                                                                lambda_,
+                                                                weights,
+                                                                data)
 
             with queue_lock:
                 for partlist in part_lists:
                     working_queue.put(np.array(partlist, dtype=np.uint32))
 
-            for _ in range(number_of_threads):
+            for _ in range(n_jobs):
                 thread = threading.Thread(target=worker)
                 thread.start()
                 threads.append(thread)
