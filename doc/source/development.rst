@@ -6,6 +6,9 @@ Development
 .. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
 
+.. image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
+    :target: https://lgtm.com/projects/g/quantling/pyndl/context:python
+
 .. image:: https://img.shields.io/github/issues/quantling/pyndl.svg
     :target: https://github.com/quantling/pyndl/issues
 
@@ -147,6 +150,7 @@ Service      Status       Config file        Description
 ===========  ===========  =================  ===========================
 Travis CI    |travis|     `.travis.yml`_     Automated testing
 Coveralls    |coveralls|                     Monitoring of test coverage
+LGTM         |lgtm|                          Monitoring code quality
 ===========  ===========  =================  ===========================
 
 .. |travis| image:: https://travis-ci.com/quantling/pyndl.svg?branch=master
@@ -154,6 +158,9 @@ Coveralls    |coveralls|                     Monitoring of test coverage
 
 .. |coveralls| image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
     :target: https://coveralls.io/github/quantling/pyndl?branch=master
+
+.. |lgtm| image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
+    :target: https://lgtm.com/projects/g/quantling/pyndl/context:python
 
 .. _.travis.yml: https://github.com/quantling/pyndl/blob/master/.travis.yml
 
