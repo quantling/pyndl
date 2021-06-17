@@ -113,6 +113,91 @@ The linting gives still a lot of complaints that need some decisions on how to
 fix them appropriately.
 
 
+Local testing with conda
+------------------------
+
+Sometimes it might be useful to test if ``pyndl`` works in a clean python
+environment. Besides ``tox`` this is possible with ``conda`` as well. The
+commands are as follows:
+
+.. code:: bash
+
+    conda create -n testpyndl
+    conda activate testpyndl
+    conda install python
+    python -c 'from pyndl import ndl; print("success")'  # this should fail
+    git clone https://github.com/quantling/pyndl.git
+    pip install pyndl
+    python -c 'from pyndl import ndl; print("success")'  # this should succeed
+    conda deactivate
+    conda env remove -n testpyndl
+
+
+Memory profiling
+----------------
+
+Sometimes it is useful to monitory the memory footprint of the python process.
+This can be achieved by using ``memory_profiler``
+(https://pypi.python.org/pypi/memory_profiler).
+
+
+CPU profiling of C extensions
+-----------------------------
+
+In order to profile Cython or C extensions that are invoked from python ``yep``
+is a good tool to do that. ``yep`` builds ontop of ``google-perftools``.
+(https://pypi.org/project/yep/)
+
+
+Keeping a fork in sync with master
+----------------------------------
+
+.. note::
+
+    If you have questions regarding ``git`` it is mostly a good start to read
+    up on it on github help pages, i. e.
+    https://help.github.com/articles/working-with-forks/ .
+
+If you fork the ``pyndl`` project on github.com you might want to keep it in
+sync with master. In order to do so, you need to setup a remote repository
+within a local ``pyndl`` clone of you fork. This remote repository will point
+to the original ``pyndl`` repository and is usually called ``upstream``. In
+order to do so run with a Terminal within the cloned pyndl folder:
+
+.. code:: bash
+
+    git remote add upstream https://github.com/quantling/pyndl.git
+
+After having set up the ``upstream`` repository you can manually sync your
+local repository by running:
+
+.. code:: bash
+
+    git fetch upstream
+
+In order to sync you ``master`` branch run:
+
+.. code:: bash
+
+    git checkout master
+    git merge upstream/master
+
+If the merge cannot be fast-forward, you should resolve any issue now and
+commit the manually merged files.
+
+After that you should sync you local repository with you github fork by
+running:
+
+.. code:: bash
+
+    git push
+
+Some sources with more explanation:
+
+- https://help.github.com/articles/configuring-a-remote-for-a-fork/
+- https://help.github.com/articles/syncing-a-fork/
+
+
 Building documentation
 ----------------------
 

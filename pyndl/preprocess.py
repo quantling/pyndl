@@ -583,10 +583,9 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
     number_events : int
         actual number of events written to file
 
-    Binary Format
-    -------------
-
-    ::
+    Notes
+    -----
+    The **binary format** as the following structure::
 
         8 byte header
         nr of events
