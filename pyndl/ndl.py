@@ -73,14 +73,6 @@ class WeightDict(defaultdict):
         self._attrs = OrderedDict(attrs)
 
 
-def events_from_file(event_path):
-    warnings.warn("Usage of pyndl.ndl.events_from_file is depreceated and will "
-                  "be removed in v0.6.0. Please use pyndl.io.events_from_file "
-                  "instead.",
-                  DeprecationWarning, stacklevel=2)
-    return io.events_from_file(event_path)
-
-
 def ndl(events, alpha, betas, lambda_=1.0, *,
         method='openmp', weights=None,
         number_of_threads=None, n_jobs=8, len_sublists=None, n_outcomes_per_job=10,

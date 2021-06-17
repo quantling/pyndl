@@ -9,6 +9,7 @@ represented as the outcome-cue weights.
 import multiprocessing as mp
 import ctypes
 from collections import defaultdict, OrderedDict
+import warnings
 
 import numpy as np
 import xarray as xr
@@ -17,7 +18,8 @@ from . import io
 
 
 # pylint: disable=W0621
-def activation(events, weights, n_jobs=1, remove_duplicates=None, ignore_missing_cues=False):
+def activation(events, weights, *, n_jobs=1, number_of_threads=None,
+               remove_duplicates=None, ignore_missing_cues=False):
     """
     Estimate activations for given events in event file and outcome-cue weights.
 
@@ -58,6 +60,11 @@ def activation(events, weights, n_jobs=1, remove_duplicates=None, ignore_missing
         returned if weights is instance of dict
 
     """
+    if number_of_threads is not None:
+        warnings.warn("Parameter `number_of_threads` is renamed to `n_jobs`. The old name "
+                      "will stop working with v0.9.0.",
+                      DeprecationWarning, stacklevel=2)
+        n_jobs = number_of_threads
     if isinstance(events, str):
         events = io.events_from_file(events)
 
