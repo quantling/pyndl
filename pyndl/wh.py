@@ -1,6 +1,6 @@
 """
 pyndl.wh
----------
+--------
 
 *pyndl.wh* provides functions in order to train WH models
 
