@@ -221,6 +221,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         if verbose:
             print('start learning...')
         # learning
+        if not weights.data.c_contiguous:
+            raise ValueError('weights has to be c_contiguous')
         if method == 'openmp':
             if not sys.platform.startswith('linux'):
                 raise NotImplementedError("OpenMP is linux only at the moment."

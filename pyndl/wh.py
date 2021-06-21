@@ -363,6 +363,9 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
         # TODO: convert dict to xarray here
         raise NotImplementedError('dicts are not supported yet.')
 
+    if not outcome_vectors.data.data.c_contiguous:
+        raise ValueError('outcome_vectors have to be c_contiguous')
+
     # preprocessing
     n_events, cues, outcomes_from_events = count.cues_outcomes(events,
                                                                n_jobs=n_jobs,
@@ -421,6 +424,8 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
         if verbose:
             print('start learning...')
         # learning
+        if not weights.data.c_contiguous:
+            raise ValueError('weights has to be c_contiguous')
         if method == 'openmp':
             if not sys.platform.startswith('linux'):
                 raise NotImplementedError("OpenMP is linux only at the moment."
@@ -535,8 +540,16 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
     """
     if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
         raise ValueError("remove_duplicates must be None, True or False")
+
     if not isinstance(events, str):
         raise ValueError("'events' need to be the path to a gzipped event file not {}".format(type(events)))
+
+    if type(cue_vectors) == dict:
+        # TODO: convert dict to xarray here
+        raise NotImplementedError('dicts are not supported yet.')
+
+    if not cue_vectors.data.data.c_contiguous:
+        raise ValueError('cue_vectors have to be c_contiguous')
 
     weights_ini = weights
     wall_time_start = time.perf_counter()
@@ -608,6 +621,8 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
         if verbose:
             print('start learning...')
         # learning
+        if not weights.data.data.c_contiguous:
+            raise ValueError('weights has to be c_contiguous')
         if method == 'openmp':
             if not sys.platform.startswith('linux'):
                 raise NotImplementedError("OpenMP is linux only at the moment."
@@ -715,6 +730,12 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
         # TODO: convert dict to xarray here
         raise NotImplementedError('dicts are not supported yet.')
 
+    if not cue_vectors.data.data.c_contiguous:
+        raise ValueError('cue_vectors have to be c_contiguous')
+
+    if not outcome_vectors.data.data.c_contiguous:
+        raise ValueError('outcome_vectors have to be c_contiguous')
+
     # preprocessing
     n_events, cues_from_events, outcomes_from_events = count.cues_outcomes(events,
                                                                            n_jobs=n_jobs,
@@ -767,6 +788,8 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
         raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
     del shape
 
+    if not weights.data.data.c_contiguous:
+        raise ValueError('weights has to be c_contiguous')
     if method == 'numpy':
         event_generator = io.events_from_file(events)
         number_events = 0
