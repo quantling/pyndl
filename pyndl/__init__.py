@@ -11,14 +11,15 @@ efficiently apply the Rescorla-Wagner learning rule to these corpora.
 import os
 import sys
 import multiprocessing as mp
-from pip._vendor import pkg_resources
+from importlib.metadata import requires
+from packaging.requirements import Requirement
 
 
 __author__ = ('Konstantin Sering, Marc Weitz, '
               'David-Elias Künstle, Lennard Schneider, '
               'Elnaz Shafaei-Bajestan')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.8.0'
+__version__ = '0.8.1'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '
@@ -45,8 +46,8 @@ def sysinfo():
     """
     Prints system the dependency information
     """
-    pyndl = pkg_resources.working_set.by_key["pyndl"]
-    dependencies = [r.project_name for r in pyndl.requires()]
+    dependencies = [Requirement(req).name for req in requires('pyndl')
+                    if not Requirement(req).marker]
 
     header = ("Pyndl Information\n"
               "=================\n\n")

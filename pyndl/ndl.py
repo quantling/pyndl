@@ -23,7 +23,7 @@ import pandas as pd
 import numpy as np
 import xarray as xr
 
-from . import __version__
+from . import __version__ as pyndl_version
 from . import count
 from . import preprocess
 from . import ndl_parallel
@@ -322,7 +322,7 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
                  'wall_time': _format(str(wall_time)),
                  'hostname': _format(socket.gethostname()),
                  'username': _format(getpass.getuser()),
-                 'pyndl': _format(__version__),
+                 'pyndl': _format(pyndl_version),
                  'numpy': _format(np.__version__),
                  'pandas': _format(pd.__version__),
                  'xarray': _format(xr.__version__),

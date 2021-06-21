@@ -21,7 +21,7 @@ import pandas as pd
 import numpy as np
 import xarray as xr
 
-from . import __version__
+from . import __version__ as pyndl_version
 from . import count
 from . import preprocess
 from . import io
@@ -475,8 +475,8 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
                         __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
-    weights = xr.DataArray(weights, [('outcome_vector_dimensions', outcome_vectors.coords['outcome_vector_dimensions']),
-                                     ('cues', cues)], attrs=attrs)
+    weights = xr.DataArray(weights, coords=[('outcome_vector_dimensions', outcome_vectors.coords['outcome_vector_dimensions'].data),
+                                            ('cues', cues)], attrs=attrs)
     return weights
 
 
@@ -884,7 +884,7 @@ def _attributes(event_path, number_events, eta, cpu_time,
                  'wall_time': _format(str(wall_time)),
                  'hostname': _format(socket.gethostname()),
                  'username': _format(getpass.getuser()),
-                 'pyndl': _format(__version__),
+                 'pyndl': _format(pyndl_version),
                  'numpy': _format(np.__version__),
                  'pandas': _format(pd.__version__),
                  'xarray': _format(xr.__version__),
