@@ -9,6 +9,7 @@ represented as the outcome-cue weights.
 import multiprocessing as mp
 import ctypes
 from collections import defaultdict, OrderedDict
+import warnings
 
 import numpy as np
 import xarray as xr
@@ -17,7 +18,8 @@ from . import io
 
 
 # pylint: disable=W0621
-def activation(events, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
+def activation(events, weights, *, n_jobs=1, number_of_threads=None,
+               remove_duplicates=None, ignore_missing_cues=False):
     """
     Estimate activations for given events in event file and outcome-cue weights.
 
@@ -31,7 +33,7 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
     weights : xarray.DataArray or dict[dict[float]]
         the xarray.DataArray needs to have the dimensions 'outcomes' and 'cues'
         the dictionaries hold weight[outcome][cue].
-    number_of_threads : int
+    n_jobs : int
         a integer giving the number of threads in which the job should
         executed
     remove_duplicates : {None, True, False}
@@ -58,6 +60,11 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
         returned if weights is instance of dict
 
     """
+    if number_of_threads is not None:
+        warnings.warn("Parameter `number_of_threads` is renamed to `n_jobs`. The old name "
+                      "will stop working with v0.9.0.",
+                      DeprecationWarning, stacklevel=2)
+        n_jobs = number_of_threads
     if isinstance(events, str):
         events = io.events_from_file(events)
 
@@ -87,14 +94,14 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
                                       for event_cues in events)
         # pylint: disable=W0621
         activations = _activation_matrix(list(event_cue_indices_list),
-                                         weights.values, number_of_threads)
+                                         weights.values, n_jobs)
         return xr.DataArray(activations,
                             coords={
                                 'outcomes': outcomes
                             },
                             dims=('outcomes', 'events'))
     elif isinstance(weights, dict):
-        assert number_of_threads == 1, "Estimating activations with multiprocessing is not implemented for dicts."
+        assert n_jobs == 1, "Estimating activations with multiprocessing is not implemented for dicts."
         activations = defaultdict(lambda: np.zeros(len(events)))
         events = list(events)
         for outcome, cue_dict in weights.items():
@@ -130,7 +137,7 @@ def _run_mp_activation_matrix(event_index, cue_indices):
     activations[:, event_index] = weights[:, cue_indices].sum(axis=1)
 
 
-def _activation_matrix(indices_list, weights, number_of_threads):
+def _activation_matrix(indices_list, weights, n_jobs):
     """
     Estimate activation for indices in weights
 
@@ -143,7 +150,7 @@ def _activation_matrix(indices_list, weights, number_of_threads):
         events as cue indices in weights
     weights : numpy.array
         weight matrix with shape (outcomes, cues)
-    number_of_threads : int
+    n_jobs : int
 
     Returns
     -------
@@ -151,10 +158,10 @@ def _activation_matrix(indices_list, weights, number_of_threads):
         estimated activations as matrix with shape (outcomes, events)
 
     """
-    assert number_of_threads >= 1, "Can't run with less than 1 thread"
+    assert n_jobs >= 1, "Can't run with less than 1 thread"
 
     activations_dim = (weights.shape[0], len(indices_list))
-    if number_of_threads == 1:
+    if n_jobs == 1:
         activations = np.empty(activations_dim, dtype=np.float64)
         for row, event_cues in enumerate(indices_list):
             activations[:, row] = weights[:, event_cues].sum(axis=1)
@@ -164,7 +171,7 @@ def _activation_matrix(indices_list, weights, number_of_threads):
         weights = np.ascontiguousarray(weights)
         shared_weights = mp.sharedctypes.copy(np.ctypeslib.as_ctypes(np.float64(weights)))
         initargs = (shared_weights, weights.shape, shared_activations, activations_dim)
-        with mp.Pool(number_of_threads, initializer=_init_mp_activation_matrix, initargs=initargs) as pool:
+        with mp.Pool(n_jobs, initializer=_init_mp_activation_matrix, initargs=initargs) as pool:
             pool.starmap(_run_mp_activation_matrix, enumerate(indices_list))
         activations = np.ctypeslib.as_array(shared_activations)
         activations.shape = activations_dim

@@ -5,9 +5,11 @@ from libc.stdio cimport fopen, fread, fclose, FILE
 
 from error_codes cimport ErrorCode, NO_ERROR, MAGIC_NUMBER_DOES_NOT_MATCH, VERSION_NUMBER_DOES_NOT_MATCH, INITIAL_ERROR_CODE, ERROR_CODES
 
+
 cdef unsigned int MAGIC_NUMBER = 14159265
 cdef unsigned int CURRENT_VERSION_WITH_FREQ = 215
 cdef unsigned int CURRENT_VERSION = 2048 + 215
+
 
 # run two sanity checks while loading the extension
 # 1. check

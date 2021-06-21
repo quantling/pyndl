@@ -14,7 +14,7 @@ CORPUS_RESOURCE_FILE = os.path.join(TEST_ROOT, "resources/corpus.txt")
 def test_cues_outcomes():
     n_events, cues, outcomes = count.cues_outcomes(EVENT_RESOURCE_FILE)
     n_events3, cues3, outcomes3 = count.cues_outcomes(EVENT_RESOURCE_FILE,
-                                                      number_of_processes=6,
+                                                      n_jobs=6,
                                                       verbose=True)
     assert n_events == 2772
     assert n_events == n_events3
@@ -25,7 +25,7 @@ def test_cues_outcomes():
 def test_words_symbols():
     words, symbols = count.words_symbols(CORPUS_RESOURCE_FILE)
     words3, symbols3 = count.words_symbols(CORPUS_RESOURCE_FILE,
-                                           number_of_processes=3,
+                                           n_jobs=3,
                                            verbose=True)
     assert words == words3
     assert symbols == symbols3

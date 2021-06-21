@@ -16,13 +16,14 @@ import tempfile
 import threading
 import time
 import warnings
+import types
 
 import cython
 import pandas as pd
 import numpy as np
 import xarray as xr
 
-from . import __version__
+from . import __version__ as pyndl_version
 from . import count
 from . import preprocess
 from . import ndl_parallel
@@ -40,12 +41,36 @@ elif sys.platform.startswith('darwin'):
 warnings.simplefilter('always', DeprecationWarning)
 
 
-def events_from_file(event_path):
-    warnings.warn("Usage of pyndl.ndl.events_from_file is depreceated and will "
-                  "be removed in v0.6.0. Please use pyndl.io.events_from_file "
-                  "instead.",
-                  DeprecationWarning, stacklevel=2)
-    return io.events_from_file(event_path)
+class WeightDict(defaultdict):
+    # pylint: disable=missing-docstring
+
+    """
+    Subclass of defaultdict to represent outcome-cue weights.
+
+    Notes
+    -----
+    Weight for each outcome-cue combination is 0 per default.
+
+    """
+
+    # pylint: disable=W0613
+    def __init__(self, *args, **kwargs):
+        super().__init__(lambda: defaultdict(float))
+
+        self._attrs = OrderedDict()
+
+        if 'attrs' in kwargs:
+            self.attrs = kwargs['attrs']
+        else:
+            self.attrs = {}
+
+    @property
+    def attrs(self):
+        return self._attrs
+
+    @attrs.setter
+    def attrs(self, attrs):
+        self._attrs = OrderedDict(attrs)
 
 
 def ndl(events, alpha, betas, lambda_=1.0, *,
@@ -63,8 +88,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     Parameters
     ----------
-    events : str
-        path to the event file
+    events : generator or str
+        generates cues, outcomes pairs or the path to the event file
     alpha : float
         saliency of all cues
     betas : (float, float)
@@ -102,6 +127,13 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     """
 
+    # Create temporary file if events is a generator
+    if isinstance(events, types.GeneratorType):
+        file_path = tempfile.NamedTemporaryFile().name
+        io.events_to_file(events, file_path)
+        events = file_path
+        del file_path
+
     if number_of_threads is not None:
         warnings.warn("Parameter `number_of_threads` is renamed to `n_jobs`. The old name "
                       "will stop working with v0.9.0.",
@@ -124,7 +156,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     # preprocessing
     n_events, cues, outcomes = count.cues_outcomes(events,
-                                                   number_of_processes=n_jobs,
+                                                   n_jobs=n_jobs,
                                                    verbose=verbose)
     cues = list(cues.keys())
     outcomes = list(outcomes.keys())
@@ -167,12 +199,16 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
     else:
         raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
 
+    if any(length > 4294967295 for length in weights.shape):
+        raise ValueError("Neither number of cues nor outcomes shall exceed 4294967295 "
+                         "for now. See https://github.com/quantling/pyndl/issues/169")
+
     beta1, beta2 = betas
 
     with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
         number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
                                                              outcome_map, overwrite=True,
-                                                             number_of_processes=n_jobs,
+                                                             n_jobs=n_jobs,
                                                              events_per_file=events_per_temporary_file,
                                                              remove_duplicates=remove_duplicates,
                                                              verbose=verbose)
@@ -185,6 +221,8 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         if verbose:
             print('start learning...')
         # learning
+        if not weights.data.c_contiguous:
+            raise ValueError('weights has to be c_contiguous')
         if method == 'openmp':
             if not sys.platform.startswith('linux'):
                 raise NotImplementedError("OpenMP is linux only at the moment."
@@ -286,7 +324,7 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
                  'wall_time': _format(str(wall_time)),
                  'hostname': _format(socket.gethostname()),
                  'username': _format(getpass.getuser()),
-                 'pyndl': _format(__version__),
+                 'pyndl': _format(pyndl_version),
                  'numpy': _format(np.__version__),
                  'pandas': _format(pd.__version__),
                  'xarray': _format(xr.__version__),
@@ -304,38 +342,6 @@ def _attributes(event_path, number_events, alpha, betas, lambda_, cpu_time,
                 new_val = ''
             new_attrs[key] = old_val + ' | ' + new_val
     return new_attrs
-
-
-class WeightDict(defaultdict):
-    # pylint: disable=missing-docstring
-
-    """
-    Subclass of defaultdict to represent outcome-cue weights.
-
-    Notes
-    -----
-    Weight for each outcome-cue combination is 0 per default.
-
-    """
-
-    # pylint: disable=W0613
-    def __init__(self, *args, **kwargs):
-        super().__init__(lambda: defaultdict(float))
-
-        self._attrs = OrderedDict()
-
-        if 'attrs' in kwargs:
-            self.attrs = kwargs['attrs']
-        else:
-            self.attrs = {}
-
-    @property
-    def attrs(self):
-        return self._attrs
-
-    @attrs.setter
-    def attrs(self, attrs):
-        self._attrs = OrderedDict(attrs)
 
 
 def dict_ndl(events, alphas, betas, lambda_=1.0, *,
@@ -472,24 +478,62 @@ def dict_ndl(events, alphas, betas, lambda_=1.0, *,
                         __name__ + "." + dict_ndl.__name__, attrs=attrs_to_update)
 
     if make_data_array:
-        outcomes = list(weights.keys())
-        cues = set()
-        for outcome in outcomes:
-            cues.update(set(weights[outcome].keys()))
-
-        cues = list(cues)
-
-        weights_dict = weights
-        shape = (len(outcomes), len(cues))
-        weights = xr.DataArray(np.zeros(shape), attrs=attrs,
-                               coords={'outcomes': outcomes, 'cues': cues},
-                               dims=('outcomes', 'cues'))
-
-        for outcome in outcomes:
-            for cue in cues:
-                weights.loc[{"outcomes": outcome, "cues": cue}] = weights_dict[outcome][cue]
+        weights = data_array(weights, attrs=attrs)
     else:
         weights.attrs = attrs
+
+    return weights
+
+
+def data_array(weights, *, attrs=None):
+    """
+    Calculate the weights for all_outcomes over all events in event_file.
+
+    Parameters
+    ----------
+    weights : dict of dicts of floats or WeightDict
+        the first dict has outcomes as keys and dicts as values
+        the second dict has cues as keys and weights as values
+        weights[outcome][cue] gives the weight between outcome and cue.
+        If a dict of dicts is given, attrs is required. If a WeightDict is
+        given, attrs is optional
+    attrs : dict
+        A dictionary of attributes
+
+    Returns
+    -------
+    weights : xarray.DataArray
+        with dimensions 'outcomes' and 'cues'. You can lookup the weights
+        between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
+        'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
+    """
+
+    if isinstance(weights, xr.DataArray) and weights.dims == ('outcomes', 'cues'):
+        return weights
+
+    if attrs is None:
+        try:
+            attrs = weights.attrs
+        except AttributeError:
+            raise AttributeError("weights does not have attributes and no attrs "
+                                 "argument is given.")
+
+    outcomes = list(weights.keys())
+    cues = set()
+    for outcome in outcomes:
+        cues.update(set(weights[outcome].keys()))
+
+    cues = list(cues)
+
+    weights_dict = weights
+    shape = (len(outcomes), len(cues))
+    weights = xr.DataArray(np.zeros(shape), attrs=attrs,
+                           coords={'outcomes': outcomes, 'cues': cues},
+                           dims=('outcomes', 'cues'))
+
+    for outcome in outcomes:
+        for cue in cues:
+            weights.loc[{"outcomes": outcome, "cues": cue}] = weights_dict[outcome][cue]
 
     return weights
 

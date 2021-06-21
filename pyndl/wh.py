@@ -21,7 +21,7 @@ import pandas as pd
 import numpy as np
 import xarray as xr
 
-from . import __version__
+from . import __version__ as pyndl_version
 from . import count
 from . import preprocess
 from . import io
@@ -363,9 +363,12 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
         # TODO: convert dict to xarray here
         raise NotImplementedError('dicts are not supported yet.')
 
+    if not outcome_vectors.data.data.c_contiguous:
+        raise ValueError('outcome_vectors have to be c_contiguous')
+
     # preprocessing
     n_events, cues, outcomes_from_events = count.cues_outcomes(events,
-                                                               number_of_processes=n_jobs,
+                                                               n_jobs=n_jobs,
                                                                verbose=verbose)
     cues = list(cues.keys())
     outcomes_from_events = list(outcomes_from_events.keys())
@@ -408,7 +411,7 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
     with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
         number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
                                                              outcome_map, overwrite=True,
-                                                             number_of_processes=n_jobs,
+                                                             n_jobs=n_jobs,
                                                              events_per_file=events_per_temporary_file,
                                                              remove_duplicates=remove_duplicates,
                                                              verbose=verbose)
@@ -421,6 +424,8 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
         if verbose:
             print('start learning...')
         # learning
+        if not weights.data.c_contiguous:
+            raise ValueError('weights has to be c_contiguous')
         if method == 'openmp':
             if not sys.platform.startswith('linux'):
                 raise NotImplementedError("OpenMP is linux only at the moment."
@@ -451,7 +456,7 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
         #        for partlist in part_lists:
         #            working_queue.put(np.array(partlist, dtype=np.uint32))
 
-        #    for _ in range(number_of_threads):
+        #    for _ in range(n_jobs):
         #        thread = threading.Thread(target=worker)
         #        thread.start()
         #        threads.append(thread)
@@ -475,8 +480,9 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
                         __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
-    weights = xr.DataArray(weights, [('outcome_vector_dimensions', outcome_vectors.coords['outcome_vector_dimensions']),
-                                     ('cues', cues)], attrs=attrs)
+    weights = xr.DataArray(weights, coords=[('outcome_vector_dimensions',
+                                             outcome_vectors.coords['outcome_vector_dimensions'].data),
+                                            ('cues', cues)], attrs=attrs)
     return weights
 
 
@@ -535,8 +541,16 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
     """
     if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
         raise ValueError("remove_duplicates must be None, True or False")
+
     if not isinstance(events, str):
         raise ValueError("'events' need to be the path to a gzipped event file not {}".format(type(events)))
+
+    if type(cue_vectors) == dict:
+        # TODO: convert dict to xarray here
+        raise NotImplementedError('dicts are not supported yet.')
+
+    if not cue_vectors.data.data.c_contiguous:
+        raise ValueError('cue_vectors have to be c_contiguous')
 
     weights_ini = weights
     wall_time_start = time.perf_counter()
@@ -544,7 +558,7 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
 
     # preprocessing
     n_events, cues_from_events, outcomes_from_events = count.cues_outcomes(events,
-                                                                           number_of_processes=n_jobs,
+                                                                           n_jobs=n_jobs,
                                                                            verbose=verbose)
 
     cues_from_events = list(cues_from_events.keys())
@@ -595,7 +609,7 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
     with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
         number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
                                                              outcome_map, overwrite=True,
-                                                             number_of_processes=n_jobs,
+                                                             n_jobs=n_jobs,
                                                              events_per_file=events_per_temporary_file,
                                                              remove_duplicates=remove_duplicates,
                                                              verbose=verbose)
@@ -608,6 +622,8 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
         if verbose:
             print('start learning...')
         # learning
+        if not weights.data.data.c_contiguous:
+            raise ValueError('weights has to be c_contiguous')
         if method == 'openmp':
             if not sys.platform.startswith('linux'):
                 raise NotImplementedError("OpenMP is linux only at the moment."
@@ -715,9 +731,15 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
         # TODO: convert dict to xarray here
         raise NotImplementedError('dicts are not supported yet.')
 
+    if not cue_vectors.data.data.c_contiguous:
+        raise ValueError('cue_vectors have to be c_contiguous')
+
+    if not outcome_vectors.data.data.c_contiguous:
+        raise ValueError('outcome_vectors have to be c_contiguous')
+
     # preprocessing
     n_events, cues_from_events, outcomes_from_events = count.cues_outcomes(events,
-                                                                           number_of_processes=n_jobs,
+                                                                           n_jobs=n_jobs,
                                                                            verbose=verbose)
 
     cues_from_events = list(cues_from_events.keys())
@@ -767,6 +789,8 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
         raise ValueError('weights need to be None or xarray.DataArray with method=%s' % method)
     del shape
 
+    if not weights.data.data.c_contiguous:
+        raise ValueError('weights has to be c_contiguous')
     if method == 'numpy':
         event_generator = io.events_from_file(events)
         number_events = 0
@@ -809,7 +833,7 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
         with tempfile.TemporaryDirectory(prefix="pyndl", dir=temporary_directory) as binary_path:
             number_events = preprocess.create_binary_event_files(events, binary_path, cue_map,
                                                                  outcome_map, overwrite=True,
-                                                                 number_of_processes=n_jobs,
+                                                                 n_jobs=n_jobs,
                                                                  events_per_file=events_per_temporary_file,
                                                                  remove_duplicates=remove_duplicates,
                                                                  verbose=verbose)
@@ -884,7 +908,7 @@ def _attributes(event_path, number_events, eta, cpu_time,
                  'wall_time': _format(str(wall_time)),
                  'hostname': _format(socket.gethostname()),
                  'username': _format(getpass.getuser()),
-                 'pyndl': _format(__version__),
+                 'pyndl': _format(pyndl_version),
                  'numpy': _format(np.__version__),
                  'pandas': _format(pd.__version__),
                  'xarray': _format(xr.__version__),

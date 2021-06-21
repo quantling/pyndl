@@ -109,7 +109,7 @@ former one using `openMP <http://www.openmp.org/>`_ and therefore being expected
 to be much faster when analyzing larger data. Besides, you can set three
 technical arguments which we will not change here:
 
-1. ``number_of_threads`` (int) giving the number of threads in which the job
+1. ``n_jobs`` (int) giving the number of threads in which the job
    should be executed (default=2)
 2. ``sequence`` (int) giving the length of sublists generated from all outcomes
    (default=10)

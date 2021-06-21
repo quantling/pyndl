@@ -11,20 +11,27 @@ efficiently apply the Rescorla-Wagner learning rule to these corpora.
 import os
 import sys
 import multiprocessing as mp
-from pip._vendor import pkg_resources
+try:
+    from importlib.metadata import requires
+except ModuleNotFoundError:  # python 3.7 and before
+    requires = None
+try:
+    from packaging.requirements import Requirement
+except ModuleNotFoundError:  # this should only happend during setup phase
+    Requirement = None
 
 
 __author__ = ('Konstantin Sering, Marc Weitz, '
               'David-Elias Künstle, Lennard Schneider, '
               'Elnaz Shafaei-Bajestan')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.8.2'
+__version__ = '0.8.1'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '
                    'equations.')
 __classifiers__ = [
-    'Development Status :: 3 - Alpha',
+    'Development Status :: 4 - Beta',
     'Environment :: Console',
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: MIT License',
@@ -45,8 +52,9 @@ def sysinfo():
     """
     Prints system the dependency information
     """
-    pyndl = pkg_resources.working_set.by_key["pyndl"]
-    dependencies = [r.project_name for r in pyndl.requires()]
+    if requires:
+        dependencies = [Requirement(req).name for req in requires('pyndl')
+                        if not Requirement(req).marker]
 
     header = ("Pyndl Information\n"
               "=================\n\n")
@@ -78,7 +86,10 @@ def sysinfo():
     deps = ("Dependencies\n"
             "------------\n")
 
-    deps += "\n".join("{pkg.__name__}: {pkg.__version__}".format(pkg=__import__(dep))
-                      for dep in dependencies)
+    if requires:
+        deps += "\n".join("{pkg.__name__}: {pkg.__version__}".format(pkg=__import__(dep))
+                          for dep in dependencies)
+    else:
+        deps = 'You need Python 3.8 or higher to show dependencies.'
 
     print(header + general + osinfo + deps)
