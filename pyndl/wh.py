@@ -480,7 +480,8 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
                         __name__ + "." + ndl.__name__, method=method, attrs=attrs_to_be_updated)
 
     # post-processing
-    weights = xr.DataArray(weights, coords=[('outcome_vector_dimensions', outcome_vectors.coords['outcome_vector_dimensions'].data),
+    weights = xr.DataArray(weights, coords=[('outcome_vector_dimensions',
+                                             outcome_vectors.coords['outcome_vector_dimensions'].data),
                                             ('cues', cues)], attrs=attrs)
     return weights
 
