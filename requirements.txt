@@ -1,5 +1,5 @@
 numpy>=1.8.2
-scipy>=1.6.3
+scipy>=1.5.4
 cython>=0.21.1
 pandas>=0.14.1
 xarray>=0.7.2

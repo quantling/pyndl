@@ -11,8 +11,14 @@ efficiently apply the Rescorla-Wagner learning rule to these corpora.
 import os
 import sys
 import multiprocessing as mp
-from importlib.metadata import requires
-from packaging.requirements import Requirement
+try:
+    from importlib.metadata import requires
+except ModuleNotFoundError:  # python 3.7 and before
+    requires = None
+try:
+    from packaging.requirements import Requirement
+except ModuleNotFoundError:  # this should only happend during setup phase
+    Requirement = None
 
 
 __author__ = ('Konstantin Sering, Marc Weitz, '
@@ -46,8 +52,9 @@ def sysinfo():
     """
     Prints system the dependency information
     """
-    dependencies = [Requirement(req).name for req in requires('pyndl')
-                    if not Requirement(req).marker]
+    if requires:
+        dependencies = [Requirement(req).name for req in requires('pyndl')
+                        if not Requirement(req).marker]
 
     header = ("Pyndl Information\n"
               "=================\n\n")
@@ -79,7 +86,10 @@ def sysinfo():
     deps = ("Dependencies\n"
             "------------\n")
 
-    deps += "\n".join("{pkg.__name__}: {pkg.__version__}".format(pkg=__import__(dep))
-                      for dep in dependencies)
+    if requires:
+        deps += "\n".join("{pkg.__name__}: {pkg.__version__}".format(pkg=__import__(dep))
+                          for dep in dependencies)
+    else:
+        deps = 'You need Python 3.8 or higher to show dependencies.'
 
     print(header + general + osinfo + deps)
