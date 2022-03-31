@@ -29,5 +29,3 @@ doc/data/weights.nc
 
 # copybutton js script
 doc/source/_static/copybutton.js
-
-paper/*.pdf
