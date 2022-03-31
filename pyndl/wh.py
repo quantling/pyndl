@@ -2,7 +2,15 @@
 pyndl.wh
 --------
 
-*pyndl.wh* provides functions in order to train WH models
+*pyndl.wh* provides functions in order to train Widrow-Hoff (WH) models. In contrast
+to the Rescorla-Wagner (RW) models in the WH models can not only have binary
+cues and outcomes, but can code gradual intesities in there cues and outcomes
+as real, continues values.
+
+It is possible to calculate weights for continuous cues or continues outcomes,
+while keeping the outcomes respectively cues binary. Finally, it is possible to
+have both sides, cues and outcomes, to be continues and calculate the
+Widrow-Hoff learning rule between them.
 
 """
 from collections import defaultdict, OrderedDict
@@ -47,6 +55,9 @@ def wh(events, eta, *, cue_vectors=None, outcome_vectors=None,
     """
     Calculate the weights for all events using the Widrow-Hoff learning rule
     and training as outcomes on sematic vectors in semantics.
+
+    Furthermore, it is possible to only have cues or outcomes continous and to
+    keep the other side binary.
 
     This is a parallel python implementation using numpy, multithreading and
     the binary format defined in preprocess.py.
