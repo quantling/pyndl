@@ -68,8 +68,10 @@ def read_clean_gzfile(gz_file_path, *, break_duration=2.0):
                 text = word_tag.text
                 if text in PUNCTUATION:
                     words.append(text)
-                else:
+                elif text is not None:
                     words.extend((' ', text))
+                else:
+                    raise ValueError("Text content of word tag is None.")
             result = ''.join(words)
             result = result.strip()
 
@@ -100,6 +102,8 @@ def read_clean_gzfile(gz_file_path, *, break_duration=2.0):
 
 
 class JobParseGz():
+    # pylint: disable=E0202,missing-docstring
+
     """
     Stores the persistent information over several jobs and exposes a job
     method that only takes the varying parts as one argument.

@@ -9,14 +9,17 @@ represented as the outcome-cue weights.
 import multiprocessing as mp
 import ctypes
 from collections import defaultdict, OrderedDict
+import warnings
 
 import numpy as np
 import xarray as xr
 
-from . import ndl
+from . import io
 
 
-def activation(events, weights, number_of_threads=1, remove_duplicates=None, ignore_missing_cues=False):
+# pylint: disable=W0621
+def activation(events, weights, *, n_jobs=1, number_of_threads=None,
+               remove_duplicates=None, ignore_missing_cues=False):
     """
     Estimate activations for given events in event file and outcome-cue weights.
 
@@ -30,7 +33,7 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
     weights : xarray.DataArray or dict[dict[float]]
         the xarray.DataArray needs to have the dimensions 'outcomes' and 'cues'
         the dictionaries hold weight[outcome][cue].
-    number_of_threads : int
+    n_jobs : int
         a integer giving the number of threads in which the job should
         executed
     remove_duplicates : {None, True, False}
@@ -57,21 +60,25 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
         returned if weights is instance of dict
 
     """
+    if number_of_threads is not None:
+        warnings.warn("Parameter `number_of_threads` is renamed to `n_jobs`. The old name "
+                      "will stop working with v0.9.0.",
+                      DeprecationWarning, stacklevel=2)
+        n_jobs = number_of_threads
     if isinstance(events, str):
-        events = ndl.events_from_file(events)
+        events = io.events_from_file(events)
 
-    event_cues_list = (cues for cues, outcomes in events)
+    events = (cues for cues, outcomes in events)
     if remove_duplicates is None:
-        def enforce_no_duplicates(cues):
+        def check_no_duplicates(cues):
             if len(cues) != len(set(cues)):
-                raise ValueError('cues needs to be unique: "%s"; use '
-                                 'remove_duplicates=True' %
-                                 (' '.join(cues)))
+                raise ValueError('cues needs to be unique: "{}"; use '
+                                 'remove_duplicates=True'.format(' '.join(cues)))
             else:
                 return set(cues)
-        event_cues_list = (enforce_no_duplicates(cues) for cues in event_cues_list)
+        events = (check_no_duplicates(cues) for cues in events)
     elif remove_duplicates is True:
-        event_cues_list = (set(cues) for cues in event_cues_list)
+        events = (set(cues) for cues in events)
 
     if isinstance(weights, xr.DataArray):
         cues = weights.coords["cues"].values.tolist()
@@ -81,23 +88,25 @@ def activation(events, weights, number_of_threads=1, remove_duplicates=None, ign
         cue_map = OrderedDict(((cue, ii) for ii, cue in enumerate(cues)))
         if ignore_missing_cues:
             event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues if cue in cues)
-                                      for event_cues in event_cues_list)
+                                      for event_cues in events)
         else:
             event_cue_indices_list = (tuple(cue_map[cue] for cue in event_cues)
-                                      for event_cues in event_cues_list)
-        activations = _activation_matrix(list(event_cue_indices_list), weights.values, number_of_threads)
+                                      for event_cues in events)
+        # pylint: disable=W0621
+        activations = _activation_matrix(list(event_cue_indices_list),
+                                         weights.values, n_jobs)
         return xr.DataArray(activations,
                             coords={
                                 'outcomes': outcomes
                             },
                             dims=('outcomes', 'events'))
     elif isinstance(weights, dict):
-        assert number_of_threads == 1, "Estimating activations with multiprocessing is not implemented for dicts."
-        activations = defaultdict(lambda: np.zeros(len(event_cues_list)))
-        event_cues_list = list(event_cues_list)
+        assert n_jobs == 1, "Estimating activations with multiprocessing is not implemented for dicts."
+        activations = defaultdict(lambda: np.zeros(len(events)))
+        events = list(events)
         for outcome, cue_dict in weights.items():
             _activations = activations[outcome]
-            for row, cues in enumerate(event_cues_list):
+            for row, cues in enumerate(events):
                 for cue in cues:
                     _activations[row] += cue_dict[cue]
         return activations
@@ -111,6 +120,7 @@ def _init_mp_activation_matrix(weights_, weights_shape_, activations_, activatio
     Initializes shared variables weights and activations.
 
     """
+    # pylint: disable=C0103, W0621, W0601
     global weights, activations
     weights = np.ctypeslib.as_array(weights_)
     weights.shape = weights_shape_
@@ -127,7 +137,7 @@ def _run_mp_activation_matrix(event_index, cue_indices):
     activations[:, event_index] = weights[:, cue_indices].sum(axis=1)
 
 
-def _activation_matrix(indices_list, weights, number_of_threads):
+def _activation_matrix(indices_list, weights, n_jobs):
     """
     Estimate activation for indices in weights
 
@@ -140,7 +150,7 @@ def _activation_matrix(indices_list, weights, number_of_threads):
         events as cue indices in weights
     weights : numpy.array
         weight matrix with shape (outcomes, cues)
-    number_of_threads : int
+    n_jobs : int
 
     Returns
     -------
@@ -148,10 +158,10 @@ def _activation_matrix(indices_list, weights, number_of_threads):
         estimated activations as matrix with shape (outcomes, events)
 
     """
-    assert number_of_threads >= 1, "Can't run with less than 1 thread"
+    assert n_jobs >= 1, "Can't run with less than 1 thread"
 
     activations_dim = (weights.shape[0], len(indices_list))
-    if number_of_threads == 1:
+    if n_jobs == 1:
         activations = np.empty(activations_dim, dtype=np.float64)
         for row, event_cues in enumerate(indices_list):
             activations[:, row] = weights[:, event_cues].sum(axis=1)
@@ -161,7 +171,7 @@ def _activation_matrix(indices_list, weights, number_of_threads):
         weights = np.ascontiguousarray(weights)
         shared_weights = mp.sharedctypes.copy(np.ctypeslib.as_ctypes(np.float64(weights)))
         initargs = (shared_weights, weights.shape, shared_activations, activations_dim)
-        with mp.Pool(number_of_threads, initializer=_init_mp_activation_matrix, initargs=initargs) as pool:
+        with mp.Pool(n_jobs, initializer=_init_mp_activation_matrix, initargs=initargs) as pool:
             pool.starmap(_run_mp_activation_matrix, enumerate(indices_list))
         activations = np.ctypeslib.as_array(shared_activations)
         activations.shape = activations_dim

@@ -1,4 +1,8 @@
 others_code/
+pyndl/ndl_parallel.c
+pyndl/ndl_openmp.c
+pyndl/corr_parallel.c
+pyndl/wh_parallel.c
 latex/
 *.pyc
 __pycache__/
@@ -7,7 +11,6 @@ tests/__pycache__/
 htmlcov/
 .cache/
 *.swp
-ndl_c.c
 notebooks/
 prof/
 pyndl.tar.gz
@@ -19,7 +22,6 @@ build/
 dist/
 *.so
 pyndl.egg-info/
-*.c
 .tox/
 doc/data/levent.tab
 doc/data/levent.tab.filtered

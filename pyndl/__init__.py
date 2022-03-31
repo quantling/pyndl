@@ -11,26 +11,36 @@ efficiently apply the Rescorla-Wagner learning rule to these corpora.
 import os
 import sys
 import multiprocessing as mp
-from pip._vendor import pkg_resources
+try:
+    from importlib.metadata import requires
+except ModuleNotFoundError:  # python 3.7 and before
+    requires = None
+try:
+    from packaging.requirements import Requirement
+except ModuleNotFoundError:  # this should only happend during setup phase
+    Requirement = None
 
 
 __author__ = ('Konstantin Sering, Marc Weitz, '
-              'David-Elias Künstle, Lennard Schneider')
+              'David-Elias Künstle, Lennard Schneider, '
+              'Elnaz Shafaei-Bajestan')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.4.0'
+__version__ = '0.8.1'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '
                    'equations.')
 __classifiers__ = [
-    'Development Status :: 3 - Alpha',
+    'Development Status :: 4 - Beta',
     'Environment :: Console',
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: MIT License',
     'Operating System :: POSIX :: Linux',
+    'Operating System :: MacOS',
     'Programming Language :: Python',
-    'Programming Language :: Python :: 3.5',
-    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3 :: Only',
     'Topic :: Scientific/Engineering',
     'Topic :: Scientific/Engineering :: Artificial Intelligence',
@@ -42,8 +52,9 @@ def sysinfo():
     """
     Prints system the dependency information
     """
-    pyndl = pkg_resources.working_set.by_key["pyndl"]
-    dependencies = [str(r) for r in pyndl.requires()]
+    if requires:
+        dependencies = [Requirement(req).name for req in requires('pyndl')
+                        if not Requirement(req).marker]
 
     header = ("Pyndl Information\n"
               "=================\n\n")
@@ -61,10 +72,13 @@ def sysinfo():
               "CPU: {cpu_count}\n").format(s=uname, cpu_count=mp.cpu_count())
 
     if uname.sysname == "Linux":
-        names, *lines = os.popen("free -m").readlines()
-        for identifier in ["Mem:", "Swap:"]:
-            memory = [line for line in lines if identifier in line][0]
-            ix, total, used, *rest = memory.split()
+        _, *lines = os.popen("free -m").readlines()
+        for identifier in ("Mem:", "Swap:"):
+            memory = [line for line in lines if identifier in line]
+            if len(memory) > 0:
+                _, total, used, *_ = memory[0].split()
+            else:
+                total, used = '?', '?'
             osinfo += "{} {}MiB/{}MiB\n".format(identifier, used, total)
 
     osinfo += "\n"
@@ -72,7 +86,10 @@ def sysinfo():
     deps = ("Dependencies\n"
             "------------\n")
 
-    deps += "\n".join("{pkg.__name__}: {pkg.__version__}".format(pkg=__import__(dep))
-                      for dep in dependencies)
+    if requires:
+        deps += "\n".join("{pkg.__name__}: {pkg.__version__}".format(pkg=__import__(dep))
+                          for dep in dependencies)
+    else:
+        deps = 'You need Python 3.8 or higher to show dependencies.'
 
     print(header + general + osinfo + deps)

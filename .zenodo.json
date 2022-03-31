@@ -27,16 +27,21 @@
         "title": "Alexander von Humboldt Professorship awarded to R. H. Baayen"
       },
       {
-        "acronym": "WIDE",
         "code": "742545",
-        "funder": {
-          "acronyms": [
-            "EC"
-          ],
-          "name": "European Commission"
+        "links": {
+          "self": "https://zenodo.org/api/grants/10.13039/501100000780::742545"
         },
-        "program": "ERC",
-        "title": "Wide Incremental learning with Discrimination nEtworks"
+        "title": "Wide Incremental learning with Discrimination nEtworks",
+        "acronym": "WIDE",
+        "program": "H2020",
+        "funder": {
+          "doi": "10.13039/501100000780",
+          "acronyms": [],
+          "name": "European Commission",
+          "links": {
+            "self": "https://zenodo.org/api/funders/10.13039/501100000780"
+          }
+        }
       }
     ],
     "keywords": [

@@ -55,8 +55,8 @@ If you are using BibTex you may want to use this example BibTex entry::
 
 Funding
 -------
-*pyndl* was partially funded by the Humboldt grant, the ERC advanced grant
-and by the University of Tübingen.
+*pyndl* was partially funded by the Humboldt grant, the ERC advanced grant (no.
+742545) and by the University of Tübingen.
 
 
 Acknowledgements

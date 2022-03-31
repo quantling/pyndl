@@ -16,7 +16,17 @@ Submodules
     :undoc-members:
     :show-inheritance:
 
+.. automodule:: pyndl.correlation
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 .. automodule:: pyndl.count
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+.. automodule:: pyndl.io
     :members:
     :undoc-members:
     :show-inheritance:
@@ -27,6 +37,11 @@ Submodules
     :show-inheritance:
 
 .. automodule:: pyndl.preprocess
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+.. automodule:: pyndl.wh
     :members:
     :undoc-members:
     :show-inheritance:

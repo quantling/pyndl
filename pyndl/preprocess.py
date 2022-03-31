@@ -73,6 +73,38 @@ def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
     return sample
 
 
+def ngrams_to_word(occurrences, n_chars, outfile, remove_duplicates=True):
+    """
+    Process the occurrences and write them to outfile.
+
+    Parameters
+    ----------
+    occurrences : sequence of (cues, outcomes) tuples
+        cues and outcomes are both strings where underscores and # are
+        special symbols.
+    n_chars : number of characters (e.g. 2 for bigrams, 3 for trigrams, ...)
+    outfile : file handle
+
+    remove_duplicates : bool
+        if True make cues and outcomes per event unique
+
+    """
+    for cues, outcomes in occurrences:
+        if cues and outcomes:
+            occurrence = cues + '_' + outcomes
+        else:  # take either
+            occurrence = cues + outcomes
+        phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
+        ngrams = (phrase_string[i:(i + n_chars)] for i in
+                  range(len(phrase_string) - n_chars + 1))
+        if not ngrams or not occurrence:
+            continue
+        if remove_duplicates:
+            ngrams = set(ngrams)
+            occurrence = "_".join(set(occurrence.split("_")))
+        outfile.write("{}\t{}\n".format("_".join(ngrams), occurrence))
+
+
 def process_occurrences(occurrences, outfile, *,
                         cue_structure="trigrams_to_word", remove_duplicates=True):
     """
@@ -92,43 +124,17 @@ def process_occurrences(occurrences, outfile, *,
 
     """
     if cue_structure == "bigrams_to_word":
-        for cues, outcomes in occurrences:
-            if cues and outcomes:
-                occurrence = cues + '_' + outcomes
-            else:  # take either
-                occurrence = cues + outcomes
-            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
-            bigrams = (phrase_string[i:(i + 2)] for i in
-                       range(len(phrase_string) - 2 + 1))
-            if not bigrams or not occurrence:
-                continue
-            if remove_duplicates:
-                outfile.write("_".join(set(bigrams)) + "\t" + occurrence + "\n")
-            else:
-                outfile.write("_".join(bigrams) + "\t" + occurrence + "\n")
+        ngrams_to_word(occurrences, 2, outfile, remove_duplicates=remove_duplicates)
     elif cue_structure == "trigrams_to_word":
-        for cues, outcomes in occurrences:
-            if cues and outcomes:
-                occurrence = cues + '_' + outcomes
-            else:  # take either
-                occurrence = cues + outcomes
-            phrase_string = "#" + re.sub("_", "#", occurrence) + "#"
-            trigrams = (phrase_string[i:(i + 3)] for i in
-                        range(len(phrase_string) - 3 + 1))
-            if not trigrams or not occurrence:
-                continue
-            if remove_duplicates:
-                outfile.write("_".join(set(trigrams)) + "\t" + occurrence + "\n")
-            else:
-                outfile.write("_".join(trigrams) + "\t" + occurrence + "\n")
+        ngrams_to_word(occurrences, 3, outfile, remove_duplicates=remove_duplicates)
     elif cue_structure == "word_to_word":
         for cues, outcomes in occurrences:
             if not cues:
                 continue
             if remove_duplicates:
-                outfile.write("_".join(set(cues.split("_"))) + "\t" + outcomes + "\n")
-            else:
-                outfile.write(cues + "\t" + outcomes + "\n")
+                cues = "_".join(set(cues.split("_")))
+                outcomes = "_".join(set(outcomes.split("_")))
+            outfile.write("{}\t{}\n".format(cues, outcomes))
     else:
         raise NotImplementedError('cue_structure=%s is not implemented yet.' % cue_structure)
 
@@ -239,19 +245,16 @@ def create_event_file(corpus_file,
         """
         if event_structure == 'consecutive_words':
             occurrences = list()
-            cur_words = list()
-            ii = 0
-            while True:
-                if ii < len(words):
-                    cur_words.append(words[ii])
-                if ii >= len(words) or ii >= number_of_words:
-                    # remove the first word
-                    cur_words = cur_words[1:]
+            # can't have more consecutive words than total words
+            length = min(number_of_words, len(words))
+            # slide window over list of words
+            for ii in range(1 - length, len(words)):
+                # no consecutive words before first word
+                start = max(ii, 0)
+                # no consecutive words after last word
+                end = min(ii + length, len(words))
                 # append (cues, outcomes) with empty outcomes
-                occurrences.append(("_".join(cur_words), ''))
-                ii += 1
-                if not cur_words:
-                    break
+                occurrences.append(("_".join(words[start:end]), ""))
             return occurrences
         # for words = (A, B, C, D); before = 2, after = 1
         # make: (B, A), (A_C, B), (A_B_D, C), (B_C, D)
@@ -268,6 +271,8 @@ def create_event_file(corpus_file,
         elif event_structure == 'line':
             # (cues, outcomes) with empty outcomes
             return [('_'.join(words), ''), ]
+        else:
+            raise ValueError('gen_occurrences should be one of {"consecutive_words", "word_to_word", "line"}')
 
     def process_line(line):
         """processes one line of text."""
@@ -453,7 +458,7 @@ def filter_event_file(input_event_file, output_event_file, *,
                       keep_cues="all", keep_outcomes="all",
                       remove_cues=None, remove_outcomes=None,
                       cue_map=None, outcome_map=None,
-                      number_of_processes=1, chunksize=100000,
+                      n_jobs=1, number_of_processes=None, chunksize=100000,
                       verbose=False):
     """
     Filter an event file by a list or a map of cues and outcomes.
@@ -482,7 +487,7 @@ def filter_event_file(input_event_file, output_event_file, *,
         maps every outcome as key to the value. Removes all outcome that do not have a
         key. This can be used to map several different outcomes to the same
         outcome or to rename outcomes.
-    number_of_processes : int
+    n_jobs : int
         number of threads to use
     chunksize : int
         number of chunks per submitted job, should be around 100000
@@ -497,10 +502,15 @@ def filter_event_file(input_event_file, output_event_file, *,
     is still present in order to capture the background rate of that cues.
 
     """
+    if number_of_processes is not None:
+        warnings.warn("Parameter `number_of_processes` is renamed to `n_jobs`. The old name "
+                      "will stop working with v0.9.0.",
+                      DeprecationWarning, stacklevel=2)
+        n_jobs = number_of_processes
     job = JobFilter(keep_cues, keep_outcomes, remove_cues, remove_outcomes,
                     cue_map, outcome_map)
 
-    with multiprocessing.Pool(number_of_processes) as pool:
+    with multiprocessing.Pool(n_jobs) as pool:
         with gzip.open(input_event_file, "rt") as infile:
             with gzip.open(output_event_file, "wt") as outfile:
                 # copy header
@@ -578,10 +588,9 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
     number_events : int
         actual number of events written to file
 
-    Binary Format
-    -------------
-
-    ::
+    Notes
+    -----
+    The **binary format** as the following structure::
 
         8 byte header
         nr of events
@@ -698,8 +707,8 @@ def create_binary_event_files(event_file,
                               outcome_id_map,
                               *,
                               sort_within_event=False,
-                              number_of_processes=2,
-                              events_per_file=1000000,
+                              n_jobs=2,
+                              events_per_file=10000000,
                               overwrite=False,
                               remove_duplicates=None,
                               verbose=False):
@@ -719,10 +728,10 @@ def create_binary_event_files(event_file,
         outcome to id map
     sort_within_event : bool
         should we sort the cues and outcomes within the event
-    number_of_processes : int
+    n_jobs : int
         number of threads to use
     events_per_file : int
-
+        Number of events in each binary file. Has to be larger than 1
     overwrite : bool
         overwrite files if they exist
     remove_duplicates : {None, True, False}
@@ -739,6 +748,9 @@ def create_binary_event_files(event_file,
     """
     # pylint: disable=missing-docstring
 
+    if events_per_file < 2:
+        raise ValueError("events_per_file has to be larger than 1")
+
     if not os.path.isdir(path_name):
         if verbose:
             print("create event file folder '%s'" % path_name)
@@ -754,13 +766,13 @@ def create_binary_event_files(event_file,
 
     number_events = 0
 
-    with multiprocessing.Pool(number_of_processes) as pool:
+    with multiprocessing.Pool(n_jobs) as pool:
 
         def _error_callback(error):
             if isinstance(error, StopIteration):
-                msg, result = error.value
+                _, result = error.value
                 nonlocal number_events
-                number_events += result
+                number_events += result  # pylint: disable=undefined-variable
                 pool.close()
             else:
                 raise error
@@ -800,8 +812,8 @@ def create_binary_event_files(event_file,
                 else:
                     raise error
             ii += 1
-            # only start jobs in chunks of 4*number_of_processes
-            if ii % (number_of_processes*4) == 0:
+            # only start jobs in chunks of 4*n_jobs
+            if ii % (n_jobs*4) == 0:
                 while True:
                     if result.ready():
                         break

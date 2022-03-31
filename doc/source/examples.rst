@@ -51,31 +51,7 @@ Rescorla Wagner learning rule.
 Data
 ----
 
-+-----------------+-----------------+-----------------+-----------------+
-| Table 1                                                               |
-+-----------------+-----------------+-----------------+-----------------+
-| Word            | Frequency       | Lexical Meaning | Number          |
-+=================+=================+=================+=================+
-| hand            | 10              | HAND            |                 |
-+-----------------+-----------------+-----------------+-----------------+
-| hands           | 20              | HAND            | PLURAL          |
-+-----------------+-----------------+-----------------+-----------------+
-| land            | 8               | LAND            |                 |
-+-----------------+-----------------+-----------------+-----------------+
-| lands           | 3               | LAND            | PLURAL          |
-+-----------------+-----------------+-----------------+-----------------+
-| and             | 35              | AND             |                 |
-+-----------------+-----------------+-----------------+-----------------+
-| sad             | 18              | SAD             |                 |
-+-----------------+-----------------+-----------------+-----------------+
-| as              | 35              | AS              |                 |
-+-----------------+-----------------+-----------------+-----------------+
-| lad             | 102             | LAD             |                 |
-+-----------------+-----------------+-----------------+-----------------+
-| lads            | 54              | LADS            | PLURAL          |
-+-----------------+-----------------+-----------------+-----------------+
-| lass            | 134             | LASS            |                 |
-+-----------------+-----------------+-----------------+-----------------+
+..  include:: lexicon.rst
 
 Table 1 shows some words, their frequencies of occurrence and their meanings as
 an artificial lexicon in the wide format. In the following, the letters
@@ -133,7 +109,7 @@ former one using `openMP <http://www.openmp.org/>`_ and therefore being expected
 to be much faster when analyzing larger data. Besides, you can set three
 technical arguments which we will not change here:
 
-1. ``number_of_threads`` (int) giving the number of threads in which the job
+1. ``n_jobs`` (int) giving the number of threads in which the job
    should be executed (default=2)
 2. ``sequence`` (int) giving the length of sublists generated from all outcomes
    (default=10)
@@ -198,7 +174,7 @@ weight matrix by specifying the ``weight`` argument:
     Coordinates:
       * outcomes  (outcomes) <U6 ...
       * cues      (cues) <U2 ...
-    Attributes:
+    Attributes: ...
     ...
 
 As you may have noticed already, :py:mod:`pyndl.ndl.ndl` provides you with meta
@@ -208,8 +184,8 @@ moment of your calculations:
 
 .. code-block:: python
 
-   >>> weights2.attrs  # doctest: +ELLIPSIS
-   OrderedDict(...)
+   >>> print('Attributes: ' + str(weights2.attrs))  # doctest: +ELLIPSIS
+   Attributes: ...
 
 
 pyndl.ndl.dict_ndl
