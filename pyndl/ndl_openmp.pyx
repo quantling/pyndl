@@ -24,7 +24,7 @@ def learn_inplace_binary_to_binary(binary_file_paths,
                   np.ndarray[dtype_t, ndim=2] weights,
                   np.ndarray[unsigned int, ndim=1] all_outcomes,
                   unsigned int chunksize,
-                  unsigned int number_of_threads):
+                  unsigned int n_jobs):
 
     cdef unsigned int n_all_cues = weights.shape[1]  # number of cues == columns
     cdef unsigned int* all_outcomes_ptr = <unsigned int *> all_outcomes.data
@@ -45,7 +45,7 @@ def learn_inplace_binary_to_binary(binary_file_paths,
 
         number_parts = math.ceil(<double> length_all_outcomes / chunksize)
 
-        with nogil, parallel(num_threads=number_of_threads):
+        with nogil, parallel(num_threads=n_jobs):
             for ii in prange(number_parts, schedule="dynamic", chunksize=1):
                 start_val = ii * chunksize
                 end_val = min(start_val + chunksize, length_all_outcomes)
@@ -66,7 +66,7 @@ def learn_inplace_binary_to_real(binary_file_paths,
                                  np.ndarray[dtype_t, ndim=2] outcome_vectors,
                                  np.ndarray[dtype_t, ndim=2] weights,
                                  unsigned int chunksize,
-                                 unsigned int number_of_threads):
+                                 unsigned int n_jobs):
 
     cdef unsigned int n_all_cues = weights.shape[1]  # number of cues == columns
     cdef unsigned int n_outcome_vector_dimensions = outcome_vectors.shape[1]
@@ -88,7 +88,7 @@ def learn_inplace_binary_to_real(binary_file_paths,
       if n_outcome_vector_dimensions % chunksize != 0:
           number_parts += 1
 
-      with nogil, parallel(num_threads=number_of_threads):
+      with nogil, parallel(num_threads=n_jobs):
         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
           start_val = ii * chunksize
           end_val = min(start_val + chunksize, n_outcome_vector_dimensions)
@@ -116,7 +116,7 @@ def learn_inplace_real_to_binary(binary_file_paths,
                                  np.ndarray[dtype_t, ndim=2] cue_vectors,
                                  np.ndarray[dtype_t, ndim=2] weights,
                                  unsigned int chunksize,
-                                 unsigned int number_of_threads):
+                                 unsigned int n_jobs):
 
     cdef unsigned int n_all_outcomes = weights.shape[0]  # number of outcomes == rows
     cdef unsigned int n_cue_vector_dimensions = weights.shape[1]  # number of cue vector dimensions == columns
@@ -138,7 +138,7 @@ def learn_inplace_real_to_binary(binary_file_paths,
       if n_all_outcomes % chunksize != 0:
           number_parts += 1
 
-      with nogil, parallel(num_threads=number_of_threads):
+      with nogil, parallel(num_threads=n_jobs):
         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
           start_val = ii * chunksize
           end_val = min(start_val + chunksize, n_all_outcomes)
@@ -166,7 +166,7 @@ def learn_inplace_real_to_real(binary_file_paths,
                   np.ndarray[dtype_t, ndim=2] outcome_vectors,
                   np.ndarray[dtype_t, ndim=2] weights,
                   unsigned int chunksize,
-                  unsigned int number_of_threads):
+                  unsigned int n_jobs):
 
     assert weights.shape[1] == cue_vectors.shape[1]
     assert weights.shape[0] == outcome_vectors.shape[1]
@@ -192,7 +192,7 @@ def learn_inplace_real_to_real(binary_file_paths,
       if n_outcome_vector_dimensions % chunksize != 0:
           number_parts += 1
 
-      with nogil, parallel(num_threads=number_of_threads):
+      with nogil, parallel(num_threads=n_jobs):
         for ii in prange(number_parts, schedule="dynamic", chunksize=1):
           start_val = ii * chunksize
           end_val = min(start_val + chunksize, n_outcome_vector_dimensions)

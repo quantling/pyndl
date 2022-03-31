@@ -124,6 +124,36 @@ def test_exceptions():
     with pytest.raises(ValueError, match="events_per_file has to be larger than 1") as e_info:
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', events_per_temporary_file=1)
 
+    with pytest.raises(AttributeError, match="weights does not have attributes "
+                       "and no attrs argument is given.") as e_info:
+        ndl.data_array(dict())
+
+#    # Test usually exeeds memory limit; It demands ~32GB of RAM.
+#    with pytest.raises(ValueError, match="Neither number of cues nor outcomes "
+#                       "shall exceed 4294967295 for now. See "
+#                       "https://github.com/quantling/pyndl/issues/169") as e_info:
+#        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS,
+#                weights=xr.DataArray(np.zeros(shape=(4294967295 + 1, 1))))
+
+
+def test_generator_learning():
+    events = io.events_from_file(FILE_PATH_SIMPLE)
+    result_ndl_gen = ndl.ndl(events, ALPHA, BETAS, method='threading')
+    result_ndl = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading')
+
+    unequal, unequal_ratio = compare_arrays(FILE_PATH_SIMPLE,
+                                            result_ndl_gen,
+                                            result_ndl)
+    print(result_ndl_gen)
+    print('%.2f ratio unequal' % unequal_ratio)
+    assert len(unequal) == 0  # pylint: disable=len-as-condition
+
+
+def test_data_array_cast():
+    result_ndl = ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading')
+    casted_result = ndl.data_array(result_ndl)
+    assert isinstance(casted_result, xr.DataArray) and (result_ndl == casted_result).all()
+
 
 def test_continue_learning_dict():
     events_simple = pd.read_csv(FILE_PATH_SIMPLE, sep="\t")
