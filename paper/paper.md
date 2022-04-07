@@ -20,13 +20,16 @@ repository: quantling/pyndl
 # Summary
 
 <!-- A summary describing the high-level functionality and purpose of the software for a diverse, non-specialist audience --> 
-*pyndl* implements Naïve Discriminative Learning (NDL) in Python. NDL is an incremental learning algorithm grounded in the principles of discrimination learning [@rescorla1972theory; @widrow1960adaptive] and motivated by animal and human learning research [@bla]. Lately, NDL has become a popular tool in language research to examine large corpora [@bla]. *pyndl* implements this algorithm in an openly available Python package. In contrast to previous implementations, our implementation allows for a broader range of analysis, including non-English languages, adds further learning rules and provides better maintainability while having the same fast processing speed. Today, it supports multiple research groups in their work and led to several scientific publications.
+*pyndl* implements Naïve Discriminative Learning (NDL) in Python. NDL is an incremental learning algorithm grounded in the principles of discrimination learning [@rescorla1972theory; @widrow1960adaptive] and motivated by animal and human learning research [e.g. @Rescorla1988PavlovianCI,@Baayen_2011]. Lately, NDL has become a popular tool in language research to examine large corpora [@bla]. *pyndl* implements this algorithm in an openly available Python package. In contrast to previous implementations, our implementation allows for a broader range of analysis, including non-English languages, adds further learning rules and provides better maintainability while having the same fast processing speed. Today, it supports multiple research groups in their work and led to several scientific publications.
 
 
 # Statement of need
 
 <!-- General problem --> 
-Naïve Discriminative Learning (NDL) is a computational modelling framework that phrases language comprehension as a multiple label classification problem [@Baayen_2011;@sering2018language]. It is grounded in simple but powerful principles of discrimination learning [@bla], implemented on a 2-layer symbolic network combined with a learning rule [@rescorla1972theory]. Alternatively, the final state of the learning weights in the network is computable by equilibrium equations [@Danks_2003,@rescorla1972theory]. The underlying assumption is that language is learned over time. NDL models are trained on large corpora to investigate the language's structure [@bla] and to provide insights into the learning process [@bla].
+Naïve Discriminative Learning (NDL) is a computational modelling framework that phrases language comprehension as a multiple label classification problem [@Baayen_2011;@sering2018language]. It is grounded in simple but powerful principles of discrimination learning implemented on a 2-layer symbolic network combined with the Rescorla-Wagner learning rule [@rescorla1972theory]. 
+This learning theory explains phenomena, where animals only associates co-occurring cues and outcomes, e.g. a flashing light and food, if the cue is effective in predicting the outcome [see @Baayen_2015 for an introduction].
+Alternatively, the final state of the learning weights in the network is computable by equilibrium equations [@Danks_2003,@rescorla1972theory]. The underlying assumption is that language is learned over time. NDL models are trained on large corpora to investigate the language's structure and to provide insights into the learning process [please find an extensive list of examples in @Baayen_2015
+, section 5].
 
 
 <!-- Which implementations are out there? --> 
