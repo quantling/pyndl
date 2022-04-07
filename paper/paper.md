@@ -49,7 +49,7 @@ The design decision to make *pyndl* maintainable allowed for an extension of the
 These works use *pyndl* for models in a wide range of linguistic subfields and explicitly use the easy extensibility and UTF-8 support of *pyndl*. 
 @TOMASCHEK_2019 and @Baayen_2020 investigate morphological effects of the context of German and English languages, while @Shafaei_Bajestan_2018 and @Sering_2018 
 show auditory comprehension based on simple acoustic features, and @Romain_2022 model the learning of tenses. 
-@milin2020keeping profited from *pyndl*'s UTF-8 support when using Cyrillic cues to show different language phenomena **(IS THIS TRUE? DID THEY USE CYRILLIC DIRECTLY, OR SOME ASCII REWRITE?)** with the simple Widrow-Hoff learning rule as a special case of the Rescorla-Wagner.
+@milin2020keeping profited from *pyndl*'s UTF-8 support when using Cyrillic cues to show different language phenomen with the simple Widrow-Hoff learning rule as a special case of the Rescorla-Wagner.
 @Shafaei_Bajestan_2021 presented a linearised version of the Rescorla-Wagner rule that they could add to *pyndl* and compare with the classic version. @Divjak_2020 showed the benefits of learning language models over probabilistic and rule-based models.
 
 
