@@ -53,11 +53,17 @@ def wh(events, eta, *, cue_vectors=None, outcome_vectors=None,
         verbose=False, temporary_directory=None,
         events_per_temporary_file=10000000):
     """
-    Calculate the weights for all events using the Widrow-Hoff learning rule
-    and training as outcomes on sematic vectors in semantics.
+    Calculate the weights for all events using the Widrow-Hoff learning rule in
+    three different flavours.
 
-    Furthermore, it is possible to only have cues or outcomes continous and to
-    keep the other side binary.
+    In the first flavour, cues and outcomes both are vectors and the names in
+    the eventfiles refer to these vectors. The vectors for all cues and
+    outcomes are given as an xarrayDataArray with the arguments `cue_vectors`
+    and `outcome_vectors'.
+
+    In the second and third flavour, only the cues or only the outcomes are
+    treated as vectors but the ones not being treated as vectors are still
+    considered being present or not being present in a binary way.
 
     This is a parallel python implementation using numpy, multithreading and
     the binary format defined in preprocess.py.
