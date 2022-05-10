@@ -37,7 +37,7 @@ learning [@rescorla1972theory; @widrow1960adaptive] and motivated by animal and
 human learning research [e.g. @Rescorla1988PavlovianCI,@Baayen_2011]. Lately,
 NDL has become a popular tool in language research to examine large corpora and
 vocabularies, with 750,000 spoken word tokens [@Shafaei_2022] and a vocabulary
-size of 52,402 word types [@sering2018language]. In contrast to previous
+size of 52,402 word types [@Sering_2018]. In contrast to previous
 implementations, pyndl allows for a broader range of analysis, including
 non-English languages, adds further learning rules and provides better
 maintainability while having the same fast processing speed. As of today, it
@@ -50,7 +50,7 @@ publications.
 <!-- General problem -->
 Naïve Discriminative Learning (NDL) is a computational modelling framework that
 phrases language comprehension as a multiple label classification problem
-[@Baayen_2011;@sering_2018]. It is grounded in simple but powerful principles
+[@Baayen_2011;@Sering_2018]. It is grounded in simple but powerful principles
 of discrimination learning implemented on a 2-layer symbolic network combined
 with the Rescorla-Wagner learning rule [@rescorla1972theory].
 This learning rule explains phenomena, where animals associate co-occurring
@@ -71,7 +71,7 @@ with modern challenges of linguistic research like multi-language support,
 increasing model sizes, and open science principles. The first implementation
 was the R package *ndl* [@ndl], which could solve the Danks equilibrium
 equations [@Danks_2003], but did not provide an exact iterative solver. An
-iterative solver has been added to the R with the package *ndl2* [@ndl2].
+iterative solver was added to R with the package *ndl2* [@ndl2].
 However, the code of *ndl2* is only available upon request. One reason for this
 has been that it only runs on Linux and CRAN's guidelines make it difficult to
 publish single platform packages [@R_project]. A severe limitation of *ndl* and
