@@ -397,6 +397,19 @@ created in this tutorial:
    >>> os.remove('doc/data/levent.tab.gz.filtered')
 
 
+Widrow-Hoff (WH) learning
+-------------------------
+There is a Widrow-Hoff learning module called `wh` now in `pyndl`, which uses
+the same event files and nearly the same function parameters as the `ndl.ndl`
+function. The main function to call is `wh.wh`.  Compared to `ndl.ndl` the
+`wh.wh` function adds two look-up tables, one for cues and one for outcomes, to
+its keyword arguments.  Each of this look-up tables  maps each cue and / or
+outcome in your event file to a vector. This look-up table has to be an
+instance `xarray.DataArray` and is passed with the keyword argument
+`cue_vectors` or `outcome_vectors`. For more information have a look at the
+function doc string.
+
+
 Load a weight matrix to R [4]_
 ------------------------------
 We can load a in netCDF format saved matrix into R:
