@@ -134,6 +134,11 @@ GitHub](https://github.com/quantling/pyndl/graphs/contributors).
 This research was supported by an ERC advanced Grant (no. 742545) and by the
 Alexander von Humboldt Professorship awarded to R. Harald Baayen and by the
 University of Tübingen.
+
+The authors thank the International Max Planck Research School for Intelligent Systems (IMPRS-IS) for supporting David-Elias Künstle.
+Funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany’s Excellence Strategy – EXC number 2064/1 – Project number 390727645.
+
+
 **TODO: CURRENT FINANCIAL SUPPORT**
 
 
