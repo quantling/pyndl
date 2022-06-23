@@ -10,18 +10,16 @@ authors:
   - name: Konstantin Sering
     affiliation: 1
   - name: Marc Weitz
-    affiliation: 2
+    affiliation: 1
   - name: Elnaz Shafaei-Bajestan
     affiliation: 1
   - name: David-Elias Künstle
-    affiliation: 1, 3
+    affiliation: 1, 2
 affiliations:
   - name: University of Tübingen
     index: 1
-  - name: UiT The Arctic University of Norway
-    index: 2
   - name: International Max Planck Research School for Intelligent Systems
-    index: 3
+    index: 2
 date: 31 March 2022
 bibliography: paper.bib
 repository: quantling/pyndl
@@ -31,10 +29,10 @@ repository: quantling/pyndl
 
 <!-- A summary describing the high-level functionality and purpose of the
 software for a diverse, non-specialist audience -->
-*pyndl* implements Naïve Discriminative Learning (NDL) in Python. NDL is an
+The *pyndl* package implements Naïve Discriminative Learning (NDL) in Python. NDL is an
 incremental learning algorithm grounded in the principles of discrimination
 learning [@rescorla1972theory; @widrow1960adaptive] and motivated by animal and
-human learning research [e.g. @Rescorla1988PavlovianCI,@Baayen_2011]. Lately,
+human learning research [e.g. @Rescorla1988PavlovianCI; @Baayen_2011]. Lately,
 NDL has become a popular tool in language research to examine large corpora and
 vocabularies, with 750,000 spoken word tokens [@Shafaei_2022] and a vocabulary
 size of 52,402 word types [@Sering_2018]. In contrast to previous
@@ -50,7 +48,7 @@ publications.
 <!-- General problem -->
 Naïve Discriminative Learning (NDL) is a computational modelling framework that
 phrases language comprehension as a multiple label classification problem
-[@Baayen_2011;@Sering_2018]. It is grounded in simple but powerful principles
+[@Baayen_2011;@Sering_2018]. It is grounded in the simple but powerful principles
 of discrimination learning implemented on a 2-layer symbolic network combined
 with the Rescorla-Wagner learning rule [@rescorla1972theory].
 This learning rule explains phenomena, where animals associate co-occurring
@@ -97,12 +95,12 @@ Python. After installation, *pyndl* can be called from R or Julia scripts by
 convenient bridges.
 
 <!-- WH extension of pyndl -->
-The design decision to make *pyndl* maintainable allowed, for example,
-extending the NDL learner to a learner for continuous inputs as cues, outcomes
-or both.  When both cues and outcomes are continuous, the Rescorla Wagner
+In contrast to previous implementations, *pyndl* is easily extendable. For example,
+the NDL learner was extended to a learner for continuous inputs as cues, outcomes
+or both.  When both cues and outcomes are continuous, the Rescorla-Wagner
 learning rule changes to the Widrow-Hoff learning rule. This extension is added
 by keeping the API to the learner comparable to NDL and computationally
-exploiting the structure of the binary multi-hot features in the symbolic
+exploiting the structure of the multi-hot encoded features in the symbolic
 representation of language.
 
 <!-- Pyndl in research -->
@@ -127,7 +125,7 @@ and rule-based models.
 
 The authors thank R. Harald Baayen for his support in creating and maintaining
 *pyndl* as a scientific software package in the Python ecosystem.
-Futhermore, the authors thank Lennart Schneider for his major contributions, as
+Furthermore, the authors thank Lennart Schneider for his major contributions, as
 well as all [other contributors on
 GitHub](https://github.com/quantling/pyndl/graphs/contributors).
 
@@ -142,4 +140,3 @@ under Germany’s Excellence Strategy – EXC number 2064/1 – Project number
 390727645.
 
 # References
-
