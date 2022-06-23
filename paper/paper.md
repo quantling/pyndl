@@ -87,7 +87,7 @@ language [@R_project].
 *pyndl* reimplements the learning rule of NDL mainly in Python with small code
 chunks outsourced to Cython to speed up the processing. It also implements the
 processing of UTF-8 coded corpora enabling the analysis of many non-European
-languages and alphabets [e.g. Mandarin or Cyrillic; @milin2020keeping]. Using
+languages and alphabets [e.g. Mandarin or Cyrillic, @milin2020keeping]. Using
 the python ecosystem, the size of weight matrices in *pyndl* is only limited by
 the memory available. While previous packages were restricted in functionality
 and partially not openly available, *pyndl* was open-source software from the
