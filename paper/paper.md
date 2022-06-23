@@ -85,14 +85,14 @@ language [@R_project].
 
 <!-- Short description of pyndl -->
 *pyndl* reimplements the learning rule of NDL mainly in Python with small code
-chunks outsourced to Cython to speed up the processing. We also implemented the
+chunks outsourced to Cython to speed up the processing. It also implements the
 processing of UTF-8 coded corpora enabling the analysis of many non-European
 languages and alphabets [e.g. Mandarin or Cyrillic; @milin2020keeping]. Using
 the python ecosystem, the size of weight matrices in *pyndl* is only limited by
 the memory available. While previous packages were restricted in functionality
 and partially not openly available, *pyndl* was open-source software from the
-beginning and developed with hindsight for usability and maintainability. We
-also aimed to provide the same functionality as the previous R packages in
+beginning and developed with hindsight for usability and maintainability.
+*pyndl* provides the same core functionality as the previous R packages in
 Python. After installation, *pyndl* can be called from R or Julia scripts by
 convenient bridges.
 
@@ -127,7 +127,7 @@ and rule-based models.
 
 The authors thank R. Harald Baayen for his support in creating and maintaining
 *pyndl* as a scientific software package in the Python ecosystem.
-Finally, the authors thank Lennart Schneider for his major contributions, as
+Futhermore, the authors thank Lennart Schneider for his major contributions, as
 well as all [other contributors on
 GitHub](https://github.com/quantling/pyndl/graphs/contributors).
 
