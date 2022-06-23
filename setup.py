@@ -69,7 +69,7 @@ setup(
             'sphinx >= 1.4',
             'sphinx_rtd_theme',
             'numpydoc',
-            'easydev==0.9.35']},
+            'easydev']},
     ext_modules=ext_modules,
     cmdclass={'build_ext': build_ext}
 )

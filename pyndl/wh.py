@@ -2,7 +2,15 @@
 pyndl.wh
 --------
 
-*pyndl.wh* provides functions in order to train WH models
+*pyndl.wh* provides functions in order to train Widrow-Hoff (WH) models. In contrast
+to the Rescorla-Wagner (RW) models in the WH models can not only have binary
+cues and outcomes, but can code gradual intesities in there cues and outcomes
+as real, continues values.
+
+It is possible to calculate weights for continuous cues or continues outcomes,
+while keeping the outcomes respectively cues binary. Finally, it is possible to
+have both sides, cues and outcomes, to be continues and calculate the
+Widrow-Hoff learning rule between them.
 
 """
 from collections import defaultdict, OrderedDict
@@ -45,11 +53,20 @@ def wh(events, eta, *, cue_vectors=None, outcome_vectors=None,
         verbose=False, temporary_directory=None,
         events_per_temporary_file=10000000):
     """
-    Calculate the weights for all events using the Widrow-Hoff learning rule
-    and training as outcomes on sematic vectors in semantics.
+    Calculate the weights for all events using the Widrow-Hoff learning rule in
+    three different flavours.
 
-    This is a parallel python implementation using numpy, multithreading and
-    the binary format defined in preprocess.py.
+    In the first flavour, cues and outcomes both are vectors and the names in
+    the eventfiles refer to these vectors. The vectors for all cues and
+    outcomes are given as an xarrayDataArray with the arguments `cue_vectors`
+    and `outcome_vectors'.
+
+    In the second and third flavour, only the cues or only the outcomes are
+    treated as vectors but the ones not being treated as vectors are still
+    considered being present or not being present in a binary way.
+
+    This is a parallel python implementation using cython, numpy,
+    multithreading and the binary format defined in preprocess.py.
 
     Parameters
     ----------
@@ -91,12 +108,11 @@ def wh(events, eta, *, cue_vectors=None, outcome_vectors=None,
         run (real to real, binary to real, real to binary or binary to binary).
         The dimension names reflect this in the weights. They are a combination
         of 'outcomes' x 'outcome_vector_dimensions' and 'cues' x
-        'cue_vector_dimensions'
-        with dimensions 'outcome_vector dimensions' and
-        'cue_vector_dimensions'. You can lookup the weights
-        between a vector dimension and a cue with
-        ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
-        'cue_vector_dimensions': cue_vector_dimension}]`` or
+        'cue_vector_dimensions' with dimensions 'outcome_vector dimensions' and
+        'cue_vector_dimensions'. You can lookup the weights between a vector
+        dimension and a cue with ``weights.loc[{'outcome_vector_dimensions':
+        outcome_vector_dimension, 'cue_vector_dimensions':
+        cue_vector_dimension}]`` or
         ``weights.loc[vector_dimension].loc[cue_vector_dimension]``.
 
     """
@@ -149,6 +165,16 @@ def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
     The metadata will only be stored when `make_data_array` is True and then
     `dict_ndl` cannot be used to continue learning. At the moment there is no
     proper way to automatically store the meta data into the default dict.
+
+    Furthermore, this implementation only supports the 'real to real' case
+    where cue vectors are learned on outcome vectors. For the 'binary to real'
+    or 'real to binary' cases the `wh.wh` function needs to be used which uses
+    a fast cython implementation.
+
+    The main purpose of this function is to have a reference implementation
+    which is used to test the faster cython version against. Additionally, this
+    function can be a good starting point to develop different flavours of the
+    Widrow-Hoff learning rule.
 
     Parameters
     ----------
@@ -307,8 +333,8 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
     Calculate the weights for all events using the Widrow-Hoff learning rule
     and training as outcomes on sematic vectors in semantics.
 
-    This is a parallel python implementation using numpy, multithreading and
-    the binary format defined in preprocess.py.
+    This is a parallel python implementation using cython, numpy,
+    multithreading and the binary format defined in preprocess.py.
 
     Parameters
     ----------
@@ -436,7 +462,8 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
                                                     weights,
                                                     n_outcomes_per_job,
                                                     n_jobs)
-        # elif method == 'threading':
+        elif method == 'threading':
+            raise ValueError('TODO: for now: method needs "openmp"')
         #    part_lists = ndl.slice_list(all_outcome_indices, n_outcomes_per_job)
 
         #    working_queue = Queue(len(part_lists))
@@ -464,7 +491,7 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
         #    for thread in threads:
         #        thread.join()
         else:
-            raise ValueError('method needs to be either "threading" or "openmp"')
+            raise ValueError('method needs to be either "openmp"')
 
     cpu_time_stop = time.process_time()
     wall_time_stop = time.perf_counter()
@@ -495,8 +522,8 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
     Calculate the weights for all events using the Widrow-Hoff learning rule
     and training as cue_vectors on outcomes.
 
-    This is a parallel python implementation using numpy, multithreading and
-    the binary format defined in preprocess.py.
+    This is a parallel python implementation using cython and the binary format
+    defined in preprocess.py.
 
     Parameters
     ----------
@@ -637,6 +664,9 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
                                                     weights.data,
                                                     n_outcomes_per_job,
                                                     n_jobs)
+        else:
+            # TODO: implement threading
+            raise ValueError('TODO: for now: method needs to be "openmp"')
 
         weights = weights.reset_coords(drop=True)
 
@@ -667,8 +697,8 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
     Calculate the weights for all events using the Widrow-Hoff learning rule
     and training as outcomes on sematic vectors in semantics.
 
-    This is a parallel python implementation using numpy, multithreading and
-    the binary format defined in preprocess.py.
+    This is a parallel python implementation using cython, numpy,
+    multithreading and the binary format defined in preprocess.py.
 
     Parameters
     ----------
