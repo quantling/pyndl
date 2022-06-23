@@ -55,14 +55,13 @@ of discrimination learning implemented on a 2-layer symbolic network combined
 with the Rescorla-Wagner learning rule [@rescorla1972theory].
 This learning rule explains phenomena, where animals associate co-occurring
 cues and outcomes, e.g. a flashing light and food, only if the cue is effective
-in predicting the outcome [see @Baayen_2015 for an introduction].
+in predicting the outcome [see @Baayen_2015, for an introduction].
 <!-- Alternatively, the final state of the learning weights in the network is
 computable by equilibrium equations [@Danks_2003,@rescorla1972theory]. The
 underlying assumption is that language is learned over time. -->
 NDL models are trained on large corpora to investigate the language's structure
 and to provide insights into the learning process of life long language
-acquisition [please find an extensive list of examples in @Baayen_2015
-, section 5].
+acquisition [please find an extensive list of examples in @Baayen_2015, section 5].
 
 
 <!-- Which implementations are out there? -->
@@ -71,7 +70,7 @@ with modern challenges of linguistic research like multi-language support,
 increasing model sizes, and open science principles. The first implementation
 was the R package *ndl* [@ndl], which could solve the Danks equilibrium
 equations [@Danks_2003], but did not provide an exact iterative solver. An
-iterative solver was added to R with the package *ndl2* [@ndl2].
+iterative solver was added to the R package *ndl2* [@ndl2].
 However, the code of *ndl2* is only available upon request. One reason for this
 has been that it only runs on Linux and CRAN's guidelines make it difficult to
 publish single platform packages [@R_project]. A severe limitation of *ndl* and
@@ -88,18 +87,19 @@ the R programming language [@R_project].
 *pyndl* reimplements the learning rule of NDL mainly in Python with small code
 chunks outsourced to Cython to speed up the processing. We also implemented the
 processing of UTF-8 coded corpora enabling the analysis of many non-European
-languages and alphabets (e.g. Cyrillic [@milin2020keeping], Mandarin). Using
+languages and alphabets (e.g. Mandarin or Cyrillic; @milin2020keeping). Using
 the python ecosystem, the size of weight matrices in *pyndl* is only limited by
 the memory available. While previous packages were restricted in functionality
-and partially not openly available, *pyndl* was developed with hindsight for
+and partially not openly available, 
+*pyndl* was open-source software from the beginning and developed with hindsight for
 usability and maintainability. We also aimed to provide the same functionality
 as the previous R packages in Python. After installation, *pyndl* can be called
 from R or Julia scripts by convenient bridges.
 
 <!-- WH extension of pyndl -->
-The design decision to make *pyndl* maintainable allowed for an extension of
-the NDL learner to a learner that allows for continuous inputs either as cues
-or outcomes or both. When both cues and outcomes are continuous, the Rescorla
+The design decision to make *pyndl* maintainable allowed, for example,
+extending the NDL learner to a learner for continuous inputs as cues, outcomes or both. 
+When both cues and outcomes are continuous, the Rescorla
 Wagner learning rule changes to the Widrow-Hoff learning rule. This extension
 is added by keeping the API to the learner comparable to NDL and
 computationally exploiting the structure of the binary multi-hot features in
