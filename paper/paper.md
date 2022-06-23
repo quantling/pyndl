@@ -70,15 +70,15 @@ with modern challenges of linguistic research like multi-language support,
 increasing model sizes, and open science principles. The first implementation
 was the R package *ndl* [@ndl], which could solve the Danks equilibrium
 equations [@Danks_2003], but did not provide an exact iterative solver. An
-iterative solver was added to the R package *ndl2* [@ndl2].
-However, the code of *ndl2* is only available upon request. One reason for this
-has been that it only runs on Linux and CRAN's guidelines make it difficult to
-publish single platform packages [@R_project]. A severe limitation of *ndl* and
-*ndl2* is that both packages have difficulties with non-ASCII input, causing
-problems in the analysis of non-English text corpora due to special characters
-or non-Latin alphabets. Furthermore, in *ndl2*, it is impossible to
-conveniently access huge weight matrices due to a size limitation of arrays in
-the R programming language [@R_project].
+iterative solver was added to the R package *ndl2* [@ndl2].  However, the code
+of *ndl2* is only available upon request. One reason for this has been that it
+only runs on Linux and CRAN's guidelines make it difficult to publish single
+platform packages [@R_project]. A severe limitation of *ndl* and *ndl2* is that
+both packages have difficulties with non-ASCII input, causing problems in the
+analysis of non-English text corpora due to special characters or non-Latin
+alphabets. Furthermore, in *ndl2*, it is impossible to conveniently access huge
+weight matrices due to a size limitation of arrays in the R programming
+language [@R_project].
 
 
 # Implementation and use in research
@@ -90,20 +90,20 @@ processing of UTF-8 coded corpora enabling the analysis of many non-European
 languages and alphabets [e.g. Mandarin or Cyrillic; @milin2020keeping]. Using
 the python ecosystem, the size of weight matrices in *pyndl* is only limited by
 the memory available. While previous packages were restricted in functionality
-and partially not openly available, 
-*pyndl* was open-source software from the beginning and developed with hindsight for
-usability and maintainability. We also aimed to provide the same functionality
-as the previous R packages in Python. After installation, *pyndl* can be called
-from R or Julia scripts by convenient bridges.
+and partially not openly available, *pyndl* was open-source software from the
+beginning and developed with hindsight for usability and maintainability. We
+also aimed to provide the same functionality as the previous R packages in
+Python. After installation, *pyndl* can be called from R or Julia scripts by
+convenient bridges.
 
 <!-- WH extension of pyndl -->
 The design decision to make *pyndl* maintainable allowed, for example,
-extending the NDL learner to a learner for continuous inputs as cues, outcomes or both. 
-When both cues and outcomes are continuous, the Rescorla
-Wagner learning rule changes to the Widrow-Hoff learning rule. This extension
-is added by keeping the API to the learner comparable to NDL and
-computationally exploiting the structure of the binary multi-hot features in
-the symbolic representation of language.
+extending the NDL learner to a learner for continuous inputs as cues, outcomes
+or both.  When both cues and outcomes are continuous, the Rescorla Wagner
+learning rule changes to the Widrow-Hoff learning rule. This extension is added
+by keeping the API to the learner comparable to NDL and computationally
+exploiting the structure of the binary multi-hot features in the symbolic
+representation of language.
 
 <!-- Pyndl in research -->
 *pyndl* is used by several research groups to analyse language data and is
@@ -135,8 +135,11 @@ This research was supported by an ERC advanced Grant (no. 742545) and by the
 Alexander von Humboldt Professorship awarded to R. Harald Baayen and by the
 University of Tübingen.
 
-The authors thank the International Max Planck Research School for Intelligent Systems (IMPRS-IS) for supporting David-Elias Künstle,
-funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) under Germany’s Excellence Strategy – EXC number 2064/1 – Project number 390727645.
+The authors thank the International Max Planck Research School for Intelligent
+Systems (IMPRS-IS) for supporting David-Elias Künstle,
+funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)
+under Germany’s Excellence Strategy – EXC number 2064/1 – Project number
+390727645.
 
 # References
 
