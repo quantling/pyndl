@@ -25,7 +25,7 @@ __author__ = ('Konstantin Sering, Marc Weitz, '
               'David-Elias Künstle, Lennard Schneider, '
               'Elnaz Shafaei-Bajestan')
 __author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.8.1'
+__version__ = '0.8.2'
 __license__ = 'MIT'
 __description__ = ('Naive discriminative learning implements learning and '
                    'classification models based on the Rescorla-Wagner '
@@ -38,7 +38,6 @@ __classifiers__ = [
     'Operating System :: POSIX :: Linux',
     'Operating System :: MacOS',
     'Programming Language :: Python',
-    'Programming Language :: Python :: 3.7',
     'Programming Language :: Python :: 3.8',
     'Programming Language :: Python :: 3.9',
     'Programming Language :: Python :: 3 :: Only',
