@@ -13,6 +13,8 @@ import gzip
 import multiprocessing
 import xml.etree.ElementTree
 
+from pyndl import io
+
 __version__ = '0.2.0'
 
 FRAMES_PER_SECOND = 30
@@ -185,12 +187,7 @@ def create_corpus_from_gz(directory, outfile, *, n_threads=1, verbose=False):
               (duration, duration // (60 * 60), duration // 60))
 
     if not_founds:
-        # prevent overwriting files
-        file_name = outfile + ".not_found"
-        nn = 1
-        while not os.path.isfile(file_name):
-            nn += 1
-            file_name = outfile + ".not_found-" + str(nn)
+        file_name = io.safe_write_path(outfile + ".not_found", template='{path}-{counter}')
 
         with open(file_name, "wt") as not_found_file:
             not_found_file.writelines(not_founds)
