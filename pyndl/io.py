@@ -10,6 +10,7 @@ existing events from a DataFrame or a list to a file.
 
 import gzip
 from collections.abc import Iterator, Iterable
+from pathlib import Path
 
 import pandas as pd
 
@@ -153,3 +154,39 @@ def events_from_list(lst):
         if isinstance(outcomes, str):
             outcomes = outcomes.split('_')
         yield (cues, outcomes)
+
+
+def safe_write_path(path, template='{path.stem}-{counter}{path.suffix}'):
+    """
+    Create a file path to avoid overwriting existing files.
+    Returns the original path if it does not exist or
+    an incremented version according to the template.
+    
+    The default template creates filenames like
+    path/example.png, path/example-1.png, path/example-2.png, etc.
+
+    Parameters
+    ----------
+    path: file path
+    template: format string syntax of incremented file name.
+              available variables are counter (int) and path (pathlib.Path).
+
+    Returns
+    -------
+    path: path-like of non-existing filename in the same directory.
+    """
+    if template.format(path=path, counter=1) == template.format(path=path, counter=2):
+        raise ValueError(f"Expects template to change by '{{counter}}', got {template}")
+
+    new_path = path = Path(path)
+    base_dir = path.parent.resolve()
+    counter = 0
+    while new_path.exists():
+        counter = counter + 1
+        new_path = Path(template.format(path=path, counter=counter))
+
+        # is new_path already relative to path's directory?
+        if not str(new_path.resolve()).startswith(str(base_dir)):
+            new_path = path.parent / new_path
+
+    return new_path
