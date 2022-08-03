@@ -10,8 +10,12 @@ python:
   - 3.9
   - 3.8
 
-install:
+
+before_install:
   - pip3 install --upgrade pip  # all three OSes agree about 'pip3'
+  - pip3 install poetry
+install:
+  - poetry install -v
   - pip3 install tox-travis
 
 script: tox -e travis
