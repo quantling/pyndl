@@ -30,11 +30,11 @@ jobs:
           poetry-version: ${{ matrix.poetry-version }}
 
       - name: Update PATH
-        if: ${{ matrix.os != 'Windows' }}
+        if: ${{ runner.os != 'Windows' }}
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Update Path for Windows
-        if: ${{ matrix.os == 'Windows' }}
+        if: ${{ runner.os == 'Windows' }}
         run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
 
       - name: Configure poetry
@@ -51,11 +51,11 @@ jobs:
         run: poetry install
 
       - name: Run linux tests
-        if: ${{ matrix.os == 'Linux' }}
+        if: ${{ runner.os == 'Linux' }}
         run: poetry run pytest --cov=pyndl --cov-report=xml --disable-pytest-warnings
 
       - name: Run tests on other distributions (skip linux-only tests)
-        if: ${{ matrix.os != 'Linux' }}
+        if: ${{ runner.os != 'Linux' }}
         run: poetry run pytest --no-linux
 
       - name: Upload coverage to Codecov
