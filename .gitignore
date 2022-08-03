@@ -3,6 +3,7 @@ pyndl/ndl_parallel.c
 pyndl/ndl_openmp.c
 pyndl/corr_parallel.c
 pyndl/wh_parallel.c
+pyndl/correlation_openmp.c
 latex/
 *.pyc
 __pycache__/
@@ -29,3 +30,6 @@ doc/data/weights.nc
 
 # copybutton js script
 doc/source/_static/copybutton.js
+
+# pypoetry
+poetry.lock
