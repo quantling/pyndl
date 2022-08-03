@@ -162,8 +162,8 @@ def safe_write_path(path, template='{path.stem}-{counter}{path.suffix}'):
     Returns the original path if it does not exist or
     an incremented version according to the template.
     
-    The default template creates filenames like
-    path/example.png, path/example-1.png, path/example-2.png, etc.
+    This function with the default template creates filenames like
+    pathname/example.png, pathname/example-1.png, pathname/example-2.png, ...
 
     Parameters
     ----------
@@ -173,7 +173,7 @@ def safe_write_path(path, template='{path.stem}-{counter}{path.suffix}'):
 
     Returns
     -------
-    path: path-like of non-existing filename in the same directory.
+    path: the input path or (if file exists) the path with incremented filename.
     """
     if template.format(path=path, counter=1) == template.format(path=path, counter=2):
         raise ValueError(f"Expects template to change by '{{counter}}', got {template}")
