@@ -66,5 +66,4 @@ vulture = "^2.3"
   disable = "E1101"
 
 [build-system]
-requires = ["poetry >= 0.12, <1"]
 build-backend = "poetry.masonry.api"
