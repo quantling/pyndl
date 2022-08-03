@@ -21,6 +21,7 @@ matrix:
   include:
     - name: "MacOS"
       os: osx
+      osx_image: xcode10.3  # default xcode9.4 is too old for some dependencies
       language: sh
       script: tox -e nolinux
 
