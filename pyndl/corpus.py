@@ -13,7 +13,7 @@ import gzip
 import multiprocessing
 import xml.etree.ElementTree
 
-from pyndl import io
+from . import io
 
 __version__ = '0.2.0'
 
