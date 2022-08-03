@@ -50,8 +50,13 @@ jobs:
       - name: Install dependencies
         run: poetry install
 
-      - name: Run tests
+      - name: Run linux tests
+        if: ${{ matrix.os == 'Linux' }}
         run: poetry run pytest --cov=pyndl --cov-report=xml --disable-pytest-warnings
+
+      - name: Run tests on other distributions (skip linux-only tests)
+        if: ${{ matrix.os != 'Linux' }}
+        run: poetry run pytest --no-linux
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
