@@ -263,8 +263,12 @@ request for another license is made and agreed on.
 
 Release Process
 ---------------
-1. Ensure, that the version of the branch to be mered, is adequately increased
-   see Versioning_ below.
+1. Update the version accordingly to Versioning_ below. This can be easily done
+   by poetry running
+
+   .. code:: bash
+        poetry version major|minor|patch|...
+
 
 2. Merge Pull Requests with new features or bugfixes into *pyndl*'s' ``master``
    branch.
@@ -281,20 +285,13 @@ Release Process
 
     git pull
     git checkout vX.Y.Z
-    python setup.py build  # to compile *.pyx -> *.c
-    python setup.py sdist
+    poetry build
 
-5. Create GPG signatures of the distribution files using:
-
-.. code:: bash
-
-    gpg --detach-sign -a dist/pyndl-X.Y.Z.tar.gz
-
-6. (maintainers only) Upload the distribution files to PyPI using twine.
+5. (maintainers only) Publish the builds to PyPI.
 
 .. code:: bash
 
-    twine upload -s dist/*
+    poetry publish
 
 7. (maintainers only) Check if the new version is on pypi (https://pypi.python.org/pypi/pyndl/).
 
