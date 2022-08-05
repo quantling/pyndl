@@ -52,14 +52,14 @@ def test_bad_symbols():
 
 def test_bad_event_context():
     with pytest.raises(NotImplementedError):
-        create_event_file(RESOURCE_FILE, EVENT_FILE,
+        create_event_file(RESOURCE_FILE, EVENT_FILE, 'a-zA-Z',
                           context_structure="UNREASONABLE")
     assert not os.path.isfile(EVENT_FILE)
 
 
 def test_bad_event_event():
     with pytest.raises(NotImplementedError):
-        create_event_file(RESOURCE_FILE, EVENT_FILE,
+        create_event_file(RESOURCE_FILE, EVENT_FILE, 'a-zA-Z',
                           event_structure="UNREASONABLE")
     assert not os.path.isfile(EVENT_FILE)
 
@@ -97,7 +97,7 @@ def test_symbols_filter_function():
 
 def test_upper_case():
     event_file = os.path.join(TEST_ROOT, "temp/events_corpus_upper_case.tab.gz")
-    create_event_file(RESOURCE_FILE, event_file,
+    create_event_file(RESOURCE_FILE, event_file, 'a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ))
@@ -107,7 +107,7 @@ def test_upper_case():
 def test_trigrams_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word.tab.gz")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab.gz")
-    create_event_file(RESOURCE_FILE, event_file,
+    create_event_file(RESOURCE_FILE, event_file, 'a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -119,7 +119,7 @@ def test_trigrams_to_word():
 def test_trigrams_to_word_line_based():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word_line_based.tab.gz")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word_line_based.tab.gz")
-    create_event_file(RESOURCE_FILE, event_file,
+    create_event_file(RESOURCE_FILE, event_file, 'a-zA-Z',
                       context_structure="document",
                       event_structure="line", event_options=(3, ),
                       cue_structure="trigrams_to_word")
@@ -130,7 +130,7 @@ def test_trigrams_to_word_line_based():
 def test_bigrams_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word.tab.gz")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_bigrams_to_word.tab.gz")
-    create_event_file(RESOURCE_FILE, event_file,
+    create_event_file(RESOURCE_FILE, event_file, 'a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -143,13 +143,13 @@ def test_bigrams_to_word():
 def test_remove_duplicates():
     event_file_noduplicates = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word_noduplicates.tab.gz")
     event_file_duplicates = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word_duplicates.tab.gz")
-    create_event_file(RESOURCE_FILE, event_file_duplicates,
+    create_event_file(RESOURCE_FILE, event_file_duplicates, 'a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
                       cue_structure="bigrams_to_word",
                       remove_duplicates=False)
-    create_event_file(RESOURCE_FILE, event_file_noduplicates,
+    create_event_file(RESOURCE_FILE, event_file_noduplicates, 'a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -190,7 +190,7 @@ def test_remove_duplicates():
 def test_word_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_word_to_word.tab.gz")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_word_to_word.tab.gz")
-    create_event_file(RESOURCE_FILE, event_file,
+    create_event_file(RESOURCE_FILE, event_file, 'a-zA-Z',
                       context_structure="document",
                       event_structure="word_to_word", event_options=(2, 1),
                       cue_structure="word_to_word")

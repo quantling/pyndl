@@ -141,7 +141,7 @@ def process_occurrences(occurrences, outfile, *,
 
 def create_event_file(corpus_file,
                       event_file,
-                      symbols="a-zA-Z",
+                      symbols,
                       *,
                       context_structure="document",
                       event_structure="consecutive_words",
