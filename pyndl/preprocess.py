@@ -141,7 +141,7 @@ def process_occurrences(occurrences, outfile, *,
 
 def create_event_file(corpus_file,
                       event_file,
-                      symbols="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                      symbols="a-zA-Z",
                       *,
                       context_structure="document",
                       event_structure="consecutive_words",
@@ -159,8 +159,19 @@ def create_event_file(corpus_file,
         path where the corpus file is
     event_file : str
         path where the output file will be created
-    symbols : str
-        string of all valid symbols
+    symbols : str or function
+        all valid symbols to include in the events, either as a set of characters or as a 
+        filter function.
+        The set of characters might be explicit or containts Regex character sets. 
+        The function should return `True`, if the passed character is a valid symbol.
+
+        '_', '#', and TAB are special symbols in the event file and might never be included here.
+
+        These examples define the same valid symbols::
+
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            'a-zA-Z'
+            lambda chr: ('a' <= chr <= 'z') or ('A' <= chr <= 'Z')
     context_structure : {"document", "paragraph", "line"}
 
     event_structure : {"line", "consecutive_words", "word_to_word", "sentence"}
@@ -211,7 +222,19 @@ def create_event_file(corpus_file,
         be (three) consecutive words, a sentence, or a line in the corpus file.
 
     """
-    if '_' in symbols or '#' in symbols or '\t' in symbols:
+    try:  # assume symbols is a string
+        not_in_symbols = re.compile(f"[^{symbols:s}]")
+        def filter_symbols(line, replace): 
+            return not_in_symbols.sub(replace, line)
+    except TypeError:  # assume symbols is a filter function
+        def filter_symbols(line, replace):
+            line_copy = list(line)
+            for i in range(len(line)):
+                if not symbols(line[i]):
+                    line_copy[i] = replace
+            return ''.join(line_copy)
+
+    if filter_symbols('_#\t', replace='') != '':
         raise ValueError('"_", "#", and "\\t" are special symbols and cannot be in symbols string')
 
     if event_structure not in ('consecutive_words', 'line', 'word_to_word'):
@@ -223,8 +246,6 @@ def create_event_file(corpus_file,
     if os.path.isfile(event_file):
         raise OSError('%s file exits. Remove file and start again.' % event_file)
 
-    # in_symbols = re.compile("^[%s]*$" % symbols)
-    not_in_symbols = re.compile("[^%s]" % symbols)
     context_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
 
     if event_structure == 'consecutive_words':
@@ -279,7 +300,7 @@ def create_event_file(corpus_file,
         if lower_case:
             line = line.lower()
         # replace all weird characters with space
-        line = not_in_symbols.sub(" ", line)
+        line = filter_symbols(line, replace=' ')
         return line
 
     def gen_words(line):

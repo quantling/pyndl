@@ -65,7 +65,7 @@ def test_bad_event_event():
 
 
 def test_drop_symbols():
-    corpus_file = os.path.join(TEST_ROOT, "resources/corpus.txt")  # includes polish symbols
+    corpus_file = RESOURCE_FILE  # includes polish symbols
     dropped_event_file = os.path.join(TEST_ROOT, "temp/dropped_events_corpus.tab.gz")
     polish_event_file = os.path.join(TEST_ROOT, "temp/polish_events_corpus.tab.gz")
     symbols = "a-z"
@@ -82,6 +82,17 @@ def test_drop_symbols():
         compare_event_files(dropped_event_file, polish_event_file)
     os.remove(dropped_event_file)
     os.remove(polish_event_file)
+
+
+def test_symbols_filter_function():
+    symbol_func = lambda chr: chr in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab.gz")
+    create_event_file(RESOURCE_FILE, EVENT_FILE, symbol_func,
+                      context_structure="document",
+                      event_structure="consecutive_words",
+                      event_options=(3, ))
+    compare_event_files(EVENT_FILE, reference_file)
+    os.remove(EVENT_FILE)
 
 
 def test_upper_case():
