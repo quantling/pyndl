@@ -64,6 +64,26 @@ def test_bad_event_event():
     assert not os.path.isfile(EVENT_FILE)
 
 
+def test_drop_symbols():
+    corpus_file = os.path.join(TEST_ROOT, "resources/corpus.txt")  # includes polish symbols
+    dropped_event_file = os.path.join(TEST_ROOT, "temp/dropped_events_corpus.tab.gz")
+    polish_event_file = os.path.join(TEST_ROOT, "temp/polish_events_corpus.tab.gz")
+    symbols = "a-z"
+    polish_symbols = "a-zóąćęłńśźż"
+    create_event_file(corpus_file, dropped_event_file, symbols,
+                      context_structure="document",
+                      event_structure="consecutive_words",
+                      event_options=(3, ))
+    create_event_file(corpus_file, polish_event_file, polish_symbols,
+                      context_structure="document",
+                      event_structure="consecutive_words",
+                      event_options=(3, ))
+    with pytest.raises(AssertionError):  # polish file should contain different events
+        compare_event_files(dropped_event_file, polish_event_file)
+    os.remove(dropped_event_file)
+    os.remove(polish_event_file)
+
+
 def test_upper_case():
     event_file = os.path.join(TEST_ROOT, "temp/events_corpus_upper_case.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
