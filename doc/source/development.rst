@@ -1,10 +1,10 @@
 Development
 ===========
-.. image:: https://travis-ci.com/quantling/pyndl.svg?branch=master
-    :target: https://travis-ci.com/quantling/pyndl?branch=master
+.. image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=master
+    :target: https://github.com/quantling/pyndl/actions/workflows/python-test.yml
 
-.. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
-    :target: https://coveralls.io/github/quantling/pyndl?branch=master
+.. image:: https://codecov.io/gh/quantling/pyndl/branch/master/graph/badge.svg?token=2GWUXRA9PD
+    :target: https://codecov.io/gh/quantling/pyndl
 
 .. image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
     :target: https://lgtm.com/projects/g/quantling/pyndl/context:python
@@ -39,14 +39,13 @@ Workflow
 1. Fork this repository on Github. From here on we assume you successfully
    forked this repository to https://github.com/yourname/pyndl.git
 
-2. Get a local copy of your fork and install the package in 'development'
-   mode, which will make changes in the source code active immediately, by running
+2. Install all dependencies with poetry (https://python-poetry.org/)
 
    .. code:: bash
 
        git clone https://github.com/yourname/pyndl.git
        cd pyndl
-       python setup.py develop --user
+       poetry install
 
 3. Add code, tests or documentation.
 
@@ -54,8 +53,18 @@ Workflow
 
    .. code:: bash
 
-       make checkstyle
-       make test
+        poetry run pytest
+        poetry run pylint
+
+.. note::
+
+    To additionally test the examples in the documentation run
+
+    .. code:: bash
+
+        poetry run pytest --doctest-glob "*.rst" && rm doc/data/levent.tab.gz
+
+    with the `rm` statement in the end to remove artifacts
 
 5. Add and commit your changes after tests run through without complaints.
 
@@ -78,46 +87,37 @@ Workflow
    click "New pull request" to submit your Pull Request to
    https://github.com/quantling/pyndl.
 
-.. note::
-
-    If you want to develop *pyndl* you should have installed:
-
-    .. code:: bash
-
-        pip install --user tox pylint pytest pycodestyle sphinx
-
 
 Running tests
 -------------
 
-We use ``make`` and ``tox`` to manage testing. You can run the tests by
+We use ``poetry`` to manage testing. You can run the tests by
 executing the following within the repository's root folder (``pyndl/``):
 
 .. code:: bash
 
-    make test
+    poetry run pytest
 
 For manually checking coding guidelines run:
 
 .. code:: bash
 
-    make checkstyle
-
-There is an additional way to invoke ``pylint`` as a linter with tox by running
-
-.. code:: bash
-
-    tox -e lint
+    poetry run pylint
 
 The linting gives still a lot of complaints that need some decisions on how to
 fix them appropriately.
+
+.. note::
+
+    Previous versions of *pyndl* used ``make`` and ``tox`` to manage testing. For
+    documentation on this, please check the respective version documentations
 
 
 Local testing with conda
 ------------------------
 
 Sometimes it might be useful to test if ``pyndl`` works in a clean python
-environment. Besides ``tox`` this is possible with ``conda`` as well. The
+environment. Besides ``poetry`` this is possible with ``conda`` as well. The
 commands are as follows:
 
 .. code:: bash
@@ -201,26 +201,27 @@ Some sources with more explanation:
 Building documentation
 ----------------------
 
-Building the documentation requires some extra dependencies. Therefore, run
+Building the documentation requires some extra dependencies. Usually, these are
+installed when installing the dependencies with poetry. Some services like Readthedocs,
+however, require the documentation dependencies extra. For that reason, they can
+also be found in `doc/requirements.txt`. For normal usage, installing all dependencies
+with poetry is sufficient.
+
+The projects documentation is stored in the ``pyndl/doc/`` folder
+and is created with ``sphinx``. However, it is not necessary to build the documentation
+from there.
+
+You can rebuild the documentation by either executing
 
 .. code:: bash
 
-    pip install -e .[docs]
-
-in the project root directory. This command will install all required
-dependencies. The projects documentation is stored in the ``pyndl/doc/`` folder
-and is created with ``sphinx``. You can rebuild the documentation by either
-executing
-
-.. code:: bash
-
-   make documentation
+    poetry run sphinx-build -b html doc/source doc/build/html
 
 in the repository's root folder (``pyndl``) or by executing
 
 .. code:: bash
 
-   make html
+   poetry run make html
 
 in the documentation folder (``pyndl/doc/``).
 
@@ -230,24 +231,24 @@ Continuous Integration
 
 We use several services in order to continuously monitor our project:
 
-===========  ===========  =================  ===========================
-Service      Status       Config file        Description
-===========  ===========  =================  ===========================
-Travis CI    |travis|     `.travis.yml`_     Automated testing
-Coveralls    |coveralls|                     Monitoring of test coverage
-LGTM         |lgtm|                          Monitoring code quality
-===========  ===========  =================  ===========================
+===============  ===========  ==================  ===========================
+Service          Status       Config file         Description
+===============  ===========  ==================  ===========================
+Github Actions   |actions|    `python-test.yml`_  Automated testing
+Codecov          |codecov|                        Monitoring of test coverage
+LGTM             |lgtm|                           Monitoring code quality
+===============  ===========  ==================  ===========================
 
-.. |travis| image:: https://travis-ci.com/quantling/pyndl.svg?branch=master
-    :target: https://travis-ci.com/quantling/pyndl?branch=master
+.. |actions| image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=master
+    :target: https://github.com/quantling/pyndl/actions/workflows/python-test.yml
 
-.. |coveralls| image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
-    :target: https://coveralls.io/github/quantling/pyndl?branch=master
+.. |codecov| image:: https://codecov.io/gh/quantling/pyndl/branch/master/graph/badge.svg?token=2GWUXRA9PD
+    :target: https://codecov.io/gh/quantling/pyndl
 
 .. |lgtm| image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
     :target: https://lgtm.com/projects/g/quantling/pyndl/context:python
 
-.. _.travis.yml: https://github.com/quantling/pyndl/blob/master/.travis.yml
+.. _python-test.yml: https://github.com/quantling/pyndl/blob/master/.github/workflows/python-test.yml
 
 
 Licensing
@@ -330,4 +331,3 @@ pull request which only contains the following two changes:
 - the change of the version number from ``X.Y.Z`` to ``X+1.0.0``
 - remove all the API with deprecation warning introduced in the current
   ``X.Y.Z`` release
-
