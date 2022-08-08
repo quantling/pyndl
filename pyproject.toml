@@ -53,6 +53,8 @@ nbsphinx = "0.8.8"
 vulture = "^2.3"
 Jinja2 = "<3.1.0"
 
+[tool.pytest.ini_options]
+addopts = '--doctest-glob "*.rst"'
 
 [tool.pylint]
   [tool.pylint.basic]
