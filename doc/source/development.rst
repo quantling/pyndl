@@ -92,7 +92,7 @@ For manually checking coding guidelines run:
 
 .. code:: bash
 
-    poetry run pylint
+    poetry run pylint pyndl
 
 The linting gives still a lot of complaints that need some decisions on how to
 fix them appropriately.
