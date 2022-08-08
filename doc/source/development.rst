@@ -89,7 +89,7 @@ executing the following within the repository's root folder (``pyndl/``):
     poetry run pytest
 
 For extensive, time and memory consuming tests run (at least 12 GB of free
-memory should be available)::
+memory should be available):
 
 .. code:: bash
 
