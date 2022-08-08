@@ -105,8 +105,8 @@ pyndl.ndl.ndl
 :py:mod:`pyndl.ndl.ndl` is a parallel Python implementation using numpy,
 multithreading and a binary format which is created automatically. It allows
 you to choose between the two methods ``openmp`` and ``threading``, with the
-former one using `openMP <http://www.openmp.org/>`_ and therefore being expected
-to be much faster when analyzing larger data. Besides, you can set three
+former one using `openMP <http://www.openmp.org/>`_ and therefore being
+expected to be faster when analyzing larger data. Besides, you can set three
 technical arguments which we will not change here:
 
 1. ``n_jobs`` (int) giving the number of threads in which the job
@@ -123,7 +123,7 @@ Let's start:
 
     >>> from pyndl import ndl
     >>> weights = ndl.ndl(events='doc/data/lexample.tab.gz', alpha=0.1,
-    ...                   betas=(0.1, 0.1), method='openmp')
+    ...                   betas=(0.1, 0.1), method='threading')
     >>> weights  # doctest: +ELLIPSIS
     <xarray.DataArray (outcomes: 8, cues: 15)>
     ...
@@ -165,7 +165,7 @@ weight matrix by specifying the ``weight`` argument:
 .. code-block:: python
 
     >>> weights2 = ndl.ndl(events='doc/data/lexample.tab.gz', alpha=0.1,
-    ...                    betas=(0.1, 0.1), method='openmp', weights=weights)
+    ...                    betas=(0.1, 0.1), method='threading', weights=weights)
     >>> weights2  # doctest: +ELLIPSIS
     <xarray.DataArray (outcomes: 8, cues: 15)>
     array([[ 0.24...
