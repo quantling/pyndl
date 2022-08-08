@@ -106,8 +106,9 @@ pyndl.ndl.ndl
 multithreading and a binary format which is created automatically. It allows
 you to choose between the two methods ``openmp`` and ``threading``, with the
 former one using `openMP <http://www.openmp.org/>`_ and therefore being
-expected to be faster when analyzing larger data. Besides, you can set three
-technical arguments which we will not change here:
+expected to be faster when analyzing larger data. Unfortunately, ``openmp`` is
+only available on Linux right now, therefore all examples use ``threading``.
+Besides, you can set three technical arguments which we will not change here:
 
 1. ``n_jobs`` (int) giving the number of threads in which the job
    should be executed (default=2)
