@@ -267,7 +267,8 @@ Release Process
    by poetry running
 
    .. code:: bash
-        poetry version major|minor|patch|...
+
+       poetry version major|minor|patch|...
 
 
 2. Merge Pull Requests with new features or bugfixes into *pyndl*'s' ``master``
