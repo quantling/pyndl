@@ -54,17 +54,7 @@ Workflow
    .. code:: bash
 
         poetry run pytest
-        poetry run pylint
-
-.. note::
-
-    To additionally test the examples in the documentation run
-
-    .. code:: bash
-
-        poetry run pytest --doctest-glob "*.rst" && rm doc/data/levent.tab.gz
-
-    with the `rm` statement in the end to remove artifacts
+        poetry run pylint pyndl
 
 5. Add and commit your changes after tests run through without complaints.
 
