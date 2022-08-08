@@ -13,15 +13,15 @@
 import os
 import sys
 import time
+from importlib import metadata
 sys.path.insert(0, os.path.abspath('.'))
 
 
 # -- Project information -----------------------------------------------------
 
-pkg = __import__('pyndl')
 project = 'pyndl'
-author =  pkg.__author__
-copyright = time.strftime('2017 - %Y ') + pkg.__author__
+author =  metadata.metadata(project)["Author"]
+copyright = time.strftime('2017 - %Y ') + author
 
 # -- General configuration ---------------------------------------------------
 
