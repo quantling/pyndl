@@ -150,9 +150,9 @@ def test_activation_matrix_large():
     def time_test(func, of=""):  # pylint: disable=invalid-name
         def dec_func(*args, **kwargs):
             print("start test '{}'".format(of))
-            start = time.clock()
+            start = time.time()
             res = func(*args, **kwargs)
-            end = time.clock()
+            end = time.time()
             print("finished test '{}'".format(of))
             print("  duration: {:.3f}s".format(end - start))
             print("")
@@ -160,15 +160,15 @@ def test_activation_matrix_large():
         return dec_func
 
     nn = 2000
-    n_cues = 10*nn
+    n_cues = 10 * nn
     n_outcomes = nn
-    n_events = 10*nn
+    n_events = 10 * nn
     n_cues_per_event = 30
-    weight_mat = np.random.rand(n_cues, n_outcomes)
+    weight_mat = np.random.rand(n_outcomes, n_cues)
     cues = ['c'+str(i) for i in range(n_cues)]
     weights = xr.DataArray(weight_mat,
                            coords={'cues': cues},
-                           dims=('cues', 'outcomes'))
+                           dims=('outcomes', 'cues'))
     events = [(np.random.choice(cues, n_cues_per_event), [])
               for i in range(n_events)]  # no generator, we use it twice
 
