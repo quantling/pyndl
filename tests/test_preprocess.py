@@ -5,6 +5,7 @@
 from collections import OrderedDict
 import gzip
 import os
+import re
 
 import pytest
 
@@ -91,6 +92,18 @@ def test_symbols_filter_function():
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab.gz")
     create_event_file(RESOURCE_FILE, EVENT_FILE,
                       symbols=symbol_func,
+                      context_structure="document",
+                      event_structure="consecutive_words",
+                      event_options=(3, ))
+    compare_event_files(EVENT_FILE, reference_file)
+    os.remove(EVENT_FILE)
+
+
+def test_symbols_pattern():
+    symbol_pattern = re.compile('[^#_\t]')
+    reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab.gz")
+    create_event_file(RESOURCE_FILE, EVENT_FILE,
+                      symbols=symbol_pattern,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ))
