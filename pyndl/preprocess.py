@@ -244,9 +244,9 @@ def create_event_file(corpus_file,
     elif callable(symbols):  # assume symbols is a filter function
         def filter_symbols(line, replace):
             line_copy = list(line)
-            for i in range(len(line)):
-                if not symbols(line[i]):
-                    line_copy[i] = replace
+            for ii in range(len(line)):
+                if not symbols(line[ii]):
+                    line_copy[ii] = replace
             return ''.join(line_copy)
     else:
         raise ValueError("symbols parameter has to be either str, re.Pattern, or function.")
