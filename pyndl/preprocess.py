@@ -251,6 +251,7 @@ def create_event_file(corpus_file,
     else:
         raise ValueError("symbols parameter has to be either str, re.Pattern, or function.")
 
+    # check that all special symbols are filtered out
     if filter_symbols('_#\t', replace='') != '':
         raise ValueError('"_", "#", and "\\t" are special symbols and cannot be in symbols string')
 
