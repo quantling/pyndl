@@ -141,8 +141,8 @@ def process_occurrences(occurrences, outfile, *,
 
 def create_event_file(corpus_file,
                       event_file,
-                      symbols,
                       *,
+                      symbols=re.compile("[^#_\t]"),
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3,),  # number_of_words,
@@ -153,13 +153,18 @@ def create_event_file(corpus_file,
     """
     Create an text based event file from a corpus file.
 
+    .. warning::
+
+        '_', '#', and '\t' are removed from the input of the corpus file and
+        replaced by a ' ', which is treated as a word boundary.
+
     Parameters
     ----------
     corpus_file : str
         path where the corpus file is
     event_file : str
         path where the output file will be created
-    symbols : str or function
+    symbols : str or function or re.Pattern
         all valid symbols to include in the events, either as a set of characters or as a 
         filter function.
         The set of characters might be explicit or containts Regex character sets. 
@@ -167,11 +172,17 @@ def create_event_file(corpus_file,
 
         '_', '#', and TAB are special symbols in the event file and might never be included here.
 
+        The re.Pattern should match all symbols that should be REMOVED.
+        Therefore the semantics is different to passing a str or a function.
+        The pattern `re.compile("[^#_\t]")` is the most inclusive pattern as it
+        will only remove the special symbols from the corpus.
+
         These examples define the same valid symbols::
 
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
             'a-zA-Z'
             lambda chr: ('a' <= chr <= 'z') or ('A' <= chr <= 'Z')
+            re.compile(["^#_\t"])
     context_structure : {"document", "paragraph", "line"}
 
     event_structure : {"line", "consecutive_words", "word_to_word", "sentence"}
@@ -222,17 +233,23 @@ def create_event_file(corpus_file,
         be (three) consecutive words, a sentence, or a line in the corpus file.
 
     """
-    try:  # assume symbols is a string
+    if isinstance(symbols, str):
         not_in_symbols = re.compile(f"[^{symbols:s}]")
-        def filter_symbols(line, replace): 
+        def filter_symbols(line, replace):
             return not_in_symbols.sub(replace, line)
-    except TypeError:  # assume symbols is a filter function
+    elif isinstance(symbols, re.Pattern):
+        not_in_symbols = symbols
+        def filter_symbols(line, replace):
+            return not_in_symbols.sub(replace, line)
+    elif callable(symbols):  # assume symbols is a filter function
         def filter_symbols(line, replace):
             line_copy = list(line)
             for i in range(len(line)):
                 if not symbols(line[i]):
                     line_copy[i] = replace
             return ''.join(line_copy)
+    else:
+        raise ValueError("symbols parameter has to be either str, re.Pattern, or function.")
 
     if filter_symbols('_#\t', replace='') != '':
         raise ValueError('"_", "#", and "\\t" are special symbols and cannot be in symbols string')
