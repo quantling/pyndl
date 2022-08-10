@@ -40,27 +40,16 @@ def test_bandsample():
     bandsample(outcome_freq_map, 50, cutoff=1, verbose=True)
 
 
-def test_bad_symbols():
-    with pytest.raises(ValueError):
-        create_event_file(RESOURCE_FILE, EVENT_FILE,
-                          symbols="abcd#")
-    assert not os.path.isfile(EVENT_FILE)
-    with pytest.raises(ValueError):
-        create_event_file(RESOURCE_FILE, EVENT_FILE,
-                          symbols="abcd_")
-    assert not os.path.isfile(EVENT_FILE)
-
-
 def test_bad_event_context():
     with pytest.raises(NotImplementedError):
-        create_event_file(RESOURCE_FILE, EVENT_FILE, symbols='a-zA-Z',
+        create_event_file(RESOURCE_FILE, EVENT_FILE, valid_symbols='a-zA-Z',
                           context_structure="UNREASONABLE")
     assert not os.path.isfile(EVENT_FILE)
 
 
 def test_bad_event_event():
     with pytest.raises(NotImplementedError):
-        create_event_file(RESOURCE_FILE, EVENT_FILE, symbols='a-zA-Z',
+        create_event_file(RESOURCE_FILE, EVENT_FILE, valid_symbols='a-zA-Z',
                           event_structure="UNREASONABLE")
     assert not os.path.isfile(EVENT_FILE)
 
@@ -72,12 +61,12 @@ def test_drop_symbols():
     symbols = "a-z"
     polish_symbols = "a-zóąćęłńśźż"
     create_event_file(corpus_file, dropped_event_file,
-                      symbols=symbols,
+                      valid_symbols=symbols,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ))
     create_event_file(corpus_file, polish_event_file,
-                      symbols=polish_symbols,
+                      valid_symbols=polish_symbols,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ))
@@ -91,19 +80,7 @@ def test_symbols_filter_function():
     symbol_func = lambda chr: chr in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab.gz")
     create_event_file(RESOURCE_FILE, EVENT_FILE,
-                      symbols=symbol_func,
-                      context_structure="document",
-                      event_structure="consecutive_words",
-                      event_options=(3, ))
-    compare_event_files(EVENT_FILE, reference_file)
-    os.remove(EVENT_FILE)
-
-
-def test_symbols_pattern():
-    symbol_pattern = re.compile('[^#_\t]')
-    reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab.gz")
-    create_event_file(RESOURCE_FILE, EVENT_FILE,
-                      symbols=symbol_pattern,
+                      filter_func=symbol_func,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ))
@@ -114,7 +91,7 @@ def test_symbols_pattern():
 def test_upper_case():
     event_file = os.path.join(TEST_ROOT, "temp/events_corpus_upper_case.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
-                      symbols='a-zA-Z',
+                      valid_symbols='a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ))
@@ -125,7 +102,7 @@ def test_trigrams_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word.tab.gz")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
-                      symbols='a-zA-Z',
+                      valid_symbols='a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -138,7 +115,7 @@ def test_trigrams_to_word_line_based():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_trigrams_to_word_line_based.tab.gz")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_trigrams_to_word_line_based.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
-                      symbols='a-zA-Z',
+                      valid_symbols='a-zA-Z',
                       context_structure="document",
                       event_structure="line", event_options=(3, ),
                       cue_structure="trigrams_to_word")
@@ -150,7 +127,7 @@ def test_bigrams_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word.tab.gz")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_bigrams_to_word.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
-                      symbols='a-zA-Z',
+                      valid_symbols='a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -164,14 +141,14 @@ def test_remove_duplicates():
     event_file_noduplicates = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word_noduplicates.tab.gz")
     event_file_duplicates = os.path.join(TEST_ROOT, "temp/event_file_bigrams_to_word_duplicates.tab.gz")
     create_event_file(RESOURCE_FILE, event_file_duplicates,
-                      symbols='a-zA-Z',
+                      valid_symbols='a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
                       cue_structure="bigrams_to_word",
                       remove_duplicates=False)
     create_event_file(RESOURCE_FILE, event_file_noduplicates,
-                      symbols='a-zA-Z',
+                      valid_symbols='a-zA-Z',
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),
@@ -213,7 +190,7 @@ def test_word_to_word():
     event_file = os.path.join(TEST_ROOT, "temp/event_file_word_to_word.tab.gz")
     reference_file = os.path.join(TEST_ROOT, "reference/event_file_word_to_word.tab.gz")
     create_event_file(RESOURCE_FILE, event_file,
-                      symbols='a-zA-Z',
+                      valid_symbols='a-zA-Z',
                       context_structure="document",
                       event_structure="word_to_word", event_options=(2, 1),
                       cue_structure="word_to_word")
@@ -376,7 +353,7 @@ def test_preprocessing():
 
     # create event file
     create_event_file(corpus_file, event_file,
-                      symbols=symbols,
+                      valid_symbols=symbols,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3, ),

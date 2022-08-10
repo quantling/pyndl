@@ -14,6 +14,7 @@ import random
 import re
 import sys
 import time
+import warnings
 
 
 def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
@@ -142,7 +143,8 @@ def process_occurrences(occurrences, outfile, *,
 def create_event_file(corpus_file,
                       event_file,
                       *,
-                      symbols=re.compile("[^#_\t]"),
+                      valid_symbols="*",
+                      filter_func=None,
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3,),  # number_of_words,
@@ -164,25 +166,29 @@ def create_event_file(corpus_file,
         path where the corpus file is
     event_file : str
         path where the output file will be created
-    symbols : str or function or re.Pattern
-        all valid symbols to include in the events, either as a set of characters or as a 
-        filter function.
-        The set of characters might be explicit or containts Regex character sets. 
-        The function should return `True`, if the passed character is a valid symbol.
+    valid_symbols : str
+        all valid symbols to include in the events as a set of characters.
+        The set of characters might be explicit or contains Regex character sets.
 
-        '_', '#', and TAB are special symbols in the event file and might never be included here.
-
-        The re.Pattern should match all symbols that should be REMOVED.
-        Therefore the semantics is different to passing a str or a function.
-        The pattern `re.compile("[^#_\t]")` is the most inclusive pattern as it
-        will only remove the special symbols from the corpus.
+        '_', '#', and TAB are special symbols in the event file and will be removed
+        automatically. If the corpus file contains these special symbols a warning
+        will be given.
 
         These examples define the same valid symbols::
 
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
             'a-zA-Z'
+            '*'
+
+    filter_func : function
+        a function indicating which characters to include. The function should
+        return `True`, if the passed character is a valid symbol.
+
+        For example::
+
+            lambda chr: chr in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             lambda chr: ('a' <= chr <= 'z') or ('A' <= chr <= 'Z')
-            re.compile(["^#_\t"])
+
     context_structure : {"document", "paragraph", "line"}
 
     event_structure : {"line", "consecutive_words", "word_to_word", "sentence"}
@@ -233,27 +239,23 @@ def create_event_file(corpus_file,
         be (three) consecutive words, a sentence, or a line in the corpus file.
 
     """
-    if isinstance(symbols, str):
-        not_in_symbols = re.compile(f"[^{symbols:s}]")
-        def filter_symbols(line, replace):
-            return not_in_symbols.sub(replace, line)
-    elif isinstance(symbols, re.Pattern):
-        not_in_symbols = symbols
-        def filter_symbols(line, replace):
-            return not_in_symbols.sub(replace, line)
-    elif callable(symbols):  # assume symbols is a filter function
+    def remove_special_chars(line):
+        special_chars = re.compile("[#_\t]")
+        if special_chars.search(line):
+            warnings.warn('"_", "#", and "\\t" are special symbols and were therefore removed')
+        return special_chars.sub(' ', line)
+
+    if filter_func:
         def filter_symbols(line, replace):
             line_copy = list(line)
             for ii in range(len(line)):
-                if not symbols(line[ii]):
+                if not filter_func(line[ii]):
                     line_copy[ii] = replace
             return ''.join(line_copy)
     else:
-        raise ValueError("symbols parameter has to be either str, re.Pattern, or function.")
-
-    # check that all special symbols are filtered out
-    if filter_symbols('_#\t', replace='') != '':
-        raise ValueError('"_", "#", and "\\t" are special symbols and cannot be in symbols string')
+        not_in_symbols = re.compile(f"[^{valid_symbols:s}]")
+        def filter_symbols(line, replace):
+            return not_in_symbols.sub(replace, line)
 
     if event_structure not in ('consecutive_words', 'line', 'word_to_word'):
         raise NotImplementedError('This event structure (%s) is not implemented yet.' % event_structure)
@@ -317,8 +319,11 @@ def create_event_file(corpus_file,
         """processes one line of text."""
         if lower_case:
             line = line.lower()
+        # remove special chars
+        line = remove_special_chars(line)
         # replace all weird characters with space
         line = filter_symbols(line, replace=' ')
+
         return line
 
     def gen_words(line):

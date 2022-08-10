@@ -135,7 +135,7 @@ corpus file and filter it:
     >>> from pyndl import preprocess
     >>> preprocess.create_event_file(corpus_file='doc/data/lcorpus.txt',
     ...                              event_file='doc/data/levent.tab.gz',
-    ...                              symbols='a-zA-Z',
+    ...                              valid_symbols='a-zA-Z',
     ...                              context_structure='document',
     ...                              event_structure='consecutive_words',
     ...                              event_options=(1, ),
