@@ -512,7 +512,7 @@ def filter_event_file(input_event_file, output_event_file, *,
                       keep_cues="all", keep_outcomes="all",
                       remove_cues=None, remove_outcomes=None,
                       cue_map=None, outcome_map=None,
-                      n_jobs=1, number_of_processes=None, chunksize=100000,
+                      n_jobs=1, chunksize=100000,
                       verbose=False):
     """
     Filter an event file by a list or a map of cues and outcomes.
@@ -556,11 +556,6 @@ def filter_event_file(input_event_file, output_event_file, *,
     is still present in order to capture the background rate of that cues.
 
     """
-    if number_of_processes is not None:
-        warnings.warn("Parameter `number_of_processes` is renamed to `n_jobs`. The old name "
-                      "will stop working with v0.9.0.",
-                      DeprecationWarning, stacklevel=2)
-        n_jobs = number_of_processes
     job = JobFilter(keep_cues, keep_outcomes, remove_cues, remove_outcomes,
                     cue_map, outcome_map)
 

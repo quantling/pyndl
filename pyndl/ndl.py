@@ -38,9 +38,6 @@ elif sys.platform.startswith('darwin'):
     pass
 
 
-warnings.simplefilter('always', DeprecationWarning)
-
-
 class WeightDict(defaultdict):
     # pylint: disable=missing-docstring
 
@@ -75,7 +72,7 @@ class WeightDict(defaultdict):
 
 def ndl(events, alpha, betas, lambda_=1.0, *,
         method='openmp', weights=None,
-        number_of_threads=None, n_jobs=8, len_sublists=None, n_outcomes_per_job=10,
+        n_jobs=8, n_outcomes_per_job=10,
         remove_duplicates=None,
         verbose=False, temporary_directory=None,
         events_per_temporary_file=10000000):
@@ -133,17 +130,6 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
         io.events_to_file(events, file_path)
         events = file_path
         del file_path
-
-    if number_of_threads is not None:
-        warnings.warn("Parameter `number_of_threads` is renamed to `n_jobs`. The old name "
-                      "will stop working with v0.9.0.",
-                      DeprecationWarning, stacklevel=2)
-        n_jobs = number_of_threads
-    if len_sublists is not None:
-        warnings.warn("Parameter `len_sublists` is renamed to `n_outcomes_per_job`. The old name "
-                      "will stop working with v0.9.0.",
-                      DeprecationWarning, stacklevel=2)
-        n_outcomes_per_job = len_sublists
 
     if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
         raise ValueError("remove_duplicates must be None, True or False")
