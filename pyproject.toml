@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyndl"
-version = "1.0.0-beta"
+version = "1.0.0"
 description = "Naive discriminative learning implements learning and classification models based on the Rescorla-Wagner equations."
 
 license = "MIT"
@@ -17,8 +17,7 @@ readme = "README.rst"  # Markdown files are supported
 repository = "https://github.com/quantling/pyndl"
 homepage = "https://pyndl.readthedocs.io/en/latest/"
 
-classifiers = ['Development Status :: 4 - Beta',
-               'Environment :: Console',
+classifiers = ['Environment :: Console',
                'Intended Audience :: Science/Research',
                'Operating System :: POSIX :: Linux',
                'Operating System :: MacOS',
