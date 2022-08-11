@@ -142,35 +142,37 @@ def test_ignore_missing_cues_dict():
 def test_activation_matrix_large():
     """
     Test with a lot of data. Better run only with at least 12GB free RAM.
-    To get time prints for single and multiprocessing run with pytest ... --capture=no --runslow
+    To get time prints for single and multiprocessing run with pytest ...
+    --capture=no --runslow
+
     """
     print("")
     print("Start setup...")
 
     def time_test(func, of=""):  # pylint: disable=invalid-name
         def dec_func(*args, **kwargs):
-            print("start test '{}'".format(of))
-            start = time.clock()
+            print(f"start test '{of}'")
+            start = time.time()
             res = func(*args, **kwargs)
-            end = time.clock()
-            print("finished test '{}'".format(of))
-            print("  duration: {:.3f}s".format(end - start))
+            end = time.time()
+            print(f"finished test '{of}'")
+            print(f"  duration: {end - start:.3f}s")
             print("")
             return res
         return dec_func
 
     nn = 2000
-    n_cues = 10*nn
+    n_cues = 10 * nn
     n_outcomes = nn
-    n_events = 10*nn
+    n_events = 10 * nn
     n_cues_per_event = 30
-    weight_mat = np.random.rand(n_cues, n_outcomes)
-    cues = ['c'+str(i) for i in range(n_cues)]
+    weight_mat = np.random.rand(n_outcomes, n_cues)
+    cues = [f'c{ii}' for ii in range(n_cues)]
     weights = xr.DataArray(weight_mat,
                            coords={'cues': cues},
-                           dims=('cues', 'outcomes'))
+                           dims=('outcomes', 'cues'))
     events = [(np.random.choice(cues, n_cues_per_event), [])
-              for i in range(n_events)]  # no generator, we use it twice
+              for _ in range(n_events)]  # no generator, we use it twice
 
     print("Start test...")
     print("")
