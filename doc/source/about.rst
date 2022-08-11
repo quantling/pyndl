@@ -8,8 +8,8 @@ Authors
 `Konstantin Sering <https://github.com/derNarr>`_,
 `Marc Weitz <https://github.com/trybnetic>`_,
 `David-Elias Künstle <https://github.com/dekuenstle/>`_,
- `Lennart Schneider <https://github.com/sumny>`_ and
- `Elnaz Shafaei-Bajestan <https://github.com/elnazsh>`_. For the full list of
+`Lennart Schneider <https://github.com/sumny>`_ and
+`Elnaz Shafaei-Bajestan <https://github.com/elnazsh>`_. For the full list of
 contributors have a look at `Github's Contributor summary
 <https://github.com/quantling/pyndl/contributors>`_.
 
