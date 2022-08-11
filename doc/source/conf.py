@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('.'))
 # -- Project information -----------------------------------------------------
 
 project = 'pyndl'
-author =  metadata.metadata(project)["Author"]
+author =  "Konstantin Sering, Marc Weitz, David-Elias Künstle, Lennart Schneider & Elnaz Shafaei-Bajestan"
 copyright = time.strftime('2017 - %Y ') + author
 
 # -- General configuration ---------------------------------------------------
