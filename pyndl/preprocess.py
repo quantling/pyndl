@@ -143,8 +143,7 @@ def process_occurrences(occurrences, outfile, *,
 def create_event_file(corpus_file,
                       event_file,
                       *,
-                      valid_symbols="*",
-                      filter_func=None,
+                      allowed_symbols="*",
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3,),  # number_of_words,
@@ -166,23 +165,22 @@ def create_event_file(corpus_file,
         path where the corpus file is
     event_file : str
         path where the output file will be created
-    valid_symbols : str
-        all valid symbols to include in the events as a set of characters.
+    allowed_symbols : str, function
+        all allowed symbols to include in the events as a set of characters.
         The set of characters might be explicit or contains Regex character sets.
 
         '_', '#', and TAB are special symbols in the event file and will be removed
         automatically. If the corpus file contains these special symbols a warning
         will be given.
 
-        These examples define the same valid symbols::
+        These examples define the same allowed symbols::
 
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
             'a-zA-Z'
             '*'
 
-    filter_func : function
-        a function indicating which characters to include. The function should
-        return `True`, if the passed character is a valid symbol.
+        or a function indicating which characters to include. The function should
+        return `True`, if the passed character is a allowed symbol.
 
         For example::
 
@@ -239,21 +237,33 @@ def create_event_file(corpus_file,
         be (three) consecutive words, a sentence, or a line in the corpus file.
 
     """
-    def remove_special_chars(line):
-        special_chars = re.compile("[#_\t]")
-        if special_chars.search(line):
-            warnings.warn('"_", "#", and "\\t" are special symbols and were therefore removed')
-        return special_chars.sub(' ', line)
 
-    if filter_func:
+    # define functions to remove special chars / symbols
+    special_chars = re.compile("[#_\t]")
+
+    def _remove_special_chars_without_warning(line):
+        new_line = special_chars.sub(' ', line)
+        return new_line
+
+    def _remove_special_chars_with_warning(line):
+        nonlocal remove_special_chars
+        new_line = special_chars.sub(' ', line)
+        if line != new_line:
+            warnings.warn('"_", "#", and "\\t" are special symbols and were therefore removed')
+            remove_special_chars = _remove_special_chars_without_warning
+        return new_line
+
+    remove_special_chars = _remove_special_chars_with_warning
+
+    if callable(allowed_symbols):
         def filter_symbols(line, replace):
             line_copy = list(line)
             for ii in range(len(line)):
-                if not filter_func(line[ii]):
+                if not allowed_symbols(line[ii]):
                     line_copy[ii] = replace
             return ''.join(line_copy)
     else:
-        not_in_symbols = re.compile(f"[^{valid_symbols:s}]")
+        not_in_symbols = re.compile(f"[^{allowed_symbols:s}]")
         def filter_symbols(line, replace):
             return not_in_symbols.sub(replace, line)
 
