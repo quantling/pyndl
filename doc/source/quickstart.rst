@@ -205,6 +205,17 @@ to load a in netCDF format saved matrix:
    > nc_close(nc = weights_nc)
    > rm(weights_nc)
 
+Clean up
+--------
+
+In order to keep everything clean we might want to remove all the files we
+created in this tutorial:
+
+.. code-block:: python
+
+  >>> import os
+  >>> os.remove('doc/data/levent.tab.gz')
+
 
 .. _lexample.tab.gz:
      https://github.com/quantling/pyndl/blob/master/doc/data/lexample.tab.gz

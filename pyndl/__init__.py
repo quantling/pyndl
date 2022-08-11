@@ -20,31 +20,12 @@ try:
 except ModuleNotFoundError:  # this should only happend during setup phase
     Requirement = None
 
-
-__author__ = ('Konstantin Sering, Marc Weitz, '
-              'David-Elias Künstle, Lennard Schneider, '
-              'Elnaz Shafaei-Bajestan')
-__author_email__ = 'konstantin.sering@uni-tuebingen.de'
-__version__ = '0.8.2'
-__license__ = 'MIT'
-__description__ = ('Naive discriminative learning implements learning and '
-                   'classification models based on the Rescorla-Wagner '
-                   'equations.')
-__classifiers__ = [
-    'Development Status :: 4 - Beta',
-    'Environment :: Console',
-    'Intended Audience :: Science/Research',
-    'License :: OSI Approved :: MIT License',
-    'Operating System :: POSIX :: Linux',
-    'Operating System :: MacOS',
-    'Programming Language :: Python',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3 :: Only',
-    'Topic :: Scientific/Engineering',
-    'Topic :: Scientific/Engineering :: Artificial Intelligence',
-    'Topic :: Scientific/Engineering :: Information Analysis',
-    ]
+try:
+    from importlib import metadata
+    __version__ = metadata.version(__package__)
+except metadata.PackageNotFoundError:
+    import toml
+    __version__ = toml.load("pyproject.toml")["tool"]["poetry"]["version"] + "dev"
 
 
 def sysinfo():

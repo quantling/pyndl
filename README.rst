@@ -2,11 +2,11 @@
 Pyndl - Naive Discriminative Learning in Python
 ===============================================
 
-.. image:: https://travis-ci.com/quantling/pyndl.svg?branch=master
-    :target: https://travis-ci.com/quantling/pyndl
+.. image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=master
+    :target: https://github.com/quantling/pyndl/actions/workflows/python-test.yml
 
-.. image:: https://coveralls.io/repos/github/quantling/pyndl/badge.svg?branch=master
-    :target: https://coveralls.io/github/quantling/pyndl?branch=master
+.. image:: https://codecov.io/gh/quantling/pyndl/branch/master/graph/badge.svg?token=2GWUXRA9PD
+    :target: https://codecov.io/gh/quantling/pyndl
 
 .. image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
     :target: https://lgtm.com/projects/g/quantling/pyndl/context:python
@@ -87,4 +87,3 @@ Acknowledgments
 This research was supported by an ERC advanced Grant (no. 742545) and by the
 Alexander von Humboldt Professorship awarded to R. H. Baayen and by the
 University of Tübingen.
-

@@ -36,6 +36,7 @@ def test_exceptions():
         assert e_info == "Weights other than xarray.DataArray or dicts are not supported."
 
 
+@pytest.mark.nolinux
 def test_activation_matrix():
     weights = xr.DataArray(np.array([[0, 1, 0], [1, 0, 0]]),
                            coords={
@@ -60,6 +61,7 @@ def test_activation_matrix():
     assert np.allclose(reference_activations, activations_mp)
 
 
+@pytest.mark.nolinux
 def test_ignore_missing_cues():
     weights = xr.DataArray(np.array([[0, 1, 0], [1, 0, 0]]),
                            coords={
