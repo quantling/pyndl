@@ -14,6 +14,7 @@ import random
 import re
 import sys
 import time
+import warnings
 
 
 def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
@@ -141,8 +142,8 @@ def process_occurrences(occurrences, outfile, *,
 
 def create_event_file(corpus_file,
                       event_file,
-                      symbols="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ",
                       *,
+                      allowed_symbols="*",
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3,),  # number_of_words,
@@ -153,14 +154,39 @@ def create_event_file(corpus_file,
     """
     Create an text based event file from a corpus file.
 
+    .. warning::
+
+        '_', '#', and '\t' are removed from the input of the corpus file and
+        replaced by a ' ', which is treated as a word boundary.
+
     Parameters
     ----------
     corpus_file : str
         path where the corpus file is
     event_file : str
         path where the output file will be created
-    symbols : str
-        string of all valid symbols
+    allowed_symbols : str, function
+        all allowed symbols to include in the events as a set of characters.
+        The set of characters might be explicit or contains Regex character sets.
+
+        '_', '#', and TAB are special symbols in the event file and will be removed
+        automatically. If the corpus file contains these special symbols a warning
+        will be given.
+
+        These examples define the same allowed symbols::
+
+            'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            'a-zA-Z'
+            '*'
+
+        or a function indicating which characters to include. The function should
+        return `True`, if the passed character is a allowed symbol.
+
+        For example::
+
+            lambda chr: chr in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            lambda chr: ('a' <= chr <= 'z') or ('A' <= chr <= 'Z')
+
     context_structure : {"document", "paragraph", "line"}
 
     event_structure : {"line", "consecutive_words", "word_to_word", "sentence"}
@@ -211,8 +237,35 @@ def create_event_file(corpus_file,
         be (three) consecutive words, a sentence, or a line in the corpus file.
 
     """
-    if '_' in symbols or '#' in symbols or '\t' in symbols:
-        raise ValueError('"_", "#", and "\\t" are special symbols and cannot be in symbols string')
+
+    # define functions to remove special chars / symbols
+    special_chars = re.compile("[#_\t]")
+
+    def _remove_special_chars_without_warning(line):
+        new_line = special_chars.sub(' ', line)
+        return new_line
+
+    def _remove_special_chars_with_warning(line):
+        nonlocal remove_special_chars
+        new_line = special_chars.sub(' ', line)
+        if line != new_line:
+            warnings.warn('"_", "#", and "\\t" are special symbols and were therefore removed')
+            remove_special_chars = _remove_special_chars_without_warning
+        return new_line
+
+    remove_special_chars = _remove_special_chars_with_warning
+
+    if callable(allowed_symbols):
+        def filter_symbols(line, replace):
+            line_copy = list(line)
+            for ii in range(len(line)):
+                if not allowed_symbols(line[ii]):
+                    line_copy[ii] = replace
+            return ''.join(line_copy)
+    else:
+        not_in_symbols = re.compile(f"[^{allowed_symbols:s}]")
+        def filter_symbols(line, replace):
+            return not_in_symbols.sub(replace, line)
 
     if event_structure not in ('consecutive_words', 'line', 'word_to_word'):
         raise NotImplementedError('This event structure (%s) is not implemented yet.' % event_structure)
@@ -223,8 +276,6 @@ def create_event_file(corpus_file,
     if os.path.isfile(event_file):
         raise OSError('%s file exits. Remove file and start again.' % event_file)
 
-    # in_symbols = re.compile("^[%s]*$" % symbols)
-    not_in_symbols = re.compile("[^%s]" % symbols)
     context_pattern = re.compile("(---end.of.document---|---END.OF.DOCUMENT---)")
 
     if event_structure == 'consecutive_words':
@@ -278,8 +329,11 @@ def create_event_file(corpus_file,
         """processes one line of text."""
         if lower_case:
             line = line.lower()
+        # remove special chars
+        line = remove_special_chars(line)
         # replace all weird characters with space
-        line = not_in_symbols.sub(" ", line)
+        line = filter_symbols(line, replace=' ')
+
         return line
 
     def gen_words(line):
