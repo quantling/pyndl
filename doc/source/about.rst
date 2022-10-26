@@ -30,8 +30,9 @@ Citation
 
 If this work was helpful in your work, feel free to cite it as
 
-    Konstantin Sering, Marc Weitz, David-Elias Künstle, & Lennart Schneider.
-    (2017). Pyndl: Naive discriminative learning in python.
+    Konstantin Sering, Marc Weitz, David-Elias Künstle, Lennart Schneider, &
+    Elnaz Shafaei-Bajestan.
+    (2022). Pyndl: Naive discriminative learning in python.
     http://doi.org/10.5281/zenodo.597964
 
 If you are using BibTex you may want to use this example BibTex entry::
@@ -40,7 +41,8 @@ If you are using BibTex you may want to use this example BibTex entry::
           author       = {Konstantin Sering and
                           Marc Weitz and
                           David-Elias Künstle and
-                          Lennart Schneider},
+                          Lennart Schneider and
+                          Elnaz Shafaei-Bajestan},
           title        = {Pyndl: Naive discriminative learning in python},
           year         = 2017,
           doi          = {10.5281/zenodo.597964},
