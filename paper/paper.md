@@ -36,7 +36,7 @@ human learning research [e.g. @Baayen_2011; @Rescorla1988PavlovianCI]. Lately,
 NDL has become a popular tool in language research to examine large corpora and
 vocabularies, with 750,000 spoken word tokens [@Shafaei_2022] and a vocabulary
 size of 52,402 word types [@Sering_2018]. In contrast to previous
-implementations, pyndl allows for a broader range of analysis, including
+implementations, *pyndl* allows for a broader range of analysis, including
 non-English languages, adds further learning rules and provides better
 maintainability while having the same fast processing speed. As of today, it
 supports multiple research groups in their work and led to several scientific
@@ -68,15 +68,26 @@ with modern challenges of linguistic research like multi-language support,
 increasing model sizes, and open science principles. The first implementation
 was the R package *ndl* [@ndl], which could solve the Danks equilibrium
 equations [@Danks_2003], but did not provide an exact iterative solver. An
-iterative solver was added to the R package *ndl2* [@ndl2].  However, the code
-of *ndl2* is only available upon request. One reason for this has been that it
-only runs on Linux and CRAN's guidelines make it difficult to publish single
-platform packages [@R_project]. A severe limitation of *ndl* and *ndl2* is that
-both packages have difficulties with non-ASCII input, causing problems in the
-analysis of non-English text corpora due to special characters or non-Latin
-alphabets. Furthermore, in *ndl2*, it is impossible to conveniently access huge
-weight matrices due to a size limitation of arrays in the R programming
-language [@R_project].
+iterative solver was added to the R package *ndl2* [@ndl2]. *ndl* and *ndl2*
+made efficient implementations to learning algorithms available to language
+researchers.
+
+
+<!-- Differences to pyndl -->
+<!-- Problems of ndl and ndl2 -->
+However, the code of *ndl2* is only available upon request. One reason for this
+has been that it only runs on Linux and CRAN's guidelines make it difficult to
+publish single platform packages [@R_project]. Another reason is the limited
+maintainability through low level C and C++ code next to high level R code.  A
+severe limitation of *ndl* and *ndl2* is that both packages have difficulties
+with non-ASCII input, causing problems in the analysis of non-English text
+corpora due to special characters or non-Latin alphabets. An example would be
+the processing of Arabic or Ukrainian languages; even German umlauts are
+inconvenient to use in *ndl* and *ndl2*. Furthermore, in *ndl2*, it is
+impossible to conveniently access huge weight matrices due to a size limitation
+of arrays in the R programming language [@R_project]. This limit does not allow
+for more than 46,340 word types in a word-type to word-type model, which is too
+small to capture the full lexicon in most languages.
 
 
 # Implementation and use in research
@@ -84,24 +95,40 @@ language [@R_project].
 <!-- Short description of pyndl -->
 *pyndl* reimplements the learning rule of NDL mainly in Python with small code
 chunks outsourced to Cython to speed up the processing. It also implements the
-processing of UTF-8 coded corpora enabling the analysis of many non-European
+processing of UTF-8 encoded corpora enabling the analysis of many non-European
 languages and alphabets [e.g. Mandarin or Cyrillic, @milin2020keeping]. Using
-the python ecosystem, the size of weight matrices in *pyndl* is only limited by
-the memory available. While previous packages were restricted in functionality
-and partially not openly available, *pyndl* was open-source software from the
-beginning and developed with hindsight for usability and maintainability.
-*pyndl* provides the same core functionality as the previous R packages in
-Python. After installation, *pyndl* can be called from R or Julia scripts by
-convenient bridges.
+the Python ecosystem, the size of weight matrices in *pyndl* is only limited by
+the memory available. Computed weights using the *xarray* format
+[@hoyer2017xarray] can be easily integrated into down-stream tasks like
+analyzing the association strength between grapheme clusters a word types.
+
+The input to *pyndl* is agnostic to the actual domain as long as it is
+tokenized as Unicode character strings. Input sequences can consist of multiple
+tokens separated by underscores which is together with the tab-character the
+only special character in *pyndl*. While *pyndl* provides some basic
+preprocessing for grapheme tokenisation, the preprocessing of ideograms,
+pictograms, logograms, and speech is possible using custom preprocessing. For
+example, word classification using tokenized speech was investigated in
+@Arnold_2017. Inputs in this work consisted of around 50 tokens per time slice,
+where each token encoded the pitch, loudness, and variability into a string.
+
+The input format is based on previous implementations of NDL. These
+implementations, however, were restricted in functionality and partially not
+openly available. *pyndl* was open-source software from the beginning and
+developed with usability and maintainability in mind.  *pyndl* provides
+the same core functionality as the previous R packages in Python. After
+installation, *pyndl* can be called from R or Julia scripts by convenient
+bridges, like any Python library. An example on how to use *pyndl* from R can
+be found in our documentation.
 
 <!-- WH extension of pyndl -->
-In contrast to previous implementations, *pyndl* is easily extendable. For example,
-the NDL learner was extended to a learner for continuous inputs as cues, outcomes
-or both.  When both cues and outcomes are continuous, the Rescorla-Wagner
-learning rule changes to the Widrow-Hoff learning rule. This extension is added
-by keeping the API to the learner comparable to NDL and computationally
-exploiting the structure of the multi-hot encoded features in the symbolic
-representation of language.
+In contrast to previous implementations, *pyndl* is easily extendable. For
+example, the NDL learner was extended to a learner for continuous inputs as
+cues, outcomes or both.  When both cues and outcomes are continuous, the
+Rescorla-Wagner learning rule changes to the Widrow-Hoff learning rule. This
+extension is added by keeping the API to the learner comparable to NDL and
+computationally exploiting the structure of the multi-hot encoded features in
+the symbolic representation of language.
 
 <!-- Pyndl in research -->
 *pyndl* is used by several research groups to analyse language data and is
