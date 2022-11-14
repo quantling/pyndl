@@ -77,8 +77,25 @@ with
 Correct Data Format
 -------------------
 
-From Wide to Long Format
-^^^^^^^^^^^^^^^^^^^^^^^^
+To analyse any data using *pyndl* requires them to be in the long format as an
+utf-8 encoded tab delimited gzipped text file with a header in the first line
+and two columns:
+
+1. the first column contains an underscore delimited list of all cues
+2. the second column contains an underscore delimited list of all outcomes
+3. each line therefore represents an event with a pair of a cue and an outcome
+   (occurring one time)
+4. the events (lines) are ordered chronologically
+
+The algorithm itself is agnostic to the actual domain as long as the data is tokenized 
+as Unicode character strings. While *pyndl* provides some basic preprocessing for grapheme
+tokenization (see for instance the following examples), the tokenization of ideograms, 
+pictograms, logograms, and speech has to be implemented manually. However, generic 
+implementations are welcome as a contribution.
+
+
+Creating Grapheme Clusters From Wide Format Data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Often data which should be analysed is not in the right format to be processed
 with *pyndl*. To illustrate how to get the data in the right format we use data
@@ -90,16 +107,6 @@ Table 1 shows some words, their frequencies of occurrence and their meanings as
 an artificial lexicon in the wide format. In the following, the letters
 (unigrams and bigrams) of the words constitute the cues, whereas the meanings
 represent the outcomes.
-
-To analyse any data using *pyndl* requires them to be in the long format as an
-utf-8 encoded tab delimited gzipped text file with a header in the first line
-and two columns:
-
-1. the first column contains an underscore delimited list of all cues
-2. the second column contains an underscore delimited list of all outcomes
-3. each line therefore represents an event with a pair of a cue and an outcome
-   (occurring one time)
-4. the events (lines) are ordered chronologically
 
 As the data in table 1 are artificial we can generate such a file for this
 example by expanding table 1 randomly regarding the frequency of occurrence of
@@ -117,8 +124,8 @@ Cues               Outcomes
 =================  =============
 
 
-From Corpus to Long Format
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creating Grapheme Clusters From Corpus Data
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Often the corpus which should be analysed is only a raw utf-8 encoded text file
 that contains huge amounts of text. From here on we will refer to such a file
