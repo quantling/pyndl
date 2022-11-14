@@ -135,6 +135,7 @@ corpus file and filter it:
     >>> from pyndl import preprocess
     >>> preprocess.create_event_file(corpus_file='doc/data/lcorpus.txt',
     ...                              event_file='doc/data/levent.tab.gz',
+    ...                              allowed_symbols='a-zA-Z',
     ...                              context_structure='document',
     ...                              event_structure='consecutive_words',
     ...                              event_options=(1, ),
@@ -203,6 +204,17 @@ to load a in netCDF format saved matrix:
    > colnames(weights_read) <- ncvar_get(nc = weights_nc, varid = "cues")
    > nc_close(nc = weights_nc)
    > rm(weights_nc)
+
+Clean up
+--------
+
+In order to keep everything clean we might want to remove all the files we
+created in this tutorial:
+
+.. code-block:: python
+
+  >>> import os
+  >>> os.remove('doc/data/levent.tab.gz')
 
 
 .. _lexample.tab.gz:
