@@ -8,8 +8,8 @@
    quickstart
    installation
    ndl
-   examples
+   examples 
+   tips_and_tricks
    pyndl
    development
-   misc
-   about
+   credits
