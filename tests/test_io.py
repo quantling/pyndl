@@ -5,6 +5,7 @@
 import os
 import gzip
 
+import pytest
 import pandas as pd
 
 from pyndl import io
@@ -94,3 +95,30 @@ def compare_events(events1, events2):
 
     unequal_ratio = len(unequal) / len(events1)
     return (unequal, unequal_ratio)
+
+
+def test_safe_write_path(tmp_path):
+    base_path = tmp_path / "example.txt"
+    assert not (tmp_path / "example.txt").exists()
+
+    path = io.safe_write_path(base_path)
+    path.write_text('test-file')
+    assert (tmp_path / "example.txt").exists()
+
+    path = io.safe_write_path(base_path)
+    path.write_text('test-file')
+    print(base_path, path)
+    assert (tmp_path / "example-1.txt").exists()
+
+    path = io.safe_write_path(base_path)
+    path.write_text('test-file')
+    assert (tmp_path / "example-2.txt").exists()
+
+    # custom template, which returns a full path instead of a file name
+    path = io.safe_write_path(base_path, template='{path}-{counter}')
+    path.write_text('test-file')
+    assert (tmp_path / "example.txt-1").exists()
+
+    with pytest.raises(ValueError):
+        # assert that pathnames are counting to avoid infinity loops
+        path = io.safe_write_path(base_path, template='{path}')

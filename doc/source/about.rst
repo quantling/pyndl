@@ -7,8 +7,9 @@ Authors
 *pyndl* was mainly developed by
 `Konstantin Sering <https://github.com/derNarr>`_,
 `Marc Weitz <https://github.com/trybnetic>`_,
-`David-Elias Künstle <https://github.com/dekuenstle/>`_
-and `Lennart Schneider <https://github.com/sumny>`_. For the full list of
+`David-Elias Künstle <https://github.com/dekuenstle/>`_,
+`Lennart Schneider <https://github.com/sumny>`_ and
+`Elnaz Shafaei-Bajestan <https://github.com/elnazsh>`_. For the full list of
 contributors have a look at `Github's Contributor summary
 <https://github.com/quantling/pyndl/contributors>`_.
 
@@ -29,8 +30,9 @@ Citation
 
 If this work was helpful in your work, feel free to cite it as
 
-    Konstantin Sering, Marc Weitz, David-Elias Künstle, & Lennart Schneider.
-    (2017). Pyndl: Naive discriminative learning in python.
+    Konstantin Sering, Marc Weitz, David-Elias Künstle, Lennart Schneider, &
+    Elnaz Shafaei-Bajestan.
+    (2022). Pyndl: Naive discriminative learning in python.
     http://doi.org/10.5281/zenodo.597964
 
 If you are using BibTex you may want to use this example BibTex entry::
@@ -39,7 +41,8 @@ If you are using BibTex you may want to use this example BibTex entry::
           author       = {Konstantin Sering and
                           Marc Weitz and
                           David-Elias Künstle and
-                          Lennart Schneider},
+                          Lennart Schneider and
+                          Elnaz Shafaei-Bajestan},
           title        = {Pyndl: Naive discriminative learning in python},
           year         = 2017,
           doi          = {10.5281/zenodo.597964},
