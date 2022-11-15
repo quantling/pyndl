@@ -4,7 +4,7 @@ pyndl.wh
 
 *pyndl.wh* provides functions in order to train Widrow-Hoff (WH) models. In contrast
 to the Rescorla-Wagner (RW) models in the WH models can not only have binary
-cues and outcomes, but can encode gradual intesities in the cues and outcomes.
+cues and outcomes, but can encode gradual intensities in the cues and outcomes.
 This is done by associating a vector of continues values (real numbers) to each
 cue and outcome. The size of the vector has to be the same for all cues and for
 all outcomes, but can differ between cues and outcomes.
@@ -399,6 +399,8 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
 
     if not outcome_vectors.data.data.c_contiguous:
         raise ValueError('outcome_vectors have to be c_contiguous')
+    if not outcome_vectors.dtype == np.float64:
+        raise ValueError('outcome_vectors have to be of dtype np.float64')
 
     # preprocessing
     n_events, cues, outcomes_from_events = count.cues_outcomes(events,
@@ -587,6 +589,8 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
 
     if not cue_vectors.data.data.c_contiguous:
         raise ValueError('cue_vectors have to be c_contiguous')
+    if not cue_vectors.dtype == np.float64:
+        raise ValueError('cue_vectors have to be of dtype np.float64')
 
     weights_ini = weights
     wall_time_start = time.perf_counter()
@@ -773,9 +777,13 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
 
     if not cue_vectors.data.data.c_contiguous:
         raise ValueError('cue_vectors have to be c_contiguous')
+    if not cue_vectors.dtype == np.float64:
+        raise ValueError('cue_vectors have to be of dtype np.float64')
 
     if not outcome_vectors.data.data.c_contiguous:
         raise ValueError('outcome_vectors have to be c_contiguous')
+    if not outcome_vectors.dtype == np.float64:
+        raise ValueError('outcome_vectors have to be of dtype np.float64')
 
     # preprocessing
     n_events, cues_from_events, outcomes_from_events = count.cues_outcomes(events,
