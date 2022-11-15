@@ -106,7 +106,7 @@ The input to *pyndl* is agnostic to the actual domain as long as it is
 tokenized as Unicode character strings. Input sequences can consist of multiple
 tokens separated by underscores which is together with the tab-character the
 only special character in *pyndl*. While *pyndl* provides some basic
-preprocessing for grapheme tokenisation, the preprocessing of ideograms,
+preprocessing for grapheme tokenization, the preprocessing of ideograms,
 pictograms, logograms, and speech is possible using custom preprocessing. For
 example, word classification using tokenized speech was investigated in
 @Arnold_2017. Inputs in this work consisted of around 50 tokens per time slice,
@@ -142,7 +142,7 @@ simple acoustic features, and @Romain_2022 model the learning of tenses.
 cues to show different language phenomena with the simple Widrow-Hoff learning
 rule as a special case of the Rescorla-Wagner. @Tomaschek:Duran:2019 used
 *pyndl* to model the McGurk effect across different languages.
-@Shafaei_Bajestan_2021 presented a linearised version of the Rescorla-Wagner
+@Shafaei_Bajestan_2021 presented a linearized version of the Rescorla-Wagner
 rule that they could add to *pyndl* and compare with the classic version.
 @Divjak_2020 showed the benefits of learning language models over probabilistic
 and rule-based models.
