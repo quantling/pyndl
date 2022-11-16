@@ -9,6 +9,7 @@
    installation
    ndl
    examples
+   benchmark
    pyndl
    development
    misc
