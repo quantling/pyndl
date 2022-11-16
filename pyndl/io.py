@@ -11,11 +11,13 @@ existing events from a DataFrame or a list to a file.
 import gzip
 from collections.abc import Iterator, Iterable
 from pathlib import Path
+import itertools
+import warnings
 
 import pandas as pd
 
 
-def events_from_file(event_path, compression="gzip"):
+def events_from_file(event_path, compression="gzip", start=0, step=1):
     """
     Yields events for all events in a gzipped event file.
 
@@ -26,6 +28,10 @@ def events_from_file(event_path, compression="gzip"):
     compression : str
         indicates whether the events should be read from gunzip
         file or not can be {"gzip" or None}
+    start: int
+        first event to read
+    step: int
+        slice every step-th event (useful for parallel computations)
 
     Yields
     ------
@@ -43,17 +49,23 @@ def events_from_file(event_path, compression="gzip"):
     try:
         # skip header
         event_file.readline()
-        for line in event_file:
-            cues, outcomes = line.strip('\n').split('\t')
+        for line in itertools.islice(event_file, start, None, step):
+            entries = line.strip('\n').split('\t')
+            if len(entries) == 2:
+                cues, outcomes = entries
+                frequency = 1
+            else:
+                cues, outcomes, frequency = entries
             cues = cues.split('_')
             outcomes = outcomes.split('_')
-            yield (cues, outcomes)
+            for i in range(int(frequency)):
+                yield (cues, outcomes)
     finally:
         event_file.close()
 
 
 def events_to_file(events, file_path, delimiter="\t", compression="gzip",
-                   columns=("cues", "outcomes")):
+                   columns=("cues", "outcomes"), compatible=False):
     """
     Writes events to a file
 
@@ -73,7 +85,8 @@ def events_to_file(events, file_path, delimiter="\t", compression="gzip",
         file or not can be {"gzip" or None}
     columns: tuple
         a tuple of column names
-
+    compatible: bool
+        if true add a third frequency column (all ones) for compatibility with ndl2
     """
     if isinstance(events, pd.DataFrame):
         events = events_from_dataframe(events)
@@ -90,17 +103,25 @@ def events_to_file(events, file_path, delimiter="\t", compression="gzip",
         raise ValueError("compression needs to be 'gzip' or None")
 
     try:
+        legacy_columns = ('Cues', 'Outcomes', 'Frequency')
+        if compatible and columns != legacy_columns:
+            warnings.warn(f"events_to_file sets the columns to the legacy names '{legacy_columns}' for ndl2 compatibility.\n"
+                           "Remove the warning by setting the columns parameter explicitly to this value.")
+            columns = legacy_columns
         out_file.write("{}\n".format(delimiter.join(columns)))
 
         for cues, outcomes in events:
             if isinstance(cues, list) and isinstance(outcomes, list):
-                line = "{}{}{}\n".format("_".join(cues),
-                                         delimiter,
-                                         "_".join(outcomes))
-            elif isinstance(cues, str) and isinstance(outcomes, str):
-                line = "{}{}{}\n".format(cues, delimiter, outcomes)
-            else:
+                cues = "_".join(cues)
+                outcomes = "_".join(outcomes)
+            elif not (isinstance(cues, str) and isinstance(outcomes, str)):
                 raise ValueError("cues and outcomes should either be a list or a string.")
+
+            if compatible: 
+                line = "{}{}{}{}1\n".format(cues, delimiter, outcomes, delimiter)
+            else:
+                line = "{}{}{}\n".format(cues, delimiter, outcomes)
+
             out_file.write(line)
     finally:
         out_file.close()
