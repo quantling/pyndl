@@ -2,7 +2,7 @@
 README pyndl tests
 ==================
 
-running tests
+Running tests
 =============
 Running tests is described in the documentation in Chapter Development in
 Section Running tests. This section can be found here::
@@ -16,8 +16,8 @@ The standard set of tests can be execute with::
 For this to work `poetry` and `pytest` need to be installed.
 
 
-resource folder
-================
+Folder 'resources'
+==================
 The following resources are used by the tests. These are the inputs to the
 tests.
 
@@ -57,8 +57,8 @@ xml_gz_corpus
 Folder hierarchy containing gzip files with artificial xml subtitles.
 
 
-reference folder
-================
+Folder 'reference'
+==================
 The reference folder contains reference data that is used to compare and
 validate test results.
 
@@ -76,5 +76,11 @@ weights_event_file_{simple,multiple_cues}{,_ndl2}.csv
 Automatically generated weights from event_file_{simple,multiple_cues}.tab
 
 xml_gz_corpus.txt
--------------
+-----------------
 Subtitle text in phrases per line from resource/xml_gz_corpus.
+
+
+Folder 'temp'
+=============
+This folder contains temporary files that are written during the testing.
+
