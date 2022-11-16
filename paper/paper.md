@@ -79,10 +79,6 @@ However, the code of *ndl2* is only available upon request. One reason for this
 has been that it only runs on Linux and CRAN's guidelines make it difficult to
 publish single platform packages [@R_project]. Another reason is the limited
 maintainability through low level C and C++ code next to high level R code. 
-The better maintainability of *pyndl* does not come at the cost of performance: 
-The benchmark results in \autoref{fig:benchmark}, described in detail in our package's documentation, shows that *pyndl* is faster than *ndl* and *ndl2*. 
-Memory is used efficiently by storing data records in compressed form and loading data points as they are needed during learning.
-
 A severe limitation of *ndl* and *ndl2* is that both packages have difficulties
 with non-ASCII input, causing problems in the analysis of non-English text
 corpora due to special characters or non-Latin alphabets. An example would be
@@ -93,7 +89,6 @@ of arrays in the R programming language [@R_project]. This limit does not allow
 for more than 46,340 word types in a word-type to word-type model, which is too
 small to capture the full lexicon in most languages.
 
-![Runtime mean and standard-error ($n$=10) for learning trigram-to-word models with different NDL implementations. Ours, *pyndl*, is the fastest for large datasets.\label{fig:benchmark}](benchmark_result.png)
 
 # Implementation and use in research
 
@@ -120,11 +115,22 @@ where each token encoded the pitch, loudness, and variability into a string.
 The input format is based on previous implementations of NDL. These
 implementations, however, were restricted in functionality and partially not
 openly available. *pyndl* was open-source software from the beginning and
-developed with usability and maintainability in mind.  *pyndl* provides
-the same core functionality as the previous R packages in Python. After
+developed with usability and maintainability in mind.  The better
+maintainability of *pyndl* does not come at the cost of performance: The
+benchmark results in \autoref{fig:benchmark}, described in detail in our
+package's documentation, shows that *pyndl* is faster than *ndl* and *ndl2*.
+Memory is used efficiently by storing data records in compressed form and
+loading data points as they are needed during learning.  *pyndl* provides the
+same core functionality as the previous R packages in Python. After
 installation, *pyndl* can be called from R or Julia scripts by convenient
 bridges, like any Python library. An example on how to use *pyndl* from R can
 be found in our documentation.
+
+![Execution wall time for different implementations of the Rescorla-Wagner
+learning rule for different number of learning events. The mean and
+standard-error ($n$=10) for the wall time show that our implementation,
+*pyndl*, is the fastest for larger numbers of
+events.\label{fig:benchmark}](benchmark_result.png)
 
 <!-- WH extension of pyndl -->
 In contrast to previous implementations, *pyndl* is easily extendable. For
