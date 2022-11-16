@@ -31,8 +31,8 @@ data_long.loc['pyndl_thread4', 'lib'] = 'pyndl (ours, threading)'
 
 fg = sns.relplot(data=data_long, kind="line", x="event_num", y="wctime", hue='lib', style='lib', markers=True, dashes=False, errorbar='se', col='parallel', facet_kws=dict(legend_out=False), height=3)
 fg.set_axis_labels('events', 'wall-clock time [sec]')   
-fg.set(ylim=(0, 26))
-sns.move_legend(fg, "upper left", bbox_to_anchor=(.57, .85), frameon=True)
+fg.set(ylim=(0, 30))
+sns.move_legend(fg, "upper left", bbox_to_anchor=(.57, .90), frameon=True)
 fg.legend.set_title(None)
 fg.savefig('benchmark_result.pdf')         
 fg.savefig('benchmark_result.png')         
