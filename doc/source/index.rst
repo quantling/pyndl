@@ -1,11 +1,13 @@
 .. automodule:: pyndl
   :noindex:
 
+.. include:: ./quickstart.rst
+
 .. toctree::
    :maxdepth: 2
+   :hidden:
    :caption: Contents:
 
-   quickstart
    installation
    ndl
    examples 
