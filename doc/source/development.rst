@@ -33,6 +33,27 @@ The *pyndl* project welcomes help in the following ways:
       <https://github.com/quantling/pyndl/issues/new>`_.
 
 
+Prerequisites
+-------------
+To make changes to the *pyndl* code base the following prerequisites need to be
+fulfilled on your machine:
+
+* you have Python3 installed
+* you have `Cython <https://cython.readthedocs.io>`_ installed and can compile
+  Cython extensions (`conda install cython` should do the trick, but sometimes
+  this can be a little bit tricky)
+* you have `poetry <https://python-poetry.org/>`_ installed
+* you have `git` installed
+
+.. note::
+
+   Depending on your operating system and your architecture properly installing
+   Cython and being able to compile Cython extensions can be a bit tricky. If
+   the installation of python fails, it is a good first step to check that the
+   Cython installation is done properly via `conda` or through you package
+   manager.
+
+
 Workflow
 --------
 
