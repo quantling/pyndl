@@ -131,7 +131,7 @@ We visualize the wall-clock time for the various NDL implementations and number 
 plot with error bars for the standard-error within the ten repetitions (``python plot_result.py``, requires the plotting packages `seaborn`).
 The shown wall-clock times were recorded on a laptop (*Intel(R) Core(TM) i7-8565U CPU* running *Ubuntu 20.4*, *R 3.6* and *python 3.9*).
 
-.. image:: benchmark_result.png
+.. image:: _static/benchmark_result.png
     
 For small event files the `pyndl` are less than one second slower than `ndl2` but still almost twenty times faster than `ndl`. With increasing number of events, `pyndl` becomes the fastest method
 in both single and parallel processing (2 jobs). 
