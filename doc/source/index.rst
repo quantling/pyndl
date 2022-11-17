@@ -10,7 +10,8 @@
 
    installation
    ndl
-   examples 
+   examples
+   benchmark
    tips_and_tricks
    pyndl
    development
