@@ -415,7 +415,7 @@ respectively. For more information have a look at the function doc string.
 WH example
 ----------
 This example shows that WH learning mimics RW learning, if the cue and outcome
-vectors are containing unit vectors. Note that WH learnin in contrast to the RW
+vectors are containing unit vectors. Note that WH learning in contrast to the RW
 learning only has one learning parameter, which is called `eta`. The assumption
 is that `beta1` equals `beta2`.
 
@@ -437,10 +437,10 @@ is that `beta1` equals `beta2`.
    >>> weights_ndl = ndl.ndl(events, alpha=1.0, betas=(eta, eta), method='threading')
 
 The weights returned by `wh.wh` have dimensions `outcome_vector_dimensions` and
-`cue_vector_dimensions`. Therefore a direct comparison is not possible. But
+`cue_vector_dimensions`. Therefore, a direct comparison is not possible. But
 as the vectors used are unit vectors the first `cue_vector_dimension` `"dim1"`
 corresponds to the first cue `"a"` and the second vector dimension corresponds
-to the second cue etc. If the dimensions are ordered their names, the equality
+to the second cue etc. If the dimensions are ordered by their names, the equality
 gets apparent.
 
 .. code-block:: python
@@ -473,8 +473,8 @@ gets apparent.
     Attributes: (12/17)
     ...
 
-Furthermore, it is possible to only use `cue_vectors` or only
-`outcome_vectors`. This functionality is linux only at the moment.
+Furthermore, it is possible to only use either `cue_vectors` or
+`outcome_vectors`. This functionality is Linux only at the moment.
 
 .. code-block:: python
 

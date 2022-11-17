@@ -3,7 +3,7 @@ pyndl.wh
 --------
 
 *pyndl.wh* provides functions in order to train Widrow-Hoff (WH) models. In contrast
-to the Rescorla-Wagner (RW) models in the WH models can not only have binary
+to the Rescorla-Wagner (RW) models, the WH models can not only have binary
 cues and outcomes, but can encode gradual intensities in the cues and outcomes.
 This is done by associating a vector of continues values (real numbers) to each
 cue and outcome. The size of the vector has to be the same for all cues and for

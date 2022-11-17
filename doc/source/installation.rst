@@ -18,25 +18,20 @@ system.
 
 .. note::
 
-    We recommend to install `Minicoda <https://conda.io/miniconda.html>`_
-    before installing *pyndl* or to create a virtualenv within your personal
-    folder.
+    If you face problems with installing *pyndl* with `pip`, it might be
+    helpful to use `Minicoda <https://conda.io/miniconda.html>`_ to install the
+    following dependencies::
 
-    It is recommended, to install the following dependencies of `pyndl` through
-    the `conda` command::
+        conda install numpy cython pandas xarray netCDF4 numpydoc pip
 
-       conda install numpy cython pandas xarray netCDF4 numpydoc pip
-
-
-.. note::
-
-   During the installation process of *pyndl* Cython extension need to be
-   installed, if no pre-compiled wheel could be found for your operating system
-   and architecture. To compile Cython extensions some further steps need to be
-   done, which is described in the `Cython documentation
-   <https://cython.readthedocs.io>`_ . These steps depend on your operating
-   system. Installing Cython with `conda install cython` should add all the
-   necessary additional programs and files and no further steps are needed.
+    The reason behind this is that during the installation process of *pyndl*
+    Cython extension need to be installed, if no pre-compiled wheel could be
+    found for your operating system and architecture. To compile Cython
+    extensions some further steps need to be done, which is described in the
+    `Cython documentation <https://cython.readthedocs.io>`_ . These steps depend
+    on your operating system. Installing Cython with `conda install cython`
+    should add all the necessary additional programs and files and no further
+    steps are needed.
 
 
 Linux
