@@ -34,6 +34,8 @@ fg.set_axis_labels('events', 'wall-clock time [sec]')
 fg.set(ylim=(0, 30))
 sns.move_legend(fg, "upper left", bbox_to_anchor=(.57, .90), frameon=True)
 fg.legend.set_title(None)
+fg.axes[0, 0].set_title('Single processing')
+fg.axes[0, 1].set_title('Parallel processing (2 jobs)')
 fg.savefig('benchmark_result.pdf')         
 fg.savefig('benchmark_result.png')         
 

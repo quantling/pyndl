@@ -136,11 +136,10 @@ The shown wall-clock times were recorded on a laptop (*Intel(R) Core(TM) i7-8565
 For small event files the `pyndl` are less than one second slower than `ndl2` but still almost twenty times faster than `ndl`. With increasing number of events, `pyndl` becomes the fastest method
 in both single and parallel processing (2 jobs). 
 
-`pyndl` processes the event file into a faster accessible format, which results in the
-overhead for small event files. However, in contrast to both other implementations 
-it never reads the full event file into memory, allowing to process way larger event files than its competitors.
-
-
-
-
+`pyndl` processes the event file into a faster accessible format, which results
+in the overhead for event files. This is similarly done in `ndl2` where this
+overhead for small event files seems to be less time consuming. However, in
+contrast to the implementations in `ndl2` and `ndl`, the implementation in
+`pyndl` never reads the full event file into memory, which is faster and has a
+smaller memory footprint than its competitors.
 
