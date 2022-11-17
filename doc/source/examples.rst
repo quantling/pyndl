@@ -1,6 +1,6 @@
-=============
-More Examples
-=============
+==============
+Usage Examples
+==============
 
 Lexical example
 ===============

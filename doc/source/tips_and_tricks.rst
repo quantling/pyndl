@@ -1,4 +1,4 @@
-Miscellaneous
+Tips & Tricks
 =============
 
 This is collection of more or less unrelated tips and tricks that can be helpful

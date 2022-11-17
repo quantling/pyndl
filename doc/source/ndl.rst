@@ -1,8 +1,11 @@
+Background
+==========
+
 Naive Discriminative Learning
-=============================
+-----------------------------
 
 Terminology
------------
+~~~~~~~~~~~
 
 Before explaining Naive Discriminative Learning (NDL) in detail, we want to
 give you a brief overview over important notions:
@@ -27,7 +30,7 @@ weights :
 
 
 Rescorla Wagner learning rule
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In order to update the association strengths (weights) between cues and
 outcomes we do for each event the following:
