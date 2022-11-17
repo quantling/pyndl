@@ -74,11 +74,49 @@ with
     \forall i, j`, :math:`\beta_{1} = \beta_{2}` and :math:`\lambda = 1`
 
 
-Correct Data Format
--------------------
+Usage
+-----
 
-From Wide to Long Format
-^^^^^^^^^^^^^^^^^^^^^^^^
+Analyzing data with *pyndl* involves three steps
+
+    1. The data has to be preprocessed into the correct data format
+    2. One of the learning methods of *pyndl* is used to learn the desired associations
+    3. The learned association (commonly also called weights) can be stored or directly 
+       be analyzed further.
+
+In the following, a usage example of *pyndl* is provided, in which the first two of the 
+three steps are described for learning the associations between bigrams and meanings. The 
+first section of this example focuses on the correct preparation of the data with inbuilt 
+methods. However, it is worth to note that the learning algorithm itself does not require 
+the data to be preprocessed by *pyndl*, nor it is limited by that. The 
+:py:mod:`pyndl.preprocess` module should rather be seen as a collection of established and 
+commonly used preprocessing methods within the context of NDL. The second section, 
+describes how the associations can be learned using *pyndl*, while the last section 
+describes how this can be exported and, for instance, loaded in R for further 
+investigation.
+
+Correct Data Format
+```````````````````
+
+To analyse any data using *pyndl* requires them to be in the long format as an
+utf-8 encoded tab delimited gzipped text file with a header in the first line
+and two columns:
+
+1. the first column contains an underscore delimited list of all cues
+2. the second column contains an underscore delimited list of all outcomes
+3. each line therefore represents an event with a pair of a cue and an outcome
+   (occurring one time)
+4. the events (lines) are ordered chronologically
+
+The algorithm itself is agnostic to the actual domain as long as the data is tokenized 
+as Unicode character strings. While *pyndl* provides some basic preprocessing for grapheme
+tokenization (see for instance the following examples), the tokenization of ideograms, 
+pictograms, logograms, and speech has to be implemented manually. However, generic 
+implementations are welcome as a contribution.
+
+
+Creating Grapheme Clusters From Wide Format Data
+''''''''''''''''''''''''''''''''''''''''''''''''
 
 Often data which should be analysed is not in the right format to be processed
 with *pyndl*. To illustrate how to get the data in the right format we use data
@@ -90,16 +128,6 @@ Table 1 shows some words, their frequencies of occurrence and their meanings as
 an artificial lexicon in the wide format. In the following, the letters
 (unigrams and bigrams) of the words constitute the cues, whereas the meanings
 represent the outcomes.
-
-To analyse any data using *pyndl* requires them to be in the long format as an
-utf-8 encoded tab delimited gzipped text file with a header in the first line
-and two columns:
-
-1. the first column contains an underscore delimited list of all cues
-2. the second column contains an underscore delimited list of all outcomes
-3. each line therefore represents an event with a pair of a cue and an outcome
-   (occurring one time)
-4. the events (lines) are ordered chronologically
 
 As the data in table 1 are artificial we can generate such a file for this
 example by expanding table 1 randomly regarding the frequency of occurrence of
@@ -117,8 +145,8 @@ Cues               Outcomes
 =================  =============
 
 
-From Corpus to Long Format
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Creating Grapheme Clusters From Corpus Data
+'''''''''''''''''''''''''''''''''''''''''''
 
 Often the corpus which should be analysed is only a raw utf-8 encoded text file
 that contains huge amounts of text. From here on we will refer to such a file
@@ -159,7 +187,7 @@ ds_s#_an_#h_ha_nd  hands
 
 
 Learn the associations
-----------------------
+``````````````````````
 
 The strength of the associations for the data can now easily be computed using
 the :py:mod:`pyndl.ndl.ndl` function from the :py:mod:`pyndl.ndl` module:
@@ -172,7 +200,7 @@ the :py:mod:`pyndl.ndl.ndl` function from the :py:mod:`pyndl.ndl` module:
 
 
 Save and load a weight matrix
------------------------------
+`````````````````````````````
 
 To save time in the future, we recommend saving the weights. For compatibility
 reasons we recommend saving the weight matrix in the netCDF format [3]_:
@@ -206,7 +234,7 @@ to load a in netCDF format saved matrix:
    > rm(weights_nc)
 
 Clean up
---------
+````````
 
 In order to keep everything clean we might want to remove all the files we
 created in this tutorial:

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyndl"
-version = "1.0.0-beta"
+version = "1.0.0-beta2"
 description = "Naive discriminative learning implements learning and classification models based on the Rescorla-Wagner equations."
 
 license = "MIT"

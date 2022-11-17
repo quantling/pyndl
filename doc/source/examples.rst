@@ -1,6 +1,6 @@
-=============
-More Examples
-=============
+==============
+Usage Examples
+==============
 
 Lexical example
 ===============
@@ -175,7 +175,7 @@ weight matrix by specifying the ``weight`` argument:
     Coordinates:
       * outcomes  (outcomes) <U6 'hand' 'plural'...
       * cues      (cues) <U2 '#h' 'ha' 'an' 'nd'...
-    Attributes:
+    Attributes:...
         date:...
         event_path:...
     ...
@@ -400,7 +400,7 @@ created in this tutorial:
 
 
 Widrow-Hoff (WH) learning
--------------------------
+=========================
 There is a Widrow-Hoff learning module called `wh` now in `pyndl`, which uses
 the same event files and nearly the same function parameters as the `ndl.ndl`
 function. The main function to call is `wh.wh`.  Compared to `ndl.ndl` the
@@ -408,12 +408,85 @@ function. The main function to call is `wh.wh`.  Compared to `ndl.ndl` the
 its keyword arguments.  Each of this look-up tables  maps each cue and / or
 outcome in your event file to a vector. This look-up table has to be an
 instance `xarray.DataArray` and is passed with the keyword argument
-`cue_vectors` or `outcome_vectors`. For more information have a look at the
-function doc string.
+`cue_vectors` or `outcome_vectors`. The second dimension of the look-up table
+needs to be named `cue_vector_dimensions` and `outcome_vector_dimensions`
+respectively. For more information have a look at the function doc string.
+
+WH example
+----------
+This example shows that WH learning mimics RW learning, if the cue and outcome
+vectors are containing unit vectors. Note that WH learning in contrast to the RW
+learning only has one learning parameter, which is called `eta`. The assumption
+is that `beta1` equals `beta2`.
+
+.. code-block:: python
+
+   >>> from pyndl import wh, ndl
+   >>> import xarray as xr
+   >>> import numpy as np
+   >>> events = 'doc/data/event_file_wh.tab.gz'
+   >>> eta = 0.01  # learning rate
+   >>> cue_vectors = xr.DataArray(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float),
+   ...                            dims=('cues', 'cue_vector_dimensions'),
+   ...                            coords={'cues': ['a', 'b', 'c'], 'cue_vector_dimensions': ['dim1', 'dim2', 'dim3']})
+   >>> outcome_vectors = xr.DataArray(np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, 1]], dtype=float),
+   ...                                dims=('outcomes', 'outcome_vector_dimensions'),
+   ...                                coords={'outcomes': ['A', 'B', 'C', 'D'],
+   ...                                        'outcome_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4']})
+   >>> weights_wh = wh.wh(events, eta, cue_vectors=cue_vectors, outcome_vectors=outcome_vectors, method='numpy')
+   >>> weights_ndl = ndl.ndl(events, alpha=1.0, betas=(eta, eta), method='threading')
+
+The weights returned by `wh.wh` have dimensions `outcome_vector_dimensions` and
+`cue_vector_dimensions`. Therefore, a direct comparison is not possible. But
+as the vectors used are unit vectors the first `cue_vector_dimension` `"dim1"`
+corresponds to the first cue `"a"` and the second vector dimension corresponds
+to the second cue etc. If the dimensions are ordered by their names, the equality
+gets apparent.
+
+.. code-block:: python
+
+    >>> weights_wh = weights_wh.loc[{'outcome_vector_dimensions': ['dim1', 'dim2', 'dim3', 'dim4'],
+    ...                              'cue_vector_dimensions': ['dim1', 'dim2', 'dim3']}]
+    >>> weights_ndl = weights_ndl.loc[{'outcomes': ['A', 'B', 'C', 'D'], 'cues': ['a', 'b', 'c']}]
+    >>> print(weights_wh)  # doctest: +ELLIPSIS
+    <xarray.DataArray (outcome_vector_dimensions: 4, cue_vector_dimensions: 3)>
+    array([[0.06706..., 0.        , 0.        ],
+           [0.        , 0.03940..., 0.        ],
+           [0.0094... , 0.        , 0.03940...],
+           [0.01      , 0.        , 0.        ]])
+    Coordinates:
+      * outcome_vector_dimensions  (outcome_vector_dimensions) <U4 'dim1' ... 'dim4'
+      * cue_vector_dimensions      (cue_vector_dimensions) <U4 'dim1' 'dim2' 'dim3'
+        outcomes                   <U1 'A'
+        cues                       <U1 'a'
+    Attributes: (12/15)
+    ...
+    >>> print(weights_ndl)  # doctest: +ELLIPSIS
+    <xarray.DataArray (outcomes: 4, cues: 3)>
+    array([[0.06706..., 0.        , 0.        ],
+           [0.        , 0.03940..., 0.        ],
+           [0.0094... , 0.        , 0.03940...],
+           [0.01      , 0.        , 0.        ]])
+    Coordinates:
+      * outcomes  (outcomes) <U1 'A' 'B' 'C' 'D'
+      * cues      (cues) <U1 'a' 'b' 'c'
+    Attributes: (12/17)
+    ...
+
+Furthermore, it is possible to only use either `cue_vectors` or
+`outcome_vectors`. This functionality is Linux only at the moment.
+
+.. code-block:: python
+
+   >>> weights_wh_cv_only = wh.wh(events, eta, cue_vectors=cue_vectors, method='openmp')  # doctest: +SKIP
+   >>> weights_wh_ov_only = wh.wh(events, eta, outcome_vectors=outcome_vectors, method='openmp')  # doctest: +SKIP
+
+For this example the content of the resulting weights matches the content of
+the `weights_wh` and `weights_ndl`.
 
 
 Load a weight matrix to R [4]_
-------------------------------
+==============================
 We can load a in netCDF format saved matrix into R:
 
 .. code-block:: R

@@ -98,7 +98,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     method : {'openmp', 'threading'}
     weights : None or xarray.DataArray
-        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+        the xarray.DataArray needs to have the named dimensions 'cues' and 'outcomes'
     n_jobs : int
         a integer giving the number of threads in which the job should
         executed
