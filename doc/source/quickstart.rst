@@ -79,7 +79,7 @@ Usage
 
 Analyzing data with *pyndl* involves three steps
 
-    1. The data has to be preprocessed into the correct data format
+    1. The data has to be preprocessed into the correct format
     2. One of the learning methods of *pyndl* is used to learn the desired associations
     3. The learned association (commonly also called weights) can be stored or directly 
        be analyzed further.
@@ -90,13 +90,14 @@ first section of this example focuses on the correct preparation of the data wit
 methods. However, it is worth to note that the learning algorithm itself does not require 
 the data to be preprocessed by *pyndl*, nor it is limited by that. The 
 :py:mod:`pyndl.preprocess` module should rather be seen as a collection of established and 
-commonly used preprocessing methods within the context of NDL. The second section, 
-describes how the associations can be learned using *pyndl*, while the last section 
-describes how this can be exported and, for instance, loaded in R for further 
-investigation.
+commonly used preprocessing methods within the context of NDL. Custom preprocessing can 
+be used as long as the created event files follow the structure as outlined in the next
+section. The second section, describes how the associations can be learned using *pyndl*,
+while the last section describes how this can be exported and, for instance, loaded in R 
+for further investigation.
 
-Correct Data Format
-```````````````````
+Data Preparation
+````````````````
 
 To analyse any data using *pyndl* requires them to be in the long format as an
 utf-8 encoded tab delimited gzipped text file with a header in the first line
