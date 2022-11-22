@@ -39,7 +39,7 @@ fg.axes[0, 1].set_title('Parallel processing (2 jobs)')
 fg.savefig('benchmark_result.pdf')         
 fg.savefig('benchmark_result.png')         
 fg.savefig('../paper/benchmark_result.png')         
-fg.savefig('../doc/source/_static/benchmark_result.png')         
+fg.savefig('../docs/source/_static/benchmark_result.png')         
 
 fg = sns.relplot(data=data_long.loc[['Rndl2-1thread', 'pyndl_openmp1'], :], kind="line", x="event_num", y="wctime", hue='lib', style='lib',
                  markers=True, dashes=False, errorbar='se')
