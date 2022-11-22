@@ -162,8 +162,8 @@ corpus file and filter it:
 .. code-block:: python
 
     >>> from pyndl import preprocess
-    >>> preprocess.create_event_file(corpus_file='doc/data/lcorpus.txt',
-    ...                              event_file='doc/data/levent.tab.gz',
+    >>> preprocess.create_event_file(corpus_file='docs/data/lcorpus.txt',
+    ...                              event_file='docs/data/levent.tab.gz',
     ...                              allowed_symbols='a-zA-Z',
     ...                              context_structure='document',
     ...                              event_structure='consecutive_words',
@@ -196,7 +196,7 @@ the :py:mod:`pyndl.ndl.ndl` function from the :py:mod:`pyndl.ndl` module:
 .. code-block:: python
 
    >>> from pyndl import ndl
-   >>> weights = ndl.ndl(events='doc/data/levent.tab.gz',
+   >>> weights = ndl.ndl(events='docs/data/levent.tab.gz',
    ...                   alpha=0.1, betas=(0.1, 0.1), method="threading")
 
 
@@ -208,7 +208,7 @@ reasons we recommend saving the weight matrix in the netCDF format [3]_:
 
 .. code-block:: python
 
-    >>> weights.to_netcdf('doc/data/weights.nc')  # doctest: +SKIP
+    >>> weights.to_netcdf('docs/data/weights.nc')  # doctest: +SKIP
 
 Now, the saved weights can later be reused or be analysed in Python or R. In
 Python the weights can simply be loaded with the `xarray module
@@ -217,7 +217,7 @@ Python the weights can simply be loaded with the `xarray module
 .. code-block:: python
 
     >>> import xarray  # doctest: +SKIP
-    >>> with xarray.open_dataarray('doc/data/weights.nc') as weights_read:  # doctest: +SKIP
+    >>> with xarray.open_dataarray('docs/data/weights.nc') as weights_read:  # doctest: +SKIP
     ...     weights_read
 
 In R you need the `ncdf4 package <https://cran.r-project.org/package=ncdf4>`_
@@ -227,7 +227,7 @@ to load a in netCDF format saved matrix:
 
    > #install.packages("ncdf4") # uncomment to install
    > library(ncdf4)
-   > weights_nc <- nc_open(filename = "doc/data/weights.nc")
+   > weights_nc <- nc_open(filename = "docs/data/weights.nc")
    > weights_read <- t(as.matrix(ncvar_get(nc = weights_nc, varid = "__xarray_dataarray_variable__")))
    > rownames(weights_read) <- ncvar_get(nc = weights_nc, varid = "outcomes")
    > colnames(weights_read) <- ncvar_get(nc = weights_nc, varid = "cues")
@@ -243,14 +243,14 @@ created in this tutorial:
 .. code-block:: python
 
   >>> import os
-  >>> os.remove('doc/data/levent.tab.gz')
+  >>> os.remove('docs/data/levent.tab.gz')
 
 
 .. _lexample.tab.gz:
-     https://github.com/quantling/pyndl/blob/master/doc/data/lexample.tab.gz
+     https://github.com/quantling/pyndl/blob/main/docs/data/lexample.tab.gz
 
 .. _lcorpus.txt:
-     https://github.com/quantling/pyndl/blob/master/doc/data/lcorpus.txt
+     https://github.com/quantling/pyndl/blob/main/docs/data/lcorpus.txt
 
 ----
 

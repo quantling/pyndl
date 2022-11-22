@@ -123,7 +123,7 @@ Let's start:
 .. code-block:: python
 
     >>> from pyndl import ndl
-    >>> weights = ndl.ndl(events='doc/data/lexample.tab.gz', alpha=0.1,
+    >>> weights = ndl.ndl(events='docs/data/lexample.tab.gz', alpha=0.1,
     ...                   betas=(0.1, 0.1), method='threading')
     >>> weights  # doctest: +ELLIPSIS
     <xarray.DataArray (outcomes: 8, cues: 15)>
@@ -165,7 +165,7 @@ weight matrix by specifying the ``weight`` argument:
 
 .. code-block:: python
 
-    >>> weights2 = ndl.ndl(events='doc/data/lexample.tab.gz', alpha=0.1,
+    >>> weights2 = ndl.ndl(events='docs/data/lexample.tab.gz', alpha=0.1,
     ...                    betas=(0.1, 0.1), method='threading', weights=weights)
     >>> weights2  # doctest: +ELLIPSIS
     <xarray.DataArray (outcomes: 8, cues: 15)>
@@ -208,7 +208,7 @@ Therefore
 
 .. code-block:: python
 
-    >>> weights = ndl.dict_ndl(events='doc/data/lexample.tab.gz',
+    >>> weights = ndl.dict_ndl(events='docs/data/lexample.tab.gz',
     ...                        alphas=0.1, betas=(0.1, 0.1))
     >>> weights['plural']['s#'] # doctes: +ELLIPSIS
     0.076988227...
@@ -221,9 +221,9 @@ learning or do both:
 
     >>> alphas_cues = dict(zip(['#h', 'ha', 'an', 'nd', 'ds', 's#', '#l', 'la', 'as', 'ss', 'ad', 'd#', '#a', '#s', 'sa'],
     ...                        [0.1, 0.2, 0.3, 0.4, 0.1, 0.2, 0.3, 0.1, 0.2, 0.1, 0.2, 0.1, 0.3, 0.1, 0.2]))
-    >>> weights = ndl.dict_ndl(events='doc/data/lexample.tab.gz',
+    >>> weights = ndl.dict_ndl(events='docs/data/lexample.tab.gz',
     ...                        alphas=alphas_cues, betas=(0.1, 0.1))
-    >>> weights2 = ndl.dict_ndl(events='doc/data/lexample.tab.gz',
+    >>> weights2 = ndl.dict_ndl(events='docs/data/lexample.tab.gz',
     ...                         alphas=alphas_cues, betas=(0.1, 0.1),
     ...                         weights=weights)
 
@@ -231,7 +231,7 @@ If you prefer to get a ``xarray.DataArray`` returned you can set the flag ``make
 
 .. code-block:: python
 
-    >>> weights = ndl.dict_ndl(events='doc/data/lexample.tab.gz',
+    >>> weights = ndl.dict_ndl(events='docs/data/lexample.tab.gz',
     ...                        alphas=alphas_cues, betas=(0.1, 0.1),
     ...                        make_data_array=True)
     >>> weights  # doctest: +ELLIPSIS
@@ -275,8 +275,8 @@ generate an event file based on a raw corpus file and filter it:
 
     >>> import pyndl
     >>> from pyndl import preprocess
-    >>> preprocess.create_event_file(corpus_file='doc/data/lcorpus.txt',
-    ...                              event_file='doc/data/levent.tab.gz',
+    >>> preprocess.create_event_file(corpus_file='docs/data/lcorpus.txt',
+    ...                              event_file='docs/data/levent.tab.gz',
     ...                              allowed_symbols='a-zA-Z',
     ...                              context_structure='document',
     ...                              event_structure='consecutive_words',
@@ -311,7 +311,7 @@ We can now count the cues and outcomes in our event file using the
 .. code-block:: python
 
     >>> from pyndl import count
-    >>> freq, cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name='doc/data/levent.tab.gz')
+    >>> freq, cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name='docs/data/levent.tab.gz')
     >>> freq
     12
     >>> cue_freq_map  # doctest: +ELLIPSIS
@@ -339,11 +339,11 @@ the id maps for cues and outcomes:
 
 .. code-block:: python
 
-    >>> preprocess.filter_event_file(input_event_file='doc/data/levent.tab.gz',
-    ...                              output_event_file='doc/data/levent.tab.gz.filtered',
+    >>> preprocess.filter_event_file(input_event_file='docs/data/levent.tab.gz',
+    ...                              output_event_file='docs/data/levent.tab.gz.filtered',
     ...                              remove_cues=('#f', 'fo', 'oo', 'ot', 't#', 'fe', 'ee', 'et'),
     ...                              remove_outcomes=('foot', 'feet'))
-    >>> freq, cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name='doc/data/levent.tab.gz.filtered')
+    >>> freq, cue_freq_map, outcome_freq_map = count.cues_outcomes(event_file_name='docs/data/levent.tab.gz.filtered')
     >>> cues = list(cue_freq_map.keys())
     >>> cues.sort()
     >>> cue_id_map = {cue: ii for ii, cue in enumerate(cues)}
@@ -374,7 +374,7 @@ example:
 .. code-block:: python
 
    >>> from pyndl import ndl
-   >>> weights = ndl.ndl(events='doc/data/levent.tab.gz.filtered',
+   >>> weights = ndl.ndl(events='docs/data/levent.tab.gz.filtered',
    ...                   alpha=0.1, betas=(0.1, 0.1), method="threading")
 
 
@@ -385,8 +385,8 @@ is straight forward using the netCDF format [3]_
 .. code-block:: python
 
     >>> import xarray  # doctest: +SKIP
-    >>> weights.to_netcdf('doc/data/weights.nc')  # doctest: +SKIP
-    >>> with xarray.open_dataarray('doc/data/weights.nc') as weights_read:  # doctest: +SKIP
+    >>> weights.to_netcdf('docs/data/weights.nc')  # doctest: +SKIP
+    >>> with xarray.open_dataarray('docs/data/weights.nc') as weights_read:  # doctest: +SKIP
     ...     weights_read
 
 In order to keep everything clean we might want to remove all the files we
@@ -395,8 +395,8 @@ created in this tutorial:
 .. code-block:: python
 
    >>> import os
-   >>> os.remove('doc/data/levent.tab.gz')
-   >>> os.remove('doc/data/levent.tab.gz.filtered')
+   >>> os.remove('docs/data/levent.tab.gz')
+   >>> os.remove('docs/data/levent.tab.gz.filtered')
 
 
 Widrow-Hoff (WH) learning
@@ -424,7 +424,7 @@ is that `beta1` equals `beta2`.
    >>> from pyndl import wh, ndl
    >>> import xarray as xr
    >>> import numpy as np
-   >>> events = 'doc/data/event_file_wh.tab.gz'
+   >>> events = 'docs/data/event_file_wh.tab.gz'
    >>> eta = 0.01  # learning rate
    >>> cue_vectors = xr.DataArray(np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]], dtype=float),
    ...                            dims=('cues', 'cue_vector_dimensions'),
@@ -493,7 +493,7 @@ We can load a in netCDF format saved matrix into R:
 
    > #install.packages("ncdf4") # uncomment to install
    > library(ncdf4)
-   > weights_nc <- nc_open(filename = "doc/data/weights.nc")
+   > weights_nc <- nc_open(filename = "docs/data/weights.nc")
    > weights_read <- t(as.matrix(ncvar_get(nc = weights_nc, varid = "__xarray_dataarray_variable__")))
    > rownames(weights_read) <- ncvar_get(nc = weights_nc, varid = "outcomes")
    > colnames(weights_read) <- ncvar_get(nc = weights_nc, varid = "cues")
@@ -501,10 +501,11 @@ We can load a in netCDF format saved matrix into R:
    > rm(weights_nc)
 
 .. _lexample.tab.gz:
-      https://github.com/quantling/pyndl/blob/master/doc/data/lexample.tab.gz
+    https://github.com/quantling/pyndl/blob/main/docs/data/lexample.tab.gz
 
 .. _lcorpus.txt:
-    https://github.com/quantling/pyndl/blob/master/doc/data/lcorpus.txt
+    https://github.com/quantling/pyndl/blob/main/docs/data/lcorpus.txt
+
 
 ----
 
