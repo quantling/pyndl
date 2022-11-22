@@ -222,10 +222,10 @@ Building documentation
 Building the documentation requires some extra dependencies. Usually, these are
 installed when installing the dependencies with poetry. Some services like Readthedocs,
 however, require the documentation dependencies extra. For that reason, they can
-also be found in `doc/requirements.txt`. For normal usage, installing all dependencies
+also be found in `docs/requirements.txt`. For normal usage, installing all dependencies
 with poetry is sufficient.
 
-The projects documentation is stored in the ``pyndl/doc/`` folder
+The projects documentation is stored in the ``pyndl/docs/`` folder
 and is created with ``sphinx``. However, it is not necessary to build the documentation
 from there.
 
@@ -233,7 +233,7 @@ You can rebuild the documentation by either executing
 
 .. code:: bash
 
-    poetry run sphinx-build -b html doc/source doc/build/html
+    poetry run sphinx-build -b html docs/source docs/build/html
 
 in the repository's root folder (``pyndl``) or by executing
 
@@ -241,7 +241,7 @@ in the repository's root folder (``pyndl``) or by executing
 
    poetry run make html
 
-in the documentation folder (``pyndl/doc/``).
+in the documentation folder (``pyndl/docs/``).
 
 
 Continuous Integration
