@@ -1,9 +1,9 @@
 Development
 ===========
-.. image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=master
+.. image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=main
     :target: https://github.com/quantling/pyndl/actions/workflows/python-test.yml
 
-.. image:: https://codecov.io/gh/quantling/pyndl/branch/master/graph/badge.svg?token=2GWUXRA9PD
+.. image:: https://codecov.io/gh/quantling/pyndl/branch/main/graph/badge.svg?token=2GWUXRA9PD
     :target: https://codecov.io/gh/quantling/pyndl
 
 .. image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
@@ -22,15 +22,36 @@ Getting Involved
 The *pyndl* project welcomes help in the following ways:
 
     * Making Pull Requests for
-      `code <https://github.com/quantling/pyndl/tree/master/pyndl>`_,
-      `tests <https://github.com/quantling/pyndl/tree/master/tests>`_
-      or `documentation <https://github.com/quantling/pyndl/tree/master/doc>`_.
+      `code <https://github.com/quantling/pyndl/tree/main/pyndl>`_,
+      `tests <https://github.com/quantling/pyndl/tree/main/tests>`_
+      or `documentation <https://github.com/quantling/pyndl/tree/main/doc>`_.
     * Commenting on `open issues <https://github.com/quantling/pyndl/issues>`_
       and `pull requests <https://github.com/quantling/pyndl/pulls>`_.
     * Helping to answer `questions in the issue section
       <https://github.com/quantling/pyndl/labels/question>`_.
     * Creating feature requests or adding bug reports in the `issue section
       <https://github.com/quantling/pyndl/issues/new>`_.
+
+
+Prerequisites
+-------------
+To make changes to the *pyndl* code base the following prerequisites need to be
+fulfilled on your machine:
+
+* you have Python3 installed
+* you have `Cython <https://cython.readthedocs.io>`_ installed and can compile
+  Cython extensions (`conda install cython` should do the trick, but sometimes
+  this can be a little bit tricky)
+* you have `poetry <https://python-poetry.org/>`_ installed
+* you have `git` installed
+
+.. note::
+
+   Depending on your operating system and your architecture properly installing
+   Cython and being able to compile Cython extensions can be a bit tricky. If
+   the installation of python fails, it is a good first step to check that the
+   Cython installation is done properly via `conda` or through you package
+   manager.
 
 
 Workflow
@@ -146,7 +167,7 @@ is a good tool to do that. ``yep`` builds ontop of ``google-perftools``.
 (https://pypi.org/project/yep/)
 
 
-Keeping a fork in sync with master
+Keeping a fork in sync with main
 ----------------------------------
 
 .. note::
@@ -156,7 +177,7 @@ Keeping a fork in sync with master
     https://help.github.com/articles/working-with-forks/ .
 
 If you fork the ``pyndl`` project on github.com you might want to keep it in
-sync with master. In order to do so, you need to setup a remote repository
+sync with main. In order to do so, you need to setup a remote repository
 within a local ``pyndl`` clone of you fork. This remote repository will point
 to the original ``pyndl`` repository and is usually called ``upstream``. In
 order to do so run with a Terminal within the cloned pyndl folder:
@@ -172,12 +193,12 @@ local repository by running:
 
     git fetch upstream
 
-In order to sync you ``master`` branch run:
+In order to sync you ``main`` branch run:
 
 .. code:: bash
 
-    git checkout master
-    git merge upstream/master
+    git checkout main
+    git merge upstream/main
 
 If the merge cannot be fast-forward, you should resolve any issue now and
 commit the manually merged files.
@@ -201,10 +222,10 @@ Building documentation
 Building the documentation requires some extra dependencies. Usually, these are
 installed when installing the dependencies with poetry. Some services like Readthedocs,
 however, require the documentation dependencies extra. For that reason, they can
-also be found in `doc/requirements.txt`. For normal usage, installing all dependencies
+also be found in `docs/requirements.txt`. For normal usage, installing all dependencies
 with poetry is sufficient.
 
-The projects documentation is stored in the ``pyndl/doc/`` folder
+The projects documentation is stored in the ``pyndl/docs/`` folder
 and is created with ``sphinx``. However, it is not necessary to build the documentation
 from there.
 
@@ -212,7 +233,7 @@ You can rebuild the documentation by either executing
 
 .. code:: bash
 
-    poetry run sphinx-build -b html doc/source doc/build/html
+    poetry run sphinx-build -b html docs/source docs/build/html
 
 in the repository's root folder (``pyndl``) or by executing
 
@@ -220,7 +241,7 @@ in the repository's root folder (``pyndl``) or by executing
 
    poetry run make html
 
-in the documentation folder (``pyndl/doc/``).
+in the documentation folder (``pyndl/docs/``).
 
 
 Continuous Integration
@@ -236,23 +257,23 @@ Codecov          |codecov|                        Monitoring of test coverage
 LGTM             |lgtm|                           Monitoring code quality
 ===============  ===========  ==================  ===========================
 
-.. |actions| image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=master
+.. |actions| image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=main
     :target: https://github.com/quantling/pyndl/actions/workflows/python-test.yml
 
-.. |codecov| image:: https://codecov.io/gh/quantling/pyndl/branch/master/graph/badge.svg?token=2GWUXRA9PD
+.. |codecov| image:: https://codecov.io/gh/quantling/pyndl/branch/main/graph/badge.svg?token=2GWUXRA9PD
     :target: https://codecov.io/gh/quantling/pyndl
 
 .. |lgtm| image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
     :target: https://lgtm.com/projects/g/quantling/pyndl/context:python
 
-.. _python-test.yml: https://github.com/quantling/pyndl/blob/master/.github/workflows/python-test.yml
+.. _python-test.yml: https://github.com/quantling/pyndl/blob/main/.github/workflows/python-test.yml
 
 
 Licensing
 ---------
 
 All contributions to this project are licensed under the `MIT license
-<https://github.com/quantling/pyndl/blob/master/LICENSE.txt>`_. Exceptions are
+<https://github.com/quantling/pyndl/blob/main/LICENSE.txt>`_. Exceptions are
 explicitly marked.
 All contributions will be made available under MIT license if no explicit
 request for another license is made and agreed on.
@@ -268,10 +289,10 @@ Release Process
        poetry version major|minor|patch|...
 
 
-2. Merge Pull Requests with new features or bugfixes into *pyndl*'s' ``master``
+2. Merge Pull Requests with new features or bugfixes into *pyndl*'s' ``main``
    branch.
 
-3. Create a new release on Github of the `master` branch of the form ``vX.Y.Z``
+3. Create a new release on Github of the `main` branch of the form ``vX.Y.Z``
    (where ``X``, ``Y``, and ``Z`` refer to the new version).  Add a description
    of the new feature or bugfix. For details on the version number see
    Versioning_ below.

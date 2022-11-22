@@ -1,0 +1,1053 @@
+
+
+GRAPHEM
+
+
+aus Wikipedia, der freien Enzyklopädie
+
+Zur Navigation springen Zur Suche springen
+
+GRAPHEME oder GRAFEME (altgriechisch γραφή
+
+graphḗ, deutsch ‚Schrift‘ und Suffix _-em_) sind die kleinsten
+bedeutungsunterscheidenden, aber nicht selbst bedeutungstragenden
+grafischen Einheiten des Schriftsystems einer bestimmten Sprache.^([1])
+Sie fassen also bedeutungsgleiche Graphe in gemeinsame Klassen zusammen.
+
+Ein bestimmter Laut in einer gesprochenen Sprache, ein Phonem, kann auf
+verschiedene Weise geschrieben werden. So ist in den beiden Wörtern
+_schrift_ und _sprache_ der Wortanfang das Phonem
+
+​/⁠ʃ⁠/​ und wird einmal mit den Graphen ‹sch› und einmal mit dem Graph
+‹s› dargestellt. Ähnliches gilt für die Wörter _flug_ und _vogel_: das
+Phonem ​/⁠f⁠/​ korrespondiert mit den unterschiedlichen Graphen ‹f› und
+‹v›. Verschiedene Graphe, die entweder frei ausgetauscht werden können
+oder nach deterministischen Regeln komplementär verteilt sind, nennt man
+Allographe. Ein Graphem besteht aus solchen Allographen.
+
+Die Linguistik untersucht in ihrer Teildisziplin Graphem(at)ik die
+Strukturen und Zusammenhänge von Graphemen, um durch die Bildung von
+Klassen und Konstruktionsprinzipien allgemeine Aussagen über eine
+Sprache und deren Verschriftlichung treffen zu können.
+
+
+Inhaltsverzeichnis
+
+-   1 Schreibweise (Notation)
+-   2 Begriffsbestimmung
+    -   2.1 Lautsprache: Analogbildung zu Phonem
+    -   2.2 Rekursivität: Abgrenzung von Buchstaben
+    -   2.3 Sprachabhängigkeit: Anwendung von Schriftzeichen
+    -   2.4 Abstraktion: Konkretisierung als Graph
+    -   2.5 Virtualität: Materialisierung als Glyphe
+-   3 Glottographische Typen
+    -   3.1 Offener Zeichensatz
+    -   3.2 Geschlossener Zeichensatz
+        -   3.2.1 Syllabische Grapheme
+        -   3.2.2 Segmentale Grapheme
+            -   3.2.2.1 Beispiel
+    -   3.3 Syntaktische Grapheme
+-   4 Technisches Graphem
+-   5 Siehe auch
+-   6 Literatur
+-   7 Weblinks
+-   8 Einzelnachweise
+
+
+Schreibweise (Notation)[Bearbeiten | Quelltext bearbeiten]
+
+Grapheme aus dem Skript der Metasprache, d. h. lateinische sowie bei
+manchen Autoren auch griechische und kyrillische Buchstaben, werden in
+der Linguistik üblicherweise in nach außen weisende spitze Klammern
+gefasst, behelfsweise auch in Guillemets oder Kleiner- und
+Größerzeichen. Dies gilt auch für Graphemketten, also Buchstabenfolgen,
+die normalerweise orthographische Wörter bilden.
+
+-   ⟨a⟩, ⟨ab⟩ (U+27E8/9, mathematisch)
+    -   HTML-Darstellung: ⟨a⟩, ⟨ab⟩ oder &#x27E8;A&#x27E9;,
+        &#10216;AB&#10217;
+-   ‹a›, ‹ab› (U+2329/A, technisch)
+-   ‹a›, ‹ab› (U+3008/9, ostasiatisch)
+-   <a>, <ab>
+
+Grapheme aus Objektsprachen mit anderem phonographischen Skript werden
+meistens nicht gesondert gekennzeichnet, stattdessen wird ihre
+Transliteration eingeklammert und ggf. ihr Name angegeben:
+
+-   ψ ⟨ps⟩ _Psi_ – ein griechischer Kleinbuchstabe mit Transkription und
+    Name.
+-   か ⟨ka⟩ – ein Hiraganasyllabogramm mit Transkription, die zugleich
+    Name ist.
+-   チ ⟨chi⟩ _Ti_ – ein Katakana­zeichen, bei dem sich Transkription und
+    Name unterscheiden.
+
+Die (Grund-)Bedeutung funktioneller und logographischer Grapheme wird
+üblicherweise in Kapitälchen angegeben. Für komplexe Grapheme werden
+analog die Konventionen für Lexeme angewandt:
+
+-   Γ_(_Majuskel_) – ein Funktionsgraphem, das nur im Zusammenspiel mit
+    anderen Graphemen sichtbar wird.
+-   ⟨3⟩ DREI – ein logographisches Graphem mit seiner Bedeutung.
+-   ⟨&⟩ UND _Ampersand_ – ein logographisches Graphem mit seiner
+    Bedeutung und seinem Namen.
+-   山 ⟨shān / san / yama / …⟩ BERG oder 山 ⟨…⟩ ‚Berg‘ – ein
+    logographisches Graphem mit piktographischem Ursprung mit seinen
+    Transkriptionen aus verschiedenen Sprachen und seiner Bedeutung.
+-   山 ⟨san yama⟩ – die importierte sinojapanische On-Lesung des Kanji
+    in Majuskeln, die native Kun-Lesung in Minuskeln, im Japanischen
+    selbst über Katakana und Hiragana realisiert: „山 サン やま“.
+-   
+    𒇽 ⟨lú awīlum⟩, 𒇽 ⟨lú antuhšaš⟩ PERSON – das Sumerogramm 𒇽 ⟨lú⟩ im
+    Akkadischen und Hethitischen.
+-   沐 ⟨mù⟩ WASSER ‚sich die Haare waschen‘ – ein logographisches
+    Graphem bestehend aus Bedeutungs- 氵 WASSER und Aussprachewurzel 木
+    ⟨mù⟩, die zusammen die angegebene lexikalische Bedeutung annehmen.
+
+
+Begriffsbestimmung[Bearbeiten | Quelltext bearbeiten]
+
+Der Begriff Graphem für die graphische Ebene der Sprache folgt demselben
+Bildungsmuster wie Phonem und Morphem. Diese drei emischen,
+sprachabhängigen Begriffe tauchten erstmals Anfang des 20. Jahrhunderts
+bei Baudouin de Courtenay auf. Der Graphembegriff wurde aber um 1932 von
+Aarni Penttilä vermutlich unabhängig davon nochmals neu geprägt^([2])
+und setzte sich erst anschließend international durch. Allerdings
+herrscht bis heute keine vollständige Einigkeit darüber, was ein Graphem
+ist und was nicht.
+
+Auf Grundlage dieser Begriffe entstanden die entsprechenden
+Bezeichnungen für etische, sprachunabhängige Grundeinheiten, also Phon,
+Morph und Graph, sowie für Fachdisziplinen, z. B. Phonem(at)ik
+(Phonologie), Morphem(at)ik (Morphologie) und Graphem(at)ik oder
+entsprechend Phonetik und Graphetik.
+
+Manche Linguisten sehen Grapheme als unidirektional abhängige visuelle
+Abbilder von lautsprachlichen Phonemen. Im allgemeinen Sprachgebrauch
+werden Grapheme häufig nicht oder nicht deutlich von den
+sprachunabhängigen Schriftzeichen und den nur in segmentalen
+Schriftsystemen vorkommenden Buchstaben unterschieden. Selbst unter
+Schriftlinguisten ist die Terminologie uneinheitlich und bisweilen
+eurozentrisch. Die Abgrenzung zu den graphetischen Einheiten Graph und
+Glyphe ist teilweise schwierig und umstritten, für viele Anwendungsfälle
+außerdem irrelevant.
+
+Lautsprache: Analogbildung zu Phonem[Bearbeiten | Quelltext bearbeiten]
+
+→ _Hauptartikel: Phonem_
+
+Das Graphem wurde analog zum Phonem geschaffen. Beide sind die kleinsten
+bedeutungsunterscheidenden Einheiten ihres Mediums. Als lautliche
+_(phonische)_ Einheit ist das Phonem der Untersuchungsgegenstand der
+Phonologie.
+
+Vielfach wird mit Bezug auf Aristoteles,^([3]) Ferdinand de
+Saussure^([4]) oder Leonard Bloomfield^([5]) die Schriftsprache nicht
+nur als geschichtlich (phylogenetisch) und individuell (ontogenetisch)
+sekundär zur Lautsprache aufgefasst, sondern als unselbständiges,
+unidirektional abhängiges Zeichensystem. Vertreter dieser
+_Dependenztheorie_, nach der die Schrift also der Rede nachgeordnet und
+nicht nebengeordnet ist, sehen das Graphem entsprechend als Abbild des
+Phonems.^([6]) Entsprechend entspricht für sie jedem Graphem genau ein
+Phonem und umgekehrt. Für Anhänger der konkurrierenden
+_Autonomiehypothese_ – wie die Prager Schule – oder der vermittelnden
+_Interdependenz-_ bzw. _Korrespondenztheorie_^([7]) sind die Begriffe
+_Phonem_ und _Graphem_ hingegen parallel angelegt und gleichberechtigt:
+In einer Orthographie können sie einander regelbasiert zugeordnet werden
+_(phonographisches Prinzip)_.
+
+Dies drückt sich bspw. auch in der Terminologie der Glossematik nach
+Louis Hjelmslev aus, worin die kleinsten ausdrucksseitigen Einheiten
+_Keneme_ genannt werden und sowohl Phoneme als auch Grapheme sein
+können; zusammen mit den inhaltsseitigen _Pleremen_ bilden sie die
+kleinsten sprachlichen Zeichen, sogenannte _Glosseme_. Um es beiden
+Lagern recht zu machen, schlug John McLaughlin^([8]) für die hyponyme
+Graphemgruppe der phonemabhängigen graphischen Einheiten den Terminus
+_Graphonem_ vor, während später Klaus Heller^([9]) stattdessen die
+Grapheme aufteilt in phonematisch bestimmte _Phonographeme_ – mit
+gekapselter Notation wie in ⟨sch/ʃ/⟩ – und graphematisch bestimmte
+_Graphographeme_ als verallgemeinerte Klassen von konkreten
+Schriftzeichen. Oliver Rezec^([10]) trennt analog _Phonemabbilder_ von
+den eigentlichen Graphemen.
+
+Als semantisch distinktive (d. h. bedeutungsunterscheidende, aber nicht
+selbst bedeutungstragende) Einheiten sollten sowohl Phoneme als auch
+Grapheme per Minimalpaaranalyse gefunden werden, wobei sie auf derselben
+Ebene nicht weiter zerlegbar sein dürfen. Da das Lautmedium
+kontinuierlich und analog, das Schriftmedium hingegen (annähernd)
+diskret und digital ist, werden Phoneme beim paarweisen Vergleich
+phonematischer Wörter als Bestandteile der größeren Einheit Silbe
+gefunden, Grapheme hingegen als Kompositionen der kleineren Einheit
+Schriftzeichen. Dies liegt daran, dass graphematische Wörter in vielen
+Schriftsystemen einerseits bereits klare Außengrenzen aufweisen und
+andererseits auch intern schon segmental strukturiert sind. So
+unterscheiden sich die beiden einsilbigen Wörter /zaɪn/ und /ʃaɪn/ nur
+im Silbenkopf, der mit den Phonemen /z/ und /ʃ/ besetzt ist, was sich
+auch in ihren graphischen Entsprechungen ⟨Sein⟩ und ⟨Schein⟩
+wiederfindet, nur dass das Graphem ⟨Sch⟩ aus drei Einzelzeichen besteht,
+die – trotz anderer Minimalpaare wie ⟨Stein⟩ – untrennbar verbunden
+sind. In beiden Realisationen von Sprache tritt dabei als (je nach
+Sprache häufigen) Sonderfall die Identität auf, indem ein Phonem einem
+alleinstehend silbenfähigen Vokal bzw. indem ein Graphem einem
+Buchstaben entspricht.
+
+Rekursivität: Abgrenzung von Buchstaben[Bearbeiten | Quelltext bearbeiten]
+
+→ _Hauptartikel: Buchstabe_
+
+Das Graphem sollte (gemeinsam mit dem Phonem) den vor der Linguistischen
+Wende verwendeten Begriff des Buchstabens (in anderen Sprachen _letter_,
+_littera_ u. ä.) ersetzen, da dieser sowohl für schriftliche als auch
+für lautliche Sprachzeichen verwendet wurde. Seitdem seine phonische
+Bedeutung weitgehend verschwunden ist, verwenden einige Linguisten
+Buchstabe synonym zu oder anstelle von Graphem, zumindest solange sie
+sich mit segmentalen, d. h. alphabetischen Schriftsystemen
+beschäftigen.^([11])
+
+Martin Neef^([12]) argumentiert, dass die Graphematik einer
+Alphabetschrift allein mit der Einheit Buchstabe auskommen können müsse,
+da die Einheit Graphem sowohl durch Einzelbuchstaben, bspw. ⟨s⟩, als
+auch durch Buchstabengruppen, ⟨sch⟩, realisiert werden kann, und sich
+bspw. die Anfangsgroßsschreibung auf Buchstaben, ⟨Schnee⟩, statt auf
+Grapheme, *⟨SCHnee⟩, bezieht.
+
+Ein Alphabet ist eine konventionalisierte Menge von Buchstaben. Es
+unterscheidet sich von einem beliebigen geschlossenen Zeichensatz vor
+allem dadurch, dass es die Sortierreihenfolge der Buchstaben festlegt.
+Die Elemente einiger Alphabete dienen daher auch als Zähl- oder
+Zahlzeichen, so hat sich bspw. in der griechischen Schrift das Qoppa ⟨ϟ⟩
+nur als Ordinalzeichen für 90. erhalten. Grapheme haben derartige
+Eigenschaften nicht, dafür kann ein Graphem rekursiv andere, kleinere
+Grapheme enthalten.
+
+Das Konzept der Buchstaben umschließt in manchen Skripten verschiedene
+Ausformungen oder Fälle, insbesondere die Unterscheidung in Minuskeln
+und Majuskeln, d. h. Klein- und Großbuchstaben; daher hat bspw. das
+englische Alphabet 26 und nicht 52 Buchstaben. Grapheme sind hingegen,
+obwohl sie graphische Einheiten sind, nicht notwendigerweise an einen
+sichtbaren Zeichenkörper gebunden und oft wird bei ihnen entweder
+überhaupt nicht zwischen Majuskel und Minuskel unterschieden oder diese
+Buchstabenvarianten werden genauso wie zwei voneinander unabhängige
+Graphe behandelt.
+
+Sprachabhängigkeit: Anwendung von Schriftzeichen[Bearbeiten | Quelltext bearbeiten]
+
+→ _Hauptartikel: Schriftzeichen_
+
+Grapheme sind sprachabhängig, d. h. sie müssen für jede Schriftsprache
+bzw. für jedes Schriftsystem eigens bestimmt werden. Schriftzeichen
+(engl. _character_) als Konstituenten eines Skripts sind hingegen
+übersprachlich oder sogar unsprachlich definierbar. Es gibt Sonderfälle
+wie das serbokroatische Schriftsystem, in welchem jedes Grundgraphem je
+ein lateinisches und ein kyrillisches Schriftzeichen verwendet.
+
+Im Sinne der Semantik sind Schriftzeichen trotz der anderes
+implizierenden Bezeichnung noch keine sprachlichen Zeichen, sondern erst
+Grapheme. Beide werden jedoch mittels Glyphen als Graphe realisiert.
+
+Abstraktion: Konkretisierung als Graph[Bearbeiten | Quelltext bearbeiten]
+
+→ _Hauptartikel: Graph (Linguistik)_
+
+Grapheme sind kleinste sprachliche Einheiten, trotzdem lassen sie sich
+mitunter weiter unterteilen. Diese weitergehende Analyse ist per
+Definition nicht mehr Teil der (Schrift-)Linguistik, sondern Aufgabe
+einer ihrer (paralinguistischen) Hilfswissenschaften, der Graphetik.
+Deren Betrachtungsgegenstand ist jede „konkrete, klassifizierbare
+graphische Erscheinung“^([13]) und heißt _Graph_. Grapheme sind dann
+abstrakte Klassen von äquivalenten konkreten Graphen, die Allographe
+genannt werden.
+
+Einige Graphetiker, darunter Beatrice Primus^([14]) und Herbert E.
+Brekle,^([15]) haben die lateinischen und teilweise auch die
+griechischen Minuskeln dahingehend analysiert, wie ihre abstrakten
+Formbestandteile mit phonologischen Eigenschaften korrelieren; so haben
+bspw. die _normalen_ Vokalbuchstaben ⟨a, e, i, o, u⟩ keine Ober- und
+Unterlängen. Da damit begründbar wäre, dass Grapheme kleinere Einheiten
+als Buchstaben sein können, wird die Definition mitunter um die
+Forderung ergänzt, dass Grapheme aus (in einem Frame) abgeschlossenen,
+ungebundenen, aber möglicherweise komplex zusammengesetzten Einheiten
+bestehen. Grapheme können also rekursiv sein, was sowohl bei
+Buchstabenverbindungen wie ⟨sch⟩ der Fall ist als auch bei den meisten
+Sinogrammen, da zumindest einige ihrer Konstituenten jeweils selbst
+Grapheme sein können.
+
+Viele Bezeichnungen graphischer Einheiten verwenden den Morph {-graph}
+oder {-gramm}. Mit dem ersten ist eher eine graphetische, mit dem
+zweiten eher eine sprachabhängige graphematische Bedeutung assoziiert,
+aber die Unterscheidung wird nicht einheitlich und systematisch
+getroffen.
+
+Bei Rezec^([10]) entsprechen Grundformen den Graphen in diesem Sinne,
+während dort Graph mit Glyphe gleichgesetzt wird.
+
+Virtualität: Materialisierung als Glyphe[Bearbeiten | Quelltext bearbeiten]
+
+→ _Hauptartikel: Glyphe_
+
+Wenn es um das (prototypische) Aussehen eines Graphs in einer bestimmten
+Hand- oder Druckschrift geht, spricht man stattdessen von Glyphen. Sie
+sind u. a. der Arbeitsgegenstand von Schriftgestaltern und
+Schriftkünstlern (Kalligraphen). Damit sind sie noch weniger als Graphe
+ein Gegenstand der Linguistik.
+
+So zeigen sich etwa _positionale_ oder _direktionale_ Allographen in
+mehreren verschiedenen, aber optisch unterschiedlichen, ähnlichen
+Glyphen. Die Position kann dabei der Wortanfang _(initial)_, mitten im
+Wort _(medial)_, das Wortende _(final)_ und alleinstehend _(isoliert)_
+sein und die Schreibrichtung ist zeilenweise (horizontal) oder
+spaltenweise (vertikal), rechtsläufig _(dextrograd)_ oder linksläufig
+_(sinistrograd)_. Auch Ligaturen haben eigene Glyphen, obwohl sie aus
+mehreren Graphen bestehen, während einzelne Graphen aus Basis und
+Diakritikum aus zwei Glyphen zusammengesetzt werden können. Glyphgrenzen
+können also, müssen aber nicht mit Graph- oder Graphemgrenzen
+korrelieren. Dieselbe Glyphe kann für verschiedene Schriftsysteme
+verwendet werden, z. B. beim lateinischen Großbuchstaben ⟨A⟩ und dem
+griechischen großen ⟨Α⟩ _Alpha_, deren Kleinbuchstaben sich voneinander
+unterscheiden.
+
+
+Glottographische Typen[Bearbeiten | Quelltext bearbeiten]
+
+Der Status von graphischen Zeichen in nicht- und parasprachlichen
+Notationen, z. B. in mathematischen oder chemischen Formeln, wird nicht
+einheitlich gehandhabt. In manchen Theoriegebilden werden sie einfach
+ignoriert oder übersehen, andere versuchen sie als speziellen Typus von
+Graphemen zu beschreiben. Viele Schriftlinguisten beschränken sich also
+auf glottographische Graphemtypen, das sind Zeichen zur Niederschrift
+von Sprache. Davon gibt es im Grundsatz zwei verschiedene Gruppen:
+
+1.  Offene Zeichensätze mit mehreren Tausend Logo- oder Morphogrammen,
+    die dialekt- und sprachübergreifend einheitlich gebraucht und
+    zumindest prinzipiell über Konstitutionsregeln ständig um neue
+    Zeichen erweitert werden können.
+2.  Geschlossene Klassen einiger Dutzend bis Hundert Phonogramme, deren
+    graphische Gestalt weitgehend arbiträr ist und die im Wortkontext –
+    abhängig von zum Teil komplexen, konventionalisierten
+    orthographischen Distributions- und Korrespondenzregeln – eine
+    eindeutige, sprachabhängige Lesung mit lediglich dialektaler Varianz
+    besitzen.
+
+Daneben existiert eine Gruppe von Hilfsgraphemen für die Interpunktion,
+die üblicherweise erst auf syntaktischer Ebene von Bedeutung sind und
+zwar Einfluss auf die Aussprache der Phrase _(Prosodie)_ haben können,
+selbst aber nicht verlautet werden. Dazu gehört als „Nullgraphem“ auch
+das Leerzeichen (Spatium) ⟨␣⟩ in verschiedenen Formen. Die meisten
+dieser Zeichen indizieren außerdem Wortgrenzen.
+
+Offener Zeichensatz[Bearbeiten | Quelltext bearbeiten]
+
+Obwohl sie häufig _Logogramme_ genannt werden, stehen Zeichen dieses
+Typs in der Regel nicht für vollständige Wortformen, sondern für das
+meist freie lexikalische Wortparadigma und die üblicherweise gebundenen
+grammatischen Affixe oder freie Partikeln, also für L- und G-Morpheme.
+Deswegen wird alternativ von _Morphogrammen_ gesprochen.
+
+Der Grundstock dieser graphischen Zeichen ist häufig ursprünglich
+mittels einer von zwei ikonischen Methoden gebildet worden: entweder
+konkret abbildend, _piktographisch_, oder abstrakt symbolisierend,
+_ideographisch_. Beachtet man einige graphische Konventionen, die aus
+dem bevorzugt verwendeten Schreibmedien resultieren, besteht diese
+Möglichkeit der Zeichengenese prinzipiell weiterhin, doch normalerweise
+existiert ein beschränktes (Sub-)Inventar von Konstituenten, aus denen
+nach bestimmten Kombinationsregeln neue Zeichen zusammengesetzt werden
+können.
+
+Üblicherweise wird der Begriff des Graphems hierbei abweichend von
+seiner eigentlichen Definition auf das Produkt und nicht auf die
+bedeutungsdifferenzierenden Konstituenten angewendet, die stattdessen
+als _Subgrapheme_ o. ä. bezeichnet werden. Dies gilt umso mehr, wenn
+dieses, wie bei den ostasiatischen Sinogrammen üblich, unabhängig von
+seiner inhärenten und kombinatorischen Komplexität, d. h. der Anzahl der
+Striche und Teilzeichen, in einen unsichtbaren Rahmen _(Frame)_ fester,
+üblicherweise quadratischer Größe eingeschrieben wird. Aufgrund dieser
+Formationsregel werden sie auch als _Tetragramme_ bezeichnet, welche im
+normalen Schreib- und Leseprozess trotz ihres systematischen Aufbaus als
+atomar wahrgenommen werden. Da dies lediglich ein graphetischer und kein
+graphemischer Begriff ist, deckt er auch die Zeichen der geschlossenen,
+phonographischen Systeme der japanischen Kana und des koreanischen
+Hangul ab.
+
+Die Subgrapheme können je nach Skript auch eigenständig verwendbar
+bleiben, sind dann also rekursive Einheiten auf verschiedenen Ebenen des
+Schriftsystems. Sie können verschiedene positionell motivierte
+Allographen aufweisen, d. h. sie sehen je nach Position und Kombination
+etwas anders aus.
+
+Die Konstituenten leisten entweder als pleremisches _Determinativ_ (Δ),
+auch _Signifikum_, einen Beitrag zur Bedeutung oder geben als
+kenemisches _Phonetikum_ (Φ) einen Hinweis auf die Aussprache des
+Summengegenstandes, d. h. des Morphogramms. Beide sind in der Regel
+ungenau und nur in der konventionalisierten Kombination eindeutig. Wenn
+es nur wenige mögliche Determinative gibt, die somit nur eine grobe
+Kategorisierung zulassen, spricht man auch von _Taxogrammen_, wenn es
+für eine genauere semantische Einordnung taugt, auch von _Semagrammen_.
+In manchen Skripten können einige oder alle Subgrapheme beide Rollen
+einnehmen, in anderen sind sie auf eine beschränkt, z. B. bei den
+ägyptischen Hieroglyphen. Die Positionen im Gesamtzeichen können
+bevorzugt oder ausschließlich von dem einen oder dem anderen Typ belegt
+sein. Es treten je nach System nur einige oder alle denkbaren
+Kombinationen der beiden Typen auf: ΔΦ, ΦΔ, ΔΔ, ΦΦ sowie komplexere
+Konstrukte. Im einfachsten Fall steht ein einzelnes Phonetikum für ein
+Homophon und wenn mehrere, aber ausschließlich Phonetika verwendet
+werden, greift das Rebus-Prinzip, wobei unter mehreren möglichen
+Zeichenalternativen oft die semantisch nächstliegende gewählt wird,
+bspw. in der chinesischen Transkription ausländischer Orts- und
+Personennamen.
+
+Bei einer engen Auslegung des Graphembegriffs, wenn also die
+Konstituenten als _Grapheme_ und die Produkte als (zweidimensionale)
+_Graphemketten_ oder als _graphematische Wörter_ bezeichnet werden,
+verschwindet der Unterschied zu den Silbensystemen weitgehend. Das
+Phonographeminventar der Phonetika ist lediglich sehr groß, enthält
+Duplikate und überschneidet sich unter Umständen mit dem
+Graphographeminventar der Determinativa, welches es in klassischen
+Syllabaren nicht oder nur sehr eingeschränkt gibt.
+
+Geschlossener Zeichensatz[Bearbeiten | Quelltext bearbeiten]
+
+Klassischerweise werden Phonogramme danach unterteilt, ob sie
+hauptsächlich für die Repräsentation von Silben oder von Silbensegmenten
+(Buchstaben) verwendet werden.
+
+Syllabische Grapheme[Bearbeiten | Quelltext bearbeiten]
+
+[]
+
+Segmentierung der Sprechsilbe (σ) in Reim (ρ), fakultatives
+konsonantisches (C^(*)) Onset (ω), obligatorischen vokalischen (V⁺)
+Nukleus (ν), fakultative konsonantische Koda (κ) und ggf. tonalen
+(T^(?)) Ton (τ)
+
+In Silbenschriften werden das Zeicheninventar _Syllabar_ und die Zeichen
+_Syllabogramme_ genannt. Es gibt jedoch viele Typen von Silbenschriften
+und Silbenzeichen, da nie alle möglichen phonematischen Silben einer
+Sprache mit je einem exklusiven Syllabogramm verschriftet werden.
+Stattdessen gibt es orthographische Regeln, um mit einem beschränkten,
+ggf. sprachübergreifendem Repertoire auszukommen. Wegen derartiger
+Zeichenkombinationen wird der Graphembegriff manchmal auf digraphische
+„Syllabogrammketten“ wie die japanischen Yōon ausgedehnt (⟨CijV⟩ /CjV/).
+
+In einer „echten“ Silbenschrift können die silbischen Schreib- und
+Leseeinheiten als Grapheme angenommen werden, doch viele Systeme sind
+nicht völlig arbiträr:
+
+Einerseits gibt es manchmal als Abugida^([11]) bezeichnete
+_synthetische_ Schriften wie die des indischen Brahmi-Schriftkreises, in
+denen Vokale entweder inhärent sind Ca ⟨Ca⟩ oder diakritisch an die
+silbischen Basen gebunden werden Ca^(e) ⟨Ce⟩ und dabei z. T. komplexe
+Ligaturen bilden. Da Konsonanten und Vokale auf unterschiedlichen Ebenen
+des Schriftsystems notiert werden, sehen manche Linguisten die
+gebildeten Silbenligaturen als Grapheme an, für andere unterscheidet
+sich dieses hierarchisch segmentale Prinzip nicht wesentlich von den
+gleichberechtigt segmentalen Schriften, und entsprechend gelten
+vorbehaltlich einzelsprachlicher Untersuchungen beide phonographischen
+Zeichentypen als Grapheme. Eine besondere Art von Graphem in diesen
+Schriften ist das _Virama_, das wie ein Vokalzeichen verwendet wird,
+aber den Wegfall des inhärenten Vokals kennzeichnet.
+
+Andererseits sind vor allem in der Neuzeit entwickelte Schriften wie die
+der Cree häufig _systematisch_, indem sowohl die Konsonanten als auch
+die Vokale der _C__V_-Syllabogramme reihen- bzw. spaltenweise
+einheitlich geometrisch variieren. Hier stellt sich die Frage, ob die
+Zeichenorientierung graphemisch ist, also ob bspw. ein allgemeines
+Vokalgraphem _Dreieck_ _V_ postuliert werden kann, dem der genaue Wert
+über ein abhängiges Ausrichtungsgraphem _Spitze (rechts) unten_ _X_e
+usw. zugeteilt wird, also ᐁ _V_(e)_, ᐃ _V_(i)_, ᐅ _V_(o)_, ᐊ _V_(a)_,
+oder aber vier selbständige Vokalgrapheme ᐁ e, ᐃ i, ᐅ o, ᐊ a ausgemacht
+werden.
+
+In den meisten sogenannten Silbenschriften gibt es auch nicht-silbische
+Zeichen, z. B. solche wie das japanische ん n, die nur für die Koda
+verwendet werden können. Diese haben in der Regel ebenfalls
+Graphemstatus.
+
+Manche mit den Syllabogrammen verwendete Schriftzeichen wie die
+japanischen ⟨ー⟩ _Chōon_ und ⟨っ / ッ⟩ _Sokuon_ haben durch
+orthographische Konventionen variablen bzw. funktionalen Charakter und
+kommen nicht frei vor, sondern sind an das vorangehende oder
+nachfolgende Syllabogramm gebunden, wodurch dessen phonographische
+Qualität verändert wird.
+
+Segmentale Grapheme[Bearbeiten | Quelltext bearbeiten]
+
+Oft werden für Alphabetschriften pauschal die jeweiligen Buchstaben als
+Grapheme angesetzt (alphabetisches Graphem). Dies gilt auch für manchmal
+Abdschad^([11]) genannte andere segmentale Skripte, in denen (manche)
+Vokale nicht auf derselben Schriftebene wie Konsonanten oder optional
+oder überhaupt nicht geschrieben werden.
+
+Viele Linguisten verstehen die Groß- und Kleinbuchstaben als
+allographische Varianten desselben Graphems oder als „funktional
+verbundenes Paar von Graphemen“,^([16]) doch vor allem im Deutschen kann
+die Unterscheidung semantisch relevant sein, vgl. Adjektiv ⟨arm⟩ vs.
+Substantiv ⟨Arm⟩ vs. Akronym ⟨ARM⟩. Zu beachten ist außerdem, dass die
+Anfangsgroßschreibung in vielen Sprachen auf Buchstaben, in manchen aber
+auf Grapheme wirkt, z. B. niederländisch ⟨IJssel⟩ statt *⟨Ijssel⟩. Daher
+postulieren einige Wissenschaftler abstrakte Funktionsgrapheme, die ihr
+Vorhandensein nur durch Interaktion mit anderen Zeichenkörpern anzeigen,
+z. B. „Supragrapheme“ bei Gallmann.^([17]) Diese Funktionen können
+syntagmatisch (aus dem Satz heraus) oder paradigmatisch (aus dem Wort
+heraus) und sogar rein graphostilistisch aktiviert werden. Damit können
+⟨ARM⟩, ⟨Arm⟩ und ⟨arm⟩ jeweils als unmarkierte oder markierte
+Schreibungen von _arm_, _Arm_ und _ARM_ legitimiert und gleichzeitig
+⟨aRM⟩, ⟨arM⟩, ⟨ArM⟩ und ⟨ARm⟩ ausgeschlossen werden.
+
+Weil das Graphem die kleinste bedeutungsunterscheidende Einheit ist,
+müssen bedeutungsgleiche Graphemketten, d. h. graphematische Wörter, aus
+denselben Graphemen aufgebaut sein. Viele Orthographien lassen aber
+bestimmte Varianten zu, z. B. ⟨Frisör⟩ und ⟨Friseur⟩, sodass schon
+allein deswegen nicht pauschal davon ausgegangen werden kann, dass ein
+Graphem einem Buchstaben entspricht _(orthographisches Graphem)_. In der
+dependenztheoretischen Begriffswelt, wozu häufig die Schreibdidaktik
+gehört, kann zwischen dem im Normalfall verwendeten _Basisgraphem_,
+bspw. /t/ → ⟨t⟩, und seinen orthographisch begründeten Varianten, den
+_Orthographemen_, unterschieden werden, bspw. /t/ → ⟨d⟩ wegen
+Morphemkonstanz.
+
+  ------------------------- --------------------------------------------------------------------------------------------------------
+  9 Vokalgrapheme:          ⟨a⟩, ⟨ä⟩, ⟨e⟩, ⟨i⟩, ⟨ie⟩, ⟨o⟩, ⟨ö⟩, ⟨u⟩, ⟨ü⟩^([19])
+  20 Konsonantengrapheme:   ⟨b⟩, ⟨d⟩, ⟨f⟩, ⟨g⟩, ⟨ch⟩, ⟨h⟩, ⟨j⟩, ⟨k⟩, ⟨l⟩, ⟨m⟩, ⟨n⟩, ⟨p⟩, ⟨qu⟩, ⟨r⟩, ⟨s⟩, ⟨sch⟩, ⟨ß⟩, ⟨t⟩, ⟨w⟩, ⟨z⟩
+  ------------------------- --------------------------------------------------------------------------------------------------------
+
+  : Natives deutsches Grapheminventar^([18])
+
+Da in vielen Schriftsystemen manche (feste) Buchstabenverbindungen in
+der Minimalpaaranalyse Positionen einnehmen, die sonst nur von
+Einzelbuchstaben eingenommen werden können, werden solche Digraphe,
+Trigraphe oder Plurigraphe oft ebenfalls als Grapheme dieser Sprache
+angesehen. In der lateinischen Schrift wird besonders häufig das ⟨h⟩ als
+hintere Komponente dieser Kombinationen verwendet. Der Buchstabe ⟨c⟩ in
+den (nicht nur) deutschen Verbindungen ⟨ck⟩ und ⟨ch⟩ kann als
+allographische Variante des Folgebuchstabens interpretiert werden,
+sodass sich die regelmäßiger gebildeten (theoretischen) Grapheme ⟨kk⟩
+und ⟨hh⟩ ergeben; ähnliches gilt für das Verhältnis von ⟨tz⟩ zu ⟨zz⟩.
+
+Die diakritischen Zeichen, welche es übrigens auch in Silbenschriften
+gibt, können nach Gallmann^([20]) (hier am Beispiel der deutschen
+Umlaute) auf drei verschiedene Arten graphematisch analysiert werden:
+
+1.  ⟨ä⟩, ⟨ö⟩, ⟨ü⟩ sind wie ⟨i⟩ eigenständige Grapheme. In
+    österreichischen Telefonbüchern zeigt sich eine solche
+    Interpretation darin, dass die Akzentbuchstaben hinter den
+    Grundbuchstaben einsortiert werden, während sie in den
+    skandinavischen Sprachen am Ende des Alphabetes angefügt werden.
+2.  ⟨ä⟩, ⟨ö⟩, ⟨ü⟩ sind allographische Realisierungen der Graphemgruppen
+    ⟨ae⟩, ⟨oe⟩, ⟨ue⟩ oder die Umlautpunkte ⟨¨⟩ sind allograph zum ⟨e⟩.
+    Diese Interpretation liegt Kreuzworträtseln und der
+    Bibliotheksortierung zugrunde, bei der gleich klingende, aber anders
+    geschriebene Namen beieinander stehen sollen.
+3.  ⟨ä⟩, ⟨ö⟩, ⟨ü⟩ sind ⟨a⟩, ⟨o⟩, ⟨u⟩ plus diakritisches Zeichen
+    «Umlautpunkte», d. h. sie bilden lediglich eine markierte Variante
+    der Basisbuchstaben. Die Wörterbuchsortierung nutzt dieses Prinzip,
+    da so aus Ableitungen _(Derivation)_ gebildete Lexeme häufig bei
+    ihren Stammwörtern stehen.
+
+Der zweite und dritte Ansatz entspricht der umgangssprachlichen Ansicht,
+dass das _deutsche Alphabet_ 26 Buchstaben habe.
+
+Beispiel[Bearbeiten | Quelltext bearbeiten]
+
+So schreibt man nach traditioneller deutscher Rechtschreibung und ohne
+eingedeutschte Schreibung französischer Lehnwörter ⟨Nuß-Nougat-Crème⟩,
+wobei der Akzent häufig weggelassen wird, ⟨…-Creme⟩, und das End-‹e›
+stumm bleiben kann. Mit der Rechtschreibreform muss ⟨Nuß⟩ durch ⟨Nuss⟩
+ersetzt werden, während der Gallizismus ⟨Nougat⟩ wahlweise als ⟨Nugat⟩
+geschrieben und dann auch ⟨Creme⟩ je nach intendierter Aussprache zu
+⟨Krem⟩ oder ⟨Kreme⟩ geändert werden kann. Damit teilt sich dieses Wort
+ohne Bedeutungsänderung in die orthographischen Grapheme
+⟨N⟩⟨u⟩⟨ß|ss⟩⟨-⟩⟨N⟩⟨ou|u⟩⟨g⟩⟨a⟩⟨t⟩⟨-⟩⟨C|K⟩⟨r⟩⟨è|e⟩⟨m⟩⟨e|∅⟩, die
+allerdings bezüglich ihrer Kombination miteinander nicht völlig frei
+sind.
+
+Der Bindestrich (und auf etwas andere Weise der Apostroph) nimmt in den
+europäischen Buchstabenschriften eine Sonderrolle ein, da er kein
+Phonogramm ist, also nicht direkt gesprochen wird, sondern lediglich den
+Status anderer Graphemketten verändern kann, indem er sie zu Komposita
+zusammenfügt. Neben diesem expliziten Bindestrich gibt es auch einen
+impliziten Trennstrich an allen möglichen Trennstellen> ⟨·⟩, an denen er
+ausschließlich am Zeilenende sichtbar wird. Obwohl hierbei häufig
+pauschal von _Silbentrennung_ gesprochen wird, gibt es in den
+verschiedenen Schriftsystemen der Welt Trennverfahren an Silben-,
+Morphem- und Graphem-, selten auch an Glyphen-Grenzen.
+
+Die Zusammensetzung mehrerer Einzelwörter zu einem neuen Wort kann je
+nach orthographischen Konventionen allerdings nicht nur durch einen
+Bindestrich ⟨_x_-_y_⟩, sondern auch durch direktes Aneinanderhängen
+⟨_x_∅_y_⟩ oder – häufig außerhalb von Texten, aber nicht regelkonform –
+mit Leerzeichen (d. h. horizontaler Weißraum ⟨_x_␣_y_⟩ oder
+Zeilenumbruch ⟨_x_↩_y_⟩) erfolgen, wobei die Anfangsgroßschreibung des
+hinteren Gliedes nicht erhalten bleiben muss, da nicht unbedingt ein
+Wortbeginn ⟨#⟩ enthalten ist.
+
+Das Graphem Γ_(_Bindestelle_) oder ⟨-⟩ kann also die Ausprägungen ‹-#›,
+‹#›, ‹∅› _(leer)_, ‹␣#› _(Spatium)_, ‹↩› und ‹↩#› _(Zeilenwechsel)_
+haben. Dabei ist zu beachten, dass diese scheinbaren Allographen die
+Teilwörter unterschiedlich stark aneinanderbinden und damit zur
+Bedeutungsdifferenzierung genutzt werden können, wodurch sie ggf. zu
+unterschiedlichen Graphemen werden: ⟨Nuss-Nugat-Krem⟩, ⟨NussNugatKrem⟩
+und ⟨Nuss Nugat Krem⟩ sowie ⟨Nussnugatkrem⟩ sind Teil der Extension
+desselben graphischen Wortes, wohingegen in ⟨Nuss-Nugatkrem⟩ und
+⟨Nussnugat-Krem⟩ verschiedene semantisch relevante Akzente gesetzt
+werden, nämlich im ersten Fall in Abgrenzung bspw. zu ⟨Mandel-Nugatkrem⟩
+oder ⟨Nuss-Kuchen⟩ und im zweiten Fall bspw. zu ⟨Nussnugat-Riegel⟩ oder
+⟨Erdnuss-Krem⟩.
+
+Für das erste Graphem nach der initialen Wortgrenze kann entweder
+syntaktisch (wenn es mit initialer Satzgrenze zusammenfällt),
+grammatisch (beim nichtpronominalen Kopf einer Nominalphrase) oder
+lexemisch (bei Namen und Substantiven) motiviert eine
+Allographiebeschränkung greifen, der zufolge für den ersten Buchstaben
+des Graphems nur eine Majuskel zulässig ist.
+
+Ähnlich galten früher, vor allem im Fraktursatz, für das letzte Graphem
+vor einer medialen oder finalen Wortgrenze Sonderbedingungen, wenn es
+mit dem Buchstaben ⟨s⟩ endet, welcher dann nicht mit dem Graph ‹ſ›,
+sondern als ‹s› dargestellt wurde, und zusätzlich greift für ein
+ursprüngliches ‹ſſ› eine orthographisch Ligationsregel, die statt ‹ſs›
+den Graph ‹ß› fordert.
+
+Damit lässt sich dieses Beispielwort mit seinen diachronen Varianten,
+die z. T. noch nicht oder nicht mehr orthographisch valide sind,
+graphemisch folgendermaßen beschreiben:
+
+_Nuss-Nougat-Crème_
+    → ⟨#nu⟨ss⟩⟨-⟩n⟨ou⟩·gat⟨-⟩⟨c⟩r⟨è⟩⟨mǝ⟩⟩
+    ⟨#⟩ → Γ_(_Majuskel_) ∨ ⟨∅⟩
+    ⟨ss⟩ → ‹ss› ∨ ‹ß›
+    ⟨c⟩ → ‹c› ∨ ‹k›
+    ⟨ou⟩ → ‹ou› ∨ ‹u›
+    ⟨è⟩ → ‹è› ∨ ‹e›
+    ⟨mǝ⟩ → ‹·me› ∨ ‹m›
+    ⟨·⟩ → ‹∅› ∨ ‹-↩› ∨ ‹↩›
+    ⟨-⟩ → ⟨·⟩ ∨ Γ_(_Bindung_)⟨#⟩
+    Γ_(_Bindung_) → ‹-› ∨ ‹␣› ∨ ‹∅›
+
+Diese Variantenanalyse trifft allerdings noch keine Entscheidung über
+tatsächlich im deutschen Schriftsystem vorhandene Grapheme, sondern
+identifiziert lediglich erste Kandidaten.
+
+Syntaktische Grapheme[Bearbeiten | Quelltext bearbeiten]
+
+Graphische Zeichen eines Schriftsystems, die nicht zur Wortbildung,
+sondern nur dem Satzbau dienen, werden teils ebenfalls als Grapheme
+angesehen und _syntaktische Grapheme_^([21]) oder _Syngrapheme_ genannt.
+Dazu gehören neben der Interpunktion auch indirekt sichtbare
+Funktionsgrapheme wie die Großschreibung am Satzanfang, die ggf. dafür
+sorgt, dass auch Wörter, die nach lexikalischen Regeln mit einem
+Kleinbuchstaben beginnen, mit einer Initialmajuskel geschrieben werden.
+
+Unter den Satzzeichen gibt es verschiedene Typen: einige können nur am
+Anfang oder Ende eines Wortes^([22]) oder Satzes^([23]) stehen, andere
+auch oder nur mittig (trennend oder verbindend) und wieder andere, bspw.
+Klammern und Anführungszeichen, treten i. d. R. nur als Paar auf.
+
+Graphemklassen nach Gallmann^([24])
+
+formal definierte
+Graphemklassen _(graphische Mittel)_
+
+funktional definierte
+Graphemklassen
+
+Grapheme
+
+Supragrapheme
+
+linear
+
+flächig
+
+SELBSTÄNDIG
+
+UNSELBSTÄNDIG
+
+KONKRET
+
+ABSTRAKT
+
+KONKRET
+
+ABSTRAKT
+
+-   Buchstaben
+-   Hilfszeichen
+-   Leerzeichen
+-   Ziffern
+-   Sonderzeichen
+
+-   diakritische Zeichen
+
+-   Unterstreichen
+
+-   Anfangsgroßschreibung
+-   allgemeine Großschreibung
+-   Kapitälchen
+-   Schriftart
+-   Schriftauszeichnung
+-   Schriftgröße
+-   Sperren
+-   Ligaturen
+-   Hoch-/Tiefstellung
+
+-   Umrandung
+-   Ton-, Rasterfläche
+
+-   Zeile, Textblock
+-   Ausschluss
+-   Einzug
+-   Zeilenanfang, -ende
+
+-   (Grund-)Grapheme
+-   Ideogramme
+-   Klassifikatoren
+-   Grenzsignale
+-   Satzintentionssignale
+-   Auslassungssignale
+
+
+Technisches Graphem[Bearbeiten | Quelltext bearbeiten]
+
+Zur angewandten Linguistik gehört an der Schnittstelle zur
+Computertechnik die elektronische Kodierung von Schrift und ihrer
+Zeichen. Dabei gibt es glyphenbasierte Ansätze wie in
+7bit-SMS-Nachrichten, graphem- / konstituentenbasierte Ansätze oder
+framebasierte Ansätze.
+
+In Unicode werden die Schriftzeichen zwar prinzipiell als Kombinationen
+von Grundeinheiten, welche kodiert werden, modelliert, aber teilweise
+aus Kompatibilitätsgründen und teilweise aus Pragmatik gibt es viele
+vorgefertigte Zeichen, was es erforderlich macht, kanonische
+Äquivalenzen und bevorzugte Codes festzulegen (bspw. NFC). So kann ein
+⟨ä⟩ als Kombination aus ⟨a⟩ U+0061 und ⟨¨⟩ TREMA U+0308 oder direkt als
+⟨ä⟩ U+00E4 gespeichert werden. Die koreanischen Hangul liegen nicht nur
+in Form von 70 miteinander kombinierbaren Einzelkomponenten (_Jamo_),
+sondern auch in über 11000 Silbenblöcken vor, während Sinogramme nur als
+Gesamteinheit kodiert werden.
+
+Die Zeichenkodierung braucht nicht auf einfache Weise mit der Eingabe
+über die Tastatur o. ä. korrelieren, bspw. werden Akzente über Tottasten
+vor dem Basisbuchstaben eingetippt, aber gespeichert werden sie
+andersherum oder als eine gemeinsame Einheit.
+
+Der Unicode-Standard verwendet den Begriff _Graphem_ in vereinfachter
+und sprachunabhängiger Bedeutung.^([25]) Ein Graphem _(Grapheme)_ ist
+danach entweder „eine minimale distinktive Einheit der Schrift im
+Kontext eines Schriftsystems, also ein graphisches Zeichen, mit dem zwei
+Wörter voneinander unterschieden werden können“ (Minimalpaaranalyse)
+oder das, „was Benutzer für ein Schriftzeichen _(Character)_ halten“.
+Außerdem werden die Begriffe Graphembasis _(Grapheme Base)_,
+Graphemhaufen _(Grapheme Cluster)_ – „eine horizontal segmentierbare
+Texteinheit, bestehend aus irgendeiner Graphembasis kombiniert mit
+beliebig vielen breitenlosen Markern“ –, Graphemerweiterung _(Grapheme
+Extender)_ – alle nullbreiten Marker, Verbinder und Trenner sowie einige
+nichtnullbreite Marker –, graphisches Schriftzeichen _(Graphic
+Character)_ – Buchstabe _(Letter)_, kombinierender Marker, Ziffer,
+Interpunktion, Symbol oder Spatium.
+
+
+Siehe auch[Bearbeiten | Quelltext bearbeiten]
+
+-   Phonematische Orthographie
+-   Phonographie (Linguistik) (Verhältnis Laut/Phonem – Buchstabe)
+-   Semem, Tagmemik, Phrasem, Taxem
+-   Semiotik
+-   Syntaktik
+
+
+Literatur[Bearbeiten | Quelltext bearbeiten]
+
+-   Julie D. Allen: The Unicode Standard, version 6.0. The Unicode
+    Consortium, Mountain View 2011, ISBN 978-1-936213-01-6 (englisch,
+    unicode.org). 
+-   Peter T. Daniels, William Bright: The World’s Writing Systems.
+    Oxford University Press, Oxford 1995, ISBN 0-19-507993-0, Glossary
+    (englisch). 
+-   Christa Dürscheid: Einführung in die Schriftlinguistik
+    (= Studienbücher zur Linguistik. Band 8). 2. Auflage. Verlag für
+    Sozialwissenschaft, Wiesbaden 2004, ISBN 3-531-33680-0. 
+-   Peter Eisenberg: Grundriss der deutschen Grammatik. 3.,
+    durchgesehene Auflage. Band 1: Das Wort. J.B. Metzler, Stuttgart
+    2006, ISBN 978-3-476-02160-1, 8 „Die Wortschreibung“, S. 301–357. 
+-   Peter Gallmann: Graphische Elemente der geschriebenen Sprache.
+    Grundlagen für eine Reform der Orthographie (= Reihe germanistische
+    Linguistik. Band 60). Niemeyer, Tübingen 1985, ISBN 3-484-31060-X,
+    2.2 „Zum Begriff des Graphems“ (uni-jena.de [PDF]). 
+-   Hartmut Günther, Otto Ludwig (Hrsg.): Schrift und Schriftlichkeit.
+    Writing and Its Use. Ein interdisziplinäres Handbuch internationaler
+    Forschung (= Handbücher zur Sprach- und Kommunikationswissenschaft.
+    10, 1. Halbband). Mouton de Gruyter, Berlin / New York 1994 (diverse
+    relevante Artikel). 
+-   Manfred Kohrt: Problemgeschichte des Graphembegriffs und des frühen
+    Phonembegriffs (= Reihe germanistische Linguistik. Band 61).
+    Niemeyer, Tübingen 1985, ISBN 3-484-31061-8, 5–6. 
+-   Dimitrios Meletis: The grapheme as a universal basic unit of
+    writing. In: Writing Systems Research. Band 11, Nr. 1, 2019,
+    S. 26–49, doi:10.1080/17586801.2019.1697412 (englisch). 
+-   Katja Siekmann, Günther Thomé: Der orthographische Fehler. 2.,
+    aktualisierte Auflage. Institut für sprachliche Bildung, Oldenburg
+    2018, ISBN 978-3-942122-07-8, S. 239–247 (im Anhang:
+    Phonem-Graphem-Korrespondenzen im Deutschen: alle Basisgrapheme und
+    Orthographeme, nach Thomé 1999, mit Prozentangaben).  Siehe auch
+    Thomé: _3 Schaubilder zu den Phonem-Graphem-Korrespondenzen im
+    Deutschen._ Institut für sprachliche Bildung, Oldenburg 2014, ISBN
+    978-3-942122-15-3.
+-   Günther Thomé, Dorothea Thomé: _Deutsche Wörter nach Laut- und
+    Schrifteinheiten gegliedert._ Oldenburg 2016, ISBN
+    978-3-942122-21-4.
+
+
+Weblinks[Bearbeiten | Quelltext bearbeiten]
+
+[]WIKTIONARY: GRAPHEM – Bedeutungserklärungen, Wortherkunft, Synonyme,
+Übersetzungen
+
+-   Das autonome Graphem Zur GP-Korrespondenz
+
+
+Einzelnachweise[Bearbeiten | Quelltext bearbeiten]
+
+1.  ↑ _Duden.de._ 28. September 2013, abgerufen am 20. Oktober 2012. 
+2.  ↑ Kohrt (1985), S. 167.
+3.  ↑ „Nun sind die (sprachlichen) Äußerungen unserer Stimme Symbole für
+    das, was (beim Sprechen) unserer Seele widerfährt, und unsere
+    schriftlichen Äußerungen sind wiederum Symbole für die
+    (sprachlichen) Äußerungen unserer Stimme.“ Aristoteles: Peri
+    Hermeneias. 16a3–6. 
+4.  ↑ „Sprache und Schrift sind zwei verschiedene Systeme von Zeichen;
+    das letztere besteht nur zu dem Zweck, um das erstere darzustellen.
+    Nicht die Verknüpfung von geschriebenem und gesprochenem Wort ist
+    Gegenstand der Sprachwissenschaft, sondern nur das letztere, das
+    gesprochene Wort allein ist ihr Objekt.“ Ferdinand de Saussure:
+    Cours de linguistique générale. 1916, S. 28 (französisch). 
+5.  ↑ “Writing is not language, but merely a way of recording language
+    by means of visible marks.” Leonard Bloomfield: Language. 1933,
+    S. 21 (englisch). 
+6.  ↑ Kohrt (1985): Kapitel 5 „Das ‚Graphem‘ als Phonemzeichen“.
+7.  ↑ Kohrt (1985): Kapitel 6 „Das ‚Graphem‘ als autonome Einheit der
+    geschriebenen Sprache“.
+8.  ↑ John C. McLaughlin: A Graphemic-Phonemic Study of a Middle English
+    Manuskript. Mouton, The Hague 1963, S. 29–32 (englisch, Zitiert in
+    Kohrt (1985), S. 319). 
+9.  ↑ Klaus Heller: Zum Graphembegriff. In: Dieter Nerius, Jürgen
+    Scharnhorst (Hrsg.): Theoretische Probleme der deutschen
+    Orthographie. Akademie Verlag, Berlin 1980, S. 74–108 (Zitiert in
+    Kohrt (1985), 319). 
+10. ↑ ^(a) ^(b) Oliver Rezec: Zur Struktur des deutschen Schriftsystems.
+    Zur Struktur des deutschen Schriftsystems.
+    Ludwig-Maximilian-Universität, München 2009 (Dissertation). ,
+    zusammengefasst in Oliver Rezec: Ein differenzierteres
+    Strukturmodell des deutschen Schriftsystems. In: Linguistische
+    Berichte. Nr. 234, 2013, ISSN 0024-3930, S. 227–254. 
+11. ↑ ^(a) ^(b) ^(c) Beispiel für divergierende Terminologie:
+      “; character: […] 2. conventional term for a unit of the Chinese
+      writing system in East Asian scripts
+
+      diacritic
+          a mark added to a character to indicate a modified
+          pronunciation (or sometimes to distinguish homophonous words)
+
+      grapheme
+          term intended to designate a unit of a writing system,
+          parallel to phoneme and morpheme, but in practice used as a
+          synonym for letter, diacritic, character (2), or sign (2)
+
+      letter
+          a self-contained unit of an abjad, alphabet, or abugida
+
+      sign
+          […] 2. conventional term for a self-contained unit of
+          cuneiform script”
+
+    – Peter T. Daniels, William Bright: The World’s Writing
+    Systems (1995)
+
+12. ↑ Martin Neef: Die Graphematik des Deutschen. 2005, 2.2 „Die
+    Grundeinheiten der graphematischen Komponente“. 
+13. ↑ Gallmann (1985), § 47.
+14. ↑ Beatrice Primus: _A featural analysis of the Modern Roman
+    Alphabet_, in: _Written Language & Literacy_, Band 7, Nr. 2,
+    2004, S. 235–274 (online).
+15. ↑ Herbert Brekle: Die Antiqualinie von ca. -1500 bis ca. +1500.
+    Untersuchungen zur Morphogenese des westlichen Alphabets auf
+    kognitivistischer Basis. Münster 1994, ISBN 3-89323-259-1. 
+16. ↑ Gallmann (1985), § 30.
+17. ↑ Gallmann (1985), § 31.
+18. ↑ Eisenberg 2006, 306. ⟨c⟩, ⟨v⟩, ⟨x⟩ und ⟨y⟩ kommen demnach zwar
+    nativ vor, sind aber nicht produktiv. Außerdem enthält das deutsche
+    Schrifttum viele übernommene Grapheme wie ⟨ph⟩ und ⟨th⟩ oder ⟨é⟩.
+19. ↑ Beachte: nicht Digraphen ⟨au⟩, ⟨ai⟩, ⟨äu⟩, ⟨ei⟩
+20. ↑ Gallmann (1985), § 39.
+21. ↑ Gallmann (1985), § 33: „Hilfszeichen: Punkt, Ausrufezeichen,
+    Fragezeichen, Doppelpunkt, Strichpunkt, Komma, Geviertstrich,
+    Bindestrich (Divis), Apostroph, Anführungszeichen, Klammern. .!?: ;,
+    — - ’ « » ‹› () []“ geschlossene Formklasse, abgegrenzt von der
+    offenen Klasse der Sonderzeichen (§$%‰&*=+–)
+22. ↑ Gallmann (1985), § 267ff: Wortbegrenzer
+23. ↑ Gallmann (1985), § 92: Satzintention- vs. Grenzsignal
+24. ↑ Gallmann (1985), § 28.
+25. ↑ Unicode Glossary
+
+[]
+
+Abgerufen von
+„https://de.wikipedia.org/w/index.php?title=Graphem&oldid=224962889“
+
+Kategorien:
+
+-   Schriftzeichen
+-   Schriftlinguistik
+-   Schriftsystem
+
+
+Navigationsmenü
+
+Meine Werkzeuge
+
+-   Nicht angemeldet
+-   Diskussionsseite
+-   Beiträge
+-   Benutzerkonto erstellen
+-   Anmelden
+
+Namensräume
+
+-   Artikel
+-   Diskussion
+
+Deutsch
+
+Ansichten
+
+-   Lesen
+-   Bearbeiten
+-   Quelltext bearbeiten
+-   Versionsgeschichte
+
+Weitere
+
+Suche
+
+Navigation
+
+-   Hauptseite
+-   Themenportale
+-   Zufälliger Artikel
+
+Mitmachen
+
+-   Artikel verbessern
+-   Neuen Artikel anlegen
+-   Autorenportal
+-   Hilfe
+-   Letzte Änderungen
+-   Kontakt
+-   Spenden
+
+Werkzeuge
+
+-   Links auf diese Seite
+-   Änderungen an verlinkten Seiten
+-   Spezialseiten
+-   Permanenter Link
+-   Seiten­informationen
+-   Artikel zitieren
+-   Wikidata-Datenobjekt
+
+Drucken/­exportieren
+
+-   Buch erstellen
+-   Als PDF herunterladen
+-   Druckversion
+
+In anderen Projekten
+
+-   Commons
+
+In anderen Sprachen
+
+-   Afrikaans
+-   Alemannisch
+-   العربية
+-   Asturianu
+-   Башҡортса
+-   Беларуская
+-   Български
+-   Brezhoneg
+-   Català
+-   Čeština
+-   Dansk
+-   English
+-   Esperanto
+-   Español
+-   Eesti
+-   Euskara
+-   فارسی
+-   Suomi
+-   Français
+-   Galego
+-   Gaelg
+-   עברית
+-   Hrvatski
+-   Kreyòl ayisyen
+-   Magyar
+-   Bahasa Indonesia
+-   Italiano
+-   日本語
+-   Jawa
+-   ქართული
+-   Қазақша
+-   한국어
+-   Кыргызча
+-   Lietuvių
+-   Latviešu
+-   Nederlands
+-   Norsk nynorsk
+-   Norsk bokmål
+-   Occitan
+-   Livvinkarjala
+-   ਪੰਜਾਬੀ
+-   Polski
+-   Português
+-   Română
+-   Русский
+-   Simple English
+-   Slovenčina
+-   Slovenščina
+-   Српски / srpski
+-   Svenska
+-   தமிழ்
+-   ไทย
+-   Türkçe
+-   Українська
+-   اردو
+-   Oʻzbekcha/ўзбекча
+-   Vèneto
+-   吴语
+-   中文
+-   Bân-lâm-gú
+-   粵語
+
+Links bearbeiten
+
+-   Diese Seite wurde zuletzt am 31. Juli 2022 um 12:57 Uhr bearbeitet.
+-   Abrufstatistik · Autoren
+
+    Der Text ist unter der Lizenz „Creative Commons Attribution/Share
+    Alike“ verfügbar; Informationen zu den Urhebern und zum Lizenzstatus
+    eingebundener Mediendateien (etwa Bilder oder Videos) können im
+    Regelfall durch Anklicken dieser abgerufen werden. Möglicherweise
+    unterliegen die Inhalte jeweils zusätzlichen Bedingungen. Durch die
+    Nutzung dieser Website erklären Sie sich mit den Nutzungsbedingungen
+    und der Datenschutzrichtlinie einverstanden.
+    Wikipedia® ist eine eingetragene Marke der Wikimedia Foundation Inc.
+
+-   Datenschutz
+-   Über Wikipedia
+-   Impressum
+-   Mobile Ansicht
+-   Entwickler
+-   Statistiken
+-   Stellungnahme zu Cookies
+
+-   [Wikimedia Foundation]
+-   [Powered by MediaWiki]

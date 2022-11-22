@@ -1,10 +1,5 @@
-Package overview
-================
-
-.. automodule:: pyndl
-
-Submodules
-----------
+API Documentation
+=================
 
 .. automodule:: pyndl.activation
     :members:

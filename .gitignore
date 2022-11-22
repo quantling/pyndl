@@ -24,9 +24,9 @@ dist/
 *.so
 pyndl.egg-info/
 .tox/
-doc/data/levent.tab
-doc/data/levent.tab.filtered
-doc/data/weights.nc
+docs/data/levent.tab
+docs/data/levent.tab.filtered
+docs/data/weights.nc
 
 # copybutton js script
 copybutton.js

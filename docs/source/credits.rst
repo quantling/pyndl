@@ -1,5 +1,5 @@
-About
-=====
+Credits
+=======
 
 Authors
 -------

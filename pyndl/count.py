@@ -17,6 +17,8 @@ import multiprocessing
 import sys
 import warnings
 
+from pyndl import io
+
 
 CuesOutcomes = namedtuple('CuesOutcomes', 'n_events, cues, outcomes')
 WordsSymbols = namedtuple('WordsSymbols', 'words, symbols')
@@ -35,18 +37,15 @@ def _job_cues_outcomes(event_file_name, start, step, verbose=False):
     cues = Counter()
     outcomes = Counter()
     nn = -1  # in case the for loop never gets called and 1 gets added in the end
-    with gzip.open(event_file_name, 'rt') as dfile:
-        # skip header
-        dfile.readline()
-        for nn, line in enumerate(itertools.islice(dfile, start, None, step)):
-            cues_line, outcomes_line = line.split('\t')
-            for cue in cues_line.split('_'):
-                cues[cue] += 1
-            for outcome in outcomes_line.strip().split('_'):
-                outcomes[outcome] += 1
-            if verbose and nn % 100000 == 0:
-                print('.', end='')
-                sys.stdout.flush()
+    events = io.events_from_file(event_file_name, start=start, step=step)
+    for nn, (cue_list, outcome_list) in enumerate(events):
+        for cue in cue_list:
+            cues[cue] += 1
+        for outcome in outcome_list:
+            outcomes[outcome] += 1
+        if verbose and nn % 100000 == 0:
+            print('.', end='')
+            sys.stdout.flush()
     return (nn + 1, cues, outcomes)
 
 

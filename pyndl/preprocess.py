@@ -16,6 +16,8 @@ import sys
 import time
 import warnings
 
+from pyndl import io
+
 
 def bandsample(population, sample_size=50000, *, cutoff=5, seed=None,
                verbose=False):
@@ -717,27 +719,18 @@ def write_events(events, filename, *, start=0, stop=4294967295, remove_duplicate
 
 
 def event_generator(event_file, cue_id_map, outcome_id_map, *, sort_within_event=False):
-    with gzip.open(event_file, "rt") as in_file:
-        # skip header
-        in_file.readline()
-        for _, line in enumerate(in_file):
-            try:
-                cues, outcomes = line.strip('\n').split("\t")
-            except ValueError:
-                raise ValueError("tabular event file need to have three tab separated columns")
-            cues = cues.split("_")
-            outcomes = outcomes.split("_")
-            # uses list and not generators; as generators can only be traversed once
-            event = ([cue_id_map[cue] for cue in cues],
-                     [outcome_id_map[outcome] for outcome in outcomes])
-            if sort_within_event:
-                cue_ids, outcome_ids = event
-                cue_ids = list(cue_ids)
-                cue_ids.sort()
-                outcome_ids = list(outcome_ids)
-                outcome_ids.sort()
-                event = (cue_ids, outcome_ids)
-            yield event
+    for cues, outcomes in io.events_from_file(event_file):
+        # uses list and not generators; as generators can only be traversed once
+        event = ([cue_id_map[cue] for cue in cues],
+                 [outcome_id_map[outcome] for outcome in outcomes])
+        if sort_within_event:
+            cue_ids, outcome_ids = event
+            cue_ids = list(cue_ids)
+            cue_ids.sort()
+            outcome_ids = list(outcome_ids)
+            outcome_ids.sort()
+            event = (cue_ids, outcome_ids)
+        yield event
 
 
 def _job_binary_event_file(*,

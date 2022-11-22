@@ -4,8 +4,8 @@ Installation
 Supported systems and versions
 ------------------------------
 
-.. image:: https://img.shields.io/travis/quantling/pyndl/master.svg?maxAge=3600&label=Linux
-    :target: https://travis-ci.org/quantling/pyndl?branch=master
+.. image:: https://img.shields.io/travis/quantling/pyndl/main.svg?maxAge=3600&label=Linux
+    :target: https://travis-ci.org/quantling/pyndl?branch=main
 
 .. image:: https://img.shields.io/pypi/pyversions/pyndl.svg
     :target: https://pypi.python.org/pypi/pyndl/
@@ -18,9 +18,20 @@ system.
 
 .. note::
 
-    We recommend to install `Minicoda <https://conda.io/miniconda.html>`_
-    before installing *pyndl* or to create a virtualenv within your personal
-    folder.
+    If you face problems with installing *pyndl* with `pip`, it might be
+    helpful to use `Minicoda <https://conda.io/miniconda.html>`_ to install the
+    following dependencies::
+
+        conda install numpy cython pandas xarray netCDF4 numpydoc pip
+
+    The reason behind this is that during the installation process of *pyndl*
+    Cython extension need to be installed, if no pre-compiled wheel could be
+    found for your operating system and architecture. To compile Cython
+    extensions some further steps need to be done, which is described in the
+    `Cython documentation <https://cython.readthedocs.io>`_ . These steps depend
+    on your operating system. Installing Cython with `conda install cython`
+    should add all the necessary additional programs and files and no further
+    steps are needed.
 
 
 Linux
@@ -38,38 +49,16 @@ MacOS
 -----
 
 If you want to install *pyndl* on MacOS you can also install it from
-`pypi <https://pypi.python.org/pypi>`_. However, you need xcode and gcc/g++ 6.3
-installed. As gcc/g++ might be outdated as xcode provides only 4.X, it might be
-necessary to update gcc first, before installing *pyndl*:
+`pypi <https://pypi.python.org/pypi>`_. However, the installation will not have
+`openmp` support. Sometimes an error is shown during the installation, but the
+installations succeeds nonetheless. Before filing a bug report please check if
+you can run the examples from the documentation.
 
-1. `Download and install x-code <https://developer.apple.com/xcode/>`_ or
-   for safe-guarding redo the xcode install in the Terminal if you have already
-   installed it:
-
-   .. code:: bash
-
-       xcode-select --install
-
-2. download gcc from `Mac OSX High Performance Computing
-   <http://prdownloads.sourceforge.net/hpc/gcc-6.3-bin.tar.gz>`_ then run these
-   commands in Terminal:
-
-   .. code:: bash
-
-       gunzip gcc-6.X-bin.tar.gz
-       sudo tar -xvf gcc-6.X-bin.tar -C /
-
-3. finally, install pyndl:
+Install *pyndl* with:
 
 .. code:: bash
 
     pip install --user pyndl
-
-.. warning::
-
-    This procedure is experimental and might not work. As long as we do not
-    actively support MacOS be aware that these installation instructions can
-    fail or the installed package does not always works as intended!
 
 
 Windows 10
@@ -81,11 +70,11 @@ Windows 10
     follow the following instructions.
 
 After installing Anaconda or Miniconda, first install the dependencies with the
-``conda`` command in the bash or the Ana/Miniconda terminal:
+``conda`` command in the bash or the Miniconda terminal:
 
 .. code:: bash
 
-    conda update --all
+    conda update conda
     conda install numpy cython pandas xarray netCDF4 numpydoc pip
 
 After the installation of the dependencies finished successfully you should be
