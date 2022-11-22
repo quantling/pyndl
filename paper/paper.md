@@ -10,16 +10,19 @@ authors:
   - name: Konstantin Sering
     affiliation: 1
   - name: Marc Weitz
-    affiliation: 1
+    affiliation: 1, 2
   - name: Elnaz Shafaei-Bajestan
     affiliation: 1
   - name: David-Elias Künstle
-    affiliation: 1, 2
+    affiliation: 1, 3
 affiliations:
   - name: University of Tübingen
     index: 1
-  - name: International Max Planck Research School for Intelligent Systems
+  - name: UiT The Arctic University of Norway
     index: 2
+  - name: International Max Planck Research School for Intelligent Systems
+    index: 3
+
 date: 31 March 2022
 bibliography: paper.bib
 repository: quantling/pyndl
@@ -176,6 +179,7 @@ The authors thank the International Max Planck Research School for Intelligent
 Systems (IMPRS-IS) for supporting David-Elias Künstle,
 funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)
 under Germany’s Excellence Strategy – EXC number 2064/1 – Project number
-390727645.
+390727645 and the High North Population Studies at UiT The Arctic University of 
+Norway for supporting Marc Weitz.
 
 # References
