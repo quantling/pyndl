@@ -5,7 +5,7 @@ Here we compare the performance of Naive Discrimination Learning in `pyndl`
 with other implementations, namely from the `R` packages `ndl` and `ndl2`. 
 
 This document summarizes the benchmarking procedure and results; the code to run
-these is available in the repository's `benchmark folder <https://github.com/quantling/pyndl/tree/master/benchmark>`_.  
+these is available in the repository's `benchmark folder <https://github.com/quantling/pyndl/tree/main/benchmark>`_.  
 
 
 Creating the event files

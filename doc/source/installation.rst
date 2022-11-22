@@ -4,8 +4,8 @@ Installation
 Supported systems and versions
 ------------------------------
 
-.. image:: https://img.shields.io/travis/quantling/pyndl/master.svg?maxAge=3600&label=Linux
-    :target: https://travis-ci.org/quantling/pyndl?branch=master
+.. image:: https://img.shields.io/travis/quantling/pyndl/main.svg?maxAge=3600&label=Linux
+    :target: https://travis-ci.org/quantling/pyndl?branch=main
 
 .. image:: https://img.shields.io/pypi/pyversions/pyndl.svg
     :target: https://pypi.python.org/pypi/pyndl/

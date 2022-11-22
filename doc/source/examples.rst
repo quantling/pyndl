@@ -501,10 +501,10 @@ We can load a in netCDF format saved matrix into R:
    > rm(weights_nc)
 
 .. _lexample.tab.gz:
-      https://github.com/quantling/pyndl/blob/master/doc/data/lexample.tab.gz
+      https://github.com/quantling/pyndl/blob/main/doc/data/lexample.tab.gz
 
 .. _lcorpus.txt:
-    https://github.com/quantling/pyndl/blob/master/doc/data/lcorpus.txt
+    https://github.com/quantling/pyndl/blob/main/doc/data/lcorpus.txt
 
 ----
 

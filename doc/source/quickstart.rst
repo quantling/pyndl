@@ -247,10 +247,10 @@ created in this tutorial:
 
 
 .. _lexample.tab.gz:
-     https://github.com/quantling/pyndl/blob/master/doc/data/lexample.tab.gz
+     https://github.com/quantling/pyndl/blob/main/doc/data/lexample.tab.gz
 
 .. _lcorpus.txt:
-     https://github.com/quantling/pyndl/blob/master/doc/data/lcorpus.txt
+     https://github.com/quantling/pyndl/blob/main/doc/data/lcorpus.txt
 
 ----
 

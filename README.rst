@@ -2,10 +2,10 @@
 Pyndl - Naive Discriminative Learning in Python
 ===============================================
 
-.. image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=master
+.. image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=main
     :target: https://github.com/quantling/pyndl/actions/workflows/python-test.yml
 
-.. image:: https://codecov.io/gh/quantling/pyndl/branch/master/graph/badge.svg?token=2GWUXRA9PD
+.. image:: https://codecov.io/gh/quantling/pyndl/branch/main/graph/badge.svg?token=2GWUXRA9PD
     :target: https://codecov.io/gh/quantling/pyndl
 
 .. image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
@@ -15,7 +15,7 @@ Pyndl - Naive Discriminative Learning in Python
     :target: https://pypi.python.org/pypi/pyndl/
 
 .. image:: https://img.shields.io/github/license/quantling/pyndl.svg
-    :target: https://github.com/quantling/pyndl/blob/master/LICENSE.txt
+    :target: https://github.com/quantling/pyndl/blob/main/LICENSE.txt
 
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.597964.svg
    :target: https://doi.org/10.5281/zenodo.597964
@@ -52,9 +52,9 @@ Getting involved
 The *pyndl* project welcomes help in the following ways:
 
 * Making Pull Requests for
-  `code <https://github.com/quantling/pyndl/tree/master/pyndl>`_,
-  `tests <https://github.com/quantling/pyndl/tree/master/tests>`_
-  or `documentation <https://github.com/quantling/pyndl/tree/master/doc>`_.
+  `code <https://github.com/quantling/pyndl/tree/main/pyndl>`_,
+  `tests <https://github.com/quantling/pyndl/tree/main/tests>`_
+  or `documentation <https://github.com/quantling/pyndl/tree/main/doc>`_.
 * Commenting on `open issues <https://github.com/quantling/pyndl/issues>`_
   and `pull requests <https://github.com/quantling/pyndl/pulls>`_.
 * Helping to answer `questions in the issue section
