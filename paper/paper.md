@@ -60,8 +60,8 @@ in predicting the outcome [see @Baayen_2015, for an introduction].
 <!-- Alternatively, the final state of the learning weights in the network is
 computable by equilibrium equations [@Danks_2003,@rescorla1972theory]. The
 underlying assumption is that language is learned over time. -->
-NDL models are trained on large corpora to investigate the language's structure
-and to provide insights into the learning process of life long language
+In linguistics, NDL models are trained on large corpora to investigate the language's
+structure and to provide insights into the learning process of life long language
 acquisition [please find an extensive list of examples in @Baayen_2015, section 5].
 
 
@@ -85,7 +85,7 @@ maintainability through low level C and C++ code next to high level R code.
 A severe limitation of *ndl* and *ndl2* is that both packages have difficulties
 with non-ASCII input, causing problems in the analysis of non-English text
 corpora due to special characters or non-Latin alphabets. An example would be
-the processing of Arabic or Ukrainian languages; even German umlauts are
+the processing of Arabic or Slavic languages; even German umlauts are
 inconvenient to use in *ndl* and *ndl2*. Furthermore, in *ndl2*, it is
 impossible to conveniently access huge weight matrices due to a size limitation
 of arrays in the R programming language [@R_project]. This limit does not allow
@@ -97,7 +97,7 @@ small to capture the full lexicon in most languages.
 
 <!-- Short description of pyndl -->
 *pyndl* reimplements the learning rule of NDL mainly in Python with small code
-chunks outsourced to Cython to speed up the processing. It also implements the
+chunks outsourced to Cython to speed up the processing. This allows the
 processing of UTF-8 encoded corpora enabling the analysis of many non-European
 languages and alphabets [e.g. Mandarin or Cyrillic, @milin2020keeping]. Using
 the Python ecosystem, the size of weight matrices in *pyndl* is only limited by
@@ -115,9 +115,8 @@ example, word classification using tokenized speech was investigated in
 @Arnold_2017. Inputs in this work consisted of around 50 tokens per time slice,
 where each token encoded the pitch, loudness, and variability into a string.
 
-The input format is based on previous implementations of NDL. These
-implementations, however, were restricted in functionality and partially not
-openly available. *pyndl* was open-source software from the beginning and
+The input format is based on previous implementations of NDL. In contrast to
+previous implementations, *pyndl* was open-source software from the beginning and
 developed with usability and maintainability in mind.  The better
 maintainability of *pyndl* does not come at the cost of performance: The
 benchmark results in \autoref{fig:benchmark}, described in detail in our
@@ -136,10 +135,10 @@ standard-error ($n$=10) for the wall time show that our implementation,
 events.\label{fig:benchmark}](benchmark_result.png)
 
 <!-- WH extension of pyndl -->
-In contrast to previous implementations, *pyndl* is easily extendable. For
-example, the NDL learner was extended to a learner for continuous inputs as
-cues, outcomes or both.  When both cues and outcomes are continuous, the
-Rescorla-Wagner learning rule changes to the Widrow-Hoff learning rule. This
+The improved maintainability of *pyndl* also allows for an easier addition of new 
+features. For example, the NDL learner was extended to a learner for continuous 
+inputs as cues, outcomes or both.  When both cues and outcomes are continuous, 
+the Rescorla-Wagner learning rule changes to the Widrow-Hoff learning rule. This
 extension is added by keeping the API to the learner comparable to NDL and
 computationally exploiting the structure of the multi-hot encoded features in
 the symbolic representation of language.
