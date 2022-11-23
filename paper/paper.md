@@ -81,7 +81,7 @@ researchers.
 However, the code of *ndl2* is only available upon request. One reason for this
 has been that it only runs on Linux and CRAN's guidelines make it difficult to
 publish single platform packages [@R_project]. Another reason is the limited
-maintainability through low level C and C++ code next to high level R code. 
+maintainability through low level C and C++ code next to high level R code.
 A severe limitation of *ndl* and *ndl2* is that both packages have difficulties
 with non-ASCII input, causing problems in the analysis of non-English text
 corpora due to special characters or non-Latin alphabets. An example would be
@@ -111,9 +111,10 @@ tokens separated by underscores which is together with the tab-character the
 only special character in *pyndl*. While *pyndl* provides some basic
 preprocessing for grapheme tokenization, the preprocessing of ideograms,
 pictograms, logograms, and speech is possible using custom preprocessing. For
-example, word classification using tokenized speech was investigated in
-@Arnold_2017. Inputs in this work consisted of around 50 tokens per time slice,
-where each token encoded the pitch, loudness, and variability into a string.
+example, word classification using tokenized speech audio recordings was
+investigated in @Arnold_2017. Inputs in this work consisted of around 50 tokens
+per time slice, where each token encoded the pitch, loudness, and variability
+into a string.
 
 The input format is based on previous implementations of NDL. In contrast to
 previous implementations, *pyndl* was open-source software from the beginning and
