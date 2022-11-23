@@ -179,7 +179,13 @@ The authors thank the International Max Planck Research School for Intelligent
 Systems (IMPRS-IS) for supporting David-Elias Künstle,
 funded by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation)
 under Germany’s Excellence Strategy – EXC number 2064/1 – Project number
-390727645 and the High North Population Studies at UiT The Arctic University of 
+390727645 and the High North Population Studies at UiT The Arctic University of
 Norway for supporting Marc Weitz.
+
+Finally, this paper and the associated package benefited from constructive and
+conscientious peer review. We would like to thank our three reviewers, Venktesh
+V, Jinhang Jiang, and especially Frankie Robertson, for their constructive and
+in-depth feedback and their suggestions on how to make the package more
+user-friendly.
 
 # References
