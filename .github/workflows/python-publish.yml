@@ -33,4 +33,4 @@ jobs:
       - name: Install package
         run: poetry install
       - name: Build and publish package
-        run: poetry publish --build --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }} --repository test-pypi
+        run: poetry publish --build --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }} --repository test-pypi --skip-existing
