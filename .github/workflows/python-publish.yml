@@ -28,7 +28,7 @@ jobs:
         uses: abatilo/actions-poetry@v2.1.3
         with:
           poetry-version: ${{ matrix.poetry-version }}
+      - name: Set up poetry
+        run: poetry config repositories.test-pypi https://test.pypi.org/legacy/
       - name: Build and publish package
-        run:
-          - poetry config repositories.test-pypi https://test.pypi.org/legacy/
-          - poetry publish --build --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }} --repository test-pypi
+        run: poetry publish --build --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }} --repository test-pypi
