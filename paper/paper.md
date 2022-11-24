@@ -78,19 +78,20 @@ researchers.
 
 <!-- Differences to pyndl -->
 <!-- Problems of ndl and ndl2 -->
-However, the code of *ndl2* is only available upon request. One reason for this
-has been that it only runs on Linux and CRAN's guidelines make it difficult to
-publish single platform packages [@R_project]. Another reason is the limited
-maintainability through low level C and C++ code next to high level R code.
-A severe limitation of *ndl* and *ndl2* is that both packages have difficulties
-with non-ASCII input, causing problems in the analysis of non-English text
-corpora due to special characters or non-Latin alphabets. An example would be
-the processing of Arabic or Slavic languages; even German umlauts are
-inconvenient to use in *ndl* and *ndl2*. Furthermore, in *ndl2*, it is
-impossible to conveniently access huge weight matrices due to a size limitation
-of arrays in the R programming language [@R_project]. This limit does not allow
-for more than 46,340 word types in a word-type to word-type model, which is too
-small to capture the full lexicon in most languages.
+However, the code of *ndl2* was only available upon request until end of the
+year 2022.  One reason for this has been that it only runs on Linux and CRAN's
+guidelines make it difficult to publish single platform packages [@R_project].
+Another reason is the limited maintainability through low level C and C++ code
+next to high level R code.  A severe limitation of *ndl* and *ndl2* is that
+both packages have difficulties with non-ASCII input, causing problems in the
+analysis of non-English text corpora due to special characters or non-Latin
+alphabets. An example would be the processing of Arabic or Slavic languages;
+even German umlauts are inconvenient to use in *ndl* and *ndl2*. Furthermore,
+in *ndl2*, it is impossible to conveniently access huge weight matrices due to
+a size limitation of arrays in the R programming language [@R_project]. This
+limit does not allow for more than 46,340 word types in a word-type to
+word-type model, which is too small to capture the full lexicon in most
+languages.
 
 
 # Implementation and use in research
