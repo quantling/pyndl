@@ -108,7 +108,7 @@ def _job_words_symbols(corpus_file_name, start, step, lower_case=False,
     """
     words = Counter()
     symbols = Counter()
-    with open(corpus_file_name, 'r') as dfile:
+    with open(corpus_file_name, 'rt', encoding="utf-8") as dfile:
         for nn, line in enumerate(itertools.islice(dfile, start, None, step)):
             for word in line.split():  # splits the string on all whitespace
                 word = word.strip()
@@ -167,7 +167,7 @@ def save_counter(counter, filename, *, header='key\tfreq\n'):
     Saves a counter object into a tab delimitered text file.
 
     """
-    with open(filename, 'wt') as dfile:
+    with open(filename, 'wt', encoding="utf-8") as dfile:
         dfile.write(header)
         for key, count in counter.most_common():
             dfile.write('{key}\t{count}\n'.format(key=key, count=count))
@@ -178,7 +178,7 @@ def load_counter(filename):
     Loads a counter out of a tab delimitered text file.
 
     """
-    with open(filename, 'rt') as dfile:
+    with open(filename, 'rt', encoding="utf-8") as dfile:
         # skip header
         dfile.readline()
         counter = Counter()

@@ -15,6 +15,7 @@ in their work and led to several scientific publications.
 
 """
 
+import platform
 import os
 import sys
 import multiprocessing as mp
@@ -51,14 +52,14 @@ def sysinfo():
                "Python version: {}\n"
                "Pyndl version: {}\n\n").format(sys.version.split()[0], __version__)
 
-    uname = os.uname()
+    uname = platform.uname()
     osinfo = ("Operating System\n"
               "----------------\n"
-              "OS: {s.sysname} {s.machine}\n"
+              "OS: {s.system} {s.machine}\n"
               "Kernel: {s.release}\n"
               "CPU: {cpu_count}\n").format(s=uname, cpu_count=mp.cpu_count())
 
-    if uname.sysname == "Linux":
+    if uname.system == "Linux":
         _, *lines = os.popen("free -m").readlines()
         for identifier in ("Mem:", "Swap:"):
             memory = [line for line in lines if identifier in line]

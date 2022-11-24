@@ -356,8 +356,8 @@ def create_event_file(corpus_file,
             line = context_pattern.sub("", line)
         return line
 
-    with open(corpus_file, "rt") as corpus:
-        with gzip.open(event_file, "wt") as outfile:
+    with open(corpus_file, "rt", encoding="utf-8") as corpus:
+        with gzip.open(event_file, "wt", encoding="utf-8") as outfile:
             outfile.write("cues\toutcomes\n")
 
             words = []
@@ -567,8 +567,8 @@ def filter_event_file(input_event_file, output_event_file, *,
                     cue_map, outcome_map)
 
     with multiprocessing.Pool(n_jobs) as pool:
-        with gzip.open(input_event_file, "rt") as infile:
-            with gzip.open(output_event_file, "wt") as outfile:
+        with gzip.open(input_event_file, "rt", encoding="utf-8") as infile:
+            with gzip.open(output_event_file, "wt", encoding="utf-8") as outfile:
                 # copy header
                 outfile.write(infile.readline())
                 for ii, processed_line, in enumerate(pool.imap(job.job, infile,
