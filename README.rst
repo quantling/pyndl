@@ -82,8 +82,17 @@ Currently, it is maintained by `Konstantin Sering <https://github.com/derNarr>`_
 and `Marc Weitz <https://github.com/trybnetic>`_.
 
 
+Funding
+=======
+*pyndl* supported by the Alexander von Humboldt Professorship awarded to R.
+Harald Baayen, the ERC advanced Grant (no. 742545), and by the University of
+Tübingen.
+
 Acknowledgments
 ===============
-This research was supported by an ERC advanced Grant (no. 742545) and by the
-Alexander von Humboldt Professorship awarded to R. H. Baayen and by the
-University of Tübingen.
+This package is build as a python replacement for the R `ndl2 package
+<https://github.com/quantling/ndl2>`_. Some
+ideas on how to build the API and how to efficiently run the Rescorla Wagner
+iterative learning on large text corpora are inspired by the way the ndl2
+package solves this problems.
+

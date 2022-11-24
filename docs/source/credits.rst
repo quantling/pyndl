@@ -58,14 +58,15 @@ If you are using BibTex you may want to use this example BibTex entry::
 
 Funding
 -------
-*pyndl* was partially funded by the Humboldt grant, the ERC advanced grant (no.
-742545) and by the University of Tübingen.
-
+*pyndl* supported by the Alexander von Humboldt Professorship awarded to R.
+Harald Baayen, the ERC advanced Grant (no. 742545), and by the University of
+Tübingen.
 
 Acknowledgements
 ----------------
-This package is build as a python replacement for the R ndl2 package. Some
+This package is build as a python replacement for the R `ndl2 package
+<https://github.com/quantling/ndl2>`_. Some
 ideas on how to build the API and how to efficiently run the Rescorla Wagner
 iterative learning on large text corpora are inspired by the way the ndl2
-package solves this problems. The ndl2 package is available on Github `here
-<https://github.com/quantling/ndl2>`_.
+package solves this problems.
+
