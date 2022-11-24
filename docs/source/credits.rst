@@ -67,5 +67,5 @@ Acknowledgements
 This package is build as a python replacement for the R ndl2 package. Some
 ideas on how to build the API and how to efficiently run the Rescorla Wagner
 iterative learning on large text corpora are inspired by the way the ndl2
-package solves this problems. The ndl2 package will be published to github soon
-and a reference will be placed here.
+package solves this problems. The ndl2 package is available on Github `here
+<https://github.com/quantling/ndl2>`_.
