@@ -17,7 +17,7 @@ readme = "README.rst"  # Markdown files are supported
 repository = "https://github.com/quantling/pyndl"
 homepage = "https://pyndl.readthedocs.io/en/latest/"
 
-classifiers = ['Development Status :: 4 - Beta',
+classifiers = ['Development Status :: 5 - Production/Stable',
                'Environment :: Console',
                'Intended Audience :: Science/Research',
                'Operating System :: POSIX :: Linux',
