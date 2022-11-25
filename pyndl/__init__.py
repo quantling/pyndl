@@ -3,14 +3,14 @@ Pyndl - Naive Discriminative Learning in Python
 ===============================================
 
 *pyndl* implements Naïve Discriminative Learning (NDL) in Python. NDL is an
-incremental learning algorithm grounded in the principles of discrimination 
-learning and motivated by animal and human learning research. Lately, NDL 
+incremental learning algorithm grounded in the principles of discrimination
+learning and motivated by animal and human learning research. Lately, NDL
 has become a popular tool in language research to examine large corpora and
 vocabularies, with 750,000 spoken word tokens and a vocabulary size of 52,402
-word types. In contrast to previous implementations, *pyndl* allows for a 
-broader range of analysis, including non-English languages, adds further 
-learning rules and provides better maintainability while having the same 
-fast processing speed. As of today, it supports multiple research groups 
+word types. In contrast to previous implementations, *pyndl* allows for a
+broader range of analysis, including non-English languages, adds further
+learning rules and provides better maintainability while having the same
+fast processing speed. As of today, it supports multiple research groups
 in their work and led to several scientific publications.
 
 """

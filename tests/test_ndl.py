@@ -5,7 +5,6 @@
 
 from collections import defaultdict, OrderedDict
 import os
-import platform
 import time
 import tempfile
 import copy
@@ -119,9 +118,8 @@ def test_exceptions():
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', remove_duplicates="magic")
         assert e_info == "remove_duplicates must be None, True or False"
 
-    if platform.uname().system == "Linux":
-        with pytest.raises(FileNotFoundError, match="No such file or directory") as e_info:
-            ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', temporary_directory="./magic")
+    with pytest.raises(FileNotFoundError) as e_info:
+        ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', temporary_directory="./magic")
 
     with pytest.raises(ValueError, match="events_per_file has to be larger than 1") as e_info:
         ndl.ndl(FILE_PATH_SIMPLE, ALPHA, BETAS, method='threading', events_per_temporary_file=1)
