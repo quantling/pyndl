@@ -3,7 +3,7 @@ name: Test atomatic builds
 on:
   push:
     branches:
-      - your-branch-name
+      - fix-windows-errors
 
 jobs:
   deploy:
