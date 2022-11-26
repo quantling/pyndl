@@ -15,7 +15,7 @@ Pyndl - Naive Discriminative Learning in Python
     :target: https://pypi.python.org/pypi/pyndl/
 
 .. image:: https://img.shields.io/github/license/quantling/pyndl.svg
-    :target: https://github.com/quantling/pyndl/blob/main/LICENSE.txt
+    :target: https://github.com/quantling/pyndl/blob/main/LICENSE
 
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.597964.svg
    :target: https://doi.org/10.5281/zenodo.597964
