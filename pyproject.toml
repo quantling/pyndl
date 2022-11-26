@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyndl"
-version = "1.0.0-beta"
+version = "1.1.0"
 description = "Naive discriminative learning implements learning and classification models based on the Rescorla-Wagner equations."
 
 license = "MIT"
@@ -17,11 +17,12 @@ readme = "README.rst"  # Markdown files are supported
 repository = "https://github.com/quantling/pyndl"
 homepage = "https://pyndl.readthedocs.io/en/latest/"
 
-classifiers = ['Development Status :: 4 - Beta',
+classifiers = ['Development Status :: 5 - Production/Stable',
                'Environment :: Console',
                'Intended Audience :: Science/Research',
                'Operating System :: POSIX :: Linux',
                'Operating System :: MacOS',
+               'Operating System :: Microsoft :: Windows',
                'Topic :: Scientific/Engineering',
                'Topic :: Scientific/Engineering :: Artificial Intelligence',
                'Topic :: Scientific/Engineering :: Information Analysis',]
@@ -43,13 +44,13 @@ pytest-cov = "^2.4"
 pydocstyle = "^6.1.1"
 flake8 = "^4.0.1"
 sphinx = "^1.4"
-sphinx_rtd_theme = "1.0.0"
+sphinx_rtd_theme = "^1.0.0"
 notebook = "^6.4.10"
 seaborn = "^0.11.2"
-numpydoc = "1.2"
-easydev = "0.9.35"
+numpydoc = "^1.2"
+sphinx-copybutton = "^0.5.1"
 pylint = "^2.0.0"
-nbsphinx = "0.8.8"
+nbsphinx = "^0.8.8"
 vulture = "^2.3"
 Jinja2 = "<3.1.0"
 

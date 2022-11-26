@@ -5,9 +5,9 @@ Contribute to pyndl
 The *pyndl* project welcomes help in the following ways:
 
 * Making Pull Requests for
-  `code <https://github.com/quantling/pyndl/tree/master/pyndl>`_,
-  `tests <https://github.com/quantling/pyndl/tree/master/tests>`_
-  or `documentation <https://github.com/quantling/pyndl/tree/master/doc>`_.
+  `code <https://github.com/quantling/pyndl/tree/main/pyndl>`_,
+  `tests <https://github.com/quantling/pyndl/tree/main/tests>`_
+  or `documentation <https://github.com/quantling/pyndl/tree/main/doc>`_.
 * Commenting on `open issues <https://github.com/quantling/pyndl/issues>`_
   and `pull requests <https://github.com/quantling/pyndl/pulls>`_.
 * Helping to answer `questions in the issue section

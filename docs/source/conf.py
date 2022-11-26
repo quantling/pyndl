@@ -40,7 +40,7 @@ extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.ifconfig',
               'sphinx.ext.viewcode',
               'numpydoc',
-              'easydev.copybutton',
+              'sphinx_copybutton',
               ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -67,6 +67,6 @@ html_static_path = ['_static']
 html_context = {"display_github": True,  # Add 'Edit on Github' link instead of 'View page source'
                 "github_user": 'quantling',
                 "github_repo": 'pyndl',
-                "github_version": 'master',
-                "conf_py_path": '/doc/source/'
+                "github_version": 'main',
+                "conf_py_path": '/docs/source/'
                 }

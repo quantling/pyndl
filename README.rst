@@ -2,10 +2,10 @@
 Pyndl - Naive Discriminative Learning in Python
 ===============================================
 
-.. image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=master
+.. image:: https://github.com/quantling/pyndl/actions/workflows/python-test.yml/badge.svg?branch=main
     :target: https://github.com/quantling/pyndl/actions/workflows/python-test.yml
 
-.. image:: https://codecov.io/gh/quantling/pyndl/branch/master/graph/badge.svg?token=2GWUXRA9PD
+.. image:: https://codecov.io/gh/quantling/pyndl/branch/main/graph/badge.svg?token=2GWUXRA9PD
     :target: https://codecov.io/gh/quantling/pyndl
 
 .. image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
@@ -15,7 +15,7 @@ Pyndl - Naive Discriminative Learning in Python
     :target: https://pypi.python.org/pypi/pyndl/
 
 .. image:: https://img.shields.io/github/license/quantling/pyndl.svg
-    :target: https://github.com/quantling/pyndl/blob/master/LICENSE.txt
+    :target: https://github.com/quantling/pyndl/blob/main/LICENSE
 
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.597964.svg
    :target: https://doi.org/10.5281/zenodo.597964
@@ -52,9 +52,9 @@ Getting involved
 The *pyndl* project welcomes help in the following ways:
 
 * Making Pull Requests for
-  `code <https://github.com/quantling/pyndl/tree/master/pyndl>`_,
-  `tests <https://github.com/quantling/pyndl/tree/master/tests>`_
-  or `documentation <https://github.com/quantling/pyndl/tree/master/doc>`_.
+  `code <https://github.com/quantling/pyndl/tree/main/pyndl>`_,
+  `tests <https://github.com/quantling/pyndl/tree/main/tests>`_
+  or `documentation <https://github.com/quantling/pyndl/tree/main/doc>`_.
 * Commenting on `open issues <https://github.com/quantling/pyndl/issues>`_
   and `pull requests <https://github.com/quantling/pyndl/pulls>`_.
 * Helping to answer `questions in the issue section
@@ -82,8 +82,17 @@ Currently, it is maintained by `Konstantin Sering <https://github.com/derNarr>`_
 and `Marc Weitz <https://github.com/trybnetic>`_.
 
 
-Acknowledgments
-===============
-This research was supported by an ERC advanced Grant (no. 742545) and by the
-Alexander von Humboldt Professorship awarded to R. H. Baayen and by the
-University of Tübingen.
+Funding
+-------
+*pyndl* was partially funded by the Humboldt grant, the ERC advanced grant (no.
+742545) and by the University of Tübingen.
+
+
+Acknowledgements
+----------------
+This package is build as a python replacement for the R ndl2 package. Some
+ideas on how to build the API and how to efficiently run the Rescorla Wagner
+iterative learning on large text corpora are inspired by the way the ndl2
+package solves this problems. The ndl2 package is available on Github `here
+<https://github.com/quantling/ndl2>`_.
+

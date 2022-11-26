@@ -3,9 +3,11 @@ pyndl.wh
 --------
 
 *pyndl.wh* provides functions in order to train Widrow-Hoff (WH) models. In contrast
-to the Rescorla-Wagner (RW) models in the WH models can not only have binary
-cues and outcomes, but can code gradual intesities in there cues and outcomes
-as real, continues values.
+to the Rescorla-Wagner (RW) models, the WH models can not only have binary
+cues and outcomes, but can encode gradual intensities in the cues and outcomes.
+This is done by associating a vector of continues values (real numbers) to each
+cue and outcome. The size of the vector has to be the same for all cues and for
+all outcomes, but can differ between cues and outcomes.
 
 It is possible to calculate weights for continuous cues or continues outcomes,
 while keeping the outcomes respectively cues binary. Finally, it is possible to
@@ -54,15 +56,15 @@ def wh(events, eta, *, cue_vectors=None, outcome_vectors=None,
         events_per_temporary_file=10000000):
     """
     Calculate the weights for all events using the Widrow-Hoff learning rule in
-    three different flavours.
+    three different flavors.
 
-    In the first flavour, cues and outcomes both are vectors and the names in
+    In the first flavor, cues and outcomes both are vectors and the names in
     the eventfiles refer to these vectors. The vectors for all cues and
-    outcomes are given as an xarrayDataArray with the arguments `cue_vectors`
+    outcomes are given as an xarray.DataArray with the arguments `cue_vectors`
     and `outcome_vectors'.
 
-    In the second and third flavour, only the cues or only the outcomes are
-    treated as vectors but the ones not being treated as vectors are still
+    In the second and third flavor, only the cues or only the outcomes are
+    treated as vectors and the ones not being treated as vectors are still
     considered being present or not being present in a binary way.
 
     This is a parallel python implementation using cython, numpy,
@@ -81,23 +83,24 @@ def wh(events, eta, *, cue_vectors=None, outcome_vectors=None,
     method : {'openmp', 'threading', 'numpy'}
         'numpy' works only for real to real Widrow-Hoff.
     weights : None or xarray.DataArray
-        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+        the xarray.DataArray needs to have the named dimensions 'cues' or
+        'cue_vector_dimensions' and 'outcomes' or 'outcome_vector_dimensions'
     n_jobs : int
         an integer giving the number of threads in which the job should be
         executed
     n_outcomes_per_job : int
         an integer giving the number of outcomes that are processed in one job
     remove_duplicates : {None, True, False}
-        if None though a ValueError when the same cue is present multiple times
+        if None raise a ValueError when the same cue is present multiple times
         in the same event; True make cues and outcomes unique per event; False
         keep multiple instances of the same cue or outcome (this is usually not
         preferred!)
     verbose : bool
-        print some output if True.
+        print some output if True
     temporary_directory : str
         path to directory to use for storing temporary files created;
         if none is provided, the operating system's default will
-        be used (/tmp on unix)
+        be used like '/tmp' on unix
     events_per_temporary_file: int
         Number of events in each temporary binary file. Has to be larger than 1
 
@@ -172,8 +175,8 @@ def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
     a fast cython implementation.
 
     The main purpose of this function is to have a reference implementation
-    which is used to test the faster cython version against. Additionally, this
-    function can be a good starting point to develop different flavours of the
+    which is used to validate the faster cython version against. Additionally, this
+    function can be a good starting point to develop different flavors of the
     Widrow-Hoff learning rule.
 
     Parameters
@@ -211,9 +214,12 @@ def dict_wh(events, eta, cue_vectors, outcome_vectors, *,
     or
 
     weights : xarray.DataArray
-        with dimensions 'outcomes' and 'cues'. You can lookup the weights
-        between a cue and an outcome with ``weights.loc[{'outcomes': outcome,
-        'cues': cue}]`` or ``weights.loc[outcome].loc[cue]``.
+        with dimensions 'outcome_vector_dimensions' and
+        'cue_vector_dimensions'. You can lookup the weights
+        between a cue dimension and an outcome dimension with
+        ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
+        'cue_vector_dimensions': cue_vector_dimension}]`` or
+        ``weights.loc[outcome_vector_dimension].loc[cue_vector_dimension]``.
 
     """
 
@@ -331,7 +337,7 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
                        events_per_temporary_file=10000000):
     """
     Calculate the weights for all events using the Widrow-Hoff learning rule
-    and training as outcomes on sematic vectors in semantics.
+    from binary cues onto continuous outcome vectors.
 
     This is a parallel python implementation using cython, numpy,
     multithreading and the binary format defined in preprocess.py.
@@ -347,7 +353,8 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
 
     method : {'openmp', 'threading'}
     weights : None or xarray.DataArray
-        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+        the xarray.DataArray needs to have the dimensions 'cues' and
+        'outcome_vector_dimensions'
     n_jobs : int
         an integer giving the number of threads in which the job should be
         executed
@@ -363,15 +370,16 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
     temporary_directory : str
         path to directory to use for storing temporary files created;
         if none is provided, the operating system's default will
-        be used (/tmp on unix)
+        be used like '/tmp' on unix
     events_per_temporary_file: int
         Number of events in each temporary binary file. Has to be larger than 1
 
     Returns
     -------
     weights : xarray.DataArray
-        with dimensions 'vector dimensions' and 'cues'. You can lookup the weights
-        between a vector dimension and a cue with ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
+        with dimensions 'outcome_vector dimensions' and 'cues'. You can lookup
+        the weights between a vector dimension and a cue with
+        ``weights.loc[{'outcome_vector_dimensions': outcome_vector_dimension,
         'cues': cue}]`` or ``weights.loc[outcome_vector_dimension].loc[cue]``.
 
     """
@@ -391,6 +399,8 @@ def _wh_binary_to_real(events, eta, outcome_vectors, *,
 
     if not outcome_vectors.data.data.c_contiguous:
         raise ValueError('outcome_vectors have to be c_contiguous')
+    if not outcome_vectors.dtype == np.float64:
+        raise ValueError('outcome_vectors have to be of dtype np.float64')
 
     # preprocessing
     n_events, cues, outcomes_from_events = count.cues_outcomes(events,
@@ -520,7 +530,7 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
                        events_per_temporary_file=10000000):
     """
     Calculate the weights for all events using the Widrow-Hoff learning rule
-    and training as cue_vectors on outcomes.
+    from continuous cue vectors onto binary outcomes.
 
     This is a parallel python implementation using cython and the binary format
     defined in preprocess.py.
@@ -536,7 +546,8 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
         matrix that contains the cue vectors for each cue
     method : {'openmp', 'threading'}
     weights : None or xarray.DataArray
-        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+        the xarray.DataArray needs to have the dimensions
+        'cue_vector_dimensions' and 'outcomes'
     n_jobs : int
         an integer giving the number of threads in which the job should be
         executed
@@ -552,7 +563,7 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
     temporary_directory : str
         path to directory to use for storing temporary files created;
         if none is provided, the operating system's default will
-        be used (/tmp on unix)
+        be used like '/tmp' on unix
     events_per_temporary_file: int
         Number of events in each temporary binary file. Has to be larger than 1
 
@@ -578,6 +589,8 @@ def _wh_real_to_binary(events, betas, lambda_, cue_vectors, *,
 
     if not cue_vectors.data.data.c_contiguous:
         raise ValueError('cue_vectors have to be c_contiguous')
+    if not cue_vectors.dtype == np.float64:
+        raise ValueError('cue_vectors have to be of dtype np.float64')
 
     weights_ini = weights
     wall_time_start = time.perf_counter()
@@ -695,7 +708,7 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
                      events_per_temporary_file=10000000):
     """
     Calculate the weights for all events using the Widrow-Hoff learning rule
-    and training as outcomes on sematic vectors in semantics.
+    from cue vectors onto outcome vectors.
 
     This is a parallel python implementation using cython, numpy,
     multithreading and the binary format defined in preprocess.py.
@@ -712,7 +725,8 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
         matrix that contains the target vectors for each outcome
     method : {'openmp', 'threading', 'numpy'}
     weights : None or xarray.DataArray
-        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+        the xarray.DataArray needs to have the dimensions
+        'cue_vector_dimensions' and 'outcome_vector_dimensions'
     n_jobs : int
         an integer giving the number of threads in which the job should be
         executed
@@ -728,7 +742,7 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
     temporary_directory : str
         path to directory to use for storing temporary files created;
         if none is provided, the operating system's default will
-        be used (/tmp on unix)
+        be used like '/tmp' on unix
     events_per_temporary_file: int
         Number of events in each temporary binary file. Has to be larger than 1
 
@@ -763,9 +777,13 @@ def _wh_real_to_real(events, eta, cue_vectors, outcome_vectors, *,
 
     if not cue_vectors.data.data.c_contiguous:
         raise ValueError('cue_vectors have to be c_contiguous')
+    if not cue_vectors.dtype == np.float64:
+        raise ValueError('cue_vectors have to be of dtype np.float64')
 
     if not outcome_vectors.data.data.c_contiguous:
         raise ValueError('outcome_vectors have to be c_contiguous')
+    if not outcome_vectors.dtype == np.float64:
+        raise ValueError('outcome_vectors have to be of dtype np.float64')
 
     # preprocessing
     n_events, cues_from_events, outcomes_from_events = count.cues_outcomes(events,

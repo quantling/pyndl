@@ -1,5 +1,5 @@
-About
-=====
+Credits
+=======
 
 Authors
 -------
@@ -58,14 +58,14 @@ If you are using BibTex you may want to use this example BibTex entry::
 
 Funding
 -------
-*pyndl* was partially funded by the Humboldt grant, the ERC advanced grant (no.
-742545) and by the University of Tübingen.
-
+*pyndl* has been supported by the Alexander von Humboldt Professorship awarded
+to R.  Harald Baayen, the ERC advanced Grant WIDE (no. 742545), and the
+University of Tübingen.
 
 Acknowledgements
 ----------------
-This package is build as a python replacement for the R ndl2 package. Some
-ideas on how to build the API and how to efficiently run the Rescorla Wagner
-iterative learning on large text corpora are inspired by the way the ndl2
-package solves this problems. The ndl2 package will be published to github soon
-and a reference will be placed here.
+This package is build as a Python replacement for the R `ndl2 package
+<https://github.com/quantling/ndl2>`_. Some ideas on how to build the API and
+how to efficiently run the Rescorla Wagner iterative learning on large text
+corpora are inspired by the ndl2 package.
+

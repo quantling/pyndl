@@ -98,7 +98,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     method : {'openmp', 'threading'}
     weights : None or xarray.DataArray
-        the xarray.DataArray needs to have the dimensions 'cues' and 'outcomes'
+        the xarray.DataArray needs to have the named dimensions 'cues' and 'outcomes'
     n_jobs : int
         a integer giving the number of threads in which the job should
         executed
@@ -147,7 +147,7 @@ def ndl(events, alpha, betas, lambda_=1.0, *,
 
     if not (remove_duplicates is None or isinstance(remove_duplicates, bool)):
         raise ValueError("remove_duplicates must be None, True or False")
-    if not isinstance(events, str):
+    if not isinstance(events, (str, os.PathLike)):
         raise ValueError("'events' need to be the path to a gzipped event file not {}".format(type(events)))
 
     weights_ini = weights
