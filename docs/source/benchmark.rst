@@ -89,8 +89,9 @@ the iterative learner of `ndl2`. ``R -f run_ndl.R`` runs the `ndl2` on the same 
 while `ndl` only runs on the smaller files because it is orders of magnitude slower.
 
 
-`ndl` can be installed from CRAN by running ``install.packages('ndl')`` in R, while `ndl2` is just
-available upon request (contact `Konstantin Sering <https://uni-tuebingen.de/fakultaeten/philosophische-fakultaet/fachbereiche/neuphilologie/seminar-fuer-sprachwissenschaft/arbeitsbereiche/quantitative-linguistik/mitarbeiter/'>`_, install with ``R CMD INSTALL ndl2.tar.gz``).
+`ndl` can be installed from CRAN by running ``install.packages('ndl')`` in R,
+while `ndl2` needs to be downloaded from Github first (`ndl2
+<https://github.com/quantling/ndl2>`_, install with ``R CMD INSTALL ndl2.tar.gz``).
 
 Both `ndl` and `ndl2` cannot handle compressed event files right away. For `ndl`, we 
 load the full event file into memory (included in time measurement), while `ndl2` reads an uncompressed event
