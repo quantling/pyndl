@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyndl"
-version = "1.1.0a1"
+version = "1.1.0a2"
 description = "Naive discriminative learning implements learning and classification models based on the Rescorla-Wagner equations."
 
 license = "MIT"
@@ -48,7 +48,7 @@ sphinx_rtd_theme = "^1.0.0"
 notebook = "^6.4.10"
 seaborn = "^0.11.2"
 numpydoc = "^1.2"
-easydev = "^0.9.35"
+sphinx-copybutton = "^0.5.1"
 pylint = "^2.0.0"
 nbsphinx = "^0.8.8"
 vulture = "^2.3"
