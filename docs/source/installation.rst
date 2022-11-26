@@ -63,29 +63,32 @@ Install *pyndl* with:
 
 Windows 10
 ----------
-
-.. note::
-
-    You might need to enable the ``bash`` within Windows 10 first to be able to
-    follow the following instructions.
-
-After installing Anaconda or Miniconda, first install the dependencies with the
-``conda`` command in the bash or the Miniconda terminal:
-
-.. code:: bash
-
-    conda update conda
-    conda install numpy cython pandas xarray netCDF4 numpydoc pip
-
-After the installation of the dependencies finished successfully you should be
-able to install ``pyndl`` with pip:
+On Windows installing ``pyndl`` should work with ``pip`` as well. Execute in the PowerShell:
 
 .. code:: bash
 
     pip install --user pyndl
 
-.. warning::
+If this fails for some reason you can try to install ``pyndl`` with `poetry
+<https://python-poetry.org/>`_. First you need to install ``poetry`` and
+``git``. After both programs are installed properly you should be able install
+``pyndl`` with the following commands in the PowerShell:
 
-    This procedure is experimental and might not work. As long as we do not
-    actively support Windows 10 be aware that these installation instructions
-    can fail or the installed package does not always works as intended!
+.. code:: bash
+
+   git clone https://github.com/quantling/pyndl
+   cd pyndl
+   poetry install
+
+Test the installation with:
+
+.. code:: bash
+
+   poetry run pytest --on-linux
+
+
+.. note::
+
+    ``pyndl`` on Windows and MacOS X comes without OpenMP support and therefore
+    some functionality is not available.
+
