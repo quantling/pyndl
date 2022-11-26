@@ -109,6 +109,13 @@ executing the following within the repository's root folder (``pyndl/``):
 
     poetry run pytest
 
+Some tests only work on Linux, therefore to run tests on Mac OS or Windows skip
+all Linux-only tests with:
+
+.. code:: bash
+
+    poetry run pytest --on-linux
+
 For extensive, time and memory consuming tests run (at least 12 GB of free
 memory should be available):
 
