@@ -342,6 +342,10 @@ def test_read_binary_file():
         for outcome, bin_outcome in zip(outcomes, bin_outcomes):
             assert outcome_id_map[outcome] == bin_outcome
 
+    # exhaust bin_events generator
+    for _ in bin_events:
+        pass
+
     # clean everything
     os.remove(abs_binary_file_path)
 

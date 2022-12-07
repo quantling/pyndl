@@ -1,0 +1,34 @@
+name: Test atomatic builds
+
+on:
+  push:
+    branches:
+      - your-branch-name
+
+jobs:
+  deploy:
+    name: ${{ matrix.os }} ${{ matrix.python-version }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+        poetry-version: [1.2]
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.1.3
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Configure test PyPI
+        run: poetry config repositories.test-pypi https://test.pypi.org/legacy/
+      - name: Install package
+        run: poetry install
+      - name: Build and upload package to tets PyPI
+        run: poetry publish --build --skip-existing --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }} --repository test-pypi

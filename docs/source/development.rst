@@ -109,6 +109,13 @@ executing the following within the repository's root folder (``pyndl/``):
 
     poetry run pytest
 
+Some tests only work on Linux, therefore to run tests on Mac OS or Windows skip
+all Linux-only tests with:
+
+.. code:: bash
+
+    poetry run pytest --on-linux
+
 For extensive, time and memory consuming tests run (at least 12 GB of free
 memory should be available):
 
@@ -295,24 +302,10 @@ Release Process
 3. Create a new release on Github of the `main` branch of the form ``vX.Y.Z``
    (where ``X``, ``Y``, and ``Z`` refer to the new version).  Add a description
    of the new feature or bugfix. For details on the version number see
-   Versioning_ below.
+   Versioning_ below. This will trigger a Action to automatically build and
+   upload the release to PyPI
 
-4. Pull the repository and checkout the tag and create the distribution files
-   using:
-
-.. code:: bash
-
-    git pull
-    git checkout vX.Y.Z
-    poetry build
-
-5. (maintainers only) Publish the builds to PyPI.
-
-.. code:: bash
-
-    poetry publish
-
-7. (maintainers only) Check if the new version is on pypi (https://pypi.python.org/pypi/pyndl/).
+4. Check if the new version is on pypi (https://pypi.python.org/pypi/pyndl/).
 
 
 Versioning

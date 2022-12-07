@@ -3,18 +3,19 @@ Pyndl - Naive Discriminative Learning in Python
 ===============================================
 
 *pyndl* implements Naïve Discriminative Learning (NDL) in Python. NDL is an
-incremental learning algorithm grounded in the principles of discrimination 
-learning and motivated by animal and human learning research. Lately, NDL 
+incremental learning algorithm grounded in the principles of discrimination
+learning and motivated by animal and human learning research. Lately, NDL
 has become a popular tool in language research to examine large corpora and
 vocabularies, with 750,000 spoken word tokens and a vocabulary size of 52,402
-word types. In contrast to previous implementations, *pyndl* allows for a 
-broader range of analysis, including non-English languages, adds further 
-learning rules and provides better maintainability while having the same 
-fast processing speed. As of today, it supports multiple research groups 
+word types. In contrast to previous implementations, *pyndl* allows for a
+broader range of analysis, including non-English languages, adds further
+learning rules and provides better maintainability while having the same
+fast processing speed. As of today, it supports multiple research groups
 in their work and led to several scientific publications.
 
 """
 
+import platform
 import os
 import sys
 import multiprocessing as mp
@@ -51,14 +52,14 @@ def sysinfo():
                "Python version: {}\n"
                "Pyndl version: {}\n\n").format(sys.version.split()[0], __version__)
 
-    uname = os.uname()
+    uname = platform.uname()
     osinfo = ("Operating System\n"
               "----------------\n"
-              "OS: {s.sysname} {s.machine}\n"
+              "OS: {s.system} {s.machine}\n"
               "Kernel: {s.release}\n"
               "CPU: {cpu_count}\n").format(s=uname, cpu_count=mp.cpu_count())
 
-    if uname.sysname == "Linux":
+    if uname.system == "Linux":
         _, *lines = os.popen("free -m").readlines()
         for identifier in ("Mem:", "Swap:"):
             memory = [line for line in lines if identifier in line]
