@@ -1,5 +1,5 @@
 {
-    "title": "Pyndl: Naive discriminative learning in python",
+    "title": "Pyndl: Naïve Discriminative Learning in Python",
     "license": {
       "id": "MIT"
     },
@@ -17,9 +17,9 @@
         {
             "name": "Lennart Schneider"
         },
-	{
-	    "name": "Elnaz Shafaei-Bajestan"
-	}
+        {
+            "name": "Elnaz Shafaei-Bajestan"
+        }
     ],
     "grants": [
       {
