@@ -1,3 +1,5 @@
+# cython: language_level=3
+
 import numpy as np
 import math
 from libc.stdlib cimport abort, malloc, free
