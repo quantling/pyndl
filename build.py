@@ -10,17 +10,16 @@ cython_dir = "pyndl"
 
 ndl_parallel = Extension("pyndl.ndl_parallel",
                          ["pyndl/ndl_parallel.pyx"],
-                         extra_compile_args=['-O3'],
                          include_dirs=[numpy.get_include()])
 ndl_openmp = Extension("pyndl.ndl_openmp",
                        ["pyndl/ndl_openmp.pyx"],
-                       extra_compile_args=['-O3', '-fopenmp'],
+                       extra_compile_args=['-fopenmp'],
                        extra_link_args=['-fopenmp'],
                        include_dirs=[numpy.get_include()])
 corr_parallel = Extension("pyndl.correlation_openmp",
                           ["pyndl/correlation_openmp.pyx"],
-                          extra_compile_args=['-O3', '-fopenmp'],
-                          extra_link_args=['-O3', '-fopenmp'],
+                          extra_compile_args=['-fopenmp'],
+                          extra_link_args=['-fopenmp'],
                           include_dirs=[numpy.get_include()])
 
 extensions = []
