@@ -34,7 +34,7 @@ scipy = "^1.9.0"
 pandas = "^1.4.3"
 xarray = "^2022.6.0"
 netCDF4 = "^1.6.0"
-Cython = "^0.29.32"
+Cython = "^3.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.0"
