@@ -1,3 +1,6 @@
+# cython: language_level=3
+# distutils: define_macros=NPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION
+
 import numpy as np
 import math
 cimport numpy as np
@@ -5,17 +8,17 @@ ctypedef np.float64_t dtype_t
 cimport cython
 from cython.parallel cimport parallel, prange
 
-from ndl_parallel cimport (learn_inplace_binary_to_binary_ptr,
-                           learn_inplace_binary_to_real_ptr,
-                           learn_inplace_real_to_real_ptr,
-                           learn_inplace_real_to_binary_ptr)
-from error_codes cimport (ErrorCode,
-                          NO_ERROR,
-                          MAGIC_NUMBER_DOES_NOT_MATCH,
-                          VERSION_NUMBER_DOES_NOT_MATCH,
-                          INITIAL_ERROR_CODE,
-                          ONLY_ONE_OUTCOME_PER_EVENT,
-                          ERROR_CODES)
+from .ndl_parallel cimport (learn_inplace_binary_to_binary_ptr,
+                            learn_inplace_binary_to_real_ptr,
+                            learn_inplace_real_to_real_ptr,
+                            learn_inplace_real_to_binary_ptr)
+from .error_codes cimport (ErrorCode,
+                           NO_ERROR,
+                           MAGIC_NUMBER_DOES_NOT_MATCH,
+                           VERSION_NUMBER_DOES_NOT_MATCH,
+                           INITIAL_ERROR_CODE,
+                           ONLY_ONE_OUTCOME_PER_EVENT,
+                           ERROR_CODES)
 
 
 def learn_inplace_binary_to_binary(binary_file_paths,

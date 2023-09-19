@@ -1,3 +1,5 @@
+# cython: language_level=3
+
 cdef enum ErrorCode:
     NO_ERROR = 0
     MAGIC_NUMBER_DOES_NOT_MATCH = 1
