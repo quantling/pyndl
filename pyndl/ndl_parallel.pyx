@@ -31,17 +31,17 @@ test_index += test_cue_index
 assert test_index == 18446744069414584320
 
 
-cdef inline void read_next_int(void *data, FILE *binary_file) nogil:
+cdef inline void read_next_int(void *data, FILE *binary_file) noexcept nogil:
     fread(data, 4, 1, binary_file) # little endian
 
 
 cdef extern from "stdio.h":
     #FILE * fopen ( const char * filename, const char * mode )
-    FILE *fopen(const char *, const char *) nogil
+    FILE *fopen(const char *, const char *) noexcept nogil
     #int fclose ( FILE * stream )
-    int fclose(FILE *) nogil
+    int fclose(FILE *) noexcept nogil
     #size_t fread ( void *ptr, size_t size, size_t count, FILE *stream );
-    size_t fread (void *, size_t, size_t, FILE *) nogil
+    size_t fread (void *, size_t, size_t, FILE *) noexcept nogil
 
 
 def learn_inplace_binary_to_binary(binary_file_paths,
@@ -78,7 +78,7 @@ def learn_inplace_binary_to_binary(binary_file_paths,
 
 
 
-cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) nogil:
+cdef int is_element_of(unsigned int elem, unsigned int* arr, unsigned int size) noexcept nogil:
     cdef unsigned int ii
     for ii in range(size):
         if arr[ii] == elem:
@@ -94,7 +94,7 @@ cdef ErrorCode learn_inplace_binary_to_binary_ptr(char* binary_file_path,
                         unsigned int n_all_cues,
                         unsigned int* all_outcome_indices,
                         unsigned int start,
-                        unsigned int end) nogil:
+                        unsigned int end) noexcept nogil:
 
 
     cdef unsigned int number_of_events, number_of_cues, number_of_outcomes
@@ -178,7 +178,7 @@ cdef ErrorCode learn_inplace_binary_to_real_ptr(char* binary_file_path,
                         unsigned int n_all_cues,
                         unsigned int n_outcome_vector_dimensions,
                         unsigned int start,
-                        unsigned int end) nogil:
+                        unsigned int end) noexcept nogil:
 
 
     cdef unsigned int number_of_events, number_of_cues, number_of_outcomes
@@ -265,7 +265,7 @@ cdef ErrorCode learn_inplace_real_to_real_ptr(char* binary_file_path,
                         unsigned int n_cue_vector_dimensions,
                         unsigned int n_outcome_vector_dimensions,
                         unsigned int start,
-                        unsigned int end) nogil:
+                        unsigned int end) noexcept nogil:
 
     cdef unsigned int number_of_events, number_of_cues, number_of_outcomes
     cdef dtype_t association_strength, update, summed_cue_vector_value, summed_outcome_vector_value
@@ -376,7 +376,7 @@ cdef ErrorCode learn_inplace_real_to_binary_ptr(char* binary_file_path,
                         dtype_t* weights,
                         unsigned int n_cue_vector_dimensions,
                         unsigned int start,
-                        unsigned int end) nogil:
+                        unsigned int end) noexcept nogil:
 
     cdef unsigned int number_of_events, number_of_cues, number_of_outcomes
     cdef dtype_t association_strength, update, summed_cue_vector_value
