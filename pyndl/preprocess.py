@@ -145,7 +145,7 @@ def process_occurrences(occurrences, outfile, *,
 def create_event_file(corpus_file,
                       event_file,
                       *,
-                      allowed_symbols="*",
+                      allowed_symbols="all",
                       context_structure="document",
                       event_structure="consecutive_words",
                       event_options=(3,),  # number_of_words,
@@ -175,11 +175,12 @@ def create_event_file(corpus_file,
         automatically. If the corpus file contains these special symbols a warning
         will be given.
 
+        If you want to use all symbols use the special word ``all``.
+
         These examples define the same allowed symbols::
 
             'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
             'a-zA-Z'
-            '*'
 
         or a function indicating which characters to include. The function should
         return `True`, if the passed character is a allowed symbol.
@@ -264,6 +265,9 @@ def create_event_file(corpus_file,
                 if not allowed_symbols(line[ii]):
                     line_copy[ii] = replace
             return ''.join(line_copy)
+    elif allowed_symbols == 'all':
+        def filter_symbols(line, replace):
+            return line
     else:
         not_in_symbols = re.compile(f"[^{allowed_symbols:s}]")
         def filter_symbols(line, replace):
