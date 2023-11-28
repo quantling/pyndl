@@ -322,8 +322,12 @@ def create_event_file(corpus_file,
                 occurrences.append(("_".join(cues), word))
             return occurrences
         elif event_structure == 'line':
-            # (cues, outcomes) with empty outcomes
-            return [('_'.join(words), ''), ]
+            #{"trigrams_to_word", "word_to_word", "bigrams_to_word"}
+            if cue_structure in ("trigrams_to_word", "bigrams_to_word"):
+                # (cues, outcomes) with empty outcomes
+                return [('_'.join(words), ''), ]
+            else:
+                return [('_'.join(words), '_'.join(words)), ]
         else:
             raise ValueError('gen_occurrences should be one of {"consecutive_words", "word_to_word", "line"}')
 
