@@ -126,7 +126,7 @@ Let's start:
     >>> weights = ndl.ndl(events='docs/data/lexample.tab.gz', alpha=0.1,
     ...                   betas=(0.1, 0.1), method='threading')
     >>> weights  # doctest: +ELLIPSIS
-    <xarray.DataArray (outcomes: 8, cues: 15)>
+    <xarray.DataArray (outcomes: 8, cues: 15)>...
     ...
 
 ``weights`` is an ``xarray.DataArray`` of dimension ``len(outcomes)``,
@@ -139,17 +139,17 @@ methods
 .. code-block:: python
 
     >>> weights[1, 5]  # doctest: +ELLIPSIS
-    <xarray.DataArray ()>
+    <xarray.DataArray ()>...
     ...
     >>> weights.loc[{'outcomes': 'plural', 'cues': 's#'}]  # doctest: +ELLIPSIS
-    <xarray.DataArray ()>
+    <xarray.DataArray ()>...
     array(0.076988...)
     Coordinates:
         outcomes  <U6 'plural'
         cues      <U2 's#'
     ...
     >>> weights.loc['plural'].loc['s#']  # doctest: +ELLIPSIS
-    <xarray.DataArray ()>
+    <xarray.DataArray ()>...
     array(0.076988...)
     Coordinates:
         outcomes  <U6 'plural'
@@ -168,7 +168,7 @@ weight matrix by specifying the ``weight`` argument:
     >>> weights2 = ndl.ndl(events='docs/data/lexample.tab.gz', alpha=0.1,
     ...                    betas=(0.1, 0.1), method='threading', weights=weights)
     >>> weights2  # doctest: +ELLIPSIS
-    <xarray.DataArray (outcomes: 8, cues: 15)>
+    <xarray.DataArray (outcomes: 8, cues: 15)>...
     array([[ 0.24...
     ...
     ...]])
@@ -449,7 +449,7 @@ gets apparent.
     ...                              'cue_vector_dimensions': ['dim1', 'dim2', 'dim3']}]
     >>> weights_ndl = weights_ndl.loc[{'outcomes': ['A', 'B', 'C', 'D'], 'cues': ['a', 'b', 'c']}]
     >>> print(weights_wh)  # doctest: +ELLIPSIS
-    <xarray.DataArray (outcome_vector_dimensions: 4, cue_vector_dimensions: 3)>
+    <xarray.DataArray (outcome_vector_dimensions: 4, cue_vector_dimensions: 3)>...
     array([[0.06706..., 0.        , 0.        ],
            [0.        , 0.03940..., 0.        ],
            [0.0094... , 0.        , 0.03940...],
@@ -462,7 +462,7 @@ gets apparent.
     Attributes: (12/15)
     ...
     >>> print(weights_ndl)  # doctest: +ELLIPSIS
-    <xarray.DataArray (outcomes: 4, cues: 3)>
+    <xarray.DataArray (outcomes: 4, cues: 3)>...
     array([[0.06706..., 0.        , 0.        ],
            [0.        , 0.03940..., 0.        ],
            [0.0094... , 0.        , 0.03940...],
