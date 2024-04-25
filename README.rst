@@ -8,9 +8,6 @@ Pyndl - Naive Discriminative Learning in Python
 .. image:: https://codecov.io/gh/quantling/pyndl/branch/main/graph/badge.svg?token=2GWUXRA9PD
     :target: https://codecov.io/gh/quantling/pyndl
 
-.. image:: https://img.shields.io/lgtm/grade/python/g/quantling/pyndl.svg?logo=lgtm&logoWidth=18
-    :target: https://lgtm.com/projects/g/quantling/pyndl/context:python
-
 .. image:: https://img.shields.io/pypi/pyversions/pyndl.svg
     :target: https://pypi.python.org/pypi/pyndl/
 
