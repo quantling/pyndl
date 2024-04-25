@@ -47,7 +47,7 @@ jobs:
         run: poetry run pytest --no-linux
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v4
         with:
           file: ./coverage.xml
           flags: unittests
