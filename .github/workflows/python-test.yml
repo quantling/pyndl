@@ -43,12 +43,11 @@ jobs:
 
       - name: Run tests on other distributions (skip linux-only tests)
         if: ${{ runner.os != 'Linux' }}
-        run: poetry run pytest --no-linux
+        run: poetry run pytest --no-linux --cov=pyndl --cov-report=xml --disable-pytest-warnings
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          file: ./coverage.xml
           flags: unittests
           token: ${{ secrets.CODECOV_TOKEN }}
           env_vars: OS,PYTHON
