@@ -35,23 +35,8 @@ jobs:
         with:
           poetry-version: ${{ matrix.poetry-version }}
 
-      - name: Update PATH
-        if: ${{ runner.os != 'Windows' }}
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
-
-      - name: Update Path for Windows
-        if: ${{ runner.os == 'Windows' }}
-        run: echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
-
-      - name: Configure poetry
-        run: poetry config virtualenvs.in-project true
-
-      - name: Set up cache
-        uses: actions/cache@v3
-        id: cache
-        with:
-          path: .venv
-          key: venv-cache-${{ runner.os }}-${{ steps.full-python-version.outputs.version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: View poetry --help
+        run: poetry --help
 
       - name: Install dependencies
         run: poetry install
