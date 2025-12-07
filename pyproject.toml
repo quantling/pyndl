@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyndl"
-version = "1.2.3"
+version = "1.2.4"
 description = "Naive discriminative learning implements learning and classification models based on the Rescorla-Wagner equations."
 
 license = "MIT"
@@ -28,7 +28,7 @@ classifiers = ['Development Status :: 5 - Production/Stable',
                'Topic :: Scientific/Engineering :: Information Analysis',]
 
 [tool.poetry.dependencies]
-python = ">=3.9,<3.13"  # Compatible python versions must be declared here
+python = "^3.9"  # Compatible python versions must be declared here
 numpy = ">=1.24.1"
 scipy = ">=1.13.0"
 pandas = ">=1.4.3"
@@ -38,7 +38,7 @@ Cython = ">=3.0.0"
 toml = ">=0.10.2"
 setuptools = ">=69.2.0"
 
-[tool.poetry.dev-dependencies]
+[tool.group.poetry.dev-dependencies]
 pytest = ">=7.0"
 pytest-cov = ">=2.4"
 pydocstyle = ">=6.1.1"
