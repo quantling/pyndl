@@ -38,7 +38,7 @@ Cython = ">=3.0.0"
 toml = ">=0.10.2"
 setuptools = ">=69.2.0"
 
-[tool.group.poetry.dev-dependencies]
+[tool.poetry.group.dev-dependencies]
 pytest = ">=7.0"
 pytest-cov = ">=2.4"
 pydocstyle = ">=6.1.1"
